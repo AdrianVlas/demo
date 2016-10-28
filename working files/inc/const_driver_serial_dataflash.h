@@ -121,15 +121,8 @@
 
 #define MAX_TIME_OFFSET_FROM_START                      0xFFFFFF // 4 год. 39 хв. 37 сек. 215 мілісек.
 #define MAX_EVENTS_IN_ONE_RECORD                        41
-#define MAX_NUMBER_FIX_MAX_MEASUREMENTS                 10
-#define SIZE_ARRAY_FIX_MAX_MEASUREMENTS                 (NUMBER_ANALOG_CANALES + 2 + 2*3 + 2 + 1)
 
 #define LABEL_START_RECORD_DR           0xA5
-
-#define IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE          1
-#define IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE                2
-#define IDENTIFIER_BIT_ARRAY_MAX_VOLTAGE                3
-#define IDENTIFIER_BIT_ARRAY_MAX_CURRENT_ZOP            4
 
 #define READING_DR_FOR_MENU             1
 #define READING_DR_FOR_USB              2

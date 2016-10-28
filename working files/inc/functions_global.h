@@ -154,8 +154,6 @@ void make_ekran_list_registrators(void);
 void make_ekran_list_records_registrator(unsigned int);
 void make_ekran_list_titles_for_record_of_digital_registrator(void);
 void make_ekran_data_and_time_of_records_registrator(unsigned int);
-void make_ekran_title_analog_value_records_digital_registrator(void);
-void make_ekran_analog_value_records_digital_registrator(void);
 void make_ekran_changing_signals_digital_registrator(void);
 void make_ekran_list_titles_for_record_of_pr_err_registrator(void);
 void make_ekran_changing_diagnostics_pr_err_registrator(void);
@@ -181,41 +179,9 @@ void d_and_handler(volatile unsigned int*);
 void d_or_handler(volatile unsigned int*);
 void d_xor_handler(volatile unsigned int*);
 void d_not_handler(volatile unsigned int*);
-void mtz_handler(volatile unsigned int*, unsigned int);
-void zdz_handler(volatile unsigned int*);
-int timeout_dependent_general(unsigned int, unsigned int);
-void zop_handler(volatile unsigned int*, unsigned int);
-void umin1_handler(volatile unsigned int*, unsigned int);
-void umin2_handler(volatile unsigned int*, unsigned int);
-void umax1_handler(volatile unsigned int*, unsigned int);
-void umax2_handler(volatile unsigned int*, unsigned int);
-uint32_t choose_tn1_tn2(volatile unsigned int*);
-void avr_handler(volatile unsigned int*, unsigned int);
 void ctrl_phase_handler(volatile unsigned int*, unsigned int);
-void ready_tu(volatile unsigned int*);
-void urov_handler(volatile unsigned int*, unsigned int);
-void apv_handler(volatile unsigned int*, unsigned int);
-void on_off_handler(volatile unsigned int*);
-void control_VV(volatile unsigned int*);
 unsigned int stop_regisrator(volatile unsigned int*, unsigned int*);
 void fix_undefined_error_dr(volatile unsigned int*);
-void start_monitoring_max_phase_current(unsigned int);
-void continue_monitoring_max_phase_current(unsigned int);
-void start_monitoring_max_phase04_current(unsigned int);
-void continue_monitoring_max_phase04_current(unsigned int);
-void start_monitoring_max_3I0(unsigned int);
-void continue_monitoring_max_3I0(unsigned int);
-void start_monitoring_max_3U0(unsigned int);
-void continue_monitoring_max_3U0(unsigned int);
-void start_monitoring_min_U(unsigned int);
-void continue_monitoring_min_U(unsigned int);
-void start_monitoring_max_U(unsigned int);
-void continue_monitoring_max_U(unsigned int);
-void start_monitoring_max_ZOP(unsigned int);
-void continue_monitoring_max_ZOP(unsigned int);
-void start_monitoring_min_f(unsigned int);
-void continue_monitoring_min_f(unsigned int);
-void end_monitoring_min_max_measurement(unsigned int, volatile unsigned int*);
 void command_start_saving_record_dr_into_dataflash(void);
 void routine_for_queue_dr(void);
 void digital_registrator(volatile unsigned int*);
@@ -264,10 +230,6 @@ unsigned int get_order(int);
 
 void calc_angle(void);
 
-void velychyna_zvorotnoi_poslidovnosti(int*);
-
-void directional_mtz(int*, unsigned int);
-
 void main_function_for_dataflash_resp(int);
 void main_function_for_dataflash_req(int);
 void start_checking_dataflash(void);
@@ -296,8 +258,6 @@ void test_external_SRAM(void);
 
 void watchdog_routine(void);
 void total_error_sw_fixed(unsigned int);
-
-void setpoints_selecting(volatile unsigned int*, unsigned int);
 
 int str_to_int_DATE_Mmm(void);
 

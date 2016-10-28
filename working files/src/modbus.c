@@ -53,114 +53,6 @@ void convert_order_list_function_to_gmm(unsigned int* input_array, unsigned shor
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_3_GRUPA_USTAVOK    , (BIT_MA_3_GRUPA_USTAVOK  - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_4_GRUPA_USTAVOK    , (BIT_MA_4_GRUPA_USTAVOK  - BIT_MA_CURRENT_AF_BASE));
 
-  //МТЗ
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_MTZ1         , (BIT_MA_BLOCK_MTZ1          - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_MTZ1               , (BIT_MA_MTZ1                - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZ1            , (BIT_MA_PO_MTZ1             - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZPN1          , (BIT_MA_PO_MTZPN1           - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZN1_VPERED    , (BIT_MA_PO_MTZN1_VPERED     - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZN1_NAZAD     , (BIT_MA_PO_MTZN1_NAZAD      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SECTOR_VPERED_MTZN1, (BIT_MA_SECTOR_VPERED_MTZN1 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SECTOR_NAZAD_MTZN1 , (BIT_MA_SECTOR_NAZAD_MTZN1  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_U_MTZPN1        , (BIT_MA_PO_U_MTZPN1         - BIT_MA_CURRENT_AF_BASE));
-
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_MTZ2         , (BIT_MA_BLOCK_MTZ2          - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_MTZ2               , (BIT_MA_MTZ2                - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZ2            , (BIT_MA_PO_MTZ2             - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZPN2          , (BIT_MA_PO_MTZPN2           - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZN2_VPERED    , (BIT_MA_PO_MTZN2_VPERED     - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZN2_NAZAD     , (BIT_MA_PO_MTZN2_NAZAD      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SECTOR_VPERED_MTZN2, (BIT_MA_SECTOR_VPERED_MTZN2 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SECTOR_NAZAD_MTZN2 , (BIT_MA_SECTOR_NAZAD_MTZN2  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_U_MTZPN2        , (BIT_MA_PO_U_MTZPN2         - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_USK_MTZ2     , (BIT_MA_BLOCK_USK_MTZ2      - BIT_MA_CURRENT_AF_BASE));
-
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_MTZ3         , (BIT_MA_BLOCK_MTZ3          - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_MTZ3               , (BIT_MA_MTZ3                - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZ3            , (BIT_MA_PO_MTZ3             - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZPN3          , (BIT_MA_PO_MTZPN3           - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZN3_VPERED    , (BIT_MA_PO_MTZN3_VPERED     - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZN3_NAZAD     , (BIT_MA_PO_MTZN3_NAZAD      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SECTOR_VPERED_MTZN3, (BIT_MA_SECTOR_VPERED_MTZN3 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SECTOR_NAZAD_MTZN3 , (BIT_MA_SECTOR_NAZAD_MTZN3  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_U_MTZPN3        , (BIT_MA_PO_U_MTZPN3         - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_USK_MTZ3     , (BIT_MA_BLOCK_USK_MTZ3      - BIT_MA_CURRENT_AF_BASE));
-
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_MTZ4         , (BIT_MA_BLOCK_MTZ4          - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_MTZ4               , (BIT_MA_MTZ4                - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZ4            , (BIT_MA_PO_MTZ4             - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZPN4          , (BIT_MA_PO_MTZPN4           - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZN4_VPERED    , (BIT_MA_PO_MTZN4_VPERED     - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_MTZN4_NAZAD     , (BIT_MA_PO_MTZN4_NAZAD      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SECTOR_VPERED_MTZN4, (BIT_MA_SECTOR_VPERED_MTZN4 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SECTOR_NAZAD_MTZN4 , (BIT_MA_SECTOR_NAZAD_MTZN4  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_U_MTZPN4        , (BIT_MA_PO_U_MTZPN4         - BIT_MA_CURRENT_AF_BASE));
-
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_BLOCK_U_MTZN    , (BIT_MA_PO_BLOCK_U_MTZN     - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_NCN_MTZ            , (BIT_MA_NCN_MTZ             - BIT_MA_CURRENT_AF_BASE));
-
-  //ЗОП
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_ZOP , (BIT_MA_BLOCK_ZOP  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_ZOP       , (BIT_MA_ZOP        - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_ZOP    , (BIT_MA_PO_ZOP     - BIT_MA_CURRENT_AF_BASE));
-  
-  //Umin
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_UMIN1  , (BIT_MA_BLOCK_UMIN1   - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_START_UMIN1  , (BIT_MA_START_UMIN1   - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_UMIN2  , (BIT_MA_BLOCK_UMIN2   - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_START_UMIN2  , (BIT_MA_START_UMIN2   - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_UMIN1     , (BIT_MA_PO_UMIN1      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_UBLK_UMIN1, (BIT_MA_PO_UBLK_UMIN1 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_IBLK_UMIN1, (BIT_MA_PO_IBLK_UMIN1 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_UMIN1        , (BIT_MA_UMIN1         - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_UMIN2     , (BIT_MA_PO_UMIN2      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_UBLK_UMIN2, (BIT_MA_PO_UBLK_UMIN2 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_IBLK_UMIN2, (BIT_MA_PO_IBLK_UMIN2 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_UMIN2        , (BIT_MA_UMIN2         - BIT_MA_CURRENT_AF_BASE));
-
-  //Umax
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_UMAX1, (BIT_MA_BLOCK_UMAX1 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_UMAX1   , (BIT_MA_PO_UMAX1    - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_UMAX1      , (BIT_MA_UMAX1       - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_UMAX2, (BIT_MA_BLOCK_UMAX2 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_UMAX2   , (BIT_MA_PO_UMAX2    - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_UMAX2      , (BIT_MA_UMAX2       - BIT_MA_CURRENT_AF_BASE));
-  
-  //АПВ
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_STAT_BLK_APV, (BIT_MA_STAT_BLK_APV - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_APV1        , (BIT_MA_APV          - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_APV2        , (BIT_MA_APV2         - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_APV3        , (BIT_MA_APV3         - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_APV4        , (BIT_MA_APV4         - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_APV_WORK    , (BIT_MA_APV_WORK     - BIT_MA_CURRENT_AF_BASE));
-
-  //УРОВ
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PUSK_UROV_VID_DV, (BIT_MA_PUSK_UROV_VID_DV - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_UROV1           , (BIT_MA_UROV1            - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_UROV2           , (BIT_MA_UROV2            - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_UROV         , (BIT_MA_PO_UROV          - BIT_MA_CURRENT_AF_BASE));
-
-  //АВР
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_OTKL_AVR               , (BIT_MA_OTKL_AVR                - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SBROS_BLOCK_AVR        , (BIT_MA_SBROS_BLOCK_AVR         - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_STAT_BLOCK_AVR_1       , (BIT_MA_STAT_BLOCK_AVR_1        - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_STAT_BLOCK_AVR_2       , (BIT_MA_STAT_BLOCK_AVR_2        - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_AVR              , (BIT_MA_BLOCK_AVR               - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_AVR_TN1_U1_MIN      , (BIT_MA_PO_AVR_TN1_U1_MIN       - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_AVR_TN1_U2_LOW_WORK , (BIT_MA_PO_AVR_TN1_U2_LOW_WORK  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_AVR_TN2_U2_MIN      , (BIT_MA_PO_AVR_TN2_U2_MIN       - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_AVR_TN2_U1_LOW_WORK , (BIT_MA_PO_AVR_TN2_U1_LOW_WORK  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_OZT_AVR_1              , (BIT_MA_OZT_AVR_1               - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_OZT_AVR_2              , (BIT_MA_OZT_AVR_2               - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_AVR_K1              , (BIT_MA_PO_AVR_K1               - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_KOM1_ON_AVR            , (BIT_MA_KOM1_ON_AVR             - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_KOM1_OFF_AVR           , (BIT_MA_KOM1_OFF_AVR            - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_KOM3_ON_AVR            , (BIT_MA_KOM3_ON_AVR             - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PO_AVR_K2              , (BIT_MA_PO_AVR_K2               - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_KOM2_ON_AVR            , (BIT_MA_KOM2_ON_AVR             - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_KOM2_OFF_AVR           , (BIT_MA_KOM2_OFF_AVR            - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_KOM4_ON_AVR            , (BIT_MA_KOM4_ON_AVR             - BIT_MA_CURRENT_AF_BASE));
-
   //Перевірка фазування
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_ERROR_DELTA_U_CTRL_PHASE  , (BIT_MA_ERROR_DELTA_U_CTRL_PHASE   - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_ERROR_DELTA_PHI_CTRL_PHASE, (BIT_MA_ERROR_DELTA_PHI_CTRL_PHASE - BIT_MA_CURRENT_AF_BASE));
@@ -308,86 +200,6 @@ unsigned int convert_order_list_buttons_to_gmm(unsigned int number, unsigned int
   {
     switch (i)
     {
-    case RANG_BUTTON_DF1_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF1;
-        break;
-      }
-    case RANG_BUTTON_DF2_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF2;
-        break;
-      }
-    case RANG_BUTTON_DF3_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF3;
-        break;
-      }
-    case RANG_BUTTON_DF4_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF4;
-        break;
-      }
-    case RANG_BUTTON_DF5_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF5;
-        break;
-      }
-    case RANG_BUTTON_DF6_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF6;
-        break;
-      }
-    case RANG_BUTTON_DF7_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF7;
-        break;
-      }
-    case RANG_BUTTON_DF8_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF8;
-        break;
-      }
-    case RANG_BUTTON_DT1_SET:
-      {
-        rezultat = BIT_MA_DT1_SET;
-        break;
-      }
-    case RANG_BUTTON_DT1_RESET:
-      {
-        rezultat = BIT_MA_DT1_RESET;
-        break;
-      }
-    case RANG_BUTTON_DT2_SET:
-      {
-        rezultat = BIT_MA_DT2_SET;
-        break;
-      }
-    case RANG_BUTTON_DT2_RESET:
-      {
-        rezultat = BIT_MA_DT2_RESET;
-        break;
-      }
-    case RANG_BUTTON_DT3_SET:
-      {
-        rezultat = BIT_MA_DT3_SET;
-        break;
-      }
-    case RANG_BUTTON_DT3_RESET:
-      {
-        rezultat = BIT_MA_DT3_RESET;
-        break;
-      }
-    case RANG_BUTTON_DT4_SET:
-      {
-        rezultat = BIT_MA_DT4_SET;
-        break;
-      }
-    case RANG_BUTTON_DT4_RESET:
-      {
-        rezultat = BIT_MA_DT4_RESET;
-        break;
-      }
     case RANG_BUTTON_RESET_LEDS:
       {
         rezultat = BIT_MA_RESET_LEDS;
@@ -411,16 +223,6 @@ unsigned int convert_order_list_buttons_to_gmm(unsigned int number, unsigned int
     case RANG_BUTTON_OTKL_VV:
       {
         rezultat = BIT_MA_OTKL_VV;
-        break;
-      }
-    case RANG_BUTTON_OTKL_AVR:
-      {
-        rezultat = BIT_MA_OTKL_AVR;
-        break;
-      }
-    case RANG_BUTTON_SBROS_BLOCK_AVR:
-      {
-        rezultat = BIT_MA_SBROS_BLOCK_AVR;
         break;
       }
     case RANG_BUTTON_RESET_BLOCK_READY_TU_VID_ZAHYSTIV:
@@ -467,86 +269,6 @@ unsigned int convert_order_list_inputs_to_gmm(unsigned int number, unsigned int 
   {
     switch (i)
     {
-    case RANG_INPUT_DF1_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF1;
-        break;
-      }
-    case RANG_INPUT_DF2_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF2;
-        break;
-      }
-    case RANG_INPUT_DF3_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF3;
-        break;
-      }
-    case RANG_INPUT_DF4_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF4;
-        break;
-      }
-    case RANG_INPUT_DF5_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF5;
-        break;
-      }
-    case RANG_INPUT_DF6_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF6;
-        break;
-      }
-    case RANG_INPUT_DF7_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF7;
-        break;
-      }
-    case RANG_INPUT_DF8_IN:
-      {
-        rezultat = BIT_MA_INPUT_DF8;
-        break;
-      }
-    case RANG_INPUT_DT1_SET:
-      {
-        rezultat = BIT_MA_DT1_SET;
-        break;
-      }
-    case RANG_INPUT_DT1_RESET:
-      {
-        rezultat = BIT_MA_DT1_RESET;
-        break;
-      }
-    case RANG_INPUT_DT2_SET:
-      {
-        rezultat = BIT_MA_DT2_SET;
-        break;
-      }
-    case RANG_INPUT_DT2_RESET:
-      {
-        rezultat = BIT_MA_DT2_RESET;
-        break;
-      }
-    case RANG_INPUT_DT3_SET:
-      {
-        rezultat = BIT_MA_DT3_SET;
-        break;
-      }
-    case RANG_INPUT_DT3_RESET:
-      {
-        rezultat = BIT_MA_DT3_RESET;
-        break;
-      }
-    case RANG_INPUT_DT4_SET:
-      {
-        rezultat = BIT_MA_DT4_SET;
-        break;
-      }
-    case RANG_INPUT_DT4_RESET:
-      {
-        rezultat = BIT_MA_DT4_RESET;
-        break;
-      }
     case RANG_INPUT_BLOCK_VKL_VV:
       {
         rezultat = BIT_MA_BLOCK_VKL_VV;
@@ -620,116 +342,6 @@ unsigned int convert_order_list_inputs_to_gmm(unsigned int number, unsigned int 
     case RANG_INPUT_RESET_BLOCK_READY_TU_VID_ZAHYSTIV:
       {
         rezultat = BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;
-        break;
-      }
-    case RANG_INPUT_BLOCK_MTZ1:
-      {
-        rezultat = BIT_MA_BLOCK_MTZ1;
-        break;
-      }
-    case RANG_INPUT_BLOCK_MTZ2:
-      {
-        rezultat = BIT_MA_BLOCK_MTZ2;
-        break;
-      }
-    case RANG_INPUT_BLOCK_USK_MTZ2:
-      {
-        rezultat = BIT_MA_BLOCK_USK_MTZ2;
-        break;
-      }
-    case RANG_INPUT_BLOCK_MTZ3:
-      {
-        rezultat = BIT_MA_BLOCK_MTZ3;
-        break;
-      }
-    case RANG_INPUT_BLOCK_USK_MTZ3:
-      {
-        rezultat = BIT_MA_BLOCK_USK_MTZ3;
-        break;
-      }
-    case RANG_INPUT_BLOCK_MTZ4:
-      {
-        rezultat = BIT_MA_BLOCK_MTZ4;
-        break;
-      }
-    case RANG_INPUT_PUSK_ZDZ_VID_DV:
-      {
-        rezultat = BIT_MA_PUSK_ZDZ_VID_DV;
-        break;
-      }
-    case RANG_INPUT_STAT_BLK_APV:
-      {
-        rezultat = BIT_MA_STAT_BLK_APV;
-        break;
-      }
-    case RANG_INPUT_PUSK_UROV_VID_DV:
-      {
-        rezultat = BIT_MA_PUSK_UROV_VID_DV;
-        break;
-      }
-    case RANG_INPUT_BLOCK_ZOP:
-      {
-        rezultat = BIT_MA_BLOCK_ZOP;
-        break;
-      }
-    case RANG_INPUT_BLOCK_UMIN1:
-      {
-        rezultat = BIT_MA_BLOCK_UMIN1;
-        break;
-      }
-    case RANG_INPUT_START_UMIN1:
-      {
-        rezultat = BIT_MA_START_UMIN1;
-        break;
-      }
-    case RANG_INPUT_BLOCK_UMIN2:
-      {
-        rezultat = BIT_MA_BLOCK_UMIN2;
-        break;
-      }
-    case RANG_INPUT_START_UMIN2:
-      {
-        rezultat = BIT_MA_START_UMIN2;
-        break;
-      }
-    case RANG_INPUT_BLOCK_UMAX1:
-      {
-        rezultat = BIT_MA_BLOCK_UMAX1;
-        break;
-      }
-    case RANG_INPUT_BLOCK_UMAX2:
-      {
-        rezultat = BIT_MA_BLOCK_UMAX2;
-        break;
-      }
-    case RANG_INPUT_OTKL_AVR:
-      {
-        rezultat = BIT_MA_OTKL_AVR;
-        break;
-      }
-    case RANG_INPUT_SBROS_BLOCK_AVR:
-      {
-        rezultat = BIT_MA_SBROS_BLOCK_AVR;
-        break;
-      }
-    case RANG_INPUT_STAT_BLOCK_AVR_1:
-      {
-        rezultat = BIT_MA_STAT_BLOCK_AVR_1;
-        break;
-      }
-    case RANG_INPUT_STAT_BLOCK_AVR_2:
-      {
-        rezultat = BIT_MA_STAT_BLOCK_AVR_2;
-        break;
-      }
-    case RANG_INPUT_OZT_AVR_1:
-      {
-        rezultat = BIT_MA_OZT_AVR_1;
-        break;
-      }
-    case RANG_INPUT_OZT_AVR_2:
-      {
-        rezultat = BIT_MA_OZT_AVR_2;
         break;
       }
     default: break;
@@ -1329,466 +941,6 @@ unsigned int convert_order_list_oldr_to_gmm(unsigned int number, unsigned int nu
         rezultat = BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;
         break;
       }
-    case RANG_BLOCK_MTZ1:
-      {
-        rezultat = BIT_MA_BLOCK_MTZ1;
-        break;
-      }
-    case RANG_BLOCK_MTZ2:
-      {
-        rezultat = BIT_MA_BLOCK_MTZ2;
-        break;
-      }
-    case RANG_BLOCK_USK_MTZ2:
-      {
-        rezultat = BIT_MA_BLOCK_USK_MTZ2;
-        break;
-      }
-    case RANG_BLOCK_MTZ3:
-      {
-        rezultat = BIT_MA_BLOCK_MTZ3;
-        break;
-      }
-    case RANG_BLOCK_USK_MTZ3:
-      {
-        rezultat = BIT_MA_BLOCK_USK_MTZ3;
-        break;
-      }
-    case RANG_BLOCK_MTZ4:
-      {
-        rezultat = BIT_MA_BLOCK_MTZ4;
-        break;
-      }
-    case RANG_SECTOR_VPERED_MTZN1:
-      {
-        rezultat = BIT_MA_SECTOR_VPERED_MTZN1;
-        break;
-      }
-    case RANG_SECTOR_NAZAD_MTZN1:
-      {
-        rezultat = BIT_MA_SECTOR_NAZAD_MTZN1;
-        break;
-      }
-    case RANG_PO_MTZ1:
-      {
-        rezultat = BIT_MA_PO_MTZ1;
-        break;
-      }
-    case RANG_PO_MTZN1_VPERED:
-      {
-        rezultat = BIT_MA_PO_MTZN1_VPERED;
-        break;
-      }
-    case RANG_PO_MTZN1_NAZAD:
-      {
-        rezultat = BIT_MA_PO_MTZN1_NAZAD;
-        break;
-      }
-    case RANG_PO_U_MTZPN1:
-      {
-        rezultat = BIT_MA_PO_U_MTZPN1;
-        break;
-      }
-    case RANG_PO_MTZPN1:
-      {
-        rezultat = BIT_MA_PO_MTZPN1;
-        break;
-      }
-    case RANG_MTZ1:
-      {
-        rezultat = BIT_MA_MTZ1;
-        break;
-      }
-    case RANG_SECTOR_VPERED_MTZN2:
-      {
-        rezultat = BIT_MA_SECTOR_VPERED_MTZN2;
-        break;
-      }
-    case RANG_SECTOR_NAZAD_MTZN2:
-      {
-        rezultat = BIT_MA_SECTOR_NAZAD_MTZN2;
-        break;
-      }
-    case RANG_PO_MTZ2:
-      {
-        rezultat = BIT_MA_PO_MTZ2;
-        break;
-      }
-    case RANG_PO_MTZN2_VPERED:
-      {
-        rezultat = BIT_MA_PO_MTZN2_VPERED;
-        break;
-      }
-    case RANG_PO_MTZN2_NAZAD:
-      {
-        rezultat = BIT_MA_PO_MTZN2_NAZAD;
-        break;
-      }
-    case RANG_PO_U_MTZPN2:
-      {
-        rezultat = BIT_MA_PO_U_MTZPN2;
-        break;
-      }
-    case RANG_PO_MTZPN2:
-      {
-        rezultat = BIT_MA_PO_MTZPN2;
-        break;
-      }
-    case RANG_MTZ2:
-      {
-        rezultat = BIT_MA_MTZ2;
-        break;
-      }
-    case RANG_SECTOR_VPERED_MTZN3:
-      {
-        rezultat = BIT_MA_SECTOR_VPERED_MTZN3;
-        break;
-      }
-    case RANG_SECTOR_NAZAD_MTZN3:
-      {
-        rezultat = BIT_MA_SECTOR_NAZAD_MTZN3;
-        break;
-      }
-    case RANG_PO_MTZ3:
-      {
-        rezultat = BIT_MA_PO_MTZ3;
-        break;
-      }
-    case RANG_PO_MTZN3_VPERED:
-      {
-        rezultat = BIT_MA_PO_MTZN3_VPERED;
-        break;
-      }
-    case RANG_PO_MTZN3_NAZAD:
-      {
-        rezultat = BIT_MA_PO_MTZN3_NAZAD;
-        break;
-      }
-    case RANG_PO_U_MTZPN3:
-      {
-        rezultat = BIT_MA_PO_U_MTZPN3;
-        break;
-      }
-    case RANG_PO_MTZPN3:
-      {
-        rezultat = BIT_MA_PO_MTZPN3;
-        break;
-      }
-    case RANG_MTZ3:
-      {
-        rezultat = BIT_MA_MTZ3;
-        break;
-      }
-    case RANG_SECTOR_VPERED_MTZN4:
-      {
-        rezultat = BIT_MA_SECTOR_VPERED_MTZN4;
-        break;
-      }
-    case RANG_SECTOR_NAZAD_MTZN4:
-      {
-        rezultat = BIT_MA_SECTOR_NAZAD_MTZN4;
-        break;
-      }
-    case RANG_PO_MTZ4:
-      {
-        rezultat = BIT_MA_PO_MTZ4;
-        break;
-      }
-    case RANG_PO_MTZN4_VPERED:
-      {
-        rezultat = BIT_MA_PO_MTZN4_VPERED;
-        break;
-      }
-    case RANG_PO_MTZN4_NAZAD:
-      {
-        rezultat = BIT_MA_PO_MTZN4_NAZAD;
-        break;
-      }
-    case RANG_PO_U_MTZPN4:
-      {
-        rezultat = BIT_MA_PO_U_MTZPN4;
-        break;
-      }
-    case RANG_PO_MTZPN4:
-      {
-        rezultat = BIT_MA_PO_MTZPN4;
-        break;
-      }
-    case RANG_MTZ4:
-      {
-        rezultat = BIT_MA_MTZ4;
-        break;
-      }
-    case RANG_PO_BLOCK_U_MTZN:
-      {
-        rezultat = BIT_MA_PO_BLOCK_U_MTZN;
-        break;
-      }
-    case RANG_NCN_MTZ:
-      {
-        rezultat = BIT_MA_NCN_MTZ;
-        break;
-      }
-    case RANG_PUSK_ZDZ_VID_DV:
-      {
-        rezultat = BIT_MA_PUSK_ZDZ_VID_DV;
-        break;
-      }
-    case RANG_ZDZ:
-      {
-        rezultat = BIT_MA_ZDZ;
-        break;
-      }
-    case RANG_STAT_BLK_APV:
-      {
-        rezultat = BIT_MA_STAT_BLK_APV;
-        break;
-      }
-    case RANG_APV1:
-      {
-        rezultat = BIT_MA_APV;
-        break;
-      }
-    case RANG_APV2:
-      {
-        rezultat = BIT_MA_APV2;
-        break;
-      }
-    case RANG_APV3:
-      {
-        rezultat = BIT_MA_APV3;
-        break;
-      }
-    case RANG_APV4:
-      {
-        rezultat = BIT_MA_APV4;
-        break;
-      }
-    case RANG_APV_WORK:
-      {
-        rezultat = BIT_MA_APV_WORK;
-        break;
-      }
-    case RANG_PUSK_UROV_VID_DV:
-      {
-        rezultat = BIT_MA_PUSK_UROV_VID_DV;
-        break;
-      }
-    case RANG_PO_UROV:
-      {
-        rezultat = BIT_MA_PO_UROV;
-        break;
-      }
-    case RANG_UROV1:
-      {
-        rezultat = BIT_MA_UROV1;
-        break;
-      }
-    case RANG_UROV2:
-      {
-        rezultat = BIT_MA_UROV2;
-        break;
-      }
-    case RANG_BLOCK_ZOP:
-      {
-        rezultat = BIT_MA_BLOCK_ZOP;
-        break;
-      }
-    case RANG_PO_ZOP:
-      {
-        rezultat = BIT_MA_PO_ZOP;
-        break;
-      }
-    case RANG_ZOP:
-      {
-        rezultat = BIT_MA_ZOP;
-        break;
-      }
-    case RANG_BLOCK_UMIN1:
-      {
-        rezultat = BIT_MA_BLOCK_UMIN1;
-        break;
-      }
-    case RANG_START_UMIN1:
-      {
-        rezultat = BIT_MA_START_UMIN1;
-        break;
-      }
-    case RANG_BLOCK_UMIN2:
-      {
-        rezultat = BIT_MA_BLOCK_UMIN2;
-        break;
-      }
-    case RANG_START_UMIN2:
-      {
-        rezultat = BIT_MA_START_UMIN2;
-        break;
-      }
-    case RANG_PO_UMIN1:
-      {
-        rezultat = BIT_MA_PO_UMIN1;
-        break;
-      }
-    case RANG_PO_UBLK_UMIN1:
-      {
-        rezultat = BIT_MA_PO_UBLK_UMIN1;
-        break;
-      }
-    case RANG_PO_IBLK_UMIN1:
-      {
-        rezultat = BIT_MA_PO_IBLK_UMIN1;
-        break;
-      }
-    case RANG_UMIN1:
-      {
-        rezultat = BIT_MA_UMIN1;
-        break;
-      }
-    case RANG_PO_UMIN2:
-      {
-        rezultat = BIT_MA_PO_UMIN2;
-        break;
-      }
-    case RANG_PO_UBLK_UMIN2:
-      {
-        rezultat = BIT_MA_PO_UBLK_UMIN2;
-        break;
-      }
-    case RANG_PO_IBLK_UMIN2:
-      {
-        rezultat = BIT_MA_PO_IBLK_UMIN2;
-        break;
-      }
-    case RANG_UMIN2:
-      {
-        rezultat = BIT_MA_UMIN2;
-        break;
-      }
-    case RANG_BLOCK_UMAX1:
-      {
-        rezultat = BIT_MA_BLOCK_UMAX1;
-        break;
-      }
-    case RANG_PO_UMAX1:
-      {
-        rezultat = BIT_MA_PO_UMAX1;
-        break;
-      }
-    case RANG_UMAX1:
-      {
-        rezultat = BIT_MA_UMAX1;
-        break;
-      }
-    case RANG_BLOCK_UMAX2:
-      {
-        rezultat = BIT_MA_BLOCK_UMAX2;
-        break;
-      }
-    case RANG_PO_UMAX2:
-      {
-        rezultat = BIT_MA_PO_UMAX2;
-        break;
-      }
-    case RANG_UMAX2:
-      {
-        rezultat = BIT_MA_UMAX2;
-        break;
-      }
-    case RANG_OTKL_AVR:
-      {
-        rezultat = BIT_MA_OTKL_AVR;
-        break;
-      }
-    case RANG_SBROS_BLOCK_AVR:
-      {
-        rezultat = BIT_MA_SBROS_BLOCK_AVR;
-        break;
-      }
-    case RANG_STAT_BLOCK_AVR_1:
-      {
-        rezultat = BIT_MA_STAT_BLOCK_AVR_1;
-        break;
-      }
-    case RANG_STAT_BLOCK_AVR_2:
-      {
-        rezultat = BIT_MA_STAT_BLOCK_AVR_2;
-        break;
-      }
-    case RANG_OZT_AVR_1:
-      {
-        rezultat = BIT_MA_OZT_AVR_1;
-        break;
-      }
-    case RANG_OZT_AVR_2:
-      {
-        rezultat = BIT_MA_OZT_AVR_2;
-        break;
-      }
-    case RANG_BLOCK_AVR:
-      {
-        rezultat = BIT_MA_BLOCK_AVR;
-        break;
-      }
-    case RANG_PO_AVR_TN1_U1_MIN:
-      {
-        rezultat = BIT_MA_PO_AVR_TN1_U1_MIN;
-        break;
-      }
-    case RANG_PO_AVR_TN1_U2_LOW_WORK:
-      {
-        rezultat = BIT_MA_PO_AVR_TN1_U2_LOW_WORK;
-        break;
-      }
-    case RANG_PO_AVR_TN2_U2_MIN:
-      {
-        rezultat = BIT_MA_PO_AVR_TN2_U2_MIN;
-        break;
-      }
-    case RANG_PO_AVR_TN2_U1_LOW_WORK:
-      {
-        rezultat = BIT_MA_PO_AVR_TN2_U1_LOW_WORK;
-        break;
-      }
-    case RANG_PO_AVR_K1:
-      {
-        rezultat = BIT_MA_PO_AVR_K1;
-        break;
-      }
-    case RANG_KOM1_ON_AVR:
-      {
-        rezultat = BIT_MA_KOM1_ON_AVR;
-        break;
-      }
-    case RANG_KOM1_OFF_AVR:
-      {
-        rezultat = BIT_MA_KOM1_OFF_AVR;
-        break;
-      }
-    case RANG_KOM3_ON_AVR:
-      {
-        rezultat = BIT_MA_KOM3_ON_AVR;
-        break;
-      }
-    case RANG_PO_AVR_K2:
-      {
-        rezultat = BIT_MA_PO_AVR_K2;
-        break;
-      }
-    case RANG_KOM2_ON_AVR:
-      {
-        rezultat = BIT_MA_KOM2_ON_AVR;
-        break;
-      }
-    case RANG_KOM2_OFF_AVR:
-      {
-        rezultat = BIT_MA_KOM2_OFF_AVR;
-        break;
-      }
-    case RANG_KOM4_ON_AVR:
-      {
-        rezultat = BIT_MA_KOM4_ON_AVR;
-        break;
-      }
     case RANG_ERROR_DELTA_U_CTRL_PHASE:
       {
         rezultat = BIT_MA_ERROR_DELTA_U_CTRL_PHASE;
@@ -1986,86 +1138,6 @@ unsigned int save_new_rang_inputs_from_gmm(unsigned int number, unsigned int num
     //Встановлюємо відповідну функцію
     switch (data)
     {
-    case BIT_MA_INPUT_DF1:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DF1_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF2:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DF2_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF3:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DF3_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF4:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DF4_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF5:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DF5_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF6:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DF6_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF7:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DF7_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF8:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DF8_IN);
-        break;
-      }
-    case BIT_MA_DT1_SET:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DT1_SET);
-        break;
-      }
-    case BIT_MA_DT1_RESET:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DT1_RESET);
-        break;
-      }
-    case BIT_MA_DT2_SET:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DT2_SET);
-        break;
-      }
-    case BIT_MA_DT2_RESET:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DT2_RESET);
-        break;
-      }
-    case BIT_MA_DT3_SET:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DT3_SET);
-        break;
-      }
-    case BIT_MA_DT3_RESET:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DT3_RESET);
-        break;
-      }
-    case BIT_MA_DT4_SET:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DT4_SET);
-        break;
-      }
-    case BIT_MA_DT4_RESET:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_DT4_RESET);
-        break;
-      }
     case BIT_MA_BLOCK_VKL_VV:
       {
         _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_VKL_VV);
@@ -2139,116 +1211,6 @@ unsigned int save_new_rang_inputs_from_gmm(unsigned int number, unsigned int num
     case BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV:
       {
         _SET_BIT(set_array_rang, RANG_INPUT_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
-        break;
-      }
-    case BIT_MA_BLOCK_MTZ1:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_MTZ1);
-        break;
-      }
-    case BIT_MA_BLOCK_MTZ2:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_MTZ2);
-        break;
-      }
-    case BIT_MA_BLOCK_USK_MTZ2:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_USK_MTZ2);
-        break;
-      }
-    case BIT_MA_BLOCK_MTZ3:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_MTZ3);
-        break;
-      }
-    case BIT_MA_BLOCK_USK_MTZ3:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_USK_MTZ3);
-        break;
-      }
-    case BIT_MA_BLOCK_MTZ4:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_MTZ4);
-        break;
-      }
-    case BIT_MA_PUSK_ZDZ_VID_DV:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_PUSK_ZDZ_VID_DV);
-        break;
-      }
-    case BIT_MA_STAT_BLK_APV:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_STAT_BLK_APV);
-        break;
-      }
-    case BIT_MA_PUSK_UROV_VID_DV:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_PUSK_UROV_VID_DV);
-        break;
-      }
-    case BIT_MA_BLOCK_ZOP:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_ZOP);
-        break;
-      }
-    case BIT_MA_BLOCK_UMIN1:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_UMIN1);
-        break;
-      }
-    case BIT_MA_BLOCK_UMIN2:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_UMIN2);
-        break;
-      }
-    case BIT_MA_START_UMIN1:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_START_UMIN1);
-        break;
-      }
-    case BIT_MA_START_UMIN2:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_START_UMIN2);
-        break;
-      }
-    case BIT_MA_BLOCK_UMAX1:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_UMAX1);
-        break;
-      }
-    case BIT_MA_BLOCK_UMAX2:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_UMAX2);
-        break;
-      }
-    case BIT_MA_OTKL_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_OTKL_AVR);
-        break;
-      }
-    case BIT_MA_SBROS_BLOCK_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_SBROS_BLOCK_AVR);
-        break;
-      }
-    case BIT_MA_STAT_BLOCK_AVR_1:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_STAT_BLOCK_AVR_1);
-        break;
-      }
-    case BIT_MA_STAT_BLOCK_AVR_2:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_STAT_BLOCK_AVR_2);
-        break;
-      }
-    case BIT_MA_OZT_AVR_1:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_OZT_AVR_1);
-        break;
-      }
-    case BIT_MA_OZT_AVR_2:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_OZT_AVR_2);
         break;
       }
     default:
@@ -3122,466 +2084,6 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
          _SET_BIT(set_array_rang, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
         break;
       }
-    case BIT_MA_BLOCK_MTZ1:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_MTZ1);
-        break;
-      }
-    case BIT_MA_BLOCK_MTZ2:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_MTZ2);
-        break;
-      }
-    case BIT_MA_BLOCK_USK_MTZ2:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_USK_MTZ2);
-        break;
-      }
-    case BIT_MA_BLOCK_MTZ3:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_MTZ3);
-        break;
-      }
-    case BIT_MA_BLOCK_USK_MTZ3:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_USK_MTZ3);
-        break;
-      }
-    case BIT_MA_BLOCK_MTZ4:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_MTZ4);
-        break;
-      }
-    case BIT_MA_SECTOR_VPERED_MTZN1:
-      {
-        _SET_BIT(set_array_rang, RANG_SECTOR_VPERED_MTZN1);
-        break;
-      }
-    case BIT_MA_SECTOR_NAZAD_MTZN1:
-      {
-        _SET_BIT(set_array_rang, RANG_SECTOR_NAZAD_MTZN1);
-        break;
-      }
-    case BIT_MA_PO_MTZ1:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZ1);
-        break;
-      }
-    case BIT_MA_PO_MTZN1_VPERED:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZN1_VPERED);
-        break;
-      }
-    case BIT_MA_PO_MTZN1_NAZAD:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZN1_NAZAD);
-        break;
-      }
-    case BIT_MA_PO_U_MTZPN1:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_U_MTZPN1);
-        break;
-      }
-    case BIT_MA_PO_MTZPN1:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZPN1);
-        break;
-      }
-    case BIT_MA_MTZ1:
-      {
-        _SET_BIT(set_array_rang, RANG_MTZ1);
-        break;
-      }
-    case BIT_MA_SECTOR_VPERED_MTZN2:
-      {
-        _SET_BIT(set_array_rang, RANG_SECTOR_VPERED_MTZN2);
-        break;
-      }
-    case BIT_MA_SECTOR_NAZAD_MTZN2:
-      {
-        _SET_BIT(set_array_rang, RANG_SECTOR_NAZAD_MTZN2);
-        break;
-      }
-    case BIT_MA_PO_MTZ2:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZ2);
-        break;
-      }
-    case BIT_MA_PO_MTZN2_VPERED:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZN2_VPERED);
-        break;
-      }
-    case BIT_MA_PO_MTZN2_NAZAD:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZN2_NAZAD);
-        break;
-      }
-    case BIT_MA_PO_U_MTZPN2:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_U_MTZPN2);
-        break;
-      }
-    case BIT_MA_PO_MTZPN2:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZPN2);
-        break;
-      }
-    case BIT_MA_MTZ2:
-      {
-        _SET_BIT(set_array_rang, RANG_MTZ2);
-        break;
-      }
-    case BIT_MA_SECTOR_VPERED_MTZN3:
-      {
-        _SET_BIT(set_array_rang, RANG_SECTOR_VPERED_MTZN3);
-        break;
-      }
-    case BIT_MA_SECTOR_NAZAD_MTZN3:
-      {
-        _SET_BIT(set_array_rang, RANG_SECTOR_NAZAD_MTZN3);
-        break;
-      }
-    case BIT_MA_PO_MTZ3:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZ3);
-        break;
-      }
-    case BIT_MA_PO_MTZN3_VPERED:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZN3_VPERED);
-        break;
-      }
-    case BIT_MA_PO_MTZN3_NAZAD:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZN3_NAZAD);
-        break;
-      }
-    case BIT_MA_PO_U_MTZPN3:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_U_MTZPN3);
-        break;
-      }
-    case BIT_MA_PO_MTZPN3:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZPN3);
-        break;
-      }
-    case BIT_MA_MTZ3:
-      {
-        _SET_BIT(set_array_rang, RANG_MTZ3);
-        break;
-      }
-    case BIT_MA_SECTOR_VPERED_MTZN4:
-      {
-        _SET_BIT(set_array_rang, RANG_SECTOR_VPERED_MTZN4);
-        break;
-      }
-    case BIT_MA_SECTOR_NAZAD_MTZN4:
-      {
-        _SET_BIT(set_array_rang, RANG_SECTOR_NAZAD_MTZN4);
-        break;
-      }
-    case BIT_MA_PO_MTZ4:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZ4);
-        break;
-      }
-    case BIT_MA_PO_MTZN4_VPERED:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZN4_VPERED);
-        break;
-      }
-    case BIT_MA_PO_MTZN4_NAZAD:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZN4_NAZAD);
-        break;
-      }
-    case BIT_MA_PO_U_MTZPN4:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_U_MTZPN4);
-        break;
-      }
-    case BIT_MA_PO_MTZPN4:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_MTZPN4);
-        break;
-      }
-    case BIT_MA_MTZ4:
-      {
-        _SET_BIT(set_array_rang, RANG_MTZ4);
-        break;
-      }
-    case BIT_MA_PO_BLOCK_U_MTZN:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_BLOCK_U_MTZN);
-        break;
-      }
-    case BIT_MA_NCN_MTZ:
-      {
-        _SET_BIT(set_array_rang, RANG_NCN_MTZ);
-        break;
-      }
-    case BIT_MA_PUSK_ZDZ_VID_DV:
-      {
-        _SET_BIT(set_array_rang, RANG_PUSK_ZDZ_VID_DV);
-        break;
-      }
-    case BIT_MA_ZDZ:
-      {
-        _SET_BIT(set_array_rang, RANG_ZDZ);
-        break;
-      }
-    case BIT_MA_STAT_BLK_APV:
-      {
-        _SET_BIT(set_array_rang, RANG_STAT_BLK_APV);
-        break;
-      }
-    case BIT_MA_APV:
-      {
-        _SET_BIT(set_array_rang, RANG_APV1);
-        break;
-      }
-    case BIT_MA_APV2:
-      {
-        _SET_BIT(set_array_rang, RANG_APV2);
-        break;
-      }
-    case BIT_MA_APV3:
-      {
-        _SET_BIT(set_array_rang, RANG_APV3);
-        break;
-      }
-    case BIT_MA_APV4:
-      {
-        _SET_BIT(set_array_rang, RANG_APV4);
-        break;
-      }
-    case BIT_MA_APV_WORK:
-      {
-        _SET_BIT(set_array_rang, RANG_APV_WORK);
-        break;
-      }
-    case BIT_MA_PUSK_UROV_VID_DV:
-      {
-        _SET_BIT(set_array_rang, RANG_PUSK_UROV_VID_DV);
-        break;
-      }
-    case BIT_MA_PO_UROV:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_UROV);
-        break;
-      }
-    case BIT_MA_UROV1:
-      {
-        _SET_BIT(set_array_rang, RANG_UROV1);
-        break;
-      }
-    case BIT_MA_UROV2:
-      {
-        _SET_BIT(set_array_rang,RANG_UROV2);
-        break;
-      }
-    case BIT_MA_BLOCK_ZOP:
-      {
-        _SET_BIT(set_array_rang,RANG_BLOCK_ZOP);
-        break;
-      }
-    case BIT_MA_PO_ZOP:
-      {
-        _SET_BIT(set_array_rang,RANG_PO_ZOP);
-        break;
-      }
-    case BIT_MA_ZOP:
-      {
-        _SET_BIT(set_array_rang,RANG_ZOP);
-        break;
-      }
-    case BIT_MA_BLOCK_UMIN1:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_UMIN1);
-        break;
-      }
-    case BIT_MA_PO_UBLK_UMIN1:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_UBLK_UMIN1);
-        break;
-      }
-    case BIT_MA_PO_IBLK_UMIN1:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_IBLK_UMIN1);
-        break;
-      }
-    case BIT_MA_UMIN1:
-      {
-        _SET_BIT(set_array_rang, RANG_UMIN1);
-        break;
-      }
-    case BIT_MA_PO_UMIN1:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_UMIN1);
-        break;
-      }
-    case BIT_MA_BLOCK_UMIN2:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_UMIN2);
-        break;
-      }
-    case BIT_MA_UMIN2:
-      {
-        _SET_BIT(set_array_rang, RANG_UMIN2);
-        break;
-      }
-    case BIT_MA_PO_UMIN2:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_UMIN2);
-        break;
-      }
-    case BIT_MA_START_UMIN1:
-      {
-        _SET_BIT(set_array_rang, RANG_START_UMIN1);
-        break;
-      }
-    case BIT_MA_START_UMIN2:
-      {
-        _SET_BIT(set_array_rang, RANG_START_UMIN2);
-        break;
-      }
-    case BIT_MA_PO_UBLK_UMIN2:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_UBLK_UMIN2);
-        break;
-      }
-    case BIT_MA_PO_IBLK_UMIN2:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_IBLK_UMIN2);
-        break;
-      }
-    case BIT_MA_BLOCK_UMAX1:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_UMAX1);
-        break;
-      }
-    case BIT_MA_PO_UMAX1:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_UMAX1);
-        break;
-      }
-    case BIT_MA_UMAX1:
-      {
-        _SET_BIT(set_array_rang, RANG_UMAX1);
-        break;
-      }
-    case BIT_MA_BLOCK_UMAX2:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_UMAX2);
-        break;
-      }
-    case BIT_MA_PO_UMAX2:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_UMAX2);
-        break;
-      }
-    case BIT_MA_UMAX2:
-      {
-        _SET_BIT(set_array_rang, RANG_UMAX2);
-        break;
-      }
-    case BIT_MA_OTKL_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_OTKL_AVR);
-        break;
-      }
-    case BIT_MA_SBROS_BLOCK_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_SBROS_BLOCK_AVR);
-        break;
-      }
-    case BIT_MA_STAT_BLOCK_AVR_1:
-      {
-        _SET_BIT(set_array_rang, RANG_STAT_BLOCK_AVR_1);
-        break;
-      }
-    case BIT_MA_STAT_BLOCK_AVR_2:
-      {
-        _SET_BIT(set_array_rang, RANG_STAT_BLOCK_AVR_2);
-        break;
-      }
-    case BIT_MA_PO_AVR_TN1_U1_MIN:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_AVR_TN1_U1_MIN);
-        break;
-      }
-    case BIT_MA_PO_AVR_TN1_U2_LOW_WORK:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_AVR_TN1_U2_LOW_WORK);
-        break;
-      }
-    case BIT_MA_PO_AVR_TN2_U2_MIN:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_AVR_TN2_U2_MIN);
-        break;
-      }
-    case BIT_MA_PO_AVR_TN2_U1_LOW_WORK:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_AVR_TN2_U1_LOW_WORK);
-        break;
-      }
-    case BIT_MA_BLOCK_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_BLOCK_AVR);
-        break;
-      }
-    case BIT_MA_OZT_AVR_1:
-      {
-        _SET_BIT(set_array_rang, RANG_OZT_AVR_1);
-        break;
-      }
-    case BIT_MA_OZT_AVR_2:
-      {
-        _SET_BIT(set_array_rang, RANG_OZT_AVR_2);
-        break;
-      }
-    case BIT_MA_PO_AVR_K1:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_AVR_K1);
-        break;
-      }
-    case BIT_MA_KOM1_ON_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_KOM1_ON_AVR);
-        break;
-      }
-    case BIT_MA_KOM1_OFF_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_KOM1_OFF_AVR);
-        break;
-      }
-    case BIT_MA_KOM3_ON_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_KOM3_ON_AVR);
-        break;
-      }
-    case BIT_MA_PO_AVR_K2:
-      {
-        _SET_BIT(set_array_rang, RANG_PO_AVR_K2);
-        break;
-      }
-    case BIT_MA_KOM2_ON_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_KOM2_ON_AVR);
-        break;
-      }
-    case BIT_MA_KOM2_OFF_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_KOM2_OFF_AVR);
-        break;
-      }
-    case BIT_MA_KOM4_ON_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_KOM4_ON_AVR);
-        break;
-      }
     case BIT_MA_ERROR_DELTA_U_CTRL_PHASE:
       {
         _SET_BIT(set_array_rang, RANG_ERROR_DELTA_U_CTRL_PHASE);
@@ -3741,86 +2243,6 @@ unsigned int save_new_rang_buttons_from_gmm(unsigned int number, unsigned int nu
     //Встановлюємо відповідну функцію
     switch (data)
     {
-    case BIT_MA_INPUT_DF1:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DF1_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF2:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DF2_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF3:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DF3_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF4:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DF4_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF5:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DF5_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF6:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DF6_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF7:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DF7_IN);
-        break;
-      }
-    case BIT_MA_INPUT_DF8:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DF8_IN);
-        break;
-      }
-    case BIT_MA_DT1_SET:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DT1_SET);
-        break;
-      }
-    case BIT_MA_DT1_RESET:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DT1_RESET);
-        break;
-      }
-    case BIT_MA_DT2_SET:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DT2_SET);
-        break;
-      }
-    case BIT_MA_DT2_RESET:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DT2_RESET);
-        break;
-      }
-    case BIT_MA_DT3_SET:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DT3_SET);
-        break;
-      }
-    case BIT_MA_DT3_RESET:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DT3_RESET);
-        break;
-      }
-    case BIT_MA_DT4_SET:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DT4_SET);
-        break;
-      }
-    case BIT_MA_DT4_RESET:
-      {
-        _SET_BIT(set_array_rang,RANG_BUTTON_DT4_RESET);
-        break;
-      }
     case BIT_MA_RESET_LEDS:
       {
         _SET_BIT(set_array_rang,RANG_BUTTON_RESET_LEDS);
@@ -3849,16 +2271,6 @@ unsigned int save_new_rang_buttons_from_gmm(unsigned int number, unsigned int nu
     case BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV:
       {
         _SET_BIT(set_array_rang,RANG_BUTTON_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
-        break;
-      }
-    case BIT_MA_OTKL_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_BUTTON_OTKL_AVR);
-        break;
-      }
-    case BIT_MA_SBROS_BLOCK_AVR:
-      {
-        _SET_BIT(set_array_rang, RANG_BUTTON_SBROS_BLOCK_AVR);
         break;
       }
     default:
@@ -4367,273 +2779,273 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
       }
     }
   }
-  else if ((address_data >= M_ADDRESS_FIRST_MEASUREMENTS_DR) && (address_data <= M_ADDRESS_LAST_MEASUREMENTS_DR))
-  {
-    //Вимірювання, які зафіксовані під час роботи дискретного реєстратора
-    if ((type_interface != USB_RECUEST) && (type_interface != RS485_RECUEST))
-    {
-      //Теоретично такого бути не мало б ніколи
-      error = ERROR_SLAVE_DEVICE_FAILURE;
-    }
-    else if (
-             ((type_interface == USB_RECUEST  ) && (number_record_of_dr_for_USB   == 0xffff)) ||
-             ((type_interface == RS485_RECUEST) && (number_record_of_dr_for_RS485 == 0xffff))
-            )
-    {
-      //Не подано попередньокоманди вичитування відповідного запису дискретного реєстратора
-      error = ERROR_ILLEGAL_DATA_ADDRESS;
-    }
-    else if (
-             ((clean_rejestrators & CLEAN_DR) != 0) ||
-             (
-              ((type_interface == USB_RECUEST  ) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_DR_USB  ) != 0)) ||
-              ((type_interface == RS485_RECUEST) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_DR_RS485) != 0))
-             ) 
-            )
-    {
-      //Зараз іде зчитування для інтерфейсу запису дискретного реєстратора, або очистка його, тому ця операція є тимчасово недоступною
-      error = ERROR_SLAVE_DEVICE_BUSY;
-    }
-    else
-    {
-      //Можна читати дані
-      int number_block, offset;
-      unsigned char *point_to_buffer;
-      number_block = (address_data - M_ADDRESS_FIRST_MEASUREMENTS_DR) / MEASUREMENTS_DR_WIDTH;
-      offset = (address_data - M_ADDRESS_FIRST_MEASUREMENTS_DR) - number_block*MEASUREMENTS_DR_WIDTH;
-      if (type_interface == USB_RECUEST) point_to_buffer = buffer_for_USB_read_record_dr;
-      else point_to_buffer = buffer_for_RS485_read_record_dr;
-      
-      if (
-          number_block < (
-                          (*(point_to_buffer + FIRST_INDEX_NUMBER_MAX_PHASE_DR  )) + 
-                          (*(point_to_buffer + FIRST_INDEX_NUMBER_MIN_U_DR      )) + 
-                          (*(point_to_buffer + FIRST_INDEX_NUMBER_MAX_U_DR      )) + 
-                          (*(point_to_buffer + FIRST_INDEX_NUMBER_MAX_ZOP_DR    ))
-                         )
-         )
-      {  
-        unsigned int value, index;
-        
-        switch (offset)
-        {
-        case DR_OFFSET_MEASUREMENT_IA_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 0)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 2;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_IB_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 1)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 2;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_IC_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 2)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 2;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_I1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 4)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 2;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_I2:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 3)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 2;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UAB_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 11)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UBC_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 12)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UCA_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 13)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UA_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 5)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UB_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 6)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UC_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 7)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UAB_2:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 14)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UBC_2:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 15)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UCA_2:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 16)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UA_2:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 8)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UB_2:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 9)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_MEASUREMENT_UC_2:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 10)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value >> 3;
-            break;
-          }
-        case DR_OFFSET_FREQUENCY_1:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 17)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value / 10;
-            break;
-          }
-        case DR_OFFSET_FREQUENCY_2:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 18)*sizeof(unsigned int);
-            value = *((unsigned int *)(point_to_buffer + index));
-            
-            temp_value = value / 10;
-            break;
-          }
-        case DR_OFFSET_LABEL_TIME_LSW:
-        case DR_OFFSET_LABEL_TIME_MSW:
-        case DR_OFFSET_LABEL_PROTECT:
-          {
-            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 19)*sizeof(unsigned int);
-            
-            if (offset == DR_OFFSET_LABEL_TIME_LSW)
-            {
-              temp_value = (*(point_to_buffer + index + 0)) | ((*(point_to_buffer + index + 1)) << 8 );
-            }
-            else if (offset ==DR_OFFSET_LABEL_TIME_MSW)
-            {
-              temp_value =  *(point_to_buffer + index + 2);
-            }
-            else
-            {
-              value = *(point_to_buffer + index + 3);
-              switch (value)
-              {
-              case IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE:
-                {
-                  temp_value = BLOCK_PROTECTION_MTZ;
-                  break;
-                }
-              case IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE:
-                {
-                  temp_value = BLOCK_PROTECTION_UMIN;
-                  break;
-                }
-              case IDENTIFIER_BIT_ARRAY_MAX_VOLTAGE:
-                {
-                  temp_value = BLOCK_PROTECTION_UMAX;
-                  break;
-                }
-              case IDENTIFIER_BIT_ARRAY_MAX_CURRENT_ZOP:
-                {
-                  temp_value = BLOCK_PROTECTION_ZOP;
-                  break;
-                }
-              default:
-                {
-                  //Якщо немає помилок, то сюди б програма не мала заходити
-                  temp_value = 0;
-                  break;
-                }
-                  
-              }
-            }
-            
-            break;
-          }
-        default:
-          {
-            temp_value = 0;
-            break;
-          }
-        }
-      }
-      else
-      {
-        if ((offset == DR_OFFSET_LABEL_TIME_LSW) || (offset == DR_OFFSET_LABEL_TIME_MSW)) temp_value = 0xffff;
-        else temp_value = 0;
-      }
-    }
-  }
+//  else if ((address_data >= M_ADDRESS_FIRST_MEASUREMENTS_DR) && (address_data <= M_ADDRESS_LAST_MEASUREMENTS_DR))
+//  {
+//    //Вимірювання, які зафіксовані під час роботи дискретного реєстратора
+//    if ((type_interface != USB_RECUEST) && (type_interface != RS485_RECUEST))
+//    {
+//      //Теоретично такого бути не мало б ніколи
+//      error = ERROR_SLAVE_DEVICE_FAILURE;
+//    }
+//    else if (
+//             ((type_interface == USB_RECUEST  ) && (number_record_of_dr_for_USB   == 0xffff)) ||
+//             ((type_interface == RS485_RECUEST) && (number_record_of_dr_for_RS485 == 0xffff))
+//            )
+//    {
+//      //Не подано попередньокоманди вичитування відповідного запису дискретного реєстратора
+//      error = ERROR_ILLEGAL_DATA_ADDRESS;
+//    }
+//    else if (
+//             ((clean_rejestrators & CLEAN_DR) != 0) ||
+//             (
+//              ((type_interface == USB_RECUEST  ) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_DR_USB  ) != 0)) ||
+//              ((type_interface == RS485_RECUEST) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_DR_RS485) != 0))
+//             ) 
+//            )
+//    {
+//      //Зараз іде зчитування для інтерфейсу запису дискретного реєстратора, або очистка його, тому ця операція є тимчасово недоступною
+//      error = ERROR_SLAVE_DEVICE_BUSY;
+//    }
+//    else
+//    {
+//      //Можна читати дані
+//      int number_block, offset;
+//      unsigned char *point_to_buffer;
+//      number_block = (address_data - M_ADDRESS_FIRST_MEASUREMENTS_DR) / MEASUREMENTS_DR_WIDTH;
+//      offset = (address_data - M_ADDRESS_FIRST_MEASUREMENTS_DR) - number_block*MEASUREMENTS_DR_WIDTH;
+//      if (type_interface == USB_RECUEST) point_to_buffer = buffer_for_USB_read_record_dr;
+//      else point_to_buffer = buffer_for_RS485_read_record_dr;
+//      
+//      if (
+//          number_block < (
+//                          (*(point_to_buffer + FIRST_INDEX_NUMBER_MAX_PHASE_DR  )) + 
+//                          (*(point_to_buffer + FIRST_INDEX_NUMBER_MIN_U_DR      )) + 
+//                          (*(point_to_buffer + FIRST_INDEX_NUMBER_MAX_U_DR      )) + 
+//                          (*(point_to_buffer + FIRST_INDEX_NUMBER_MAX_ZOP_DR    ))
+//                         )
+//         )
+//      {  
+//        unsigned int value, index;
+//        
+//        switch (offset)
+//        {
+//        case DR_OFFSET_MEASUREMENT_IA_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 0)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 2;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_IB_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 1)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 2;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_IC_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 2)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 2;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_I1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 4)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 2;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_I2:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 3)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 2;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UAB_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 11)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UBC_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 12)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UCA_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 13)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UA_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 5)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UB_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 6)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UC_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 7)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UAB_2:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 14)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UBC_2:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 15)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UCA_2:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 16)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UA_2:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 8)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UB_2:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 9)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_MEASUREMENT_UC_2:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 10)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value >> 3;
+//            break;
+//          }
+//        case DR_OFFSET_FREQUENCY_1:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 17)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value / 10;
+//            break;
+//          }
+//        case DR_OFFSET_FREQUENCY_2:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 18)*sizeof(unsigned int);
+//            value = *((unsigned int *)(point_to_buffer + index));
+//            
+//            temp_value = value / 10;
+//            break;
+//          }
+//        case DR_OFFSET_LABEL_TIME_LSW:
+//        case DR_OFFSET_LABEL_TIME_MSW:
+//        case DR_OFFSET_LABEL_PROTECT:
+//          {
+//            index = FIRST_INDEX_FIRST_BLOCK_DR + (number_block*SIZE_ARRAY_FIX_MAX_MEASUREMENTS + 19)*sizeof(unsigned int);
+//            
+//            if (offset == DR_OFFSET_LABEL_TIME_LSW)
+//            {
+//              temp_value = (*(point_to_buffer + index + 0)) | ((*(point_to_buffer + index + 1)) << 8 );
+//            }
+//            else if (offset ==DR_OFFSET_LABEL_TIME_MSW)
+//            {
+//              temp_value =  *(point_to_buffer + index + 2);
+//            }
+//            else
+//            {
+//              value = *(point_to_buffer + index + 3);
+//              switch (value)
+//              {
+//              case IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE:
+//                {
+//                  temp_value = BLOCK_PROTECTION_MTZ;
+//                  break;
+//                }
+//              case IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE:
+//                {
+//                  temp_value = BLOCK_PROTECTION_UMIN;
+//                  break;
+//                }
+//              case IDENTIFIER_BIT_ARRAY_MAX_VOLTAGE:
+//                {
+//                  temp_value = BLOCK_PROTECTION_UMAX;
+//                  break;
+//                }
+//              case IDENTIFIER_BIT_ARRAY_MAX_CURRENT_ZOP:
+//                {
+//                  temp_value = BLOCK_PROTECTION_ZOP;
+//                  break;
+//                }
+//              default:
+//                {
+//                  //Якщо немає помилок, то сюди б програма не мала заходити
+//                  temp_value = 0;
+//                  break;
+//                }
+//                  
+//              }
+//            }
+//            
+//            break;
+//          }
+//        default:
+//          {
+//            temp_value = 0;
+//            break;
+//          }
+//        }
+//      }
+//      else
+//      {
+//        if ((offset == DR_OFFSET_LABEL_TIME_LSW) || (offset == DR_OFFSET_LABEL_TIME_MSW)) temp_value = 0xffff;
+//        else temp_value = 0;
+//      }
+//    }
+//  }
   else if ((address_data >= M_ADDRESS_FIRST_USER_REGISTER) && (address_data <= M_ADDRESS_LAST_USER_REGISTER))
   {
     temp_value = current_settings_interfaces.user_register[address_data - M_ADDRESS_FIRST_USER_REGISTER];
@@ -8682,10 +7094,6 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
              ||  
              (current_ekran.current_level == EKRAN_CHANGES_SIGNALS_DR        )
              ||  
-             (current_ekran.current_level == EKRAN_TITLE_MAX_VALUES          )
-             ||  
-             (current_ekran.current_level == EKRAN_MAX_VALUES                )
-             ||  
              (
               (control_tasks_dataflash & (
                                           TASK_MAMORY_PAGE_PROGRAM_THROUGH_BUFFER_DATAFLASH_FOR_DR | 
@@ -9441,96 +7849,6 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
           case (107 + NUMBER_ANALOG_CANALES):
           case (108 + NUMBER_ANALOG_CANALES):
           case (109 + NUMBER_ANALOG_CANALES):
-          case (110 + NUMBER_ANALOG_CANALES):
-          case (111 + NUMBER_ANALOG_CANALES):
-          case (112 + NUMBER_ANALOG_CANALES):
-          case (113 + NUMBER_ANALOG_CANALES):
-          case (114 + NUMBER_ANALOG_CANALES):
-          case (115 + NUMBER_ANALOG_CANALES):
-          case (116 + NUMBER_ANALOG_CANALES):
-          case (117 + NUMBER_ANALOG_CANALES):
-          case (118 + NUMBER_ANALOG_CANALES):
-          case (119 + NUMBER_ANALOG_CANALES):
-          case (120 + NUMBER_ANALOG_CANALES):
-          case (121 + NUMBER_ANALOG_CANALES):
-          case (122 + NUMBER_ANALOG_CANALES):
-          case (123 + NUMBER_ANALOG_CANALES):
-          case (124 + NUMBER_ANALOG_CANALES):
-          case (125 + NUMBER_ANALOG_CANALES):
-          case (126 + NUMBER_ANALOG_CANALES):
-          case (127 + NUMBER_ANALOG_CANALES):
-          case (128 + NUMBER_ANALOG_CANALES):
-          case (129 + NUMBER_ANALOG_CANALES):
-          case (130 + NUMBER_ANALOG_CANALES):
-          case (131 + NUMBER_ANALOG_CANALES):
-          case (132 + NUMBER_ANALOG_CANALES):
-          case (133 + NUMBER_ANALOG_CANALES):
-          case (134 + NUMBER_ANALOG_CANALES):
-          case (135 + NUMBER_ANALOG_CANALES):
-          case (136 + NUMBER_ANALOG_CANALES):
-          case (137 + NUMBER_ANALOG_CANALES):
-          case (138 + NUMBER_ANALOG_CANALES):
-          case (139 + NUMBER_ANALOG_CANALES):
-          case (140 + NUMBER_ANALOG_CANALES):
-          case (141 + NUMBER_ANALOG_CANALES):
-          case (142 + NUMBER_ANALOG_CANALES):
-          case (143 + NUMBER_ANALOG_CANALES):
-          case (144 + NUMBER_ANALOG_CANALES):
-          case (145 + NUMBER_ANALOG_CANALES):
-          case (146 + NUMBER_ANALOG_CANALES):
-          case (147 + NUMBER_ANALOG_CANALES):
-          case (148 + NUMBER_ANALOG_CANALES):
-          case (149 + NUMBER_ANALOG_CANALES):
-          case (150 + NUMBER_ANALOG_CANALES):
-          case (151 + NUMBER_ANALOG_CANALES):
-          case (152 + NUMBER_ANALOG_CANALES):
-          case (153 + NUMBER_ANALOG_CANALES):
-          case (154 + NUMBER_ANALOG_CANALES):
-          case (155 + NUMBER_ANALOG_CANALES):
-          case (156 + NUMBER_ANALOG_CANALES):
-          case (157 + NUMBER_ANALOG_CANALES):
-          case (158 + NUMBER_ANALOG_CANALES):
-          case (159 + NUMBER_ANALOG_CANALES):
-          case (160 + NUMBER_ANALOG_CANALES):
-          case (161 + NUMBER_ANALOG_CANALES):
-          case (162 + NUMBER_ANALOG_CANALES):
-          case (163 + NUMBER_ANALOG_CANALES):
-          case (164 + NUMBER_ANALOG_CANALES):
-          case (165 + NUMBER_ANALOG_CANALES):
-          case (166 + NUMBER_ANALOG_CANALES):
-          case (167 + NUMBER_ANALOG_CANALES):
-          case (168 + NUMBER_ANALOG_CANALES):
-          case (169 + NUMBER_ANALOG_CANALES):
-          case (170 + NUMBER_ANALOG_CANALES):
-          case (171 + NUMBER_ANALOG_CANALES):
-          case (172 + NUMBER_ANALOG_CANALES):
-          case (173 + NUMBER_ANALOG_CANALES):
-          case (174 + NUMBER_ANALOG_CANALES):
-          case (175 + NUMBER_ANALOG_CANALES):
-          case (176 + NUMBER_ANALOG_CANALES):
-          case (177 + NUMBER_ANALOG_CANALES):
-          case (178 + NUMBER_ANALOG_CANALES):
-          case (179 + NUMBER_ANALOG_CANALES):
-          case (180 + NUMBER_ANALOG_CANALES):
-          case (181 + NUMBER_ANALOG_CANALES):
-          case (182 + NUMBER_ANALOG_CANALES):
-          case (183 + NUMBER_ANALOG_CANALES):
-          case (184 + NUMBER_ANALOG_CANALES):
-          case (185 + NUMBER_ANALOG_CANALES):
-          case (186 + NUMBER_ANALOG_CANALES):
-          case (187 + NUMBER_ANALOG_CANALES):
-          case (188 + NUMBER_ANALOG_CANALES):
-          case (189 + NUMBER_ANALOG_CANALES):
-          case (190 + NUMBER_ANALOG_CANALES):
-          case (191 + NUMBER_ANALOG_CANALES):
-          case (192 + NUMBER_ANALOG_CANALES):
-          case (193 + NUMBER_ANALOG_CANALES):
-          case (194 + NUMBER_ANALOG_CANALES):
-          case (195 + NUMBER_ANALOG_CANALES):
-          case (196 + NUMBER_ANALOG_CANALES):
-          case (197 + NUMBER_ANALOG_CANALES):
-          case (198 + NUMBER_ANALOG_CANALES):
-          case (199 + NUMBER_ANALOG_CANALES):
             {
               if (length <= 19)
               {
@@ -10128,96 +8446,6 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
           case 107:
           case 108:
           case 109:
-          case 110:
-          case 111:
-          case 112:
-          case 113:
-          case 114:
-          case 115:
-          case 116:
-          case 117:
-          case 118:
-          case 119:
-          case 120:
-          case 121:
-          case 122:
-          case 123:
-          case 124:
-          case 125:
-          case 126:
-          case 127:
-          case 128:
-          case 129:
-          case 130:
-          case 131:
-          case 132:
-          case 133:
-          case 134:
-          case 135:
-          case 136:
-          case 137:
-          case 138:
-          case 139:
-          case 140:
-          case 141:
-          case 142:
-          case 143:
-          case 144:
-          case 145:
-          case 146:
-          case 147:
-          case 148:
-          case 149:
-          case 150:
-          case 151:
-          case 152:
-          case 153:
-          case 154:
-          case 155:
-          case 156:
-          case 157:
-          case 158:
-          case 159:
-          case 160:
-          case 161:
-          case 162:
-          case 163:
-          case 164:
-          case 165:
-          case 166:
-          case 167:
-          case 168:
-          case 169:
-          case 170:
-          case 171:
-          case 172:
-          case 173:
-          case 174:
-          case 175:
-          case 176:
-          case 177:
-          case 178:
-          case 179:
-          case 180:
-          case 181:
-          case 182:
-          case 183:
-          case 184:
-          case 185:
-          case 186:
-          case 187:
-          case 188:
-          case 189:
-          case 190:
-          case 191:
-          case 192:
-          case 193:
-          case 194:
-          case 195:
-          case 196:
-          case 197:
-          case 198:
-          case 199:
             {
               if (length <= 19)
               {
@@ -10976,25 +9204,7 @@ void modbus_rountines(unsigned int type_interface)
               Тут ми використовуємо каонстанти активації функцій з допомогою ф-кнопок, бо механізм обробки однаковий що активацшя
               функції з ф-кнопкт, що активація функції з інтерейсу
               */
-                   if  (add_data == BIT_MA_OTKL_AVR                         ) activation_function_from_interface |= 1 << RANG_BUTTON_OTKL_AVR;                          /*Відключення АВР*/
-              else if  (add_data == BIT_MA_SBROS_BLOCK_AVR                  ) activation_function_from_interface |= 1 << RANG_BUTTON_SBROS_BLOCK_AVR;                   /*Скидання блокувння АВР*/
-              else if  (add_data == BIT_MA_INPUT_DF1                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DF1_IN;                            /*ОФ1*/
-              else if  (add_data == BIT_MA_INPUT_DF2                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DF2_IN;                            /*ОФ2*/
-              else if  (add_data == BIT_MA_INPUT_DF3                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DF3_IN;                            /*ОФ3*/
-              else if  (add_data == BIT_MA_INPUT_DF4                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DF4_IN;                            /*ОФ4*/
-              else if  (add_data == BIT_MA_INPUT_DF5                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DF5_IN;                            /*ОФ5*/
-              else if  (add_data == BIT_MA_INPUT_DF6                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DF6_IN;                            /*ОФ6*/
-              else if  (add_data == BIT_MA_INPUT_DF7                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DF7_IN;                            /*ОФ7*/
-              else if  (add_data == BIT_MA_INPUT_DF8                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DF8_IN;                            /*ОФ8*/
-              else if  (add_data == BIT_MA_DT1_SET                          ) activation_function_from_interface |= 1 << RANG_BUTTON_DT1_SET;                           /*Вст. ОТ1*/
-              else if  (add_data == BIT_MA_DT1_RESET                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DT1_RESET;                         /*Скид. ОТ1*/
-              else if  (add_data == BIT_MA_DT2_SET                          ) activation_function_from_interface |= 1 << RANG_BUTTON_DT2_SET;                           /*Вст. ОТ2*/
-              else if  (add_data == BIT_MA_DT2_RESET                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DT2_RESET;                         /*Скид. ОТ2*/
-              else if  (add_data == BIT_MA_DT3_SET                          ) activation_function_from_interface |= 1 << RANG_BUTTON_DT3_SET;                           /*Вст. ОТ3*/
-              else if  (add_data == BIT_MA_DT3_RESET                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DT3_RESET;                         /*Скид. ОТ3*/
-              else if  (add_data == BIT_MA_DT4_SET                          ) activation_function_from_interface |= 1 << RANG_BUTTON_DT4_SET;                           /*Вст. ОТ4*/
-              else if  (add_data == BIT_MA_DT4_RESET                        ) activation_function_from_interface |= 1 << RANG_BUTTON_DT4_RESET;                         /*Скид. ОТ4*/
-              else if  (add_data == BIT_MA_VKL_VV                           ) activation_function_from_interface |= 1 << RANG_BUTTON_VKL_VV;                            /*Вкл.  виключателя*/
+                   if  (add_data == BIT_MA_VKL_VV                           ) activation_function_from_interface |= 1 << RANG_BUTTON_VKL_VV;                            /*Вкл.  виключателя*/
               else if  (add_data == BIT_MA_OTKL_VV                          ) activation_function_from_interface |= 1 << RANG_BUTTON_OTKL_VV;                           /*Викл. виключателя*/
               else if  (add_data == BIT_MA_RESET_LEDS                       ) activation_function_from_interface |= 1 << RANG_BUTTON_RESET_LEDS;                        /*Очищення індикації*/
               else if  (add_data == BIT_MA_RESET_RELES                      ) activation_function_from_interface |= 1 << RANG_BUTTON_RESET_RELES;                       /*Скидання реле*/
@@ -11639,43 +9849,7 @@ void modbus_rountines(unsigned int type_interface)
                 number_activated_function = add_data + i;
                 if (value_of_bit != 0)
                 {
-                  if       (number_activated_function == BIT_MA_OTKL_AVR        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_OTKL_AVR;                      /*Відключення АВР*/
-                  else if  (number_activated_function == BIT_MA_SBROS_BLOCK_AVR ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_SBROS_BLOCK_AVR;               /*Скидання блокувння АВР*/
-                  else if  (number_activated_function == BIT_MA_INPUT_DF1                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DF1_IN;                        /*ОФ1*/
-                  else if  (number_activated_function == BIT_MA_INPUT_DF2                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DF2_IN;                        /*ОФ2*/
-                  else if  (number_activated_function == BIT_MA_INPUT_DF3                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DF3_IN;                        /*ОФ3*/
-                  else if  (number_activated_function == BIT_MA_INPUT_DF4                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DF4_IN;                        /*ОФ4*/
-                  else if  (number_activated_function == BIT_MA_INPUT_DF5                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DF5_IN;                        /*ОФ5*/
-                  else if  (number_activated_function == BIT_MA_INPUT_DF6                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DF6_IN;                        /*ОФ6*/
-                  else if  (number_activated_function == BIT_MA_INPUT_DF7                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DF7_IN;                        /*ОФ7*/
-                  else if  (number_activated_function == BIT_MA_INPUT_DF8                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DF8_IN;                        /*ОФ8*/
-                  else if  (number_activated_function == BIT_MA_DT1_SET                          ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DT1_SET;                       /*Встановл. опред. тр. 1*/
-                  else if  (number_activated_function == BIT_MA_DT1_RESET                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DT1_RESET;                     /*Скид. опред. тр. 1*/
-                  else if  (number_activated_function == BIT_MA_DT2_SET                          ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DT2_SET;                       /*Встановл. опред. тр. 2*/
-                  else if  (number_activated_function == BIT_MA_DT2_RESET                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DT2_RESET;                     /*Скид. опред. тр. 2*/
-                  else if  (number_activated_function == BIT_MA_DT3_SET                          ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DT3_SET;                       /*Встановл. опред. тр. 3*/
-                  else if  (number_activated_function == BIT_MA_DT3_RESET                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DT3_RESET;                     /*Скид. опред. тр. 3*/
-                  else if  (number_activated_function == BIT_MA_DT4_SET                          ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DT4_SET;                       /*Встановл. опред. тр. 4*/
-                  else if  (number_activated_function == BIT_MA_DT4_RESET                        ) 
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_DT4_RESET;                     /*Скид. опред. тр. 4*/
-                  else if  (number_activated_function == BIT_MA_VKL_VV                           )
+                       if  (number_activated_function == BIT_MA_VKL_VV                           )
                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_VKL_VV;                        /*Вкл.  виключателя*/
                   else if  (number_activated_function == BIT_MA_OTKL_VV                          )
                     activation_function_from_interface_tmp |= 1 << RANG_BUTTON_OTKL_VV;                       /*Викл. виключателя*/

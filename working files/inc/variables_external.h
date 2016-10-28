@@ -148,12 +148,6 @@ extern unsigned int sequence_TN2;
 extern int sector_1_mtz_tznp[8];
 extern int sector_2_mtz_tznp[8];
 
-//Направлена МТЗ
-extern unsigned int sector_directional_mtz[4][3];
-extern unsigned int Uxy_bilshe_porogu[3];
-extern unsigned int Ix_bilshe_porogu[3];
-extern unsigned int temp_states_for_mtz;
-
 extern unsigned int i1_bilshe_porogu, i2_bilshe_porogu;
 
 extern unsigned int TN1_TN2;
@@ -243,7 +237,6 @@ extern volatile unsigned int changed_settings;
 extern unsigned char crc_settings;
 extern __SETTINGS current_settings_prt, current_settings,  edition_settings,current_settings_interfaces;
 extern int * const type_mtz_arr[NUMBER_LEVEL_MTZ];
-extern const unsigned int mtz_settings_prt[NUMBER_LEVEL_MTZ][MTZ_SETTINGS_LENGTH];
 extern const unsigned int mtz_tmr_const[NUMBER_LEVEL_MTZ][NUMBER_LEVEL_TMR_CONST];
 extern const unsigned int mtz_prysk_tmr_const[2][NUMBER_LEVEL_TMR_MTZ_PRYSK_CONST];
 extern const unsigned int mtz_const_menu_settings_prt[NUMBER_LEVEL_MTZ][MTZ_CONST_MENU_SETTINGS_LENGTH];
@@ -370,20 +363,6 @@ extern unsigned int number_record_of_dr_for_RS485;
 extern unsigned int part_reading_dr_from_dataflash_for_menu;
 extern unsigned int part_reading_dr_from_dataflash_for_USB;
 extern unsigned int part_reading_dr_from_dataflash_for_RS485;
-extern unsigned int state_current_monitoring;
-extern unsigned int measurements_phase_max_dr[SIZE_ARRAY_FIX_MAX_MEASUREMENTS];
-extern unsigned int measurements_U_min_dr[SIZE_ARRAY_FIX_MAX_MEASUREMENTS];    
-extern unsigned int measurements_U_max_dr[SIZE_ARRAY_FIX_MAX_MEASUREMENTS];    
-extern unsigned int measurements_ZOP_max_dr[SIZE_ARRAY_FIX_MAX_MEASUREMENTS];  
-extern unsigned int max_phase_current_dr;
-extern unsigned int min_voltage_dr;
-extern unsigned int max_voltage_dr;
-extern unsigned int number_max_phase_dr;
-extern unsigned int number_min_U_dr;
-extern unsigned int number_max_U_dr;
-extern unsigned int number_max_ZOP_dr;
-extern unsigned int type_view_max_values_dr;
-extern int index_cell_into_array_for_min_max_measurement_dr;
 
 //Реєстратор програмних помилок
 extern unsigned char crc_info_rejestrator_pr_err;
@@ -474,12 +453,6 @@ extern unsigned char info_vidkluchennja_vymykachatime[VYMKNENNJA_VID_MAX_NUMBER]
 
 extern volatile unsigned int control_word_of_watchdog;
 extern unsigned int test_watchdogs;
-
-/**************************************************************
- * Змінна використовується в функції вибору групи уставок:
- * protections.c --> setpoints_selecting()
- **************************************************************/
-extern unsigned int gr_ustavok_tmp;
 
 //Змінна глобальної помилки
 extern unsigned int total_error;

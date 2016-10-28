@@ -250,12 +250,6 @@ unsigned int sequence_TN2 = 0;
 int sector_1_mtz_tznp[8];
 int sector_2_mtz_tznp[8];
 
-//Направлена МТЗ
-unsigned int sector_directional_mtz[4][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-unsigned int Uxy_bilshe_porogu[3] = {0, 0, 0};
-unsigned int Ix_bilshe_porogu[3] = {0, 0, 0};
-unsigned int temp_states_for_mtz = 0;
-
 unsigned int i1_bilshe_porogu = 0, i2_bilshe_porogu = 0;
 
 unsigned int TN1_TN2 = 0; //0 - ТН1; 1 - ТН2
@@ -352,57 +346,6 @@ unsigned char temp_register_rtc[2];
 volatile unsigned int changed_settings = CHANGED_ETAP_NONE; 
 unsigned char crc_settings;
 __SETTINGS current_settings_prt, current_settings, edition_settings, current_settings_interfaces;
-const unsigned int mtz_settings_prt[NUMBER_LEVEL_MTZ][MTZ_SETTINGS_LENGTH] = 
-{
-  {
-    RANG_BLOCK_MTZ1, 
-    0,
-    RANG_SECTOR_VPERED_MTZN1,
-    RANG_SECTOR_NAZAD_MTZN1,
-    RANG_PO_MTZ1,
-    RANG_PO_MTZN1_VPERED,
-    RANG_PO_MTZN1_NAZAD,
-    RANG_PO_U_MTZPN1,
-    RANG_PO_MTZPN1,
-    RANG_MTZ1
-  },
-  {
-    RANG_BLOCK_MTZ2, 
-    RANG_BLOCK_USK_MTZ2,
-    RANG_SECTOR_VPERED_MTZN2,
-    RANG_SECTOR_NAZAD_MTZN2,
-    RANG_PO_MTZ2,
-    RANG_PO_MTZN2_VPERED,
-    RANG_PO_MTZN2_NAZAD,
-    RANG_PO_U_MTZPN2,
-    RANG_PO_MTZPN2,
-    RANG_MTZ2
-  },
-  {
-    RANG_BLOCK_MTZ3, 
-    RANG_BLOCK_USK_MTZ3,
-    RANG_SECTOR_VPERED_MTZN3,
-    RANG_SECTOR_NAZAD_MTZN3,
-    RANG_PO_MTZ3,
-    RANG_PO_MTZN3_VPERED,
-    RANG_PO_MTZN3_NAZAD,
-    RANG_PO_U_MTZPN3,
-    RANG_PO_MTZPN3,
-    RANG_MTZ3
-  },
-  {
-    RANG_BLOCK_MTZ4, 
-    0,
-    RANG_SECTOR_VPERED_MTZN4,
-    RANG_SECTOR_NAZAD_MTZN4,
-    RANG_PO_MTZ4,
-    RANG_PO_MTZN4_VPERED,
-    RANG_PO_MTZN4_NAZAD,
-    RANG_PO_U_MTZPN4,
-    RANG_PO_MTZPN4,
-    RANG_MTZ4
-  }
-};
 const unsigned int mtz_tmr_const[NUMBER_LEVEL_MTZ][NUMBER_LEVEL_TMR_CONST] = 
 {
   {
@@ -689,20 +632,6 @@ unsigned int number_record_of_dr_for_RS485 = 0xffff; //Це число означає, що номе
 unsigned int part_reading_dr_from_dataflash_for_menu = 0;
 unsigned int part_reading_dr_from_dataflash_for_USB = 0;
 unsigned int part_reading_dr_from_dataflash_for_RS485 = 0;
-unsigned int state_current_monitoring;
-unsigned int measurements_phase_max_dr[SIZE_ARRAY_FIX_MAX_MEASUREMENTS];        //частоти + розрахункові величини + величина типу unsigned int (найстарший байт - це мітка типу запуску, а решта байт - це мітка часу)
-unsigned int measurements_U_min_dr[SIZE_ARRAY_FIX_MAX_MEASUREMENTS];            //частоти + розрахункові величини + величина типу unsigned int (найстарший байт - це мітка типу запуску, а решта байт - це мітка часу)
-unsigned int measurements_U_max_dr[SIZE_ARRAY_FIX_MAX_MEASUREMENTS];            //частоти + розрахункові величини + величина типу unsigned int (найстарший байт - це мітка типу запуску, а решта байт - це мітка часу)
-unsigned int measurements_ZOP_max_dr[SIZE_ARRAY_FIX_MAX_MEASUREMENTS];          //частоти + розрахункові величини + величина типу unsigned int (найстарший байт - це мітка типу запуску, а решта байт - це мітка часу)
-unsigned int max_phase_current_dr;   //максимальний фазний струм
-unsigned int min_voltage_dr;  //мінімальнва фазна/лінійна напруга
-unsigned int max_voltage_dr;  //максимальна фазна/лінійна напруга
-unsigned int number_max_phase_dr;
-unsigned int number_min_U_dr;
-unsigned int number_max_U_dr;
-unsigned int number_max_ZOP_dr;
-unsigned int type_view_max_values_dr;
-int index_cell_into_array_for_min_max_measurement_dr;
 
 //Реєстратор програмних помилок
 unsigned char crc_info_rejestrator_pr_err;
@@ -788,12 +717,6 @@ unsigned char info_vidkluchennja_vymykachatime[VYMKNENNJA_VID_MAX_NUMBER][7];
 
 volatile unsigned int control_word_of_watchdog = 0;
 unsigned int test_watchdogs = 0;
-
-/**************************************************************
- * Змінна використовується в функції вибору групи уставок:
- * protections.c --> setpoints_selecting()
- **************************************************************/
-unsigned int gr_ustavok_tmp = 0xf;
 
 //Змінна глобальної помилки
 unsigned int total_error;

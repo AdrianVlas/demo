@@ -181,15 +181,6 @@ inline void periodical_operations(void)
   Щоб за один оберт виконувалася тільки одна перевірка, тобто щоб в одному оберті
   не було надто довга затримка на фонову перевірку, хоч і важливу.
   */
-  if (periodical_tasks_CALC_ENERGY_DATA != 0)
-  {
-    //Стоїть у черзі активна задача розразунку потужності і енергій
-      
-    calc_power_and_energy();
-
-    //Скидаємо активну задачу розрахунку потужності і енергій
-    periodical_tasks_CALC_ENERGY_DATA = false;
-  }
   else if (periodical_tasks_CALCULATION_ANGLE != 0)
   {
     //Стоїть у черзі активна задача розразунку кутів
@@ -336,15 +327,6 @@ inline void periodical_operations(void)
 
     //Скидаємо активну задачу самоконтролю по резервній копії для аналогового реєстратора
     periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK = false;
-  }
-  else if (periodical_tasks_TEST_RESURS_LOCK != 0)
-  {
-    //Стоїть у черзі активна задача самоконтролю по резервній копії для ресурсу лічильника
-    //Виконуємо її
-    control_resurs();
-
-    //Скидаємо активну задачу самоконтролю по резервній копії для аналогового реєстратора
-    periodical_tasks_TEST_RESURS_LOCK = false;
   }
   /*******************/
 

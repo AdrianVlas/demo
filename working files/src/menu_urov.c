@@ -298,117 +298,9 @@ void make_ekran_control_urov()
   /******************************************/
   //Виключаємо поля, які не треба відображати
   /******************************************/
-  int additional_current_mtz = 0, additional_current_zdz = 0, additional_current_zop = 0;
-  int additional_current_Umin = 0, additional_current_Umax = 0;
   int position_temp = current_ekran.index_position;
   int index_of_ekran;
 
-  int additional_current = additional_current_mtz  + additional_current_zdz + additional_current_zop + 
-                           additional_current_Umin + additional_current_Umax;
-  for (int current_index = 0; current_index < (MAX_ROW_FOR_CONTROL_UROV - additional_current); current_index++ )
-  {
-
-    if (
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4)
-         )   
-         &&
-         ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-        )  
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ)
-         )   
-         &&
-         ((current_settings.configuration & (1<<ZDZ_BIT_CONFIGURATION)) == 0)
-        )
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1)
-         )   
-         &&
-         ((current_settings.configuration & (1<<ZOP_BIT_CONFIGURATION)) == 0)
-        )
-        ||
-        (
-         (
-          (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1) ||
-          (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2)
-         )   
-         &&
-         ((current_settings.configuration & (1<<UMIN_BIT_CONFIGURATION)) == 0)
-        )  
-        ||
-        (
-         (
-          (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1) ||
-          (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2)
-         )   
-         &&
-         ((current_settings.configuration & (1<<UMAX_BIT_CONFIGURATION)) == 0)
-        )  
-       )   
-    {
-      int i = current_index - additional_current;
-      unsigned int maska_1, maska_2;
-      maska_1 = (1 << i) - 1;
-      maska_2 = (unsigned int)(~maska_1);
-    
-      if ((i+1) <= position_temp) position_temp--;
-      do
-      {
-        for(unsigned int j = 0; j < MAX_COL_LCD; j++)
-        {
-          if ((i+1) < (MAX_ROW_FOR_CONTROL_UROV - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-          else name_string_tmp[i][j] = ' ';
-        }
-        i++;
-      }
-      while (i < (MAX_ROW_FOR_CONTROL_UROV -  additional_current));
-    
-      unsigned int temp_data_1 = (temp_data >> 1) & maska_2;
-      temp_data = (temp_data & maska_1) | temp_data_1;
-
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4)
-         )   
-        additional_current_mtz++;
-
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ)
-         )   
-        additional_current_zdz++;
-
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1)
-         )   
-        additional_current_zop++;
-
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2)
-         )   
-        additional_current_Umin++;
-
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2)
-         )   
-        additional_current_Umax++;
-
-      additional_current = additional_current_mtz  + additional_current_zdz + additional_current_zop + 
-                           additional_current_Umin + additional_current_Umax;
-    }
-  }
   /******************************************/
   
   //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
@@ -417,7 +309,7 @@ void make_ekran_control_urov()
   
   for (unsigned int i=0; i< MAX_ROW_LCD; i++)
   {
-    if (index_of_ekran < ((MAX_ROW_FOR_CONTROL_UROV - additional_current) << 1))//Множення на два константи MAX_ROW_FOR_CONTROL_UROV потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
+    if (index_of_ekran < ((MAX_ROW_FOR_CONTROL_UROV) << 1))//Множення на два константи MAX_ROW_FOR_CONTROL_UROV потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
     {
       if ((i & 0x1) == 0)
       {

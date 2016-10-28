@@ -45,7 +45,6 @@
 #include "const_menu_diagnostyka.h"
 #include "const_menu_registrators.h"
 #include "const_menu_setting_language.h"
-#include "const_menu_resurs.h"
 #include "const_watchdog.h"
 #include "const_menu_vidkluchennja.h"
 

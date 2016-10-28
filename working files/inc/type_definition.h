@@ -392,7 +392,6 @@ STATE_READING_READ
 } STATE_READING_ADCs;
 
 typedef enum _full_ort_index __full_ort_index;
-typedef enum _index_energy __index_energy;
 
 typedef struct
 {

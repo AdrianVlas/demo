@@ -215,7 +215,6 @@ volatile unsigned int semaphore_measure_values_low = 0;
 volatile unsigned int semaphore_measure_values_low1 = 0;
 
 unsigned int number_inputs_for_fix_one_second = 0;
-unsigned int number_inputs_for_fix_one_period = 0;
 volatile unsigned int measurement[NUMBER_ANALOG_CANALES + 8]; 
 unsigned int measurement_high[2][NUMBER_ANALOG_CANALES + 8] , bank_measurement_high = 0; 
 unsigned int measurement_middle[NUMBER_ANALOG_CANALES + 8]; 
@@ -239,9 +238,6 @@ unsigned int lichylnyk_1s_po_20ms = 0;
 volatile unsigned int bank_for_enegry = 0;
 int P = 0, Q = 0, cos_phi_x1000 = 0;
 unsigned int S = 0;
-double energy[MAX_NUMBER_INDEXES_ENERGY] = {0, 0, 0, 0, 0, 0};
-unsigned int clean_energy = 0;
-unsigned int information_about_clean_energy = 0;
 
 #define VAGA_E_AMPLITUDE        7
 const int ea[2] = {(int)(((float)(1 << VAGA_E_AMPLITUDE))*( 0.0000f)), (int)(((float)(1 << VAGA_E_AMPLITUDE))*( 1.0000f))};
@@ -327,11 +323,9 @@ volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR = false;
 volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR_LOCK = false;
 volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR = false;
 volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK = false;
-volatile unsigned int periodical_tasks_TEST_RESURS = false;
 volatile unsigned int periodical_tasks_TEST_RESURS_LOCK = false;
 volatile unsigned int periodical_tasks_TEST_FLASH_MEMORY = false;
 volatile unsigned int periodical_tasks_CALCULATION_ANGLE = false;
-volatile unsigned int periodical_tasks_CALC_ENERGY_DATA = false;
 volatile unsigned int periodical_tasks_CALC_DELTA_PHI = false;
 
 const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VYMIRJUVANNJA] =
@@ -588,10 +582,6 @@ _Bool previous_state_mtz_po_incn = 0;
 _Bool previous_state_mtz_po_uncn = 0;
 unsigned int p_global_trigger_state_mtz2 = 0;
 
-//Визначення періодів у хвилину і більше
-unsigned int number_seconds = 0;
-volatile unsigned int number_minutes = 0;
-
 //Ресурс++
 volatile unsigned int restart_resurs_count = 0;
 unsigned int resurs_temp = 0;
@@ -731,14 +721,6 @@ unsigned int number_record_of_pr_err_into_RS485 = 0xffff;
 
 //Очистка інформації по реєстраторах
 volatile unsigned int clean_rejestrators = 0;
-
-//Лічильник ресурсу
-unsigned int koef_resurs_changed = CHANGED_ETAP_NONE;
-float K_resurs_prt, K_resurs;
-unsigned int resurs_vymykacha = 0, resurs_vymykacha_ctrl;
-unsigned int resurs_vidkljuchennja = 0, resurs_vidkljuchennja_ctrl;
-unsigned char crc_resurs, crc_resurs_ctrl;
-unsigned int restart_counter = 0;
 
 //RS-485
 unsigned char TxBuffer_RS485[BUFFER_RS485];

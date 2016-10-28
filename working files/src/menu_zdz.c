@@ -49,57 +49,8 @@ void make_ekran_control_zdz()
   if(current_ekran.edition == 0) temp_data = current_settings.control_zdz;
   else temp_data = edition_settings.control_zdz;
         
-  /******************************************/
-  //Виключаємо поля, які не треба відображати
-  /******************************************/
-  int additional_current_mtz = 0;
   int position_temp = current_ekran.index_position;
   int index_of_ekran;
-
-  for (int current_index = 0; current_index < (MAX_ROW_FOR_CONTROL_ZDZ - additional_current_mtz); current_index++ )
-  {
-
-    if (
-        (
-         (current_index == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ1) ||
-         (current_index == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ2) ||
-         (current_index == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ3) ||
-         (current_index == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ4)
-        )   
-        &&
-        ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-       )   
-    {
-      int i = current_index - additional_current_mtz;
-      unsigned int maska_1, maska_2;
-      maska_1 = (1 << i) - 1;
-      maska_2 = (unsigned int)(~maska_1);
-    
-      if ((i+1) <= position_temp) position_temp--;
-      do
-      {
-        for(unsigned int j = 0; j<MAX_COL_LCD; j++)
-        {
-          if ((i+1) < MAX_ROW_FOR_CONTROL_ZDZ) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-          else name_string_tmp[i][j] = ' ';
-        }
-        i++;
-      }
-      while (i< (MAX_ROW_FOR_CONTROL_ZDZ - additional_current_mtz));
-    
-      unsigned int temp_data_1 = (temp_data >> 1) & maska_2;
-      temp_data = (temp_data & maska_1) | temp_data_1;
-
-      if (
-          (current_index == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ1) ||
-          (current_index == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ2) ||
-          (current_index == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ3) ||
-          (current_index == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ4)
-         )   
-        additional_current_mtz++;
-    }
-  }
-  /******************************************/
   
   //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
   index_of_ekran = ((position_temp<<1) >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;

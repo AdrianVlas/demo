@@ -10,50 +10,18 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
   const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_EKRAN_CONFIGURATION][MAX_COL_LCD_PART1] = 
   {
     {
-     "МТЗ       ",
-     "ЗДЗ       ",
-     "АПВ       ",
-     "УРОВ      ",
-     "ЗОП(КОФ)  ",
-     "ЗНмин     ",
-     "ЗНмакс    ",
-     " АВР      ",
      "Контр.фаз ",
      "Расш.лог. "
     },
     {
-     "МСЗ       ",
-     "ЗДЗ       ",
-     "АПВ       ",
-     "ПРВВ      ",
-     "ЗЗП(КОФ)  ",
-     "ЗНмін     ",
-     "ЗНмакс    ",
-     " АВР      ",
      "Контр.фаз ",
      "Розш.лог. "
     },
     {
-     "OCP       ",
-     "ЗДЗ       ",
-     "AR        ",
-     "CBFP      ",
-     "NPSP      ",
-     "Umin      ",
-     "Umax      ",
-     " АВР      ",
      "Контр.фаз ",
      "Ext.logic "
     },
     {
-     "МТK       ",
-     "ЗДЗ       ",
-     "АKK       ",
-     "СІШРK     ",
-     "КKK       ",
-     "ЗНмин     ",
-     "ЗНмакс    ",
-     " АВР      ",
      "Контр.фаз ",
      "Расш.лог. "
     }

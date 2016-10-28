@@ -378,30 +378,9 @@ void make_ekran_control_apv()
   /******************************************/
   //Виключаємо поля, які не треба відображати
   /******************************************/
-  int additional_current_mtz = 0;
   int position_temp = current_ekran.index_position;
   int index_of_ekran;
   
-  if ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-  {
-    for (int current_index = INDEX_ML_CTRAPV_STARTED_FROM_MTZ1; current_index <= INDEX_ML_CTRAPV_STARTED_FROM_MTZ4; current_index++ )
-    {
-      int i = current_index - additional_current_mtz;
-    
-      if ((i+1) <= position_temp) position_temp--;
-      do
-      {
-        for(unsigned int j = 0; j<MAX_COL_LCD; j++)
-        {
-          if ((i+1) < (MAX_ROW_FOR_CONTROL_APV - additional_current_mtz)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-          else name_string_tmp[i][j] = ' ';
-        }
-        i++;
-      }
-      while (i < (MAX_ROW_FOR_CONTROL_APV - additional_current_mtz));
-      additional_current_mtz++;
-    }
-  }
   /******************************************/
 
   //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
@@ -409,7 +388,7 @@ void make_ekran_control_apv()
   
   for (unsigned int i=0; i< MAX_ROW_LCD; i++)
   {
-    if (index_of_ekran < ((MAX_ROW_FOR_CONTROL_APV - additional_current_mtz)<<1))//Множення на два константи MAX_ROW_FOR_CONTROL_APV потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
+    if (index_of_ekran < ((MAX_ROW_FOR_CONTROL_APV)<<1))//Множення на два константи MAX_ROW_FOR_CONTROL_APV потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
     {
       if ((i & 0x1) == 0)
       {

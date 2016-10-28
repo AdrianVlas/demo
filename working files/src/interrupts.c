@@ -846,11 +846,9 @@ void TIM4_IRQHandler(void)
         (current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY    ) ||
         (current_ekran.current_level == EKRAN_MEASURMENT_ANGLE        ) ||
         (current_ekran.current_level == EKRAN_MEASURMENT_POWER        ) ||
-        (current_ekran.current_level == EKRAN_ENERGY                  ) ||
         (current_ekran.current_level == EKRAN_STATE_INPUTS)   ||
         (current_ekran.current_level == EKRAN_STATE_OUTPUTS)  ||
         (current_ekran.current_level == EKRAN_DIAGNOSTYKA)    ||
-        (current_ekran.current_level == EKRAN_RESURS) ||
         (current_ekran.current_level == EKRAN_VIDKLUCHENNJA)
        )
     {
@@ -904,24 +902,9 @@ void TIM4_IRQHandler(void)
       //Запусаємо раз у секунду самоконтроль важливих змінних
       periodical_tasks_TEST_SETTINGS            = periodical_tasks_TEST_USTUVANNJA          = periodical_tasks_TEST_TRG_FUNC                = 
       periodical_tasks_TEST_INFO_REJESTRATOR_AR = periodical_tasks_TEST_INFO_REJESTRATOR_DR = periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR = 
-      periodical_tasks_TEST_RESURS              = periodical_tasks_TEST_FLASH_MEMORY        = periodical_tasks_CALCULATION_ANGLE            = true;
+      periodical_tasks_TEST_FLASH_MEMORY        = periodical_tasks_CALCULATION_ANGLE        = true;
       
       number_inputs_for_fix_one_second = 0;
-      
-      if(++number_seconds >= 60)
-      {
-        number_seconds = 0;
-        if(
-           ((POWER_CTRL->IDR & POWER_CTRL_PIN) != (uint32_t)Bit_RESET) &&
-           (++number_minutes >= PERIOD_SAVE_ENERGY_IN_MINUTES)
-          )   
-        {
-          number_minutes = 0;
-          
-          //Запускаємо запис у EEPROM
-          _SET_BIT(control_i2c_taskes, TASK_START_WRITE_ENERGY_EEPROM_BIT);
-        }
-      }
       
       //Робота з таймером очікування нових змін налаштувань
       if (
@@ -1704,10 +1687,6 @@ void EXITI_POWER_IRQHandler(void)
 
       //Виставляємо повідомлення про цю подію
       _SET_BIT(set_diagnostyka, EVENT_DROP_POWER_BIT);
-
-      //Запускаємо запис у EEPROM
-      _SET_BIT(control_i2c_taskes, TASK_START_WRITE_ENERGY_EEPROM_BIT);
-      number_minutes = 0;
     }
   }
   

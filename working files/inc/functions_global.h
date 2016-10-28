@@ -110,7 +110,7 @@ void make_ekran_transformator(void);
 void make_ekran_set_function_in_input(unsigned int);
 void make_ekran_transformator_control(void);
 void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int, unsigned int);
-void check_current_index_is_presented_in_configuration(unsigned int*, /*int*,*/ /*EL_FILTER_STRUCT[],*/ int, int, int, int, int, int, int, int, int, int, int, int);
+void check_current_index_is_presented_in_configuration(unsigned int*, /*int*,*/ /*EL_FILTER_STRUCT[],*/ int, int, int, int);
 void make_ekran_choose_CBOn_CBOff(void);
 void make_ekran_setpoint_switch(void);
 void make_ekran_timeout_switch(void);
@@ -160,8 +160,6 @@ void make_ekran_changing_signals_digital_registrator(void);
 void make_ekran_list_titles_for_record_of_pr_err_registrator(void);
 void make_ekran_changing_diagnostics_pr_err_registrator(void);
 void make_ekran_setting_language(void);
-void make_ekran_resurs(void);
-void make_ekran_energy(unsigned int);
 void make_ekran_grupa_ustavok(void);
 void make_ekran_vidkluchenja(void);
 
@@ -199,8 +197,6 @@ void urov_handler(volatile unsigned int*, unsigned int);
 void apv_handler(volatile unsigned int*, unsigned int);
 void on_off_handler(volatile unsigned int*);
 void control_VV(volatile unsigned int*);
-void make_koef_for_resurs(void);
-void resurs_vymykacha_handler(volatile unsigned int*);
 unsigned int stop_regisrator(volatile unsigned int*, unsigned int*);
 void fix_undefined_error_dr(volatile unsigned int*);
 void start_monitoring_max_phase_current(unsigned int);
@@ -267,8 +263,6 @@ unsigned int sqrt_64(unsigned long long);
 unsigned int get_order(int);
 
 void calc_angle(void);
-void calc_power(int*);
-void calc_power_and_energy(void);
 
 void velychyna_zvorotnoi_poslidovnosti(int*);
 
@@ -297,7 +291,6 @@ void control_settings(void);
 void control_ustuvannja(void);
 void control_trg_func(void);
 unsigned int control_info_rejestrator(__INFO_REJESTRATOR*, unsigned char);
-void control_resurs(void);
 
 void test_external_SRAM(void);
 

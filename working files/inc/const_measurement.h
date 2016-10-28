@@ -293,20 +293,6 @@ FULL_ORT_Ic,
 FULL_ORT_MAX
 };
 
-#define DIV_kWh         3600000000.0
-#define PERIOD_SAVE_ENERGY_IN_MINUTES           30 /*хв.*/
-enum _index_energy
-{
-  INDEX_EA_PLUS = 0,
-  INDEX_EA_MINUS,
-  INDEX_ER_1,
-  INDEX_ER_2,
-  INDEX_ER_3,
-  INDEX_ER_4,
-  
-  MAX_NUMBER_INDEXES_ENERGY
-};
-
 #define UNDEF_PHI                              (1 << 31)
 #define UNDEF_SPEED_PHI                        (1 << 31)
 

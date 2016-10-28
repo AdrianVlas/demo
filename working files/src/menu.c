@@ -534,22 +534,6 @@ void main_manu_function(void)
             {
               if(current_ekran.index_position >= MAX_ROW_FOR_EKRAN_MAIN) current_ekran.index_position = 0;
                 
-              if ((current_ekran.index_position == INDEX_ML1_MTZ) && ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0))
-                current_ekran.index_position++;
-              if ((current_ekran.index_position == INDEX_ML1_ZDZ) && ((current_settings.configuration & (1<<ZDZ_BIT_CONFIGURATION)) == 0))
-                current_ekran.index_position++;
-              if ((current_ekran.index_position == INDEX_ML1_APV) && ((current_settings.configuration & (1<<APV_BIT_CONFIGURATION)) == 0))
-                current_ekran.index_position++;
-              if ((current_ekran.index_position == INDEX_ML1_UROV) && ((current_settings.configuration & (1<<UROV_BIT_CONFIGURATION)) == 0))
-                current_ekran.index_position++;
-              if ((current_ekran.index_position == INDEX_ML1_ZOP) && ((current_settings.configuration & (1<<ZOP_BIT_CONFIGURATION)) == 0))
-                current_ekran.index_position++;
-              if ((current_ekran.index_position == INDEX_ML1_UMIN) && ((current_settings.configuration & (1<<UMIN_BIT_CONFIGURATION)) == 0))
-                current_ekran.index_position++;
-              if ((current_ekran.index_position == INDEX_ML1_UMAX) && ((current_settings.configuration & (1<<UMAX_BIT_CONFIGURATION)) == 0))
-                current_ekran.index_position++;
-              if ((current_ekran.index_position == INDEX_ML1_AVR) && ((current_settings.configuration & (1<<AVR_BIT_CONFIGURATION)) == 0))
-                current_ekran.index_position++;
               if ((current_ekran.index_position == INDEX_ML1_CTRL_PHASE) && ((current_settings.configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0))
                 current_ekran.index_position++;
             }
@@ -611,26 +595,10 @@ void main_manu_function(void)
                 current_ekran.cursor_on = 1;
                 current_ekran.cursor_blinking_on = 0;
               }
-              else if(current_ekran.index_position == INDEX_ML1_ENERGY)
-              {
-                //Переходимо на меню відображення технічного обліку електроенергії
-                current_ekran.current_level = EKRAN_ENERGY;
-
-                //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення, які поступають на аналогові входи приладу
-                pervynna_vtorynna = 0;
-                
-                current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-              }
               else if(current_ekran.index_position == INDEX_ML1_INPUTS_OUTPUTS)
               {
                 //Переходимо на меню вибору відображення списку вибору входів-виходів для відображення їх миттєвого стану
                 current_ekran.current_level = EKRAN_LIST_INPUTS_OUTPUTS;
-                current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-              }
-              else if(current_ekran.index_position == INDEX_ML1_RESURS)
-              {
-                //Переходимо на меню відображення ресурсу вимикача
-                current_ekran.current_level = EKRAN_RESURS;
                 current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
               }
               else if(current_ekran.index_position == INDEX_ML1_REGISTRATORS)
@@ -673,35 +641,11 @@ void main_manu_function(void)
                 current_ekran.cursor_blinking_on = 0;
               }
               else if(
-                      (current_ekran.index_position == INDEX_ML1_MTZ       ) || 
-                      (current_ekran.index_position == INDEX_ML1_ZDZ       ) || 
-                      (current_ekran.index_position == INDEX_ML1_APV       ) ||
-                      (current_ekran.index_position == INDEX_ML1_UROV      ) || 
-                      (current_ekran.index_position == INDEX_ML1_ZOP       ) ||
-                      (current_ekran.index_position == INDEX_ML1_UMIN      ) ||
-                      (current_ekran.index_position == INDEX_ML1_UMAX      ) || 
-                      (current_ekran.index_position == INDEX_ML1_AVR       ) ||
                       (current_ekran.index_position == INDEX_ML1_CTRL_PHASE) 
                      )
               {
-                //Переходимо на меню МТЗ
-                if(current_ekran.index_position == INDEX_ML1_MTZ) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_MTZ;
-                //Переходимо на меню ЗДЗ
-                else if(current_ekran.index_position == INDEX_ML1_ZDZ) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_ZDZ;
-                //Переходимо на меню АПВ
-                else if(current_ekran.index_position == INDEX_ML1_APV) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_APV;
-                //Переходимо на меню УРОВ
-                else if(current_ekran.index_position == INDEX_ML1_UROV) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_UROV;
-                //Переходимо на меню ЗОП(КОФ)
-                else if(current_ekran.index_position == INDEX_ML1_ZOP) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_ZOP;
-                //Переходимо на меню Umin
-                else if(current_ekran.index_position == INDEX_ML1_UMIN) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_UMIN;
-                //Переходимо на меню Umax
-                else if(current_ekran.index_position == INDEX_ML1_UMAX) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_UMAX;
-                //Переходимо на меню АВР
-                else if(current_ekran.index_position == INDEX_ML1_AVR) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_AVR;
                 //Переходимо на меню Перевірки фазування
-                else if(current_ekran.index_position == INDEX_ML1_CTRL_PHASE) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_CTRL_PHASE;
+                if(current_ekran.index_position == INDEX_ML1_CTRL_PHASE) current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_CTRL_PHASE;
                 
                 current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                 current_ekran.edition = 0;
@@ -728,22 +672,6 @@ void main_manu_function(void)
 
                 if ((current_ekran.index_position == INDEX_ML1_CTRL_PHASE) && ((current_settings.configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0))
                   current_ekran.index_position--;
-                if ((current_ekran.index_position == INDEX_ML1_AVR) && ((current_settings.configuration & (1<<AVR_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position--;
-                if ((current_ekran.index_position == INDEX_ML1_UMAX) && ((current_settings.configuration & (1<<UMAX_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position--;
-                if ((current_ekran.index_position == INDEX_ML1_UMIN) && ((current_settings.configuration & (1<<UMIN_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position--;
-                if ((current_ekran.index_position == INDEX_ML1_ZOP) && ((current_settings.configuration & (1<<ZOP_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position--;
-                if ((current_ekran.index_position == INDEX_ML1_UROV) && ((current_settings.configuration & (1<<UROV_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position--;
-                if ((current_ekran.index_position == INDEX_ML1_APV) && ((current_settings.configuration & (1<<APV_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position--;
-                if ((current_ekran.index_position == INDEX_ML1_ZDZ) && ((current_settings.configuration & (1<<ZDZ_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position--;
-                if ((current_ekran.index_position == INDEX_ML1_MTZ) && ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position--;
               }
               while (current_ekran.index_position < 0);
               position_in_current_level_menu[EKRAN_MAIN] = current_ekran.index_position;
@@ -761,24 +689,7 @@ void main_manu_function(void)
               do
               {
                 if(current_ekran.index_position >= MAX_ROW_FOR_EKRAN_MAIN) current_ekran.index_position = 0;
-                
-
-                if ((current_ekran.index_position == INDEX_ML1_MTZ) && ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position++;
-                if ((current_ekran.index_position == INDEX_ML1_ZDZ) && ((current_settings.configuration & (1<<ZDZ_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position++;
-                if ((current_ekran.index_position == INDEX_ML1_APV) && ((current_settings.configuration & (1<<APV_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position++;
-                if ((current_ekran.index_position == INDEX_ML1_UROV) && ((current_settings.configuration & (1<<UROV_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position++;
-                if ((current_ekran.index_position == INDEX_ML1_ZOP) && ((current_settings.configuration & (1<<ZOP_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position++;
-                if ((current_ekran.index_position == INDEX_ML1_UMIN) && ((current_settings.configuration & (1<<UMIN_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position++;
-                if ((current_ekran.index_position == INDEX_ML1_UMAX) && ((current_settings.configuration & (1<<UMAX_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position++;
-                if ((current_ekran.index_position == INDEX_ML1_AVR) && ((current_settings.configuration & (1<<AVR_BIT_CONFIGURATION)) == 0))
-                  current_ekran.index_position++;
+ 
                 if ((current_ekran.index_position == INDEX_ML1_CTRL_PHASE) && ((current_settings.configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0))
                   current_ekran.index_position++;
               }
@@ -1333,7 +1244,6 @@ void main_manu_function(void)
     case EKRAN_MEASURMENT_FREQUENCY:
     case EKRAN_MEASURMENT_ANGLE:
     case EKRAN_MEASURMENT_POWER:
-    case EKRAN_ENERGY:
     case EKRAN_CHOOSE_SETTINGS_MTZ:
     case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ:
     case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_MTZ:
@@ -1505,13 +1415,6 @@ void main_manu_function(void)
               position_in_current_level_menu[EKRAN_MEASURMENT_POWER] = current_ekran.index_position;
               //Формуємо екран відображення потужностей
               make_ekran_power(pervynna_vtorynna);
-            }
-            else if (current_ekran.current_level == EKRAN_ENERGY)
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_EKRAN_ENERGY) current_ekran.index_position = 0;
-              position_in_current_level_menu[EKRAN_ENERGY] = current_ekran.index_position;
-              //Формуємо екран відображення вікна технічного обліку електроенергії
-              make_ekran_energy(pervynna_vtorynna);
             }
             else if (
                      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_MTZ       )||
@@ -2085,8 +1988,7 @@ void main_manu_function(void)
                        (current_ekran.current_level == EKRAN_MEASURMENT_CURRENT) ||
                        (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE) ||
                        (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE) ||
-                       (current_ekran.current_level == EKRAN_MEASURMENT_POWER) ||
-                       (current_ekran.current_level == EKRAN_ENERGY)
+                       (current_ekran.current_level == EKRAN_MEASURMENT_POWER)
                       )   
               {
                 //Ми у вікні відображення або струмів, напруг, потужностей, опорів, енергій
@@ -3330,13 +3232,6 @@ void main_manu_function(void)
                 //Формуємо екран відображення вікна потужностей
                 make_ekran_power(pervynna_vtorynna);
               }
-              else if(current_ekran.current_level == EKRAN_ENERGY)
-              {
-                if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_EKRAN_ENERGY - 1;
-                position_in_current_level_menu[EKRAN_ENERGY] = current_ekran.index_position;
-                //Формуємо екран відображення вікна технічного обліку келектроенергії
-                make_ekran_energy(pervynna_vtorynna);
-              }
               else if (
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_MTZ       )||
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_APV       )||
@@ -3892,13 +3787,6 @@ void main_manu_function(void)
                 position_in_current_level_menu[EKRAN_MEASURMENT_POWER] = current_ekran.index_position;
                 //Формуємо екран відображення вікна потужностей
                 make_ekran_power(pervynna_vtorynna);
-              }
-              else if(current_ekran.current_level == EKRAN_ENERGY)
-              {
-                if(++current_ekran.index_position >= MAX_ROW_FOR_EKRAN_ENERGY) current_ekran.index_position =  0;
-                position_in_current_level_menu[EKRAN_ENERGY] = current_ekran.index_position;
-                //Формуємо екран відображення вікна технічного обліку келектроенергії
-                make_ekran_energy(pervynna_vtorynna);
               }
               else if (
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_MTZ       )||
@@ -4577,21 +4465,6 @@ void main_manu_function(void)
             else if(current_ekran.current_level == EKRAN_CONTROL_ZDZ)
             {
               if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_ZDZ) current_ekran.index_position = 0;
-              while(
-                    (
-                     (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ1) ||
-                     (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ2) ||
-                     (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ3) ||
-                     (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ4)
-                    )   
-                    &&
-                    ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-                   )
-              {
-                current_ekran.index_position++;
-                if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_ZDZ) current_ekran.index_position = 0;
-              }
-
               position_in_current_level_menu[EKRAN_CONTROL_ZDZ] = current_ekran.index_position;
               
               //Формуємо екран управлінської інформації для ЗДЗ
@@ -4612,21 +4485,6 @@ void main_manu_function(void)
             else if(current_ekran.current_level == EKRAN_CONTROL_APV)
             {
               if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_APV) current_ekran.index_position = 0;
-              while(
-                    (
-                     (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ1) ||
-                     (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ2) ||
-                     (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ3) ||
-                     (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ4)
-                    )   
-                    &&
-                    ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-                   )
-              {
-                current_ekran.index_position++;
-                if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_APV) current_ekran.index_position = 0;
-              }
-
               position_in_current_level_menu[EKRAN_CONTROL_APV] = current_ekran.index_position;
               //Формуємо екран управлінської інформації для АПВ
               make_ekran_control_apv();
@@ -4658,57 +4516,6 @@ void main_manu_function(void)
             else if(current_ekran.current_level == EKRAN_CONTROL_UROV)
             {
               if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_UROV) current_ekran.index_position = 0;
-              while(
-                    (
-                     (
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1) ||
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2) ||
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3) ||
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4)
-                     )   
-                     &&
-                     ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-                    )  
-                    ||
-                    (
-                     (
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ)
-                     )   
-                     &&
-                     ((current_settings.configuration & (1<<ZDZ_BIT_CONFIGURATION)) == 0)
-                    )  
-                    ||
-                    (
-                     (
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1)
-                     )   
-                     &&
-                     ((current_settings.configuration & (1<<ZOP_BIT_CONFIGURATION)) == 0)
-                    )
-                    ||
-                    (
-                     (
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1) ||
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2)
-                     )   
-                     &&
-                     ((current_settings.configuration & (1<<UMIN_BIT_CONFIGURATION)) == 0)
-                    )  
-                    ||
-                    (
-                     (
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1) ||
-                      (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2)
-                     )   
-                     &&
-                     ((current_settings.configuration & (1<<UMAX_BIT_CONFIGURATION)) == 0)
-                    )  
-                   )
-              {
-                current_ekran.index_position++;
-                if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_UROV) current_ekran.index_position = 0;
-              }
-
               position_in_current_level_menu[EKRAN_CONTROL_UROV] = current_ekran.index_position;
 
               //Формуємо екран управлінської інформації для УРОВ
@@ -9022,9 +8829,6 @@ void main_manu_function(void)
                         
                         current_settings.setpoint_Inom = edition_settings.setpoint_Inom;
 
-                        //Розраховуємо коефіцієнти для розрахунку ресурсу вимикача
-                        make_koef_for_resurs();
-
                         //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                         fix_change_settings(0, 1);
                       }
@@ -9042,9 +8846,6 @@ void main_manu_function(void)
                         changed_settings = CHANGED_ETAP_EXECUTION;
                         
                         current_settings.setpoint_r_kom_st_Inom = edition_settings.setpoint_r_kom_st_Inom;
-
-                        //Розраховуємо коефіцієнти для розрахунку ресурсу вимикача
-                        make_koef_for_resurs();
 
                         //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                         fix_change_settings(0, 1);
@@ -9064,9 +8865,6 @@ void main_manu_function(void)
                         
                         current_settings.setpoint_Inom_vymk = edition_settings.setpoint_Inom_vymk;
 
-                        //Розраховуємо коефіцієнти для розрахунку ресурсу вимикача
-                        make_koef_for_resurs();
-
                         //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                         fix_change_settings(0, 1);
                       }
@@ -9084,9 +8882,6 @@ void main_manu_function(void)
                         changed_settings = CHANGED_ETAP_EXECUTION;
                         
                         current_settings.setpoint_r_kom_st_Inom_vymk = edition_settings.setpoint_r_kom_st_Inom_vymk;
-
-                        //Розраховуємо коефіцієнти для розрахунку ресурсу вимикача
-                        make_koef_for_resurs();
 
                         //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                         fix_change_settings(0, 1);
@@ -9959,21 +9754,6 @@ void main_manu_function(void)
                 current_ekran.index_position--;
                 
                 if(current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CONTROL_ZDZ - 1;
-                while(
-                      (  
-                       (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ1) ||
-                       (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ2) ||
-                       (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ3) ||
-                       (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ4)
-                      )   
-                      &&
-                      ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-                    )
-                {
-                  current_ekran.index_position--;
-                  if(current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CONTROL_ZDZ - 1;
-                }
-
                 position_in_current_level_menu[EKRAN_CONTROL_ZDZ] = current_ekran.index_position;
                 
                 //Формуємо екран управлінської інформації для ЗДЗ
@@ -10021,21 +9801,6 @@ void main_manu_function(void)
                 current_ekran.index_position--;
                 
                 if(current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CONTROL_APV - 1;
-                while(
-                      (  
-                       (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ1) ||
-                       (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ2) ||
-                       (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ3) ||
-                       (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ4)
-                      )   
-                      &&
-                      ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-                    )
-                {
-                  current_ekran.index_position--;
-                  if(current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CONTROL_APV - 1;
-                }
-
                 position_in_current_level_menu[EKRAN_CONTROL_APV] = current_ekran.index_position;
                 //Формуємо екран управлінської інформації для АПВ
                 make_ekran_control_apv();
@@ -10088,57 +9853,6 @@ void main_manu_function(void)
                 current_ekran.index_position--;
                 
                 if(current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CONTROL_UROV - 1;
-                while(
-                      (
-                       (  
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-                      )  
-                      ||
-                      (
-                       (  
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<ZDZ_BIT_CONFIGURATION)) == 0)
-                      )  
-                      ||
-                      (
-                       (
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<ZOP_BIT_CONFIGURATION)) == 0)
-                      )
-                      ||
-                      (
-                       (
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<UMIN_BIT_CONFIGURATION)) == 0)
-                      )  
-                      ||
-                      (
-                       (
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<UMAX_BIT_CONFIGURATION)) == 0)
-                      )  
-                    )
-                {
-                  current_ekran.index_position--;
-                  if(current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CONTROL_UROV - 1;
-                }
-
                 position_in_current_level_menu[EKRAN_CONTROL_UROV] = current_ekran.index_position;
 
                 //Формуємо екран управлінської інформації для УРОВ
@@ -11020,21 +10734,6 @@ void main_manu_function(void)
                 current_ekran.index_position++;
                 
                 if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_ZDZ) current_ekran.index_position = 0;
-                while(
-                      (  
-                       (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ1) ||
-                       (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ2) ||
-                       (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ3) ||
-                       (current_ekran.index_position == INDEX_ML_CTRZDZ_STARTED_FROM_MTZ4)
-                      )   
-                      &&
-                      ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-                     )
-                {
-                  current_ekran.index_position++;
-                  if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_ZDZ) current_ekran.index_position = 0;
-                }
-
                 position_in_current_level_menu[EKRAN_CONTROL_ZDZ] = current_ekran.index_position;
                 
                 //Формуємо екран управлінської інформації для ЗДЗ
@@ -11082,21 +10781,6 @@ void main_manu_function(void)
                 current_ekran.index_position++;
                 
                 if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_APV) current_ekran.index_position = 0;
-                while(
-                      (  
-                       (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ1) ||
-                       (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ2) ||
-                       (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ3) ||
-                       (current_ekran.index_position == INDEX_ML_CTRAPV_STARTED_FROM_MTZ4)
-                      )   
-                      &&
-                      ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-                     )
-                {
-                  current_ekran.index_position++;
-                  if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_APV) current_ekran.index_position = 0;
-                }
-
                 position_in_current_level_menu[EKRAN_CONTROL_APV] = current_ekran.index_position;
                 //Формуємо екран управлінської інформації для АПВ
                 make_ekran_control_apv();
@@ -11149,57 +10833,6 @@ void main_manu_function(void)
                 current_ekran.index_position++;
                 
                 if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_UROV) current_ekran.index_position = 0;
-                while(
-                      (
-                       (  
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-                      )  
-                      ||
-                      (
-                       (  
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<ZDZ_BIT_CONFIGURATION)) == 0)
-                      )  
-                      ||
-                      (
-                       (
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<ZOP_BIT_CONFIGURATION)) == 0)
-                      )
-                      ||
-                      (
-                       (
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<UMIN_BIT_CONFIGURATION)) == 0)
-                      )  
-                      ||
-                      (
-                       (
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1) ||
-                        (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2)
-                       )   
-                       &&
-                       ((current_settings.configuration & (1<<UMAX_BIT_CONFIGURATION)) == 0)
-                      )  
-                     )
-                {
-                  current_ekran.index_position++;
-                  if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_UROV) current_ekran.index_position = 0;
-                }
-
                 position_in_current_level_menu[EKRAN_CONTROL_UROV] = current_ekran.index_position;
 
                 //Формуємо екран управлінської інформації для УРОВ
@@ -14711,151 +14344,6 @@ void main_manu_function(void)
 /******************************************************************************************************************************************/ 
 
 /******************************************************************************************************************************************/      
-    case EKRAN_RESURS:
-      {
-        //Очищаємо всі біти краім упралінських
-        unsigned int maska_keyboard_bits = (1<<BIT_KEY_ENTER)| (1<<BIT_KEY_ESC)|(1<<BIT_REWRITE)|(1<<BIT_KEY_UP)|(1<<BIT_KEY_DOWN);
-
-        new_state_keyboard &= maska_keyboard_bits;
-        //Дальше виконуємо дії, якщо натиснута кнопка на яку треба реагувати, або стоїть команда обновити екран
-        if (new_state_keyboard !=0)
-        {
-          //Пріоритет стоїть на обновлені екрану
-          if((new_state_keyboard & (1<<BIT_REWRITE)) !=0)
-          {
-            if(current_ekran.edition == 0)
-            {
-              if (current_ekran.current_level == EKRAN_RESURS)
-              {
-                if(current_ekran.index_position >= MAX_ROW_FOR_EKRAN_RESURS) current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_RESURS] = current_ekran.index_position;
-                //Формуємо екран відображення лічильників ресурсу
-                make_ekran_resurs();
-              }
-            }
-            else if (current_ekran.edition == 1)
-            {
-              if(current_ekran.current_level == EKRAN_RESURS)
-              {
-                unsigned char information_about_reset_counter[1][MAX_NAMBER_LANGUAGE][MAX_COL_LCD] = 
-                {
-                  " Очистить ресурс",
-                  " Очистити ресурс",
-                  " Reset Resources",
-                  " Очистить ресурс"
-                };
-
-                current_ekran.cursor_on = 0;
-                current_ekran.cursor_blinking_on = 0;
-                make_ekran_about_activation_command(0, information_about_reset_counter);
-              }
-
-              //Переходимо в режим введення значень у дію
-              current_ekran.edition = 2;
-            }
-
-            //Очищаємо біт обновлення екрану
-            new_state_keyboard &= (unsigned int)(~(1<<BIT_REWRITE));
-          }
-          else
-          {
-            if (new_state_keyboard == (1<<BIT_KEY_ENTER))
-            {
-              //Натиснута кнопка ENTER
-              if(current_ekran.edition == 0)
-              {
-                int temp_current_level = current_ekran.current_level;
-                
-                //Переходимо на меню запиту паролю скидання ресурсу вимикача
-                current_ekran.current_level = EKRAN_LEVEL_PASSWORD_HARD;
-                previous_level_in_current_level_menu[current_ekran.current_level] = temp_current_level;
-                current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-              }
-              else if (current_ekran.edition == 2)
-              {
-                if(current_ekran.current_level == EKRAN_RESURS)
-                {
-                  restart_counter = 0xff; /*Сигнал про очищення ресурсу лічильників з системи зазистів*/
-                }
-
-                //Виходимо з режиму редагування
-                current_ekran.edition = 0;
-              }
-              
-              //Виставляємо біт обновлення екрану
-              new_state_keyboard |= (1<<BIT_REWRITE);
-
-              //Очистити сигналізацію, що натиснута кнопка 
-              new_state_keyboard &= (unsigned int)(~(1<<BIT_KEY_ENTER));
-            }
-            else if (new_state_keyboard == (1<<BIT_KEY_ESC))
-            {
-              if(current_ekran.edition == 0)
-              {
-                //Вихід у режимі спостерігання
-                //Переходимо у попереднє меню
-                current_ekran.current_level = previous_level_in_current_level_menu[current_ekran.current_level];
-                current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-                current_ekran.edition = 0;
-              }
-              else
-              {
-                //Вихід у режимі редагування без введення змін
-                current_ekran.edition = 0;
-              }
-
-              //Виставляємо команду на обновлекння нового екрану
-              new_state_keyboard |= (1<<BIT_REWRITE);
-              //Очистити сигналізацію, що натиснута кнопка 
-              new_state_keyboard &= (unsigned int)(~(1<<BIT_KEY_ESC));
-            }
-            else if (new_state_keyboard == (1<<BIT_KEY_UP))
-            {
-              //Натиснута кнопка UP
-              if(current_ekran.edition == 0)
-              {
-                if(current_ekran.current_level == EKRAN_RESURS)
-                {
-                  if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_EKRAN_RESURS - 1;
-                  position_in_current_level_menu[EKRAN_RESURS] = current_ekran.index_position;
-                  //Формуємо екран відображення лічильників ресурсу
-                  make_ekran_resurs();
-                }
-              }
-
-              //Очистити сигналізацію, що натиснута кнопка 
-              new_state_keyboard &= (unsigned int)(~(1<<BIT_KEY_UP));
-            }
-            else if (new_state_keyboard == (1<<BIT_KEY_DOWN))
-            {
-              //Натиснута кнопка DOWN
-              if(current_ekran.edition == 0)
-              {
-                if(current_ekran.current_level == EKRAN_RESURS)
-                {
-                  if(++current_ekran.index_position >= MAX_ROW_FOR_EKRAN_RESURS) current_ekran.index_position =  0;
-                  position_in_current_level_menu[EKRAN_RESURS] = current_ekran.index_position;
-                  //Формуємо екран відображення лічильників ресурсу
-                  make_ekran_resurs();
-                }
-              }
-
-              //Очистити сигналізацію, що натиснута кнопка 
-              new_state_keyboard &= (unsigned int)(~(1<<BIT_KEY_DOWN));
-            }
-            else
-            {
-              //Натиснуто зразу декілька кнопок - це є невизначена ситуація, тому скидаємо сигналізацію про натиснуті кнопки і чекаємо знову
-              unsigned int temp_data = new_state_keyboard;
-              new_state_keyboard &= ~temp_data;
-            }
-          }
-        }
-        break;
-      }
-/******************************************************************************************************************************************/ 
-      
-/******************************************************************************************************************************************/      
     case EKRAN_RANGUVANNJA_INPUT_1:
     case EKRAN_RANGUVANNJA_INPUT_2:
     case EKRAN_RANGUVANNJA_INPUT_3:
@@ -15039,14 +14527,6 @@ void main_manu_function(void)
                                                                      /*el_filter,*/
                                                                      1,
                                                                      NUMBER_GENERAL_SIGNAL_FOR_RANG_INPUT,
-                                                                     NUMBER_MTZ_SIGNAL_FOR_RANG_INPUT,
-                                                                     NUMBER_ZDZ_SIGNAL_FOR_RANG_INPUT,
-                                                                     NUMBER_APV_SIGNAL_FOR_RANG_INPUT,
-                                                                     NUMBER_UROV_SIGNAL_FOR_RANG_INPUT,
-                                                                     NUMBER_ZOP_SIGNAL_FOR_RANG_INPUT,
-                                                                     NUMBER_UMIN_SIGNAL_FOR_RANG_INPUT,
-                                                                     NUMBER_UMAX_SIGNAL_FOR_RANG_INPUT,
-                                                                     NUMBER_AVR_SIGNAL_FOR_RANG_INPUT,
                                                                      NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_INPUT,
                                                                      NUMBER_EL_SIGNAL_FOR_RANG_INPUT
                                                                     );
@@ -15103,14 +14583,6 @@ void main_manu_function(void)
                                                                      /*el_filter,*/
                                                                      1,
                                                                      NUMBER_GENERAL_SIGNAL_FOR_RANG_BUTTON,
-                                                                     NUMBER_MTZ_SIGNAL_FOR_RANG_BUTTON,
-                                                                     NUMBER_ZDZ_SIGNAL_FOR_RANG_BUTTON,
-                                                                     NUMBER_APV_SIGNAL_FOR_RANG_BUTTON,
-                                                                     NUMBER_UROV_SIGNAL_FOR_RANG_BUTTON,
-                                                                     NUMBER_ZOP_SIGNAL_FOR_RANG_BUTTON,
-                                                                     NUMBER_UMIN_SIGNAL_FOR_RANG_BUTTON,
-                                                                     NUMBER_UMAX_SIGNAL_FOR_RANG_BUTTON,
-                                                                     NUMBER_AVR_SIGNAL_FOR_RANG_BUTTON,
                                                                      NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_BUTTON,
                                                                      NUMBER_EL_SIGNAL_FOR_RANG_BUTTON
                                                                     );
@@ -15310,14 +14782,6 @@ void main_manu_function(void)
                                                                      /*el_filter,*/
                                                                      1,
                                                                      NUMBER_GENERAL_SIGNAL_FOR_RANG,
-                                                                     NUMBER_MTZ_SIGNAL_FOR_RANG,
-                                                                     NUMBER_ZDZ_SIGNAL_FOR_RANG,
-                                                                     NUMBER_APV_SIGNAL_FOR_RANG,
-                                                                     NUMBER_UROV_SIGNAL_FOR_RANG,
-                                                                     NUMBER_ZOP_SIGNAL_FOR_RANG,
-                                                                     NUMBER_UMIN_SIGNAL_FOR_RANG,
-                                                                     NUMBER_UMAX_SIGNAL_FOR_RANG,
-                                                                     NUMBER_AVR_SIGNAL_FOR_RANG,
                                                                      NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG,
                                                                      NUMBER_EL_SIGNAL_FOR_RANG
                                                                     );
@@ -16562,14 +16026,6 @@ void main_manu_function(void)
                                                                        /*el_filter,*/
                                                                        0,
                                                                        NUMBER_GENERAL_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_MTZ_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_ZDZ_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_APV_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_UROV_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_ZOP_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_UMIN_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_UMAX_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_AVR_SIGNAL_FOR_RANG_INPUT,
                                                                        NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_INPUT,
                                                                        NUMBER_EL_SIGNAL_FOR_RANG_INPUT
                                                                       );
@@ -16630,14 +16086,6 @@ void main_manu_function(void)
                                                                        /*el_filter,*/
                                                                        0,
                                                                        NUMBER_GENERAL_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_MTZ_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_ZDZ_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_APV_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_UROV_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_ZOP_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_UMIN_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_UMAX_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_AVR_SIGNAL_FOR_RANG_BUTTON,
                                                                        NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_BUTTON,
                                                                        NUMBER_EL_SIGNAL_FOR_RANG_BUTTON
                                                                       );
@@ -16893,14 +16341,6 @@ void main_manu_function(void)
                                                                        /*el_filter,*/
                                                                        0,
                                                                        NUMBER_GENERAL_SIGNAL_FOR_RANG,
-                                                                       NUMBER_MTZ_SIGNAL_FOR_RANG,
-                                                                       NUMBER_ZDZ_SIGNAL_FOR_RANG,
-                                                                       NUMBER_APV_SIGNAL_FOR_RANG,
-                                                                       NUMBER_UROV_SIGNAL_FOR_RANG,
-                                                                       NUMBER_ZOP_SIGNAL_FOR_RANG,
-                                                                       NUMBER_UMIN_SIGNAL_FOR_RANG,
-                                                                       NUMBER_UMAX_SIGNAL_FOR_RANG,
-                                                                       NUMBER_AVR_SIGNAL_FOR_RANG,
                                                                        NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG,
                                                                        NUMBER_EL_SIGNAL_FOR_RANG
                                                                       );
@@ -17239,14 +16679,6 @@ void main_manu_function(void)
                                                                        /*el_filter,*/
                                                                        1,
                                                                        NUMBER_GENERAL_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_MTZ_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_ZDZ_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_APV_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_UROV_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_ZOP_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_UMIN_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_UMAX_SIGNAL_FOR_RANG_INPUT,
-                                                                       NUMBER_AVR_SIGNAL_FOR_RANG_INPUT,
                                                                        NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_INPUT,
                                                                        NUMBER_EL_SIGNAL_FOR_RANG_INPUT
                                                                       );
@@ -17307,14 +16739,6 @@ void main_manu_function(void)
                                                                        /*el_filter,*/
                                                                        1,
                                                                        NUMBER_GENERAL_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_MTZ_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_ZDZ_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_APV_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_UROV_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_ZOP_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_UMIN_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_UMAX_SIGNAL_FOR_RANG_BUTTON,
-                                                                       NUMBER_AVR_SIGNAL_FOR_RANG_BUTTON,
                                                                        NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_BUTTON,
                                                                        NUMBER_EL_SIGNAL_FOR_RANG_BUTTON
                                                                       );
@@ -17570,14 +16994,6 @@ void main_manu_function(void)
                                                                        /*el_filter,*/
                                                                        1,
                                                                        NUMBER_GENERAL_SIGNAL_FOR_RANG,
-                                                                       NUMBER_MTZ_SIGNAL_FOR_RANG,
-                                                                       NUMBER_ZDZ_SIGNAL_FOR_RANG,
-                                                                       NUMBER_APV_SIGNAL_FOR_RANG,
-                                                                       NUMBER_UROV_SIGNAL_FOR_RANG,
-                                                                       NUMBER_ZOP_SIGNAL_FOR_RANG,
-                                                                       NUMBER_UMIN_SIGNAL_FOR_RANG,
-                                                                       NUMBER_UMAX_SIGNAL_FOR_RANG,
-                                                                       NUMBER_AVR_SIGNAL_FOR_RANG,
                                                                        NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG,
                                                                        NUMBER_EL_SIGNAL_FOR_RANG
                                                                       );

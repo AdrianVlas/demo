@@ -111,7 +111,6 @@ extern unsigned int bank_ortogonal;
 extern volatile unsigned int semaphore_measure_values_low1;
 
 extern unsigned int number_inputs_for_fix_one_second;
-extern unsigned int number_inputs_for_fix_one_period;
 extern volatile unsigned int measurement[NUMBER_ANALOG_CANALES + 8];
 extern unsigned int measurement_high[2][NUMBER_ANALOG_CANALES + 8], bank_measurement_high;
 extern unsigned int measurement_middle[NUMBER_ANALOG_CANALES + 8]; 
@@ -139,9 +138,6 @@ extern unsigned int lichylnyk_1s_po_20ms;
 extern volatile unsigned int bank_for_enegry;
 extern int P, Q, cos_phi_x1000;
 extern unsigned int S;
-extern double energy[MAX_NUMBER_INDEXES_ENERGY];
-extern unsigned int clean_energy;
-extern unsigned int information_about_clean_energy;
 
 extern const int ea[2];
 extern const int eb[2];
@@ -224,11 +220,8 @@ extern volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR;
 extern volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR_LOCK;
 extern volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR;
 extern volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK;
-extern volatile unsigned int periodical_tasks_TEST_RESURS;
-extern volatile unsigned int periodical_tasks_TEST_RESURS_LOCK;
 extern volatile unsigned int periodical_tasks_TEST_FLASH_MEMORY;
 extern volatile unsigned int periodical_tasks_CALCULATION_ANGLE;
-extern volatile unsigned int periodical_tasks_CALC_ENERGY_DATA;
 extern volatile unsigned int periodical_tasks_CALC_DELTA_PHI;
 
 extern const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VYMIRJUVANNJA];
@@ -274,10 +267,6 @@ extern int * const timeout_mtz_vvid_prysk[2];
 extern _Bool previous_state_mtz_po_incn;
 extern _Bool previous_state_mtz_po_uncn;
 extern unsigned int p_global_trigger_state_mtz2;
-
-//Визначення періодів у хвилину і більше
-extern unsigned int number_seconds;
-extern volatile unsigned int number_minutes;
 
 //Змінні для визначеня ресурсу процесора-програми
 extern volatile unsigned int restart_resurs_count;
@@ -418,14 +407,6 @@ extern const unsigned char letters[69][2];
 extern const unsigned char extra_letters[12][1 + MAX_NAMBER_LANGUAGE];
 
 extern int current_language;
-
-//Лічильник ресурсу
-extern unsigned int koef_resurs_changed;
-extern float K_resurs_prt, K_resurs;
-extern unsigned int resurs_vymykacha, resurs_vymykacha_ctrl;
-extern unsigned int resurs_vidkljuchennja, resurs_vidkljuchennja_ctrl;
-extern unsigned char crc_resurs, crc_resurs_ctrl;
-extern unsigned int restart_counter;
 
 //RS-485
 extern unsigned char TxBuffer_RS485[BUFFER_RS485];

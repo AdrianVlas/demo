@@ -107,7 +107,7 @@ extern void make_ekran_transformator(void);
 extern void make_ekran_transformator_control(void);
 extern void make_ekran_set_function_in_input(unsigned int);
 extern void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int, unsigned int);
-extern void check_current_index_is_presented_in_configuration(unsigned int*, /*int*,*/ /*EL_FILTER_STRUCT[],*/ int, int, int, int, int, int, int, int, int, int, int, int);
+extern void check_current_index_is_presented_in_configuration(unsigned int*, /*int*,*/ /*EL_FILTER_STRUCT[],*/ int, int, int, int);
 extern void make_ekran_choose_CBOn_CBOff(void);
 extern void make_ekran_setpoint_switch(void);
 extern void make_ekran_timeout_switch(void);
@@ -157,8 +157,6 @@ extern void make_ekran_changing_signals_digital_registrator(void);
 extern void make_ekran_list_titles_for_record_of_pr_err_registrator(void);
 extern void make_ekran_changing_diagnostics_pr_err_registrator(void);
 extern void make_ekran_setting_language(void);
-extern void make_ekran_resurs(void);
-extern void make_ekran_energy(unsigned int);
 extern void make_ekran_grupa_ustavok(void);
 extern void make_ekran_vidkluchenja(void);
 
@@ -198,8 +196,6 @@ extern void urov_handler(volatile unsigned int*, unsigned int);
 extern void apv_handler(volatile unsigned int*, unsigned int);
 extern void on_off_handler(volatile unsigned int*);
 extern void control_VV(volatile unsigned int*);
-extern void make_koef_for_resurs(void);
-extern void resurs_vymykacha_handler(volatile unsigned int*);
 extern unsigned int stop_regisrator(volatile unsigned int*, unsigned int*);
 extern void fix_undefined_error_dr(volatile unsigned int*);
 extern void start_monitoring_max_phase_current(unsigned int);
@@ -266,8 +262,6 @@ extern unsigned int sqrt_64(unsigned long long);
 extern unsigned int get_order(int);
 
 extern void calc_angle(void);
-extern void calc_power(int*);
-extern void calc_power_and_energy(void);
 
 extern void velychyna_zvorotnoi_poslidovnosti(int*);
 
@@ -296,7 +290,6 @@ extern void control_settings(void);
 extern void control_ustuvannja(void);
 extern void control_trg_func(void);
 extern unsigned int control_info_rejestrator(__INFO_REJESTRATOR*, unsigned char);
-extern void control_resurs(void);
 
 extern void test_external_SRAM(void);
 

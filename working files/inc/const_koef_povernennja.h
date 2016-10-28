@@ -25,9 +25,6 @@
 #define PORIG_CHUTLYVOSTI_CURRENT    50
 #define PORIG_CHUTLYVOSTI_VOLTAGE    5000
 
-#define PORIG_I_ENERGY                  20
-#define PORIG_POWER_ENERGY              2000
-
 #define PORIG_Ixy                       50 /*לְ*/
 
 #endif

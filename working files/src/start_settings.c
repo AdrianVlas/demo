@@ -1,0 +1,2480 @@
+#include "header.h"
+
+
+/**************************************/
+//Тестування зовнішньої SRAM
+/**************************************/
+inline void test_external_SRAM(void)
+{
+  //Визнапчаємо кількість двохбайтих слів
+  unsigned int size_SRAM_word = (((unsigned int)&__ICFEDIT_region_RAM1_size__) + 1) >> 1;
+  
+  //Визначаємо вказівник на початок зовнішньої оперативної пам'яті
+   unsigned short int *point = ((unsigned short int *)&__ICFEDIT_region_RAM1_start__);
+  
+  //Заповнюємо кожну комірку зовнішьої оперативної пам'яті її адресою
+  for (unsigned int i = 0; i < size_SRAM_word; i++) *point++ = (unsigned short int)(i & 0xffff);
+  
+  //Перевіряємо зчитуванням, чи у всіх комірках прописані ті числа, які ми попередньо записали
+  unsigned int error = 0, i = 0;
+  point = ((unsigned short int *)&__ICFEDIT_region_RAM1_start__);
+  while((i < size_SRAM_word) && (error == 0))
+  {
+    if ((*point) == ((unsigned short int)(i & 0xffff)))
+    {
+      //Тест даної комірки пройшов вдало
+      i++;
+      *point++ = 0;
+    }
+    else
+    {
+      //Тест даної комірки не пройшов вдало
+      
+      error = 0xff;
+      //Виставляємо повідомлення про помилку тесту зовнішьої оперативної пам'яті
+      _SET_BIT(set_diagnostyka, ERROR_EXTERNAL_SRAM_BIT);
+    }
+  }
+}
+/**************************************/
+
+/**************************************/
+//Стартова ініціалізація змінниз
+/**************************************/
+void global_vareiables_installation(void)
+{
+  /**************************/
+  //Вимірювальна система
+  /**************************/
+  for (unsigned int i = 0; i < NUMBER_INPUTs_ADCs; i++)
+  {
+    output_adc[i].tick = 0;
+    output_adc[i].value = 0;
+  }
+  
+  for (unsigned int i = 0; i < NUMBER_GND_ADC1; i++)
+  {
+    for(unsigned int j = 0; j < NUMBER_POINT; j++)
+    {
+      gnd_adc1_moment_value[i][j] = GND_NORMAL_VALUE;
+    }
+    gnd_adc1_averange_sum[i] = GND_NORMAL_VALUE*NUMBER_POINT;
+    gnd_adc1_averange[i] = GND_NORMAL_VALUE;
+  }
+  gnd_adc1 = GND_NORMAL_VALUE;
+
+  for (unsigned int i = 0; i < NUMBER_GND_ADC2; i++)
+  {
+    for(unsigned int j = 0; j < NUMBER_POINT; j++)
+    {
+      gnd_adc2_moment_value[i][j] = GND_NORMAL_VALUE;
+    }
+    gnd_adc2_averange_sum[i] = GND_NORMAL_VALUE*NUMBER_POINT;
+    gnd_adc2_averange[i] = GND_NORMAL_VALUE;
+  }
+  gnd_adc2 = GND_NORMAL_VALUE;
+
+  for(unsigned int i = 0; i < NUMBER_POINT; i++)
+  {
+    vref_adc1_moment_value[i] = VREF_NORMAL_VALUE;
+    vdd_adc1_moment_value[i] = VDD_NORMAL_VALUE;
+
+    vref_adc2_moment_value[i] = VREF_NORMAL_VALUE;
+    vdd_adc2_moment_value[i] = VDD_NORMAL_VALUE;
+  }
+  
+  for(unsigned int i=0; i<(NUMBER_ANALOG_CANALES*NUMBER_POINT*NUMBER_PERIOD_TRANSMIT); i++)
+    current_data[i] = 0;
+  
+  rozshyrena_vyborka.VAL_1_time_p = 0;
+  rozshyrena_vyborka.VAL_1_time_c = 0;
+  for (unsigned int i = 0; i < NUMBER_ANALOG_CANALES_VAL_1; i++)
+  {
+    rozshyrena_vyborka.VAL_1_data_p[i] = 0;
+    rozshyrena_vyborka.VAL_1_data_c[i] = 0;
+  }
+  rozshyrena_vyborka.VAL_2_time_p = 0;
+  rozshyrena_vyborka.VAL_2_time_c = 0;
+  for (unsigned int i = 0; i < NUMBER_ANALOG_CANALES_VAL_2; i++)
+  {
+    rozshyrena_vyborka.VAL_2_data_p[i] = 0;
+    rozshyrena_vyborka.VAL_2_data_c[i] = 0;
+  }
+
+  for (unsigned int i = 0; i < MAX_INDEX_DATA_FOR_OSCYLOGRAPH; i++)
+  {
+    data_for_oscylograph[i].time_stemp = 0;
+    data_for_oscylograph[i].VAL_1_fix = 0;
+    data_for_oscylograph[i].VAL_2_fix = 0;
+    for (unsigned int j = 0; j < NUMBER_ANALOG_CANALES; j++) data_for_oscylograph[i].data[j] = 0;
+    for (unsigned int j = 0; j < N_BIG; j++) data_for_oscylograph[i].active_functions[j] = 0;
+    data_for_oscylograph[i].state_ar_record = STATE_AR_NO_RECORD;
+  }
+
+  for (unsigned int i = 0; i < MAX_INDEX_PhK; i++)
+  {
+    for (unsigned int j = 0; j < 2; j++)
+    {
+      perechid_cherez_nul[i][j].x1 = 0;
+      perechid_cherez_nul[i][j].y1 = 0;
+
+      perechid_cherez_nul[i][j].x2 = 0;
+      perechid_cherez_nul[i][j].y2 = 0;
+    }
+    fix_perechid_cherez_nul[i] = 0;
+  }
+
+  poperednij_perechid.Ua1_x1 = 0;
+  poperednij_perechid.Ua1_y1 = 0;
+  poperednij_perechid.Ua1_x2 = 0;
+  poperednij_perechid.Ua1_y2 = 0;
+  poperednij_perechid.Ub1_x1 = 0;
+  poperednij_perechid.Ub1_y1 = 0;
+  poperednij_perechid.Ub1_x2 = 0;
+  poperednij_perechid.Ub1_y2 = 0;
+  poperednij_perechid.Uc1_x1 = 0;
+  poperednij_perechid.Uc1_y1 = 0;
+  poperednij_perechid.Uc1_x2 = 0;
+  poperednij_perechid.Uc1_y2 = 0;
+  poperednij_perechid.Ua2_x1 = 0;
+  poperednij_perechid.Ua2_y1 = 0;
+  poperednij_perechid.Ua2_x2 = 0;
+  poperednij_perechid.Ua2_y2 = 0;
+  poperednij_perechid.Ub2_x1 = 0;
+  poperednij_perechid.Ub2_y1 = 0;
+  poperednij_perechid.Ub2_x2 = 0;
+  poperednij_perechid.Ub2_y2 = 0;
+  poperednij_perechid.Uc2_x1 = 0;
+  poperednij_perechid.Uc2_y1 = 0;
+  poperednij_perechid.Uc2_x2 = 0;
+  poperednij_perechid.Uc2_y2 = 0;
+  
+  sector_1_mtz_tznp[0] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)( 90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_1_mtz_tznp[1] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)( 90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_1_mtz_tznp[2] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)( 90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_1_mtz_tznp[3] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)( 90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_1_mtz_tznp[4] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)(-90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_1_mtz_tznp[5] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)(-90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_1_mtz_tznp[6] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)(-90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_1_mtz_tznp[7] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)(-90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+
+  sector_2_mtz_tznp[0] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)( 90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_2_mtz_tznp[1] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)( 90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_2_mtz_tznp[2] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)( 90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_2_mtz_tznp[3] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)( 90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_2_mtz_tznp[4] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)(-90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_2_mtz_tznp[5] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)(-90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_2_mtz_tznp[6] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)(-90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+  sector_2_mtz_tznp[7] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)(-90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
+
+  for(unsigned int i=0; i<(NUMBER_POINT*NUMBER_ANALOG_CANALES_VAL_1); i++)
+  {
+    data_sin_val_1[i] = 0;
+    data_cos_val_1[i] = 0;
+  }
+  
+  for(unsigned int i=0; i<(NUMBER_POINT*NUMBER_ANALOG_CANALES_VAL_2); i++)
+  {
+    data_sin_val_2[i] = 0;
+    data_cos_val_2[i] = 0;
+  }
+  
+  for(unsigned int i=0; i<NUMBER_ANALOG_CANALES; i++)
+  {
+    ADCs_data_raw[i].tick = 0;
+    ADCs_data_raw[i].value = 0;
+      
+    ustuvannja_meas[i] = ustuvannja[i] = DEFAULT_USTUVANNJA_VALUE;
+
+    int phi_tmp;
+    phi_ustuvannja_meas[i] = phi_ustuvannja[i] = phi_tmp = 0;
+    
+    float phi_radian_tmp = PI*((float)phi_tmp)/180.0f;
+    phi_ustuvannja_sin_cos_meas[2*i    ] = phi_ustuvannja_sin_cos[2*i    ] = arm_sin_f32(phi_radian_tmp);
+    phi_ustuvannja_sin_cos_meas[2*i + 1] = phi_ustuvannja_sin_cos[2*i + 1] = arm_cos_f32(phi_radian_tmp);
+  }
+
+  for(unsigned int i=0; i<(2*NUMBER_ANALOG_CANALES); i++)
+  {
+    ortogonal_irq[i] = 0;
+    ortogonal[i][0] = ortogonal[i][1] = 0;
+  }
+
+  for(unsigned int i=0; i<(2*FULL_ORT_MAX); i++)
+  {
+    ortogonal_calc[i]     = 0;
+    ortogonal_calc_low[i] = 0;
+  }
+  /**************************/
+
+  /**************************/
+  //Ініціалізація глобальних таймерів
+  /**************************/
+  for(unsigned int i = 0; i < MAX_NUMBER_GLOBAL_TIMERS; i++) global_timers[i] = -1;
+  /**************************/
+
+  /**************************/
+  //Змінні, які потрібні для роботи
+  /**************************/
+  for(unsigned int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
+  {
+    etap_execution_df[i] = NONE_DF;
+  }
+  /**************************/
+
+  /**************************/
+  //Змінні, які потрібні для дискретного реєстратора
+  /**************************/
+  for(unsigned int i = 0; i < SIZE_BUFFER_FOR_DR_RECORD; i++)
+  {
+    buffer_for_save_dr_record[i] = 0xff;
+  }
+  /**************************/
+  
+  /**************************
+  Константа (які від версії до версії може змінюватися), але для даного проекту 
+  завжди визначена
+  **************************/
+  number_word_digital_part_ar = NUMBER_TOTAL_SIGNAL_FOR_RANG/(8*sizeof(short int));
+  if ((number_word_digital_part_ar*8*sizeof(short int)) < NUMBER_TOTAL_SIGNAL_FOR_RANG) number_word_digital_part_ar += 1;
+  /**************************/
+
+  /**************************/
+  //
+  /**************************/
+  /**************************/
+
+  for(unsigned int i = 0; i < MAX_ROW_LCD; i++)
+  {
+    for (unsigned int j = 0; j < MAX_COL_LCD; j++) working_ekran[i][j] = ' ';
+  }
+  for (unsigned int i=0; i<NUMBER_KEY_KEYBOARD; i++) time_set_keyboard[i] = 0;
+ 
+  for(unsigned int i=0; i<MAX_LEVEL_MENU; i++)
+  {
+    if ((i == EKRAN_LEVEL_PASSWORD) || (i == EKRAN_LEVEL_SET_NEW_PASSWORD1) || (i == EKRAN_LEVEL_SET_NEW_PASSWORD2)) position_in_current_level_menu[i] = INDEX_LINE_NUMBER_1_FOR_LEVEL_PASSWORD;
+    else  position_in_current_level_menu[i] = 0;
+    previous_level_in_current_level_menu[i] = -1;
+  }
+  
+  //Визначення початкового стану екрану
+  current_ekran.current_level = EKRAN_MAIN;
+  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
+  current_ekran.position_cursor_y = current_ekran.index_position;
+  current_ekran.edition = 0;
+  current_ekran.cursor_on = 0;
+  current_ekran.cursor_blinking_on = 0;  
+  
+  time[0] = 0x0;
+  time[1] = 0x0;
+  time[2] = 0x0;
+  time[3] = 0x0;
+  time[4] = 0x0;
+  time[5] = 0x0;
+  time[6] = 0x0;
+  calibration = 0;
+
+  time_copy[0] = 0x0;
+  time_copy[1] = 0x0;
+  time_copy[2] = 0x0;
+  time_copy[3] = 0x0;
+  time_copy[4] = 0x0;
+  time_copy[5] = 0x0;
+  time_copy[6] = 0x0;
+  calibration_copy = 0;
+  
+  /**************************/
+  //Ініціалізація структури усправління драйвером I2C
+  /**************************/
+  //Стан обміну
+  driver_i2c.state_execution = -1;
+  //Ідентифікатор пристрою, з яким ведетьсяобмін
+  driver_i2c.device_id = -1;
+  //Код операції
+  driver_i2c.action =- 1;
+  //Значення решти полів поки не грає ролі 
+  /**************************/
+
+  /**************************/
+  //Обнуляємо масив для аналогового реєстратора
+  /**************************/
+  for(unsigned int i = 0; i < SIZE_BUFFER_FOR_AR; i++) array_ar[i] = 0;
+  /**************************/
+
+  /**************************/
+  //Додаткові константи для МСЗ
+  /**************************/
+//  mtz_settings_prt[MTZ_LEVEL1][RANG_BLOCK_MTZ] = RANG_BLOCK_MTZ1;
+//  mtz_settings_prt[MTZ_LEVEL1][RANG_SECTOR_VPERED_MTZN] = RANG_SECTOR_VPERED_MTZN1;
+//  mtz_settings_prt[MTZ_LEVEL1][RANG_SECTOR_NAZAD_MTZN] = RANG_SECTOR_NAZAD_MTZN1;
+//  mtz_settings_prt[MTZ_LEVEL1][RANG_PO_MTZ] = RANG_PO_MTZ1;
+//  mtz_settings_prt[MTZ_LEVEL1][RANG_PO_MTZN_VPERED] = RANG_PO_MTZN1_VPERED;
+//  mtz_settings_prt[MTZ_LEVEL1][RANG_PO_MTZN_NAZAD] = RANG_PO_MTZN1_NAZAD;
+//  mtz_settings_prt[MTZ_LEVEL1][RANG_PO_U_MTZPN] = RANG_PO_U_MTZPN1;
+//  mtz_settings_prt[MTZ_LEVEL1][RANG_PO_MTZPN] = RANG_PO_MTZPN1;
+//  mtz_settings_prt[MTZ_LEVEL1][RANG_MTZ] = RANG_MTZ1;
+//  
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_BLOCK_MTZ] = RANG_BLOCK_MTZ2;
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_BLOCK_USK_MTZ] = RANG_BLOCK_USK_MTZ2;
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_SECTOR_VPERED_MTZN] = RANG_SECTOR_VPERED_MTZN2;
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_SECTOR_NAZAD_MTZN] = RANG_SECTOR_NAZAD_MTZN2;
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_PO_MTZ] = RANG_PO_MTZ2;
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_PO_MTZN_VPERED] = RANG_PO_MTZN2_VPERED;
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_PO_MTZN_NAZAD] = RANG_PO_MTZN2_NAZAD;
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_PO_U_MTZPN] = RANG_PO_U_MTZPN2;
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_PO_MTZPN] = RANG_PO_MTZPN2;
+//  mtz_settings_prt[MTZ_LEVEL2][RANG_MTZ] = RANG_MTZ2;
+//  
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_BLOCK_MTZ] = RANG_BLOCK_MTZ3;
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_BLOCK_USK_MTZ] = RANG_BLOCK_USK_MTZ3;
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_SECTOR_VPERED_MTZN] = RANG_SECTOR_VPERED_MTZN3;
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_SECTOR_NAZAD_MTZN] = RANG_SECTOR_NAZAD_MTZN3;
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_PO_MTZ] = RANG_PO_MTZ3;
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_PO_MTZN_VPERED] = RANG_PO_MTZN3_VPERED;
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_PO_MTZN_NAZAD] = RANG_PO_MTZN3_NAZAD;
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_PO_U_MTZPN] = RANG_PO_U_MTZPN3;
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_PO_MTZPN] = RANG_PO_MTZPN3;
+//  mtz_settings_prt[MTZ_LEVEL3][RANG_MTZ] = RANG_MTZ3;
+//  
+//  mtz_settings_prt[MTZ_LEVEL4][RANG_BLOCK_MTZ] = RANG_BLOCK_MTZ4;
+//  mtz_settings_prt[MTZ_LEVEL4][RANG_SECTOR_VPERED_MTZN] = RANG_SECTOR_VPERED_MTZN4;
+//  mtz_settings_prt[MTZ_LEVEL4][RANG_SECTOR_NAZAD_MTZN] = RANG_SECTOR_NAZAD_MTZN4;
+//  mtz_settings_prt[MTZ_LEVEL4][RANG_PO_MTZ] = RANG_PO_MTZ4;
+//  mtz_settings_prt[MTZ_LEVEL4][RANG_PO_MTZN_VPERED] = RANG_PO_MTZN4_VPERED;
+//  mtz_settings_prt[MTZ_LEVEL4][RANG_PO_MTZN_NAZAD] = RANG_PO_MTZN4_NAZAD;
+//  mtz_settings_prt[MTZ_LEVEL4][RANG_PO_U_MTZPN] = RANG_PO_U_MTZPN4;
+//  mtz_settings_prt[MTZ_LEVEL4][RANG_PO_MTZPN] = RANG_PO_MTZPN4;
+//  mtz_settings_prt[MTZ_LEVEL4][RANG_MTZ] = RANG_MTZ4;
+  
+//  mtz_const_menu_settings_prt[MTZ_LEVEL1][CTR_MTZ] = CTR_MTZ_1;
+//  mtz_const_menu_settings_prt[MTZ_LEVEL1][CTR_MTZ_VPERED] = CTR_MTZ_1_VPERED;
+//  mtz_const_menu_settings_prt[MTZ_LEVEL1][CTR_MTZ_NAZAD] = CTR_MTZ_1_NAZAD;
+//  
+//  mtz_const_menu_settings_prt[MTZ_LEVEL2][CTR_MTZ] = CTR_MTZ_2;
+//  mtz_const_menu_settings_prt[MTZ_LEVEL2][CTR_MTZ_VPERED] = CTR_MTZ_2_VPERED;
+//  mtz_const_menu_settings_prt[MTZ_LEVEL2][CTR_MTZ_NAZAD] = CTR_MTZ_2_NAZAD;
+
+//  mtz_prysk_const_menu_settings_prt[MTZ_LEVEL2 - MTZ_LEVEL2][CTR_MTZ_PRYSKORENNJA] = CTR_MTZ_2_PRYSKORENNJA;
+//  mtz_prysk_const_menu_settings_prt[MTZ_LEVEL2 - MTZ_LEVEL2][CTR_MTZ_PRYSKORENA] = CTR_MTZ_2_PRYSKORENA;
+  
+//  mtz_const_menu_settings_prt[MTZ_LEVEL3][CTR_MTZ] = CTR_MTZ_3;
+//  mtz_const_menu_settings_prt[MTZ_LEVEL3][CTR_MTZ_VPERED] = CTR_MTZ_3_VPERED;
+//  mtz_const_menu_settings_prt[MTZ_LEVEL3][CTR_MTZ_NAZAD] = CTR_MTZ_3_NAZAD;
+
+//  mtz_prysk_const_menu_settings_prt[MTZ_LEVEL3 - MTZ_LEVEL2][CTR_MTZ_PRYSKORENNJA] = CTR_MTZ_3_PRYSKORENNJA;
+//  mtz_prysk_const_menu_settings_prt[MTZ_LEVEL3 - MTZ_LEVEL2][CTR_MTZ_PRYSKORENA] = CTR_MTZ_3_PRYSKORENA;
+  
+//  mtz_const_menu_settings_prt[MTZ_LEVEL4][CTR_MTZ] = CTR_MTZ_4;
+//  mtz_const_menu_settings_prt[MTZ_LEVEL4][CTR_MTZ_VPERED] = CTR_MTZ_4_VPERED;
+//  mtz_const_menu_settings_prt[MTZ_LEVEL4][CTR_MTZ_NAZAD] = CTR_MTZ_4_NAZAD;
+  
+//  type_mtz_arr[MTZ_LEVEL1] = &current_settings_prt.type_mtz1;
+//  type_mtz_arr[MTZ_LEVEL2] = &current_settings_prt.type_mtz2;
+//  type_mtz_arr[MTZ_LEVEL3] = &current_settings_prt.type_mtz3;
+//  type_mtz_arr[MTZ_LEVEL4] = &current_settings_prt.type_mtz4;
+  
+//  setpoint_mtz[MTZ_LEVEL1] = current_settings_prt.setpoint_mtz_1;
+//  setpoint_mtz[MTZ_LEVEL2] = current_settings_prt.setpoint_mtz_2;
+//  setpoint_mtz[MTZ_LEVEL3] = current_settings_prt.setpoint_mtz_3;
+//  setpoint_mtz[MTZ_LEVEL4] = current_settings_prt.setpoint_mtz_4;
+  
+//  setpoint_mtz_n_vpered[MTZ_LEVEL1] = current_settings_prt.setpoint_mtz_1_n_vpered;
+//  setpoint_mtz_n_vpered[MTZ_LEVEL2] = current_settings_prt.setpoint_mtz_2_n_vpered;
+//  setpoint_mtz_n_vpered[MTZ_LEVEL3] = current_settings_prt.setpoint_mtz_3_n_vpered;
+//  setpoint_mtz_n_vpered[MTZ_LEVEL4] = current_settings_prt.setpoint_mtz_4_n_vpered;
+  
+//  setpoint_mtz_n_nazad[MTZ_LEVEL1] = current_settings_prt.setpoint_mtz_1_n_nazad;
+//  setpoint_mtz_n_nazad[MTZ_LEVEL2] = current_settings_prt.setpoint_mtz_2_n_nazad;
+//  setpoint_mtz_n_nazad[MTZ_LEVEL3] = current_settings_prt.setpoint_mtz_3_n_nazad;
+//  setpoint_mtz_n_nazad[MTZ_LEVEL4] = current_settings_prt.setpoint_mtz_4_n_nazad;
+  
+//  setpoint_mtz_U[MTZ_LEVEL1] = current_settings_prt.setpoint_mtz_1_U;
+//  setpoint_mtz_U[MTZ_LEVEL2] = current_settings_prt.setpoint_mtz_2_U;
+//  setpoint_mtz_U[MTZ_LEVEL3] = current_settings_prt.setpoint_mtz_3_U;
+//  setpoint_mtz_U[MTZ_LEVEL4] = current_settings_prt.setpoint_mtz_4_U;
+  
+//  setpoint_mtz_po_napruzi[MTZ_LEVEL1] = current_settings_prt.setpoint_mtz_1_po_napruzi;
+//  setpoint_mtz_po_napruzi[MTZ_LEVEL2] = current_settings_prt.setpoint_mtz_2_po_napruzi;
+//  setpoint_mtz_po_napruzi[MTZ_LEVEL3] = current_settings_prt.setpoint_mtz_3_po_napruzi;
+//  setpoint_mtz_po_napruzi[MTZ_LEVEL4] = current_settings_prt.setpoint_mtz_4_po_napruzi;
+  
+//  mtz_tmr_const[MTZ_LEVEL1][INDEX_TIMER_MTZ] = INDEX_TIMER_MTZ1;
+//  mtz_tmr_const[MTZ_LEVEL1][INDEX_TIMER_MTZ_N_VPERED] = INDEX_TIMER_MTZ1_N_VPERED;
+//  mtz_tmr_const[MTZ_LEVEL1][INDEX_TIMER_MTZ_N_NAZAD] = INDEX_TIMER_MTZ1_N_NAZAD;
+//  mtz_tmr_const[MTZ_LEVEL1][INDEX_TIMER_MTZ_PO_NAPRUZI] = INDEX_TIMER_MTZ1_PO_NAPRUZI;
+//  mtz_tmr_const[MTZ_LEVEL2][INDEX_TIMER_MTZ] = INDEX_TIMER_MTZ2;
+//  mtz_tmr_const[MTZ_LEVEL2][INDEX_TIMER_MTZ_N_VPERED] = INDEX_TIMER_MTZ2_N_VPERED;
+//  mtz_tmr_const[MTZ_LEVEL2][INDEX_TIMER_MTZ_N_NAZAD] = INDEX_TIMER_MTZ2_N_NAZAD;
+//  mtz_tmr_const[MTZ_LEVEL2][INDEX_TIMER_MTZ_PO_NAPRUZI] = INDEX_TIMER_MTZ2_PO_NAPRUZI;
+//  mtz_tmr_const[MTZ_LEVEL3][INDEX_TIMER_MTZ] = INDEX_TIMER_MTZ3;
+//  mtz_tmr_const[MTZ_LEVEL3][INDEX_TIMER_MTZ_N_VPERED] = INDEX_TIMER_MTZ3_N_VPERED;
+//  mtz_tmr_const[MTZ_LEVEL3][INDEX_TIMER_MTZ_N_NAZAD] = INDEX_TIMER_MTZ3_N_NAZAD;
+//  mtz_tmr_const[MTZ_LEVEL3][INDEX_TIMER_MTZ_PO_NAPRUZI] = INDEX_TIMER_MTZ3_PO_NAPRUZI;
+//  mtz_tmr_const[MTZ_LEVEL4][INDEX_TIMER_MTZ] = INDEX_TIMER_MTZ4;
+//  mtz_tmr_const[MTZ_LEVEL4][INDEX_TIMER_MTZ_N_VPERED] = INDEX_TIMER_MTZ4_N_VPERED;
+//  mtz_tmr_const[MTZ_LEVEL4][INDEX_TIMER_MTZ_N_NAZAD] = INDEX_TIMER_MTZ4_N_NAZAD;
+//  mtz_tmr_const[MTZ_LEVEL4][INDEX_TIMER_MTZ_PO_NAPRUZI] = INDEX_TIMER_MTZ4_PO_NAPRUZI;
+
+//  mtz_prysk_tmr_const[MTZ_LEVEL2 - MTZ_LEVEL2][INDEX_TIMER_MTZ_PR] = INDEX_TIMER_MTZ2_PR;
+//  mtz_prysk_tmr_const[MTZ_LEVEL2 - MTZ_LEVEL2][INDEX_TIMER_MTZ_N_VPERED_PR] = INDEX_TIMER_MTZ2_N_VPERED_PR;
+//  mtz_prysk_tmr_const[MTZ_LEVEL2 - MTZ_LEVEL2][INDEX_TIMER_MTZ_N_NAZAD_PR] = INDEX_TIMER_MTZ2_N_NAZAD_PR;
+//  mtz_prysk_tmr_const[MTZ_LEVEL2 - MTZ_LEVEL2][INDEX_TIMER_MTZ_PO_NAPRUZI_PR] = INDEX_TIMER_MTZ2_PO_NAPRUZI_PR;
+//  mtz_prysk_tmr_const[MTZ_LEVEL2 - MTZ_LEVEL2][INDEX_TIMER_MTZ_VVID_PR] = INDEX_TIMER_MTZ2_VVID_PR;
+//  mtz_prysk_tmr_const[MTZ_LEVEL3 - MTZ_LEVEL2][INDEX_TIMER_MTZ_PR] = INDEX_TIMER_MTZ3_PR;
+//  mtz_prysk_tmr_const[MTZ_LEVEL3 - MTZ_LEVEL2][INDEX_TIMER_MTZ_N_VPERED_PR] = INDEX_TIMER_MTZ2_N_VPERED_PR;
+//  mtz_prysk_tmr_const[MTZ_LEVEL3 - MTZ_LEVEL2][INDEX_TIMER_MTZ_N_NAZAD_PR] = INDEX_TIMER_MTZ3_N_NAZAD_PR;
+//  mtz_prysk_tmr_const[MTZ_LEVEL3 - MTZ_LEVEL2][INDEX_TIMER_MTZ_PO_NAPRUZI_PR] = INDEX_TIMER_MTZ3_PO_NAPRUZI_PR;
+//  mtz_prysk_tmr_const[MTZ_LEVEL3 - MTZ_LEVEL2][INDEX_TIMER_MTZ_VVID_PR] = INDEX_TIMER_MTZ3_VVID_PR;
+  
+//  timeout_mtz[MTZ_LEVEL1] = current_settings_prt.timeout_mtz_1;
+//  timeout_mtz[MTZ_LEVEL2] = current_settings_prt.timeout_mtz_2;
+//  timeout_mtz[MTZ_LEVEL3] = current_settings_prt.timeout_mtz_3;
+//  timeout_mtz[MTZ_LEVEL4] = current_settings_prt.timeout_mtz_4;
+
+//  timeout_mtz_prysk[MTZ_LEVEL2 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_2_pr;
+//  timeout_mtz_prysk[MTZ_LEVEL3 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_3_pr;
+//  
+//  timeout_mtz_n_vpered[MTZ_LEVEL1] = current_settings_prt.timeout_mtz_1_n_vpered;
+//  timeout_mtz_n_vpered[MTZ_LEVEL2] = current_settings_prt.timeout_mtz_2_n_vpered;
+//  timeout_mtz_n_vpered[MTZ_LEVEL3] = current_settings_prt.timeout_mtz_3_n_vpered;
+//  timeout_mtz_n_vpered[MTZ_LEVEL4] = current_settings_prt.timeout_mtz_4_n_vpered;
+
+//  timeout_mtz_n_vpered_prysk[MTZ_LEVEL2 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_2_n_vpered_pr;
+//  timeout_mtz_n_vpered_prysk[MTZ_LEVEL3 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_3_n_vpered_pr;
+  
+//  timeout_mtz_n_nazad[MTZ_LEVEL1] = current_settings_prt.timeout_mtz_1_n_nazad;
+//  timeout_mtz_n_nazad[MTZ_LEVEL2] = current_settings_prt.timeout_mtz_2_n_nazad;
+//  timeout_mtz_n_nazad[MTZ_LEVEL3] = current_settings_prt.timeout_mtz_3_n_nazad;
+//  timeout_mtz_n_nazad[MTZ_LEVEL4] = current_settings_prt.timeout_mtz_4_n_nazad;
+
+//  timeout_mtz_n_nazad_prysk[MTZ_LEVEL2 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_2_n_nazad_pr;
+//  timeout_mtz_n_nazad_prysk[MTZ_LEVEL3 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_3_n_nazad_pr;
+  
+//  timeout_mtz_po_napruzi[MTZ_LEVEL1] = current_settings_prt.timeout_mtz_1_po_napruzi;
+//  timeout_mtz_po_napruzi[MTZ_LEVEL2] = current_settings_prt.timeout_mtz_2_po_napruzi;
+//  timeout_mtz_po_napruzi[MTZ_LEVEL3] = current_settings_prt.timeout_mtz_3_po_napruzi;
+//  timeout_mtz_po_napruzi[MTZ_LEVEL4] = current_settings_prt.timeout_mtz_4_po_napruzi;
+
+//  timeout_mtz_po_napruzi_prysk[MTZ_LEVEL2 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_2_po_napruzi_pr;
+//  timeout_mtz_po_napruzi_prysk[MTZ_LEVEL3 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_3_po_napruzi_pr;
+
+//  timeout_mtz_vvid_prysk[MTZ_LEVEL2 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_2_vvid_pr;
+//  timeout_mtz_vvid_prysk[MTZ_LEVEL3 - MTZ_LEVEL2] = current_settings_prt.timeout_mtz_3_vvid_pr;
+  
+//  i_nom_const = I_NOM * KOEF_1_2_I;
+//  u_linear_nom_const = U_LINEAR_NOM * KOEF_0_2_U;
+  /**************************/
+}
+/**************************************/
+
+/**************************************/
+//Конфігурація I2C
+/**************************************/
+void Configure_I2C(I2C_TypeDef* I2Cx)
+{
+  I2C_InitTypeDef  I2C_InitStructure;
+  GPIO_InitTypeDef GPIO_InitStructure;
+  uint16_t current_count_tim4, new_count_tim4;
+  unsigned int delta;
+
+  /* Забороняємо I2C  */
+  I2C_Cmd(I2Cx, DISABLE);
+
+  /***
+  Добиваємося, щоб на SDA встановилася 1
+  ***/
+  /* Настроюємо I2C піни SCL Output Open-drain */
+  GPIO_InitStructure.GPIO_Pin = GPIO_I2C_SCL;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_Init(GPIO_I2C, &GPIO_InitStructure);
+  /* Встановлюємо піни SCL у високий рівень*/
+  GPIO_SetBits(GPIO_I2C, GPIO_I2C_SCL);
+  while(GPIO_ReadOutputDataBit(GPIO_I2C, GPIO_I2C_SCL) == Bit_RESET);
+
+  /*Настроюємо I2C піни SDA  на ввід*/
+  GPIO_InitStructure.GPIO_Pin = GPIO_I2C_SDA;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_Init(GPIO_I2C, &GPIO_InitStructure);
+  
+  while(GPIO_ReadInputDataBit(GPIO_I2C, GPIO_I2C_SDA) == RESET)
+  {
+    /* SCL -> "0" */
+    GPIO_ResetBits(GPIO_I2C, GPIO_I2C_SCL);
+    current_count_tim4 = ((uint16_t)TIM4->CNT);
+    delta = 0;
+    while (delta < 4) // <= 4x10 = 40(мкс)
+    {
+      new_count_tim4 = ((uint16_t)TIM4->CNT);
+      if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+      else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+    }
+
+    /* SCL -> "1" */
+    GPIO_SetBits(GPIO_I2C, GPIO_I2C_SCL);
+    while(GPIO_ReadOutputDataBit(GPIO_I2C, GPIO_I2C_SCL) == Bit_RESET);
+    current_count_tim4 = ((uint16_t)TIM4->CNT);
+    delta = 0;
+    while (delta < 4) // <= 4x10 = 40(мкс)
+    {
+      new_count_tim4 = ((uint16_t)TIM4->CNT);
+      if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+      else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+    }
+  }
+  /*******/
+  
+  /***
+  Переводимо піна під упавління мікроконтролера
+  ***/
+  /* Настроюємо I2C пін SDA як Output Open-drain */
+  GPIO_InitStructure.GPIO_Pin = GPIO_I2C_SDA;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_Init(GPIO_I2C, &GPIO_InitStructure);
+  /* Встановлюємо піни SCL і SDA у високий рівень*/
+  GPIO_SetBits(GPIO_I2C, (GPIO_I2C_SCL | GPIO_I2C_SDA));
+  while(GPIO_ReadOutputDataBit(GPIO_I2C, GPIO_I2C_SCL) == Bit_RESET);
+  /*******/
+  
+  /***
+  Симулюємо SOFTWARE RESET для EEPROM: Start + 9-bit + Start + Stop 
+  ****/
+
+  /*- Start -*/
+  /*SCL = 1 і SCA = 1*/
+
+  /* SCL -> "0" */
+  GPIO_ResetBits(GPIO_I2C, GPIO_I2C_SCL);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+    
+  /* SCL -> "1" */
+  GPIO_SetBits(GPIO_I2C, GPIO_I2C_SCL);
+  while(GPIO_ReadOutputDataBit(GPIO_I2C, GPIO_I2C_SCL) == Bit_RESET);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+  
+  /* SDA -> "0" */
+  GPIO_ResetBits(GPIO_I2C, GPIO_I2C_SDA);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+
+  /* SCL -> "0" */
+  GPIO_ResetBits(GPIO_I2C, GPIO_I2C_SCL);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+  
+  /* SDA -> "1" */
+  GPIO_SetBits(GPIO_I2C, GPIO_I2C_SDA);
+
+  /*- 9 циклів -*/
+  for(unsigned int i = 0; i < 9; i++)
+  {
+    /* SCL = "0" */
+    current_count_tim4 = ((uint16_t)TIM4->CNT);
+    delta = 0;
+    while (delta < 2) // <= 2x10 = 20(мкс)
+    {
+      new_count_tim4 = ((uint16_t)TIM4->CNT);
+      if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+      else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+    }
+
+    /* SCL -> "1" */
+    GPIO_SetBits(GPIO_I2C, GPIO_I2C_SCL);
+    while(GPIO_ReadOutputDataBit(GPIO_I2C, GPIO_I2C_SCL) == Bit_RESET);
+    current_count_tim4 = ((uint16_t)TIM4->CNT);
+    delta = 0;
+    while (delta < 4) // <= 4x10 = 40(мкс)
+    {
+      new_count_tim4 = ((uint16_t)TIM4->CNT);
+      if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+      else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+    }
+
+    /* SCL -> "0" */
+    GPIO_ResetBits(GPIO_I2C, GPIO_I2C_SCL);
+    current_count_tim4 = ((uint16_t)TIM4->CNT);
+    delta = 0;
+    while (delta < 2) // <= 2x10 = 20(мкс)
+    {
+      new_count_tim4 = ((uint16_t)TIM4->CNT);
+      if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+      else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+    }
+  }
+
+  /*- Start -*/
+  /*SCL = 0 і SCA = 1*/
+
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+    
+  /* SCL -> "1" */
+  GPIO_SetBits(GPIO_I2C, GPIO_I2C_SCL);
+  while(GPIO_ReadOutputDataBit(GPIO_I2C, GPIO_I2C_SCL) == Bit_RESET);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+  
+  /* SDA -> "0" */
+  GPIO_ResetBits(GPIO_I2C, GPIO_I2C_SDA);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+
+  /* SCL -> "0" */
+  GPIO_ResetBits(GPIO_I2C, GPIO_I2C_SCL);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+
+  /*- Stop -*/
+  /*SCL = 0 і SCA = 0*/
+
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+    
+  /* SCL -> "1" */
+  GPIO_SetBits(GPIO_I2C, GPIO_I2C_SCL);
+  while(GPIO_ReadOutputDataBit(GPIO_I2C, GPIO_I2C_SCL) == Bit_RESET);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+  
+  /* SDA -> "1" */
+  GPIO_SetBits(GPIO_I2C, GPIO_I2C_SDA);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+
+  /* SCL -> "0" */
+  GPIO_ResetBits(GPIO_I2C, GPIO_I2C_SCL);
+  current_count_tim4 = ((uint16_t)TIM4->CNT);
+  delta = 0;
+  while (delta < 2) // <= 2x10 = 20(мкс)
+  {
+    new_count_tim4 = ((uint16_t)TIM4->CNT);
+    if (new_count_tim4 >= current_count_tim4) delta = new_count_tim4 - current_count_tim4;
+    else delta = (0x10000 - current_count_tim4) + new_count_tim4; //0x10000 - це повний період таймера, бо ми настроїли його тактуватиу інтервалі [0; 65535]
+  }
+
+  /* Встановлюємо піни SCL і SDA у високий рівень*/
+  GPIO_SetBits(GPIO_I2C, (GPIO_I2C_SCL | GPIO_I2C_SDA));
+  while(GPIO_ReadOutputDataBit(GPIO_I2C, GPIO_I2C_SCL) == Bit_RESET);
+  /*******/
+  
+  /*
+  Повертаємо піни під управління I2C
+  */
+  //Конфігуруємо піни PB8/I2C1_SCL і PB9/I2C1_SDA
+  GPIO_PinAFConfig(GPIO_I2C, GPIO_I2C_SCLSource, GPIO_AF_I2C);
+  GPIO_PinAFConfig(GPIO_I2C, GPIO_I2C_SDASource, GPIO_AF_I2C);
+
+  /* Настроюємо I2C піни: SCL і SDA */
+  GPIO_InitStructure.GPIO_Pin =  GPIO_I2C_SCL | GPIO_I2C_SDA;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_Init(GPIO_I2C, &GPIO_InitStructure);
+  /*******/
+
+  /* Скидаємо всі I2C регістри */
+  I2C_SoftwareResetCmd(I2Cx, ENABLE);
+  I2C_SoftwareResetCmd(I2Cx, DISABLE);
+
+  /* Дозволяємо I2C*/
+  I2C_Cmd(I2Cx, ENABLE);
+
+
+  I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
+  I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;
+  I2C_InitStructure.I2C_OwnAddress1 = EEPROM_ADDRESS;
+  I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
+  I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
+  I2C_InitStructure.I2C_ClockSpeed = (low_speed_i2c == 0 ) ? CLOCKSPEED_1MBIT : CLOCKSPEED;
+  I2C_Init(I2Cx, &I2C_InitStructure);
+
+  /* Дозволяємо для I2C генерацію переривань по помилках */
+  I2C_ITConfig(I2Cx, I2C_IT_ERR, ENABLE);
+}
+/**************************************/
+
+/**************************************/
+//Стартова ініціалізація периферії процесора
+/**************************************/
+void start_settings_peripherals(void)
+{
+  /**********************/
+  //Настроювання мікроконтролера: ядра + периферії
+  /**********************/
+  Set_System();
+  /**********************/
+
+  /**********************/
+  //Настроюємо DBG модуль
+  /**********************/
+  DBGMCU_APB1PeriphConfig(DBGMCU_TIM2_STOP | DBGMCU_TIM5_STOP | DBGMCU_TIM4_STOP | DBGMCU_I2C1_SMBUS_TIMEOUT, ENABLE);
+  /**********************/
+
+  /**********************/
+  //Настроювання переривань
+  /**********************/
+  Interrupts_Config();
+  /**********************/
+
+  /**********************/
+  //Настроювання зовнішню шину
+  /**********************/
+  FSMC_SRAM_Init();
+  _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_OUTPUTS_1) = 0;
+  _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_OUTPUTS_2) = 0;
+  _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_LEDS) = 0;
+  /**********************/
+
+  /**********************/
+  //Настроювання пінів процесора
+  /**********************/
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /**************/
+  //Піни на вивід
+  /**************/
+  /* Пін зовнішнього Watchdog, як Output push-pull */
+  GPIO_InitStructure.GPIO_Pin = GPIO_PIN_EXTERNAL_WATCHDOG;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_Init(GPIO_EXTERNAL_WATCHDOG, &GPIO_InitStructure);
+  /* Знімаємо пін зовнішнього Watchdog */
+  GPIO_ResetBits(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG);
+  
+  /*
+  Виконуємо стартову ініціалізацію змінних? а потім скидаємо Watchdog
+  Після цього продовжуємо настройку периферії
+  
+  Це потрібно, щоб уникнути перезапуску приладу
+  */
+  /**********************/
+  //Тестуємо зовнішню SRAM
+  /**********************/
+  test_external_SRAM();
+  /**********************/
+  
+  //Змінюємо стан біту зовнішнього Watchdog на протилежний
+  GPIO_WriteBit(
+                GPIO_EXTERNAL_WATCHDOG,
+                GPIO_PIN_EXTERNAL_WATCHDOG,
+                (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+               );
+    
+  /**********************/
+  //Стартова ініціалізація змінних у зовнішіній і у внітрішній SRAM
+  /**********************/
+  global_vareiables_installation();
+  /**********************/
+    
+  //Змінюємо стан біту зовнішнього Watchdog на протилежний
+  GPIO_WriteBit(
+                GPIO_EXTERNAL_WATCHDOG,
+                GPIO_PIN_EXTERNAL_WATCHDOG,
+                (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+               );
+  /*****/ 
+
+  /*
+  Продовжуємо виконувати ініціалізацію периферії  
+  */
+    
+  /* Конфігурація піну CON-L, як Output push-pull */
+  GPIO_InitStructure.GPIO_Pin = CON_L_PIN;
+  GPIO_Init(CON_L, &GPIO_InitStructure);
+  /* Скидаємо пін CON-L, щоб покищо управляти свтоіндикаторами не можна було*/
+  GPIO_ResetBits(CON_L, CON_L_PIN);
+
+  /* Конфігурація піну CON-OUTPUTS, як Output push-pull */
+  GPIO_InitStructure.GPIO_Pin = CON_1_OUTPUTS_PIN;
+  GPIO_Init(CON_OUTPUTS, &GPIO_InitStructure);
+  /* Знімаємо пін CON-OUTPUTS-1, щоб покищо управляти виходами не можна було*/
+  GPIO_ResetBits(CON_OUTPUTS, CON_1_OUTPUTS_PIN);
+
+  GPIO_InitStructure.GPIO_Pin = CON_2_OUTPUTS_PIN;
+  GPIO_Init(CON_OUTPUTS, &GPIO_InitStructure);
+  /* Знімаємо пін CON-OUTPUTS-2, щоб покищо управляти виходамии не можна було*/
+  GPIO_ResetBits(CON_OUTPUTS, CON_2_OUTPUTS_PIN);
+
+  GPIO_InitStructure.GPIO_Pin = CON_3_OUTPUTS_PIN;
+  GPIO_Init(CON_OUTPUTS, &GPIO_InitStructure);
+  /* Знімаємо пін CON-OUTPUTS-3, щоб покищо управляти виходами не можна було*/
+  GPIO_ResetBits(CON_OUTPUTS, CON_3_OUTPUTS_PIN);
+  
+  /* Конфігурація піну LCD-BL, як Output push-pull */
+  GPIO_InitStructure.GPIO_Pin = LCD_BL_PIN;
+  GPIO_Init(LCD_BL, &GPIO_InitStructure);
+  /* Виставляємоо пін LCD-BL для того, щоб включити підсвітку LCD*/
+  GPIO_SetBits(LCD_BL, LCD_BL_PIN);
+
+  /* Конфігурація піну LCD-R/W, як Output push-pull */
+  GPIO_InitStructure.GPIO_Pin = LCD_RW_PIN;
+  GPIO_Init(LCD_RW, &GPIO_InitStructure);
+  /* Знімаємо пін LCD-R/W*/
+  GPIO_ResetBits(LCD_RW, LCD_RW_PIN);
+
+  /* Конфігурація піну LCD-RS, як Output push-pull */
+  GPIO_InitStructure.GPIO_Pin = LCD_RS_PIN;
+  GPIO_Init(LCD_RS, &GPIO_InitStructure);
+  /* Знімаємо пін LCD-RS*/
+  GPIO_ResetBits(LCD_RS, LCD_RS_PIN);
+
+  /*SW_1 клавіатури */
+  GPIO_InitStructure.GPIO_Pin = KEYBOARD_SW_1_PIN;
+  GPIO_Init(KEYBOARD, &GPIO_InitStructure);
+  /* Виставляємо пін SW1*/
+  GPIO_SetBits(KEYBOARD, KEYBOARD_SW_1_PIN);
+
+  /*SW_2 клавіатури */
+  GPIO_InitStructure.GPIO_Pin = KEYBOARD_SW_2_PIN;
+  GPIO_Init(KEYBOARD, &GPIO_InitStructure);
+  /* Виставляємо пін SW2*/
+  GPIO_SetBits(KEYBOARD, KEYBOARD_SW_2_PIN);
+
+  /*SW_3 клавіатури */
+  GPIO_InitStructure.GPIO_Pin = KEYBOARD_SW_3_PIN;
+  GPIO_Init(KEYBOARD, &GPIO_InitStructure);
+  /*Виставляємо пін SW3*/
+  GPIO_SetBits(KEYBOARD, KEYBOARD_SW_3_PIN);
+
+  /*SW_4 клавіатури */
+  GPIO_InitStructure.GPIO_Pin = KEYBOARD_SW_4_PIN;
+  GPIO_Init(KEYBOARD, &GPIO_InitStructure);
+  /*Виставляємо пін SW4*/
+  GPIO_SetBits(KEYBOARD, KEYBOARD_SW_4_PIN);
+
+  /*Вибір АЦП */
+  GPIO_InitStructure.GPIO_Pin = GPIO_SELECTPin_ADC;
+  GPIO_Init(GPIO_SELECT_ADC, &GPIO_InitStructure);
+  GPIO_ResetBits(GPIO_SELECT_ADC, GPIO_SELECTPin_ADC);
+
+  /*NSS_ADC каналу SPI_ADC */
+  GPIO_InitStructure.GPIO_Pin = GPIO_NSSPin_ADC;
+  GPIO_Init(GPIO_SPI_ADC, &GPIO_InitStructure);
+  GPIO_SetBits(GPIO_SPI_ADC, GPIO_NSSPin_ADC);
+
+  /*NSS_ADC каналу SPI_DF */
+  GPIO_InitStructure.GPIO_Pin = GPIO_NSSPin_DF;
+  GPIO_Init(GPIO_SPI_DF, &GPIO_InitStructure);
+  GPIO_SetBits(GPIO_SPI_DF, GPIO_NSSPin_DF);
+
+  /*GPIO_SPI_DF_TOGGLE - вибір мікросхеми DataFlash*/
+  GPIO_InitStructure.GPIO_Pin = GPIO_SPI_DF_TOGGLE_Pin;
+  GPIO_Init(GPIO_SPI_DF_TOGGLE, &GPIO_InitStructure);
+  /*Вибираємо мікросхему з 1МБ*/
+  GPIO_SetBits(GPIO_SPI_DF_TOGGLE, GPIO_SPI_DF_TOGGLE_Pin);
+
+  /* Пін 485DE*/
+  GPIO_InitStructure.GPIO_Pin = GPIO_PIN_485DE;
+  GPIO_Init(GPIO_485DE, &GPIO_InitStructure);
+  /* Знімаємо пін 485DE */
+  GPIO_ResetBits(GPIO_485DE, GPIO_PIN_485DE);
+  /**************/
+
+  /**************/
+  //Піни на ввід
+  /**************/
+  /*SW_A клавіатури */
+  GPIO_InitStructure.GPIO_Pin = KEYBOARD_SW_A_PIN;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_Init(KEYBOARD, &GPIO_InitStructure);
+
+  /*SW_B клавіатури */
+  GPIO_InitStructure.GPIO_Pin = KEYBOARD_SW_B_PIN;
+  GPIO_Init(KEYBOARD, &GPIO_InitStructure);
+
+  /*SW_C клавіатури */
+  GPIO_InitStructure.GPIO_Pin = KEYBOARD_SW_C_PIN;
+  GPIO_Init(KEYBOARD, &GPIO_InitStructure);
+
+  /*Контроль живлення */
+  GPIO_InitStructure.GPIO_Pin = POWER_CTRL_PIN;
+  GPIO_Init(POWER_CTRL, &GPIO_InitStructure);
+//
+//  /* Configure SPI_ADC MISO*/
+//  GPIO_InitStructure.GPIO_Pin = GPIO_MISOPin_ADC;
+//  GPIO_Init(GPIO_SPI_ADC, &GPIO_InitStructure);
+//
+//  /* Configure SPI_DF MISO*/
+//  GPIO_InitStructure.GPIO_Pin = GPIO_MISOPin_DF;
+//  GPIO_Init(GPIO_SPI_DF, &GPIO_InitStructure);
+//  
+//
+//  /* Configure USART_RS485 Rx as input floating */
+//  GPIO_InitStructure.GPIO_Pin = GPIO_RxPin_RS485;
+//  GPIO_Init(GPIO_USART_RS485, &GPIO_InitStructure);
+  /**************/
+
+  /**************/
+  //Піни альтернативних функцій
+  /**************/
+  //Перекидаємо піни PB13/SPI2_SCK, PB14/SPI2_MISO і  PB15/SPI2_MOSI
+  GPIO_PinAFConfig(GPIO_SPI_ADC, GPIO_SCKPin_ADCSource, GPIO_AF_SPI_ADC);
+  GPIO_PinAFConfig(GPIO_SPI_ADC, GPIO_MISOPin_ADCSource, GPIO_AF_SPI_ADC);
+  GPIO_PinAFConfig(GPIO_SPI_ADC, GPIO_MOSIPin_ADCSource, GPIO_AF_SPI_ADC);
+
+  /* Configure SPI_ADC SCK, MISO і MOSI */
+  GPIO_InitStructure.GPIO_Pin = GPIO_SCKPin_ADC | GPIO_MISOPin_ADC | GPIO_MOSIPin_ADC;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_Init(GPIO_SPI_ADC, &GPIO_InitStructure);
+
+  //Перекидаємо піни PA5/SPI1_SCK, PA6/SPI1_MISO і  PA7/SPI1_MOSI
+  GPIO_PinAFConfig(GPIO_SPI_DF, GPIO_SCKPin_DFSource, GPIO_AF_SPI_DF);
+  GPIO_PinAFConfig(GPIO_SPI_DF, GPIO_MISOPin_DFSource, GPIO_AF_SPI_DF);
+  GPIO_PinAFConfig(GPIO_SPI_DF, GPIO_MOSIPin_DFSource, GPIO_AF_SPI_DF);
+
+  /* Configure SPI_DF SCK, MISO і MOSI */
+  GPIO_InitStructure.GPIO_Pin = GPIO_SCKPin_DF | GPIO_MISOPin_DF | GPIO_MOSIPin_DF;
+  GPIO_Init(GPIO_SPI_DF, &GPIO_InitStructure);
+
+  //Перекидаємо піни PA9/Tx_RS-485, PA10/Rx_RS-485
+  GPIO_PinAFConfig(GPIO_USART_RS485, GPIO_TxPin_RS485Source, GPIO_AF_USART_RS_485);
+  GPIO_PinAFConfig(GPIO_USART_RS485, GPIO_RxPin_RS485Source, GPIO_AF_USART_RS_485);
+
+  /* Configure USART_RS485 Tx as alternate function push-pull */
+  GPIO_InitStructure.GPIO_Pin = GPIO_TxPin_RS485 | GPIO_RxPin_RS485;
+  GPIO_Init(GPIO_USART_RS485, &GPIO_InitStructure);
+  /**********************/
+
+  /* Під'єднання EXTI Line0 to POWER_CTRL_PIN піну */
+  SYSCFG_EXTILineConfig(EXTI_PortSource_POWER, EXTI_PinSource_POWER);  
+  /**********************/
+
+   /* Конфігурування EXTI Line0 */
+  EXTI_InitTypeDef   EXTI_InitStructure;
+
+  EXTI_InitStructure.EXTI_Line = EXTI_Line_POWER;
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;  
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&EXTI_InitStructure);
+  /**********************/
+
+  /**********************/
+  //Настроювання DMA контролерів
+  /**********************/
+  DMA_InitTypeDef  DMA_InitStructure;
+
+  /* DMA настроюємо для прийому даних по I2C*/
+  DMA_DeInit(DMA_StreamI2C_Rx);
+  while (DMA_GetCmdStatus(DMA_StreamI2C_Rx) != DISABLE);
+  
+  DMA_InitStructure.DMA_Channel = DMA_ChannelI2C_Rx;
+  DMA_InitStructure.DMA_PeripheralBaseAddr = I2C_DR_Address;
+  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)Temporaty_I2C_Buffer;
+  DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
+  DMA_InitStructure.DMA_BufferSize = SIZE_PAGE_EEPROM + 2;
+  DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+  DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+  DMA_InitStructure.DMA_PeripheralDataSize = DMA_MemoryDataSize_Byte;
+  DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+  DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+  DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+  DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;
+  DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;
+  DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+  DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+  DMA_Init(DMA_StreamI2C_Rx, &DMA_InitStructure);
+  DMA_ClearFlag(DMA_StreamI2C_Rx, DMA_FLAG_TCI2C_Rx | DMA_FLAG_HTI2C_Rx | DMA_FLAG_TEII2C_Rx | DMA_FLAG_DMEII2C_Rx | DMA_FLAG_FEII2C_Rx);
+
+  /* DMA настроюємо для передавання даних по I2C*/
+  DMA_DeInit(DMA_StreamI2C_Tx);
+  while (DMA_GetCmdStatus(DMA_StreamI2C_Tx) != DISABLE);
+  
+  DMA_InitStructure.DMA_Channel = DMA_ChannelI2C_Tx;
+  DMA_InitStructure.DMA_PeripheralBaseAddr = I2C_DR_Address;
+  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)Temporaty_I2C_Buffer;
+  DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
+  DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
+  DMA_Init(DMA_StreamI2C_Tx, &DMA_InitStructure);
+  DMA_ClearFlag(DMA_StreamI2C_Tx, DMA_FLAG_TCI2C_Tx | DMA_FLAG_HTI2C_Tx | DMA_FLAG_TEII2C_Tx | DMA_FLAG_DMEII2C_Tx | DMA_FLAG_FEII2C_Tx);
+
+  /* DMA настроюємо для передачі даних по SPI_DF*/
+  DMA_DeInit(DMA_StreamSPI_DF_Tx);
+  while (DMA_GetCmdStatus(DMA_StreamSPI_DF_Tx) != DISABLE);
+  
+  DMA_InitStructure.DMA_Channel = DMA_ChannelSPI_DF_Tx;
+  DMA_InitStructure.DMA_PeripheralBaseAddr = SPI_DF_DR_Address;
+  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)TxBuffer_SPI_DF;
+  DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
+  DMA_InitStructure.DMA_BufferSize = SIZE_PAGE_DATAFLASH_MAX + 10;
+  DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh; /*Так як № потоку DMA_StreamSPI_DF_Tx > за № потоку DMA_StreamSPI_DF_Rx, то DMA_StreamSPI_DF_Rx має пріориет над DMA_StreamSPI_DF_Tx при однаковому програмному пріоритеті*/
+  DMA_Init(DMA_StreamSPI_DF_Tx, &DMA_InitStructure);
+  DMA_ClearFlag(DMA_StreamSPI_DF_Tx, DMA_FLAG_TCSPI_DF_Tx | DMA_FLAG_HTSPI_DF_Tx | DMA_FLAG_TEISPI_DF_Tx | DMA_FLAG_DMEISPI_DF_Tx | DMA_FLAG_FEISPI_DF_Tx);
+
+  /* DMA настроюємо для прийому даних по SPI_DF*/
+  DMA_DeInit(DMA_StreamSPI_DF_Rx);
+  while (DMA_GetCmdStatus(DMA_StreamSPI_DF_Rx) != DISABLE);
+  
+  DMA_InitStructure.DMA_Channel = DMA_ChannelSPI_DF_Rx;
+  DMA_InitStructure.DMA_PeripheralBaseAddr = SPI_DF_DR_Address;
+  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)RxBuffer_SPI_DF;
+  DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
+  DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh; /*Так як № потоку DMA_StreamSPI_DF_Tx > за № потоку DMA_StreamSPI_DF_Rx, то DMA_StreamSPI_DF_Rx має пріориет над DMA_StreamSPI_DF_Tx при однаковому програмному пріоритеті*/
+  DMA_Init(DMA_StreamSPI_DF_Rx, &DMA_InitStructure);
+  DMA_ClearFlag(DMA_StreamSPI_DF_Rx, DMA_FLAG_TCSPI_DF_Rx | DMA_FLAG_HTSPI_DF_Rx | DMA_FLAG_TEISPI_DF_Rx | DMA_FLAG_DMEISPI_DF_Rx | DMA_FLAG_FEISPI_DF_Rx);
+
+  /* Прийом по RS-485*/
+  DMA_DeInit(DMA_StreamRS485_Rx);
+  while (DMA_GetCmdStatus(DMA_StreamRS485_Rx) != DISABLE);
+  
+  DMA_InitStructure.DMA_Channel = DMA_ChannelRS485_Rx;
+  DMA_InitStructure.DMA_PeripheralBaseAddr = USARTRS485_DR_Base;
+  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)RxBuffer_RS485;
+  DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
+  DMA_InitStructure.DMA_BufferSize = BUFFER_RS485;
+  DMA_InitStructure.DMA_Priority = DMA_Priority_Low;
+  DMA_Init(DMA_StreamRS485_Rx, &DMA_InitStructure);
+  DMA_ClearFlag(DMA_StreamRS485_Rx, DMA_FLAG_TCRS485_Rx | DMA_FLAG_HTRS485_Rx | DMA_FLAG_TEIRS485_Rx | DMA_FLAG_DMEIRS485_Rx | DMA_FLAG_FEIRS485_Rx);
+  
+  /* Передача по RS-485*/
+  DMA_DeInit(DMA_StreamRS485_Tx);
+  while (DMA_GetCmdStatus(DMA_StreamRS485_Tx) != DISABLE);
+
+  DMA_InitStructure.DMA_Channel = DMA_ChannelRS485_Tx;
+  DMA_InitStructure.DMA_PeripheralBaseAddr = USARTRS485_DR_Base;
+  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)TxBuffer_RS485;
+  DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
+  DMA_InitStructure.DMA_BufferSize = 0;
+  DMA_InitStructure.DMA_Priority = DMA_Priority_Low;
+  DMA_Init(DMA_StreamRS485_Tx, &DMA_InitStructure);
+  DMA_ClearFlag(DMA_StreamRS485_Tx, DMA_FLAG_TCRS485_Tx | DMA_FLAG_HTRS485_Tx | DMA_FLAG_TEIRS485_Tx | DMA_FLAG_DMEIRS485_Tx | DMA_FLAG_FEIRS485_Tx);
+  /**********************/
+
+  /**********************/
+  //Настроювання SPI для  АЦП з початковою ініціалізацією АП
+  /**********************/
+  SPI_InitTypeDef  SPI_InitStructure;
+  
+  SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+  SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+  SPI_InitStructure.SPI_DataSize = SPI_DataSize_16b;
+  SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;
+  SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
+  SPI_InitStructure.SPI_NSS =  SPI_NSS_Soft;
+  SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;/*30МГц/2 = 15 МГц*/
+  SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+  SPI_InitStructure.SPI_CRCPolynomial = 7;
+  SPI_Init(SPI_ADC, &SPI_InitStructure);
+
+  /* Дозволяємо SPI_ADC */
+  SPI_Cmd(SPI_ADC, ENABLE);
+  
+  //Стартовий запуск АЦП
+  //Скидаємо признаки помилок
+  if  (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_RXNE) == SET) SPI_I2S_ReceiveData(SPI_ADC);
+  while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_OVR) == SET) SPI_I2S_ReceiveData(SPI_ADC);
+      
+  for (unsigned int i = 0; i < NUMBER_ADCs; i++)
+  {
+    if (i == 0) GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC;
+    else GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC; 
+    
+    //Посилаємо перше слово 0xffff
+    while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_TXE) == RESET);          //Очікуємо, поки SPI стане вільним
+    GPIO_ResetBits(GPIO_SPI_ADC, GPIO_NSSPin_ADC);                              //Виставляємо chip_select
+    SPI_I2S_SendData(SPI_ADC, 0xFFFF);                                          //Відправляємо число 0xffff
+    while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_RXNE) == RESET);         //Очікуємо завершення трансакції по прийнятті даних по MISO
+    GPIO_SetBits(GPIO_SPI_ADC, GPIO_NSSPin_ADC);                                //Знімаємо chip_select
+    SPI_I2S_ReceiveData(SPI_ADC);                                               //Читаємо прийняті дані
+
+    //Посилаємо друге слово 0xffff
+    while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_TXE) == RESET);          //Очікуємо, поки SPI стане вільним
+    GPIO_ResetBits(GPIO_SPI_ADC, GPIO_NSSPin_ADC);                              //Виставляємо chip_select
+    SPI_I2S_SendData(SPI_ADC, 0xFFFF);                                          //Відправляємо число 0xffff
+    while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_RXNE) == RESET);         //Очікуємо завершення трансакції по прийнятті даних по MISO
+    GPIO_SetBits(GPIO_SPI_ADC, GPIO_NSSPin_ADC);                                //Знімаємо chip_select
+    SPI_I2S_ReceiveData(SPI_ADC);                                               //Читаємо прийняті дані
+  }
+  
+  //Дозволяємо переривання від прийнятого байту по SPI
+  SPI_I2S_ITConfig(SPI_ADC, SPI_I2S_IT_RXNE, ENABLE);
+  /**********************/
+
+  /**********************/
+  //Настроювання TIM4 на генерацію переривань кожні 10 мс для клавіатури і 1 мс для низькопріоритетних задач
+  /**********************/
+  /* Настроюємо TIM4 */
+  /* ---------------------------------------------------------------
+  TIM4 Настроювання: Output Compare Timing Mode:
+  TIM4CLK = (30*2) МГц, Prescaler = 600, TIM4 counter clock = 100 кГц
+  CC1 update rate = TIM4 counter clock / CCR1_Val = 100 Hz
+  CC2 update rate = TIM4 counter clock / CCR1_Val = 1000 Hz
+  --------------------------------------------------------------- */
+  TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+  TIM_OCInitTypeDef  TIM_OCInitStructure;
+
+  TIM_TimeBaseStructure.TIM_Period = 65535;
+  TIM_TimeBaseStructure.TIM_Prescaler = (600-1);
+  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+  TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+
+  /* Output Compare Timing Mode настроювання: Канал:1 */
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Timing;
+  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Disable;
+  TIM_OCInitStructure.TIM_Pulse = TIM4_CCR1_VAL;
+  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+  TIM_OC1Init(TIM4, &TIM_OCInitStructure);
+  
+  TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Disable);
+
+  /* Дозволяємо переривання від каналу 1 таймера 4*/
+  TIM_ITConfig(TIM4, TIM_IT_CC1, ENABLE);
+
+  /* Дозволяєм роботу таймера */
+  TIM_Cmd(TIM4, ENABLE);
+  /**********************/
+
+  /**********************/
+  //Конфігуруємо I2C
+  /**********************/
+  Configure_I2C(I2C);
+  /**********************/
+
+  /**********************/
+  //Читаємо збережені дані енергій з EEPROM
+  /**********************/
+  comparison_writing &= (unsigned int)(~COMPARISON_WRITING_ENERGY);/*зчитування, а не порівняння*/
+  _SET_BIT(control_i2c_taskes, TASK_START_READ_ENERGY_EEPROM_BIT);
+  while(
+        (control_i2c_taskes[0]     != 0) ||
+        (control_i2c_taskes[1]     != 0) ||
+        (driver_i2c.state_execution > 0)
+       )
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+    main_routines_for_i2c();
+    changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+    if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+    {
+      //Повне роозблоковування обміну з мікросхемами для драйверу I2C
+      _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+    }
+  }
+  /**********************/
+
+  /**********************/
+  //Читаємо збережені дані настройок з EEPROM
+  /**********************/
+  comparison_writing &= (unsigned int)(~COMPARISON_WRITING_SETTINGS);/*зчитування, а не порівняння*/
+  _SET_BIT(control_i2c_taskes, TASK_START_READ_SETTINGS_EEPROM_BIT);
+  while(
+        (control_i2c_taskes[0]     != 0) ||
+        (control_i2c_taskes[1]     != 0) ||
+        (driver_i2c.state_execution > 0)
+       )
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+    main_routines_for_i2c();
+    changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+    if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+    {
+      //Повне роозблоковування обміну з мікросхемами для драйверу I2C
+      _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+    }
+  }
+  /**********************/
+
+  /**********************/
+  //Читаємо збережені дані юстування з EEPROM
+  /**********************/
+  comparison_writing &= (unsigned int)(~COMPARISON_WRITING_USTUVANNJA);/*зчитування, а не порівняння*/
+  _SET_BIT(control_i2c_taskes, TASK_START_READ_USTUVANNJA_EEPROM_BIT);
+  while(
+        (control_i2c_taskes[0]     != 0) ||
+        (control_i2c_taskes[1]     != 0) ||
+        (driver_i2c.state_execution > 0)
+       )
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+    main_routines_for_i2c();
+    changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+    if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+    {
+      //Повне роозблоковування обміну з мікросхемами для драйверу I2C
+      _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+    }
+  }
+  /**********************/
+
+  /**********************/
+  //Читаємо збережені дані про сигнальні виходи і тригерні свтлодіоди
+  /**********************/
+  comparison_writing &= (unsigned int)(~COMPARISON_WRITING_STATE_LEDS_OUTPUTS);/*зчитування, а не порівняння*/
+  _SET_BIT(control_i2c_taskes, TASK_START_READ_STATE_LEDS_OUTPUTS_EEPROM_BIT);
+  while(
+        (control_i2c_taskes[0]     != 0) ||
+        (control_i2c_taskes[1]     != 0) ||
+        (driver_i2c.state_execution > 0)
+       )
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+    main_routines_for_i2c();
+    changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+    if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+    {
+      //Повне роозблоковування обміну з мікросхемами для драйверу I2C
+      _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+    }
+  }
+  /**********************/
+  
+  /**********************/
+  //Читаємо збережені дані про тригерну інформацію
+  /**********************/
+  comparison_writing &= (unsigned int)(~COMPARISON_WRITING_TRG_FUNC);/*зчитування, а не порівняння*/
+  _SET_BIT(control_i2c_taskes, TASK_START_READ_TRG_FUNC_EEPROM_BIT);
+  while(
+        (control_i2c_taskes[0]     != 0) ||
+        (control_i2c_taskes[1]     != 0) ||
+        (driver_i2c.state_execution > 0)
+       )
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+    main_routines_for_i2c();
+    changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+    if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+    {
+      //Повне роозблоковування обміну з мікросхемами для драйверу I2C
+      _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+    }
+  }
+  /**********************/
+  
+  if((state_i2c_task & STATE_SETTINGS_EEPROM_GOOD) != 0)
+  {
+    /*
+    Оскільки при читанні даних аналогового реєстратора буде аналізуватися
+    мкасимальна кількість записів, яка залежить від ширини доаварійного і
+    післяаварійного масивів, то це читання треба виконувати тільки, коли відбулося
+    успішне зчитування настройок.
+    У інікшому разі структура інформації по аналоговому реєстратору має буди
+    обнулена - тобто вся інформація по аналоговому реєстратуу буде очищена, якщо
+    відбулася втрата інформації по настройках
+    */
+    /**********************/
+    //Читаємо збережені дані аналогового реєстратора з EEPROM
+    /**********************/
+    comparison_writing &= (unsigned int)(~COMPARISON_WRITING_INFO_REJESTRATOR_AR);/*зчитування, а не порівняння*/
+    _SET_BIT(control_i2c_taskes, TASK_START_READ_INFO_REJESTRATOR_AR_EEPROM_BIT);
+    while(
+          (control_i2c_taskes[0]     != 0) ||
+          (control_i2c_taskes[1]     != 0) ||
+          (driver_i2c.state_execution > 0)
+         )
+    {
+      //Робота з watchdogs
+      if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+      {
+        //Змінюємо стан біту зовнішнього Watchdog на протилежний
+        GPIO_WriteBit(
+                      GPIO_EXTERNAL_WATCHDOG,
+                      GPIO_PIN_EXTERNAL_WATCHDOG,
+                      (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                     );
+      }
+
+      main_routines_for_i2c();
+      changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+      if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+      {
+        //Повне роозблоковування обміну з мікросхемами для драйверу I2C
+        _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+      }
+    }
+    /**********************/
+  }
+
+  /**********************/
+  //Читаємо збережені дані дискретного реєстратора з EEPROM
+  /**********************/
+  comparison_writing &= (unsigned int)(~COMPARISON_WRITING_INFO_REJESTRATOR_DR);/*зчитування, а не порівняння*/
+  _SET_BIT(control_i2c_taskes, TASK_START_READ_INFO_REJESTRATOR_DR_EEPROM_BIT);
+  while(
+        (control_i2c_taskes[0]     != 0) ||
+        (control_i2c_taskes[1]     != 0) ||
+        (driver_i2c.state_execution > 0)
+       )
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+    main_routines_for_i2c();
+    changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+    if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+    {
+      //Повне роозблоковування обміну з мікросхемами для драйверу I2C
+      _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+    }
+  }
+  /**********************/
+
+  /**********************/
+  //Читаємо збережені дані реєстратора програмних подій з EEPROM
+  /**********************/
+  comparison_writing &= (unsigned int)(~COMPARISON_WRITING_INFO_REJESTRATOR_PR_ERR);/*зчитування, а не порівняння*/
+  _SET_BIT(control_i2c_taskes, TASK_START_READ_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT);
+  while(
+        (control_i2c_taskes[0]     != 0) ||
+        (control_i2c_taskes[1]     != 0) ||
+        (driver_i2c.state_execution > 0)
+       )
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+    main_routines_for_i2c();
+    changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+    if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+    {
+      //Повне роозблоковування обміну з мікросхемами для драйверу I2C
+      _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+    }
+  }
+  /**********************/
+
+  /**********************/
+  //Читаємо збережені дані ресурсу вимикача
+  /**********************/
+  comparison_writing &= (unsigned int)(~COMPARISON_WRITING_RESURS);/*зчитування, а не порівняння*/
+  _SET_BIT(control_i2c_taskes, TASK_START_READ_RESURS_EEPROM_BIT);
+  while(
+        (control_i2c_taskes[0]     != 0) ||
+        (control_i2c_taskes[1]     != 0) ||
+        (driver_i2c.state_execution > 0)
+       )
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+    main_routines_for_i2c();
+    changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+    if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+    {
+      //Повне роозблоковування обміну з мікросхемами для драйверу I2C
+      _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+    }
+  }
+  /**********************/
+  
+  //Переконфігуровуємо I2C
+  low_speed_i2c = 0xff;
+  Configure_I2C(I2C);
+
+  /**********************/
+  //Настроювання TIM2 на генерацію переривань кожні 1 мс для системи захистів
+  /**********************/
+  /* Настроюємо TIM2 */
+  /* ---------------------------------------------------------------
+  TIM2 Настроювання: Output Compare Timing Mode:
+  TIM2CLK = 30*2 МГц, Prescaler = 2000, TIM2 counter clock = 30 кГц
+  CC1 update rate = TIM2 counter clock / CCR1_Val = 1000 Hz
+  --------------------------------------------------------------- */
+  TIM_TimeBaseStructure.TIM_Period = 0xffffffff;
+  TIM_TimeBaseStructure.TIM_Prescaler = (2000-1);
+  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+  TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+
+  /* Output Compare Timing Mode настроювання: Канал:1 */
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Timing;
+  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Disable;
+  TIM_OCInitStructure.TIM_Pulse = TIM2_CCR1_VAL;
+  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+  TIM_OC1Init(TIM2, &TIM_OCInitStructure);
+  
+  TIM_OC1PreloadConfig(TIM2, TIM_OCPreload_Disable);
+
+  /* Дозволяємо переривання від каналу 1 таймера 2*/
+  TIM_ITConfig(TIM2, TIM_IT_CC1, ENABLE);
+  /**********************/
+
+  /**********************/
+  //Настроювання TIM5 на генерацію переривань кожні 0,625 мс
+  /**********************/
+  /* Настроюємо TIM5 */
+  /* ---------------------------------------------------------------
+  TIM5 Настроювання: Output Compare Timing Mode:
+  TIM2CLK = 30*2 МГц, Prescaler = 1, TIM5 counter clock = 60 МГц
+  CC1 update rate = TIM5 counter clock / CCR1_Val = 1600 Hz
+  --------------------------------------------------------------- */
+  TIM_TimeBaseStructure.TIM_Period = 0xffffffff;
+  TIM_TimeBaseStructure.TIM_Prescaler = (1-1);
+  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+  TIM_TimeBaseInit(TIM5, &TIM_TimeBaseStructure);
+
+  /* Output Compare Timing Mode настроювання: Канал:1 */
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Timing;
+  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Disable;
+  TIM_OCInitStructure.TIM_Pulse = step_val_1;
+  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+  TIM_OC1Init(TIM5, &TIM_OCInitStructure);
+  TIM_OC1PreloadConfig(TIM5, TIM_OCPreload_Disable);
+
+  TIM_OCInitStructure.TIM_Pulse = step_val_2;
+  TIM_OC2Init(TIM5, &TIM_OCInitStructure);
+  TIM_OC2PreloadConfig(TIM5, TIM_OCPreload_Disable);
+
+  TIM_OCInitStructure.TIM_Pulse = TIM5_CCR1_2_3_VAL;
+  TIM_OC3Init(TIM5, &TIM_OCInitStructure);
+  TIM_OC3PreloadConfig(TIM5, TIM_OCPreload_Disable);
+  
+  /* Дозволяємо переривання від каналу 1 таймера 5*/
+  TIM_ITConfig(TIM5, TIM_IT_CC1, ENABLE);
+  /* Дозволяємо переривання від каналу 2 таймера 5*/
+  TIM_ITConfig(TIM5, TIM_IT_CC2, ENABLE);
+  /* Дозволяємо переривання від каналу 3 таймера 3*/
+  TIM_ITConfig(TIM5, TIM_IT_CC3, ENABLE);
+  /**********************/
+  
+  /**********************/
+  //Настроювання SPI для  DataFlash з початковим читанням , чи мікросхеми переведені у потрібний режим
+  /**********************/
+  SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+  SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+  SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
+  SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;
+  SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;
+  SPI_InitStructure.SPI_NSS =  SPI_NSS_Soft;
+  SPI_InitStructure.SPI_BaudRatePrescaler = /*SPI_BaudRatePrescaler_4*/SPI_BaudRatePrescaler_2;
+  SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+  SPI_InitStructure.SPI_CRCPolynomial = 7;
+  SPI_Init(SPI_DF, &SPI_InitStructure);
+
+  /* Забороняємо SPI_DF DMA Tx запити */
+  SPI_I2S_DMACmd(SPI_DF, SPI_I2S_DMAReq_Tx, DISABLE);
+  /* Забороняємо SPI_DF DMA Rx запити */
+  SPI_I2S_DMACmd(SPI_DF, SPI_I2S_DMAReq_Rx, DISABLE);
+
+  //Очищаємо прапореці, що сигналізує про завершення прийом/передачі даних для DMA по потоку DMA_StreamSPI_DF_Rx і DMA_StreamSPI_DF_Tx
+  DMA_ClearFlag(DMA_StreamSPI_DF_Rx, DMA_FLAG_TCSPI_DF_Rx | DMA_FLAG_HTSPI_DF_Rx | DMA_FLAG_TEISPI_DF_Rx | DMA_FLAG_DMEISPI_DF_Rx | DMA_FLAG_FEISPI_DF_Rx);
+  DMA_ClearFlag(DMA_StreamSPI_DF_Tx, DMA_FLAG_TCSPI_DF_Tx | DMA_FLAG_HTSPI_DF_Tx | DMA_FLAG_TEISPI_DF_Tx | DMA_FLAG_DMEISPI_DF_Tx | DMA_FLAG_FEISPI_DF_Tx);
+
+  //Дозволяємо переривання від помилок на SPI_DF
+  SPI_I2S_ITConfig(SPI_DF, SPI_I2S_IT_ERR, ENABLE);
+
+  /* Дозволяємо SPI_DF */
+  SPI_Cmd(SPI_DF, ENABLE);
+  /**********************/
+
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+  /**********************/
+  //Ініціалізація USB
+  /**********************/
+  USBD_Init(&USB_OTG_dev,
+#ifdef USE_USB_OTG_HS 
+            USB_OTG_HS_CORE_ID,
+#else            
+            USB_OTG_FS_CORE_ID,
+#endif  
+            &USR_desc, 
+            &USBD_CDC_cb, 
+            &USR_cb);
+  /**********************/
+
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+}
+/**************************************/
+
+/**************************************/
+//Мінімальна конфігурація
+/**************************************/
+void min_settings(__SETTINGS *target_label)
+{
+  target_label->device_id = VERSIA_PZ;
+    
+  target_label->type_of_input = 0x0;
+  target_label->type_of_input_signal = 0x0;
+  
+  for(unsigned int i = 0; i < NUMBER_INPUTS; i++)
+  {
+    target_label->ranguvannja_inputs[N_SMALL*i  ] = 0x0;
+    target_label->ranguvannja_inputs[N_SMALL*i+1] = 0x0;
+    
+    if ((target_label->type_of_input_signal & (1<<i)) != 0)
+    {
+      target_label->dopusk_dv[i] = KOEF_DOPUSK_DV_ZMIN_MIN;
+      if ((target_label->dopusk_dv[i] % 10) != 0)
+      {
+        target_label->dopusk_dv[i] = (target_label->dopusk_dv[i] / 10)*10;
+      }
+    }
+    else
+      target_label->dopusk_dv[i] = KOEF_DOPUSK_DV_POST_MIN;
+  }
+
+  target_label->type_of_output = 0x0;
+  target_label->type_of_output_modif = 0x0;
+  for(unsigned int i = 0; i < NUMBER_OUTPUTS; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_outputs[N_BIG*i+j] = 0x0;
+  }
+
+  target_label->type_of_led = 0x0;
+  for(unsigned int i = 0; i < NUMBER_LEDS; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_leds[N_BIG*i+j] = 0x0;
+  }
+
+  for (unsigned int j = 0; j < N_BIG; j++ ) 
+  {
+    target_label->ranguvannja_analog_registrator[j]  = 0x0;
+    target_label->ranguvannja_digital_registrator[j] = 0x0;
+
+    target_label->ranguvannja_off_cb[j] = 0x0;
+    target_label->ranguvannja_on_cb[j] = 0x0;
+  }
+  
+  target_label->number_iteration_el = NUMBER_ITERATION_EL_MAX;
+//  target_label->number_defined_df = NUMBER_DEFINED_FUNCTIONS_MAX;
+//  target_label->number_defined_dt = NUMBER_DEFINED_TRIGGERS_MAX;
+//  target_label->number_defined_and = NUMBER_DEFINED_AND_MAX;
+//  target_label->number_defined_or = NUMBER_DEFINED_OR_MAX;
+//  target_label->number_defined_xor = NUMBER_DEFINED_XOR_MAX;
+//  target_label->number_defined_not = NUMBER_DEFINED_NOT_MAX;
+
+  target_label->type_df = 0x0;
+  
+  for(unsigned int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
+  {
+    target_label->timeout_pause_df[i] = TIMEOUT_DF_PAUSE_MIN;
+    target_label->timeout_work_df[i] = TIMEOUT_DF_WORK_MIN;
+
+    for (unsigned int j = 0; j < N_BIG; j++ ) 
+    {
+      target_label->ranguvannja_df_source_plus[N_BIG*i+j]  = 0x0;
+      target_label->ranguvannja_df_source_minus[N_BIG*i+j] = 0x0;
+      target_label->ranguvannja_df_source_blk[N_BIG*i+j]   = 0x0;
+    }
+  }
+  
+  for(unsigned int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) 
+    {
+      target_label->ranguvannja_set_dt_source_plus[N_BIG*i+j]    = 0x0;
+      target_label->ranguvannja_set_dt_source_minus[N_BIG*i+j]   = 0x0;
+      target_label->ranguvannja_reset_dt_source_plus[N_BIG*i+j]  = 0x0;
+      target_label->ranguvannja_reset_dt_source_minus[N_BIG*i+j] = 0x0;
+    }
+  }
+  
+  for(unsigned int i = 0; i < NUMBER_DEFINED_AND; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_and[N_BIG*i+j] = 0x0;
+  }
+  
+  for(unsigned int i = 0; i < NUMBER_DEFINED_OR; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_or[N_BIG*i+j] = 0x0;
+  }
+  
+  for(unsigned int i = 0; i < NUMBER_DEFINED_XOR; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_xor[N_BIG*i+j] = 0x0;
+  }
+  
+  for(unsigned int i = 0; i < NUMBER_DEFINED_NOT; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_not[N_BIG*i+j] = 0x0;
+  }
+  
+  for(unsigned int i = 0; i < NUMBER_DEFINED_BUTTONS; i++)
+  {
+    target_label->ranguvannja_buttons[i] = 0x0;
+  }
+
+  target_label->configuration = 0;
+  
+  target_label->grupa_ustavok = SETPOINT_GRUPA_USTAVOK_MIN;
+  
+  for (unsigned int i = 0; i < NUMBER_GROUP_USTAVOK; i++)
+  {
+    unsigned int angle;
+    float angle_f;
+    target_label->setpoint_mtz_1[i] = SETPOINT_MTZ1_MIN;
+    target_label->setpoint_mtz_1_n_vpered[i] = SETPOINT_MTZ1_N_VPERED_MIN;
+    target_label->setpoint_mtz_1_n_nazad[i] = SETPOINT_MTZ1_N_NAZAD_MIN;
+    
+    angle = SETPOINT_MTZ1_ANGLE_MIN;
+    angle_f = (float)angle;
+    target_label->setpoint_mtz_1_angle[i] = angle;
+    target_label->setpoint_mtz_1_angle_cos[i] = (int) (AMPLITUDA_FI*/*cos*/arm_cos_f32(/*(double)*/(PI*angle_f/180.0f)));
+    target_label->setpoint_mtz_1_angle_sin[i] = (int) (AMPLITUDA_FI*/*sin*/arm_sin_f32(/*(double)*/(PI*angle_f/180.0f)));
+    
+    target_label->setpoint_mtz_1_po_napruzi[i] = SETPOINT_MTZ1_PO_NAPRUZI_MIN;
+    target_label->setpoint_mtz_1_U[i] = SETPOINT_MTZ1_U_MIN;
+
+    target_label->setpoint_mtz_2[i] = SETPOINT_MTZ2_MIN;
+    target_label->setpoint_mtz_2_n_vpered[i] = SETPOINT_MTZ2_N_VPERED_MIN;
+    target_label->setpoint_mtz_2_n_nazad[i] = SETPOINT_MTZ2_N_NAZAD_MIN;
+    
+    angle = SETPOINT_MTZ2_ANGLE_MIN;
+    angle_f = (float)angle;
+    target_label->setpoint_mtz_2_angle[i] = angle;
+    target_label->setpoint_mtz_2_angle_cos[i] = (int) (AMPLITUDA_FI*/*cos*/arm_cos_f32(/*(double)*/(PI*angle_f/180.0f)));
+    target_label->setpoint_mtz_2_angle_sin[i] = (int) (AMPLITUDA_FI*/*sin*/arm_sin_f32(/*(double)*/(PI*angle_f/180.0f)));
+    
+    target_label->setpoint_mtz_2_po_napruzi[i] = SETPOINT_MTZ2_PO_NAPRUZI_MIN;
+    target_label->setpoint_mtz_2_U[i] = SETPOINT_MTZ2_U_MIN;
+
+    target_label->setpoint_mtz_3[i] = SETPOINT_MTZ3_MIN;
+    target_label->setpoint_mtz_3_n_vpered[i] = SETPOINT_MTZ3_N_VPERED_MIN;
+    target_label->setpoint_mtz_3_n_nazad[i] = SETPOINT_MTZ3_N_NAZAD_MIN;
+    
+    angle = SETPOINT_MTZ3_ANGLE_MIN;
+    angle_f = (float)angle;
+    target_label->setpoint_mtz_3_angle[i] = angle;
+    target_label->setpoint_mtz_3_angle_cos[i] = (int) (AMPLITUDA_FI*/*cos*/arm_cos_f32(/*(double)*/(PI*angle_f/180.0f)));
+    target_label->setpoint_mtz_3_angle_sin[i] = (int) (AMPLITUDA_FI*/*sin*/arm_sin_f32(/*(double)*/(PI*angle_f/180.0f)));
+    
+    target_label->setpoint_mtz_3_po_napruzi[i] = SETPOINT_MTZ3_PO_NAPRUZI_MIN;
+    target_label->setpoint_mtz_3_U[i] = SETPOINT_MTZ3_U_MIN;
+
+    target_label->setpoint_mtz_4[i] = SETPOINT_MTZ4_MIN;
+    target_label->setpoint_mtz_4_n_vpered[i] = SETPOINT_MTZ4_N_VPERED_MIN;
+    target_label->setpoint_mtz_4_n_nazad[i] = SETPOINT_MTZ4_N_NAZAD_MIN;
+    
+    angle = SETPOINT_MTZ4_ANGLE_MIN;
+    angle_f = (float)angle;
+    target_label->setpoint_mtz_4_angle[i] = angle;
+    target_label->setpoint_mtz_4_angle_cos[i] = (int) (AMPLITUDA_FI*/*cos*/arm_cos_f32(/*(double)*/(PI*angle_f/180.0f)));
+    target_label->setpoint_mtz_4_angle_sin[i] = (int) (AMPLITUDA_FI*/*sin*/arm_sin_f32(/*(double)*/(PI*angle_f/180.0f)));
+    
+    target_label->setpoint_mtz_4_po_napruzi[i] = SETPOINT_MTZ4_PO_NAPRUZI_MIN;
+    target_label->setpoint_mtz_4_U[i] = SETPOINT_MTZ4_U_MIN;
+    
+    target_label->timeout_mtz_1[i] = TIMEOUT_MTZ1_MIN; 
+    target_label->timeout_mtz_1_n_vpered[i] = TIMEOUT_MTZ1_N_VPERED_MIN; 
+    target_label->timeout_mtz_1_n_nazad[i] = TIMEOUT_MTZ1_N_NAZAD_MIN; 
+    target_label->timeout_mtz_1_po_napruzi[i] = TIMEOUT_MTZ1_PO_NAPRUZI_MIN; 
+
+    target_label->timeout_mtz_2[i] = TIMEOUT_MTZ2_MIN; 
+    target_label->timeout_mtz_2_pr[i] = TIMEOUT_MTZ2_PR_MIN; 
+    target_label->timeout_mtz_2_n_vpered[i] = TIMEOUT_MTZ2_N_VPERED_MIN; 
+    target_label->timeout_mtz_2_n_vpered_pr[i] = TIMEOUT_MTZ2_N_VPERED_PR_MIN; 
+    target_label->timeout_mtz_2_n_nazad[i] = TIMEOUT_MTZ2_N_NAZAD_MIN; 
+    target_label->timeout_mtz_2_n_nazad_pr[i] = TIMEOUT_MTZ2_N_NAZAD_PR_MIN; 
+    target_label->timeout_mtz_2_po_napruzi[i] = TIMEOUT_MTZ2_PO_NAPRUZI_MIN; 
+    target_label->timeout_mtz_2_po_napruzi_pr[i] = TIMEOUT_MTZ2_PO_NAPRUZI_PR_MIN; 
+    target_label->timeout_mtz_2_vvid_pr[i] = TIMEOUT_MTZ2_VVID_PR_MIN;
+
+    target_label->timeout_mtz_3[i] = TIMEOUT_MTZ3_MIN; 
+    target_label->timeout_mtz_3_pr[i] = TIMEOUT_MTZ3_PR_MIN; 
+    target_label->timeout_mtz_3_n_vpered[i] = TIMEOUT_MTZ3_N_VPERED_MIN; 
+    target_label->timeout_mtz_3_n_vpered_pr[i] = TIMEOUT_MTZ3_N_VPERED_PR_MIN; 
+    target_label->timeout_mtz_3_n_nazad[i] = TIMEOUT_MTZ3_N_NAZAD_MIN; 
+    target_label->timeout_mtz_3_n_nazad_pr[i] = TIMEOUT_MTZ3_N_NAZAD_PR_MIN; 
+    target_label->timeout_mtz_3_po_napruzi[i] = TIMEOUT_MTZ3_PO_NAPRUZI_MIN; 
+    target_label->timeout_mtz_3_po_napruzi_pr[i] = TIMEOUT_MTZ3_PO_NAPRUZI_PR_MIN; 
+    target_label->timeout_mtz_3_vvid_pr[i] = TIMEOUT_MTZ3_VVID_PR_MIN;
+
+    target_label->timeout_mtz_4[i] = TIMEOUT_MTZ4_MIN; 
+    target_label->timeout_mtz_4_n_vpered[i] = TIMEOUT_MTZ4_N_VPERED_MIN; 
+    target_label->timeout_mtz_4_n_nazad[i] = TIMEOUT_MTZ4_N_NAZAD_MIN; 
+    target_label->timeout_mtz_4_po_napruzi[i] = TIMEOUT_MTZ4_PO_NAPRUZI_MIN; 
+
+    target_label->timeout_apv_1[i] = TIMEOUT_APV1_MIN;    
+    target_label->timeout_apv_2[i] = TIMEOUT_APV2_MIN;    
+    target_label->timeout_apv_3[i] = TIMEOUT_APV3_MIN;    
+    target_label->timeout_apv_4[i] = TIMEOUT_APV4_MIN;    
+    target_label->timeout_apv_block_vid_apv1[i] = TIMEOUT_APV_BLOCK_VID_APV1_MIN;
+    target_label->timeout_apv_block_vid_apv2[i] = TIMEOUT_APV_BLOCK_VID_APV2_MIN;
+    target_label->timeout_apv_block_vid_apv3[i] = TIMEOUT_APV_BLOCK_VID_APV3_MIN;
+    target_label->timeout_apv_block_vid_apv4[i] = TIMEOUT_APV_BLOCK_VID_APV4_MIN;
+    target_label->timeout_apv_block_vid_VV[i] = TIMEOUT_APV_BLOCK_VID_VV_MIN;
+    
+    target_label->setpoint_urov[i]  = SETPOINT_UROV_MIN;
+    target_label->timeout_urov_1[i] = TIMEOUT_UROV1_MIN;
+    target_label->timeout_urov_2[i] = TIMEOUT_UROV2_MIN;
+
+    target_label->setpoint_zop[i] = SETPOINT_ZOP_MIN;
+    target_label->timeout_zop[i] = TIMEOUT_ZOP_MIN; 
+
+    target_label->setpoint_Umin1[i] = SETPOINT_UMIN1_MIN;
+    target_label->setpoint_Umin1_Iblk[i] = SETPOINT_UMIN1_IBLK_MIN;
+    target_label->setpoint_Umin2[i] = SETPOINT_UMIN2_MIN;
+    target_label->setpoint_Umin2_Iblk[i] = SETPOINT_UMIN2_IBLK_MIN;
+    target_label->timeout_Umin1[i] = TIMEOUT_UMIN1_MIN; 
+    target_label->timeout_Umin2[i] = TIMEOUT_UMIN2_MIN;
+    
+    target_label->setpoint_Umax1[i] = SETPOINT_UMAX1_MIN;
+    target_label->setpoint_Umax2[i] = SETPOINT_UMAX2_MIN;
+    target_label->timeout_Umax1[i] = TIMEOUT_UMAX1_MIN;
+    target_label->timeout_Umax2[i] = TIMEOUT_UMAX2_MIN;
+
+    target_label->setpoint_avr_tn1_U1_Umin[i] = SETPOINT_AVR_TN1_U1_UMIN_MIN;
+    target_label->setpoint_avr_tn1_U2_low_work[i] = SETPOINT_AVR_TN1_U2_LOW_WORK_MIN;
+    target_label->setpoint_avr_tn2_U2_Umin[i] = SETPOINT_AVR_TN2_U2_UMIN_MIN;
+    target_label->setpoint_avr_tn2_U1_low_work[i] = SETPOINT_AVR1_TN2_U1_LOW_WORK_MIN;
+    target_label->setpoint_avr_tn1_U1_Umax[i] = SETPOINT_AVR_TN1_U1_UMAX_MIN;
+    target_label->setpoint_avr_tn1_U2_high_work[i] = SETPOINT_AVR1_TN1_U2_HIGH_WORK_MIN;
+    target_label->setpoint_avr_tn2_U2_Umax[i] = SETPOINT_AVR_TN2_U2_UMAX_MIN;
+    target_label->setpoint_avr_tn2_U1_high_work[i] = SETPOINT_AVR1_TN2_U1_HIGH_WORK_MIN;
+    target_label->timeout_avr_blk_k1[i] = TIMEOUT_AVR_GENERAL_BLK_K1_MIN;
+    target_label->timeout_avr_pusk_k1[i] = TIMEOUT_AVR_GENERAL_PUSK_K1_MIN;
+    target_label->timeout_avr_d_diji_k1[i] = TIMEOUT_AVR_GENERAL_D_DIJI_K1_MIN;
+    target_label->timeout_avr_vvimk_rez_k1[i] = TIMEOUT_AVR_GENERAL_VVIMK_REZ_K1_MIN;
+    target_label->timeout_avr_vvimk_k1[i] = TIMEOUT_AVR_GENERAL_VVIMK_K1_MIN;
+    target_label->timeout_avr_vymk_rob_k1_Umin[i] = TIMEOUT_AVR_UMIN_VYMK_ROB_K1_MIN;
+    target_label->timeout_avr_vymk_rob_k1_Umax[i] = TIMEOUT_AVR_UMAX_VYMK_ROB_K1_MIN;
+    target_label->timeout_avr_vymk_k1[i] = TIMEOUT_AVR_GENERAL_VYMK_K1_MIN;
+    target_label->timeout_avr_blk_k2[i] = TIMEOUT_AVR_GENERAL_BLK_K2_MIN;
+    target_label->timeout_avr_pusk_k2[i] = TIMEOUT_AVR_GENERAL_PUSK_K2_MIN;
+    target_label->timeout_avr_d_diji_k2[i] = TIMEOUT_AVR_GENERAL_D_DIJI_K2_MIN;
+    target_label->timeout_avr_vvimk_rez_k2[i] = TIMEOUT_AVR_GENERAL_VVIMK_REZ_K2_MIN;
+    target_label->timeout_avr_vvimk_k2[i] = TIMEOUT_AVR_GENERAL_VVIMK_K2_MIN;
+    target_label->timeout_avr_vymk_rob_k2_Umin[i] = TIMEOUT_AVR_UMIN_VYMK_ROB_K2_MIN;
+    target_label->timeout_avr_vymk_rob_k2_Umax[i] = TIMEOUT_AVR_UMAX_VYMK_ROB_K2_MIN;
+    target_label->timeout_avr_vymk_k2[i] = TIMEOUT_AVR_GENERAL_VYMK_K2_MIN;
+
+    target_label->setpoint_ctrl_phase_U[i] = SETPOINT_CTRL_PHASE_U_MIN;
+    target_label->setpoint_ctrl_phase_phi[i] = SETPOINT_CTRL_PHASE_PHI_MIN;
+    target_label->setpoint_ctrl_phase_f[i] = SETPOINT_CTRL_PHASE_F_MIN;
+    target_label->timeout_ctrl_phase_U[i] = TIMEOUT_CTRL_PHASE_U_MIN;
+    target_label->timeout_ctrl_phase_U_d[i] = TIMEOUT_CTRL_PHASE_U_D_MIN;
+    target_label->timeout_ctrl_phase_phi[i] = TIMEOUT_CTRL_PHASE_PHI_MIN;
+    target_label->timeout_ctrl_phase_phi_d[i] = TIMEOUT_CTRL_PHASE_PHI_D_MIN;
+    target_label->timeout_ctrl_phase_f[i] = TIMEOUT_CTRL_PHASE_F_MIN;
+    target_label->timeout_ctrl_phase_f_d[i] = TIMEOUT_CTRL_PHASE_F_D_MIN;
+  }
+
+  target_label->control_mtz = 0;
+  target_label->control_zdz = 0;
+  target_label->control_apv = 0;
+  target_label->control_urov = 0;
+  target_label->control_zop = 0;
+  target_label->control_Umin = 0;
+  target_label->control_Umax = 0;
+  target_label->control_avr = 0;
+  target_label->control_ctrl_phase = 0;
+  
+  target_label->setpoint_Inom = SETPOINT_Inom_MIN;
+  target_label->setpoint_r_kom_st_Inom = SETPOINT_RKS_Inom_MIN;
+  target_label->setpoint_Inom_vymk = SETPOINT_Inom_vymk_MIN;
+  target_label->setpoint_r_kom_st_Inom_vymk = SETPOINT_RKS_Inom_vymk_MIN;
+  
+  unsigned int chastka = target_label->setpoint_r_kom_st_Inom/target_label->setpoint_r_kom_st_Inom_vymk;
+  target_label->setpoint_pochatkovyj_resurs = 2*chastka;
+  target_label->setpoint_krytychnyj_resurs = chastka;
+  target_label->setpoint_pochatkova_k_vymk = 0;
+  
+  target_label->timeout_swch_on = TIMEOUT_SWCH_ON_MIN;
+  target_label->timeout_swch_off = TIMEOUT_SWCH_OFF_MIN;
+  target_label->timeout_swch_udl_blk_on = TIMEOUT_SWCH_UDL_BLK_ON_MIN;
+  target_label->timeout_pryvoda_VV = TIMEOUT_PRYVODA_VV_MIN;
+  target_label->control_switch = 0;
+  
+  target_label->prefault_number_periods = TIMEOUT_PREFAULT_MIN / 20;
+  target_label->postfault_number_periods = TIMEOUT_POSTFAULT_MIN / 20;
+
+  target_label->password1 = 0;
+  target_label->password2 = 1234;
+  target_label->timeout_deactivation_password_interface_USB = TIMEOUT_DEACTIVATION_PASSWORD_MIN;
+  target_label->password_interface_USB = 0;
+  target_label->timeout_deactivation_password_interface_RS485 = TIMEOUT_DEACTIVATION_PASSWORD_MIN;
+  target_label->password_interface_RS485 = 0;
+  
+  target_label->timeout_idle_new_settings = TIMEOUT_NEW_SETTINGS_MIN;
+  
+  target_label->TCurrent = KOEF_TT_MIN;
+  target_label->TVoltage = KOEF_TN_MIN;
+  target_label->control_transformator = 0;
+
+  for(unsigned int i=0; i< ((M_ADDRESS_LAST_USER_REGISTER_DATA - M_ADDRESS_FIRST_USER_REGISTER_DATA) + 1); i++) target_label->user_register[i] = 0;
+
+  for(unsigned int i=0; i<MAX_CHAR_IN_NAME_OF_CELL; i++) target_label->name_of_cell[i] = ' ';
+  target_label->name_of_cell[4 ] = 'Б';
+  target_label->name_of_cell[5 ] = 'е';
+  target_label->name_of_cell[6 ] = 'з';
+  target_label->name_of_cell[8 ] = 'и';
+  target_label->name_of_cell[9 ] = 'м';
+  target_label->name_of_cell[10] = 'е';
+  target_label->name_of_cell[11] = 'н';
+  target_label->name_of_cell[12] = 'и';
+  
+  target_label->address = KOEF_ADDRESS_MIN;
+  target_label->speed_RS485 = VALUE_SPEED_INTERFACE_MIN;
+  target_label->pare_bit_RS485 = VALUE_PARE_INTERFACE_MAX; //томущо восновному контроль парності має бути в EVEN - а це число відповідає VALUE_PARE_INTERFACE_MAX
+  target_label->number_stop_bit_RS485 = VALUE_STOP_BITS_INTERFACE_MIN;
+  target_label->time_out_1_RS485 = VALUE_TIME_OUT_1_INTERFACE_MIN;
+  
+  target_label->language = LANGUAGE_EN;
+  
+  target_label->control_extra_settings_1 = 0;
+
+  for(unsigned int i = 0; i < (7+1); i++)
+  {
+    target_label->time_setpoints[i] = 0;
+    target_label->time_ranguvannja[i] = 0;
+  }
+}
+/**************************************/
+
+/**************************************/
+//Виводимо повідомлення про те, що настройки не зчитані успішно
+/**************************************/
+void error_reading_with_eeprom()
+{
+  const unsigned char string_info[MAX_NAMBER_LANGUAGE][4][MAX_COL_LCD] = 
+  {
+    {
+      "  Настроек нет  ",
+      " Ош.к.с.настр.  ",
+      "  Триг.инф.нет  ",
+      "Ош.к.с.триг.инф."
+    },
+    {
+      "Налагоджень нема",
+      " Пом.к.с.налаг. ",
+      " Триґ.інф.нема  ",
+      "Пом.к.с.триґ.інф"
+    },
+    {
+      "Param are absent",
+      "Error Param chks",
+      "F-F info.are abs",
+      "Er.F-F info.chks"
+    },
+    {
+      "  Настроек нет  ",
+      " Ош.к.с.настр.  ",
+      "  Триг.инф.нет  ",
+      "Ош.к.с.триг.инф."
+    } 
+  };
+  const unsigned char string_action[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] =
+  {
+    {
+      "Мин.парам.:Enter",
+      " Сбросить: Enter"
+    },
+    {
+      "Мін.парам.:Enter",
+      " Скинути: Enter "
+    },
+    {
+      "Min.param :Enter",
+      "  Reset: Enter  "
+    },
+    {
+      "Мин.парам.:Enter",
+      " Сбросить: Enter"
+    }
+  };
+  
+  int index_language;
+  if ((state_i2c_task & STATE_SETTINGS_EEPROM_GOOD) == 0) index_language = index_language_in_array(LANGUAGE_ABSENT);
+  else index_language = index_language_in_array(current_settings.language);
+
+  if (
+      ((state_i2c_task & (STATE_SETTINGS_EEPROM_EMPTY | STATE_SETTINGS_EEPROM_FAIL) ) != 0) ||
+      ((state_i2c_task & (STATE_TRG_FUNC_EEPROM_EMPTY | STATE_TRG_FUNC_EEPROM_FAIL) ) != 0)
+     )   
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+    
+    unsigned int index_info, index_action, information_type;
+    if((state_i2c_task & STATE_SETTINGS_EEPROM_EMPTY) != 0)
+    {
+      index_info = 0;
+      index_action = 0;
+      information_type = 1;
+    }
+    else if((state_i2c_task & STATE_SETTINGS_EEPROM_FAIL) != 0)
+    {
+      index_info = 1;
+      index_action = 0;
+      information_type = 1;
+    }
+    else if((state_i2c_task & STATE_TRG_FUNC_EEPROM_EMPTY) != 0)
+    {
+      index_info = 2;
+      index_action = 1;
+      information_type = 2;
+    }
+    else if((state_i2c_task & STATE_TRG_FUNC_EEPROM_FAIL) != 0)
+    {
+      index_info = 3;
+      index_action = 1;
+      information_type = 2;
+    }
+
+    //Копіюємо  рядки у робочий екран
+    for (unsigned int i=0; i< MAX_ROW_LCD; i++)
+    {
+      for (unsigned int j = 0; j<MAX_COL_LCD; j++) 
+      {
+        if (i == 0) working_ekran[i][j] = string_info[index_language][index_info][j];
+        else if (i == 1) working_ekran[i][j] = string_action[index_language][index_action][j];
+        else working_ekran[i][j] = ' ';
+      }
+    }
+  
+    //Обновити повністю весь екран
+    current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
+
+    //Обновляємо інформацію на екрані
+    view_whole_ekran();
+    
+    //Чекаємо поки не буде натиснута кнопка ENTER
+    while ((new_state_keyboard & (1<<BIT_KEY_ENTER)) ==0)
+    {
+      //Робота з watchdogs
+      if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+      {
+        //Змінюємо стан біту зовнішнього Watchdog на протилежний
+        GPIO_WriteBit(
+                      GPIO_EXTERNAL_WATCHDOG,
+                      GPIO_PIN_EXTERNAL_WATCHDOG,
+                      (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                     );
+      }
+    }
+
+    new_state_keyboard = 0;
+    
+    if (information_type == 1)
+    {
+      //Помічаємо, що таблиця зараз буде змінилася і її треба буде з системи захистів зкопіювати у таблицю з якою працює система захистів
+      changed_settings = CHANGED_ETAP_EXECUTION;
+      //Заповнюємо мінімальну конфігурацію
+      min_settings(&current_settings);
+      //Помічаємо, що таблиця змінилася і її треба буде з системи захистів зкопіювати у таблицю з якою працює система захистів
+      changed_settings = CHANGED_ETAP_ENDED;
+      current_settings_interfaces = current_settings;
+      
+      //Записуємо мінімальну конфігурацію
+      _SET_BIT(control_i2c_taskes, TASK_START_WRITE_SETTINGS_EEPROM_BIT);
+      
+    }
+    else if (information_type == 2)
+    {
+      misceve_dystancijne = 0;
+      for (unsigned int i = 0; i < N_BIG; i++) trigger_active_functions[i] = 0x0;
+
+      //Записуємо очищену триґерну інформацію
+      _SET_BIT(control_i2c_taskes, TASK_START_WRITE_TRG_FUNC_EEPROM_BIT);
+    }
+    
+    //Чекаємо завершення запису
+    while(
+          (control_i2c_taskes[0]     != 0) ||
+          (control_i2c_taskes[1]     != 0) ||
+          (driver_i2c.state_execution > 0)
+         )
+    {
+      //Робота з watchdogs
+      if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+      {
+        //Змінюємо стан біту зовнішнього Watchdog на протилежний
+        GPIO_WriteBit(
+                      GPIO_EXTERNAL_WATCHDOG,
+                      GPIO_PIN_EXTERNAL_WATCHDOG,
+                      (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                     );
+      }
+
+      main_routines_for_i2c();
+      changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+      //Оскільки ще тамер вимірювальної системи не запущений, то цю операцію треба робити тут
+      if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+      {
+        //Повне роозблоковування запуск заблокованих задач запису в EEPROM для драйверу I2C
+        _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+      }
+    }
+
+    if (information_type == 1)
+    {
+      //Повтрокно зчитуємо налаштування
+      comparison_writing &= (unsigned int)(~COMPARISON_WRITING_SETTINGS);/*зчитування, а не порівняння*/
+      _SET_BIT(control_i2c_taskes, TASK_START_READ_SETTINGS_EEPROM_BIT);
+    }
+    else if (information_type == 2)
+    {
+      //Повтрокно зчитуємо триґерну інформацію
+      comparison_writing &= (unsigned int)(~COMPARISON_WRITING_TRG_FUNC);/*зчитування, а не порівняння*/
+      _SET_BIT(control_i2c_taskes, TASK_START_READ_TRG_FUNC_EEPROM_BIT);
+    }
+
+    //Чекаємо завершення читання
+    while(
+          (control_i2c_taskes[0]     != 0) ||
+          (control_i2c_taskes[1]     != 0) ||
+          (driver_i2c.state_execution > 0)
+         )
+    {
+      //Робота з watchdogs
+      if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+      {
+        //Змінюємо стан біту зовнішнього Watchdog на протилежний
+        GPIO_WriteBit(
+                      GPIO_EXTERNAL_WATCHDOG,
+                      GPIO_PIN_EXTERNAL_WATCHDOG,
+                      (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                     );
+      }
+      
+      main_routines_for_i2c();
+      changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+      //Оскільки ще тамер вимірювальної системи не запущений, то цю операцію треба робити тут
+      if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+      {
+        //Повне роозблоковування запуск заблокованих задач запису в EEPROM для драйверу I2C
+        _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+      }
+    }
+  }
+}  
+/**************************************/
+
+/**************************************/
+//стартова перевірка (і при необхідності перенастройка на потрібні параметри) DataFlash
+/**************************************/
+void start_checking_dataflash(void)
+{
+  //Читаємо статуми мікросхеми 1
+  unsigned char page_size_256, page_size_256_total = 1;
+  unsigned int ready_busy;
+  number_chip_dataflsh_exchange = INDEX_DATAFLASH_1;
+  
+  for (unsigned int i = 0; i < NUMBER_DATAFLASH_CHIP; i++)
+  {
+    page_size_256 = 1;
+    dataflash_status_read(number_chip_dataflsh_exchange);
+    while (driver_spi_df[number_chip_dataflsh_exchange].state_execution != TRANSACTION_EXECUTED_WAIT_ANALIZE)
+    {
+      if (driver_spi_df[number_chip_dataflsh_exchange].state_execution == TRANSACTION_EXECUTING_NONE)
+      {
+        /*
+        ця ситуація могла виникнути тільки в одному випадку - якщо в процесі прийом/передачі
+        зафісована була помилка у SPI_DF, тому повторно виконуємо запуск читання регістру статусу
+        */
+        dataflash_status_read(number_chip_dataflsh_exchange);
+      }
+      
+      //Робота з watchdogs
+      if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+      {
+        //Змінюємо стан біту зовнішнього Watchdog на протилежний
+        GPIO_WriteBit(
+                      GPIO_EXTERNAL_WATCHDOG,
+                      GPIO_PIN_EXTERNAL_WATCHDOG,
+                      (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                     );
+      }
+    }
+    page_size_256 &= RxBuffer_SPI_DF[1] & (1<< 0); 
+    ready_busy = RxBuffer_SPI_DF[1] & (1<< 7);
+    driver_spi_df[number_chip_dataflsh_exchange].state_execution = TRANSACTION_EXECUTING_NONE;
+    driver_spi_df[number_chip_dataflsh_exchange].code_operation = CODE_OPERATION_NONE;
+    if (page_size_256 == 0)
+    {
+      //Треба подати команду на перевід мікросхеми з розміром сторінки 256 байт
+      
+      //Перевіряємо, чи мікросхема зараз є вільною по біту Ready/Busy
+      while (ready_busy == 0)/*перший раз біт ready/busy беремо з попередньої операції читання регістру статусу*/
+      {
+        dataflash_status_read(number_chip_dataflsh_exchange);
+        while (driver_spi_df[number_chip_dataflsh_exchange].state_execution != TRANSACTION_EXECUTED_WAIT_ANALIZE)
+        {
+          if (driver_spi_df[number_chip_dataflsh_exchange].state_execution == TRANSACTION_EXECUTING_NONE)
+          {
+            /*
+            ця ситуація могла виникнути тільки в одному випадку - якщо в процесі прийом/передачі
+            зафісована була помилка у SPI_DF, тому повторно виконуємо запуск читання регістру статусу
+            */
+            dataflash_status_read(number_chip_dataflsh_exchange);
+          }
+          
+          //Робота з watchdogs
+          if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+          {
+            //Змінюємо стан біту зовнішнього Watchdog на протилежний
+            GPIO_WriteBit(
+                          GPIO_EXTERNAL_WATCHDOG,
+                          GPIO_PIN_EXTERNAL_WATCHDOG,
+                          (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                         );
+          }
+        }
+        ready_busy = RxBuffer_SPI_DF[1] & (1<< 7);
+        driver_spi_df[number_chip_dataflsh_exchange].state_execution = TRANSACTION_EXECUTING_NONE;
+        driver_spi_df[number_chip_dataflsh_exchange].code_operation = CODE_OPERATION_NONE;
+      }
+      
+      //Подаємо команду на переналаштування DataFlash
+      dataflash_set_pagesize_256(number_chip_dataflsh_exchange);
+      while (driver_spi_df[number_chip_dataflsh_exchange].state_execution != TRANSACTION_EXECUTED_WAIT_ANALIZE)
+      {
+        /*
+        Тут я вирішив не аналізувати випадок збою, бо після виконання цієї операції
+        треба буде виклю чити і включити прилад (причому скоріше всього це буде на заводі), 
+        тому у гіршому випадку мікросхема скаже, що вона ще не переведена на потрібну ширину сторінки
+        */
+        
+        //Робота з watchdogs
+        if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+        {
+          //Змінюємо стан біту зовнішнього Watchdog на протилежний
+          GPIO_WriteBit(
+                        GPIO_EXTERNAL_WATCHDOG,
+                        GPIO_PIN_EXTERNAL_WATCHDOG,
+                        (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                       );
+        }
+      }
+      driver_spi_df[number_chip_dataflsh_exchange].state_execution = TRANSACTION_EXECUTING_NONE;
+      driver_spi_df[number_chip_dataflsh_exchange].code_operation = CODE_OPERATION_NONE;
+      
+      //Очікуємо, поки попредня команда переналаштування мікросхеми виконається
+      do
+      {
+        dataflash_status_read(number_chip_dataflsh_exchange);
+        while (driver_spi_df[number_chip_dataflsh_exchange].state_execution != TRANSACTION_EXECUTED_WAIT_ANALIZE)
+        {
+          if (driver_spi_df[number_chip_dataflsh_exchange].state_execution == TRANSACTION_EXECUTING_NONE)
+          {
+            /*
+            ця ситуація могла виникнути тільки в одному випадку - якщо в процесі прийом/передачі
+            зафісована була помилка у SPI_DF, тому повторно виконуємо запуск читання регістру статусу
+            */
+            dataflash_status_read(number_chip_dataflsh_exchange);
+          }
+      
+          //Робота з watchdogs
+          if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+          {
+            //Змінюємо стан біту зовнішнього Watchdog на протилежний
+            GPIO_WriteBit(
+                          GPIO_EXTERNAL_WATCHDOG,
+                          GPIO_PIN_EXTERNAL_WATCHDOG,
+                          (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                         );
+          }
+        }
+        ready_busy = RxBuffer_SPI_DF[1] & (1<< 7);
+        driver_spi_df[number_chip_dataflsh_exchange].state_execution = TRANSACTION_EXECUTING_NONE;
+        driver_spi_df[number_chip_dataflsh_exchange].code_operation = CODE_OPERATION_NONE;
+      }
+      while (ready_busy == 0);/*біт ready/busy беремо з попереднії операцій читання регістру статусу, а з нової операції читання регістру статсусу*/
+      
+    }
+
+    page_size_256_total &=  page_size_256;
+    number_chip_dataflsh_exchange = (number_chip_dataflsh_exchange + 1) & (NUMBER_DATAFLASH_CHIP - 1);
+  }
+  
+  if (error_into_spi_df != 0)
+  {
+    /*
+    Якщо була зафіксована помилка під час переходу на ширину сторінки 256 байт
+    (під час читання регістру статусу змінна error_into_spi_df не встановлюється
+    у ненульове значення), то робимо примусовий перезапуск з допомогою внутрішнього
+    (і зовнішнього, якщо джампер є) watchdog-а
+    */
+    while(1);
+  }
+  
+  if (page_size_256_total == 0)
+  {
+    const unsigned char name_string[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] = 
+    {
+      {
+        " Перезапустите  ",
+        "   устройство   "
+      },
+      {
+        " Перезапустіть  ",
+        "    пристрій    "
+      },
+      {
+        "     Reset      ",
+        "   the device   "
+      },
+      {
+        " Перезапустите  ",
+        "   устройство   "
+      }
+    };
+
+    int index_language = index_language_in_array(current_settings.language);
+    
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+                    GPIO_EXTERNAL_WATCHDOG,
+                    GPIO_PIN_EXTERNAL_WATCHDOG,
+                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                   );
+    }
+
+    //Копіюємо  рядки у робочий екран
+    for (unsigned int i=0; i< MAX_ROW_LCD; i++)
+    {
+      for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string[index_language][i][j];
+    }
+  
+    //Обновити повністю весь екран
+    current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
+
+    //Обновляємо інформацію на екрані
+    view_whole_ekran();
+    
+    //Чекаємо, поки пристрій буде перезапущений
+    while(1)
+    {
+      //Робота з watchdogs
+      if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+      {
+        //Змінюємо стан біту зовнішнього Watchdog на протилежний
+        GPIO_WriteBit(
+                      GPIO_EXTERNAL_WATCHDOG,
+                      GPIO_PIN_EXTERNAL_WATCHDOG,
+                      (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
+                     );
+      }
+    }
+  }
+}
+/**************************************/
+
+/**************************************/
+//Запускаємо канал 2 таймеру 4 на генерацію переривань кожну 1 мс
+/**************************************/
+void start_tim4_canal2_for_interrupt_1mc(void)
+{
+  TIM_OCInitTypeDef  TIM_OCInitStructure;
+
+  /* Output Compare Timing Mode настроювання: Канал:2 */
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Timing;
+  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Disable;
+  TIM_OCInitStructure.TIM_Pulse = ((uint16_t)TIM4->CNT) + TIM4_CCR2_VAL;
+  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+  TIM_OC2Init(TIM4, &TIM_OCInitStructure);
+  
+  TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Disable);
+
+  /* Дозволяємо переривання від каналу 2 таймера 4*/
+  TIM_ITConfig(TIM4, TIM_IT_CC2, ENABLE);
+
+//  //Обновляємо новий час запуску переривання
+//  TIM4->CCR2 = ((uint16_t)TIM4->CNT) + TIM4_CCR2_VAL;
+}
+/**************************************/
+
+/**************************************/
+//Запускаємо канал 3 таймеру 4 на генерацію переривань як мінімум 10 мкс
+/**************************************/
+void start_tim4_canal3_for_interrupt_10mkc(void)
+{
+  TIM_OCInitTypeDef  TIM_OCInitStructure;
+  
+  if (number_bits_rs_485_waiting < 10) calculate_namber_bit_waiting_for_rs_485();
+
+  /* Output Compare Timing Mode настроювання: Канал:2 */
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Timing;
+  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Disable;
+  unsigned int delta = TIM4_CCR3_VAL*number_bits_rs_485_waiting;
+  TIM_OCInitStructure.TIM_Pulse = ((uint16_t)TIM4->CNT) + delta;
+  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+  TIM_OC3Init(TIM4, &TIM_OCInitStructure);
+  
+  TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Disable);
+
+  /* Дозволяємо переривання від каналу 3 таймера 4*/
+  TIM_ITConfig(TIM4, TIM_IT_CC3, ENABLE);
+}
+/**************************************/
+
+/**************************************/
+//
+/**************************************/
+/**************************************/

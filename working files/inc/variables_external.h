@@ -236,30 +236,6 @@ extern unsigned char temp_register_rtc[2];
 extern volatile unsigned int changed_settings; 
 extern unsigned char crc_settings;
 extern __SETTINGS current_settings_prt, current_settings,  edition_settings,current_settings_interfaces;
-extern int * const type_mtz_arr[NUMBER_LEVEL_MTZ];
-extern const unsigned int mtz_tmr_const[NUMBER_LEVEL_MTZ][NUMBER_LEVEL_TMR_CONST];
-extern const unsigned int mtz_prysk_tmr_const[2][NUMBER_LEVEL_TMR_MTZ_PRYSK_CONST];
-extern const unsigned int mtz_const_menu_settings_prt[NUMBER_LEVEL_MTZ][MTZ_CONST_MENU_SETTINGS_LENGTH];
-extern const unsigned int mtz_prysk_const_menu_settings_prt[2][MTZ_PR_CONST_MENU_SETTINGS_LENGTH];
-extern const unsigned int i_nom_const;
-extern const unsigned int u_linear_nom_const;
-extern unsigned int * const setpoint_mtz[NUMBER_LEVEL_MTZ];
-extern unsigned int * const setpoint_mtz_n_vpered[NUMBER_LEVEL_MTZ];
-extern unsigned int * const setpoint_mtz_n_nazad[NUMBER_LEVEL_MTZ];
-extern unsigned int * const setpoint_mtz_U[NUMBER_LEVEL_MTZ];
-extern unsigned int * const setpoint_mtz_po_napruzi[NUMBER_LEVEL_MTZ];
-extern int * const timeout_mtz[NUMBER_LEVEL_MTZ];
-extern int * const timeout_mtz_prysk[2];
-extern int * const timeout_mtz_n_vpered[NUMBER_LEVEL_MTZ];
-extern int * const timeout_mtz_n_vpered_prysk[2];
-extern int * const timeout_mtz_n_nazad[NUMBER_LEVEL_MTZ];
-extern int * const timeout_mtz_n_nazad_prysk[2];
-extern int * const timeout_mtz_po_napruzi[NUMBER_LEVEL_MTZ];
-extern int * const timeout_mtz_po_napruzi_prysk[2];
-extern int * const timeout_mtz_vvid_prysk[2];
-extern _Bool previous_state_mtz_po_incn;
-extern _Bool previous_state_mtz_po_uncn;
-extern unsigned int p_global_trigger_state_mtz2;
 
 //Змінні для визначеня ресурсу процесора-програми
 extern volatile unsigned int restart_resurs_count;
@@ -446,10 +422,6 @@ extern unsigned int type_of_settings_changed;
 
 extern unsigned int serial_number_dev;
 extern unsigned int edit_serial_number_dev;
-
-//Для відображення інформації про причину відключення
-extern unsigned int info_vidkluchennja_vymykacha;
-extern unsigned char info_vidkluchennja_vymykachatime[VYMKNENNJA_VID_MAX_NUMBER][7]; 
 
 extern volatile unsigned int control_word_of_watchdog;
 extern unsigned int test_watchdogs;

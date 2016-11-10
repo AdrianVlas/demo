@@ -77,7 +77,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>7.40.5.9734</state>
+          <state>7.50.2.10499</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -4514,9 +4514,6 @@
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_urov.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_vidkluchennja.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zdz.h</name>
         </file>
         <file>
@@ -4704,9 +4701,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_urov.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\src\menu_vidkluchennja.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_view_measurement.c</name>

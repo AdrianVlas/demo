@@ -130,7 +130,7 @@ inline unsigned int sqrt_32(unsigned int y)
 /*****************************************************/
 //Розрахунки віимірювань
 /*****************************************************/
-inline void calc_measurement(unsigned int number_group_stp)
+inline void calc_measurement(void)
 {
   int ortogonal_local[2*NUMBER_ANALOG_CANALES];
   //Виставляємо семафор заборони обновлення значень з вимірювальної системи
@@ -1385,98 +1385,8 @@ inline void d_not_handler(volatile unsigned int *p_active_functions)
 /*****************************************************/
 // "Перевірка фазування"
 /*****************************************************/
-void ctrl_phase_handler(volatile unsigned int *p_active_functions, unsigned int number_group_stp)
+void ctrl_phase_handler(volatile unsigned int *p_active_functions)
 {
-  static unsigned int TN1_bilshe_porogu, TN2_bilshe_porogu;
-  unsigned int setpoint_TN1, setpoint_TN2;
-    
-  if (TN1_bilshe_porogu == 0) setpoint_TN1 = PORIG_FOR_FAPCH*U_DOWN/100;
-  else setpoint_TN1 = PORIG_FOR_FAPCH;
-  if (TN2_bilshe_porogu == 0) setpoint_TN2 = PORIG_FOR_FAPCH*U_DOWN/100;
-  else setpoint_TN2 = PORIG_FOR_FAPCH;
-  
-  TN1_bilshe_porogu = (measurement[IM_UA1] >= setpoint_TN1) && (measurement[IM_UB1] >= setpoint_TN1) && (measurement[IM_UC1] >= setpoint_TN1);
-  TN2_bilshe_porogu = (measurement[IM_UA2] >= setpoint_TN2) && (measurement[IM_UB2] >= setpoint_TN2) && (measurement[IM_UC2] >= setpoint_TN2);
-
-  unsigned int logic_CTRL_PHASE_0 = 0;
-  
-  static unsigned int state_delta_U, state_delta_phi, state_delta_f;
-  if ((TN1_bilshe_porogu != 0) && (TN2_bilshe_porogu != 0))
-  {
-    //Різниця напруг
-    unsigned int setpoint_U;
-    setpoint_U = (state_delta_U == 0) ? current_settings_prt.setpoint_ctrl_phase_U[number_group_stp] : current_settings_prt.setpoint_ctrl_phase_U[number_group_stp]*U_DOWN/100;
-    unsigned int Ua1 = measurement[IM_UA1];
-    unsigned int Ua2 = measurement[IM_UA2];
-    unsigned int Ub1 = measurement[IM_UB1];
-    unsigned int Ub2 = measurement[IM_UB2];
-    unsigned int Uc1 = measurement[IM_UC1];
-    unsigned int Uc2 = measurement[IM_UC2];
-    state_delta_U = ((unsigned int)(abs(Ua1 - Ua2)) >= setpoint_U) && 
-                    ((unsigned int)(abs(Ub1 - Ub2)) >= setpoint_U) && 
-                    ((unsigned int)(abs(Uc1 - Uc2)) >= setpoint_U);
-    
-    //Різниця фаз
-    unsigned int setpoint_phi;
-    setpoint_phi = (state_delta_phi == 0) ? current_settings_prt.setpoint_ctrl_phase_phi[number_group_stp] : current_settings_prt.setpoint_ctrl_phase_phi[number_group_stp]*KOEF_POVERNENNJA_GENERAL/100;
-    unsigned int bank_phi_angle_high_tmp = bank_phi_angle_high;
-    int phi_Ua1 = phi_angle_high[bank_phi_angle_high_tmp][FULL_ORT_Ua1];
-    int phi_Ua2 = phi_angle_high[bank_phi_angle_high_tmp][FULL_ORT_Ua2];
-    int phi_Ub1 = phi_angle_high[bank_phi_angle_high_tmp][FULL_ORT_Ub1];
-    int phi_Ub2 = phi_angle_high[bank_phi_angle_high_tmp][FULL_ORT_Ub2];
-    int phi_Uc1 = phi_angle_high[bank_phi_angle_high_tmp][FULL_ORT_Uc1];
-    int phi_Uc2 = phi_angle_high[bank_phi_angle_high_tmp][FULL_ORT_Uc2];
-    state_delta_phi = ((phi_Ua1 >= 0) && (phi_Ua2 >= 0) && ((unsigned int)(abs(phi_Ua1 - phi_Ua2)) >= setpoint_phi)) && 
-                      ((phi_Ub1 >= 0) && (phi_Ub2 >= 0) && ((unsigned int)(abs(phi_Ub1 - phi_Ub2)) >= setpoint_phi)) && 
-                      ((phi_Uc1 >= 0) && (phi_Uc2 >= 0) && ((unsigned int)(abs(phi_Uc1 - phi_Uc2)) >= setpoint_phi));
-
-    //Різниця частот
-    unsigned int setpoint_f;
-    setpoint_f = (state_delta_f == 0) ? current_settings_prt.setpoint_ctrl_phase_f[number_group_stp] : current_settings_prt.setpoint_ctrl_phase_f[number_group_stp]*KOEF_POVERNENNJA_GENERAL/100;
-    int frequency_val_1_int = (int)frequency_val_1;
-    int frequency_val_2_int = (int)frequency_val_2;
-    state_delta_f = (frequency_val_1_int >= 0) && (frequency_val_2_int >= 0) && (((unsigned int)(abs(1000*frequency_val_1_int - 1000*frequency_val_2_int))) >= setpoint_f);
-
-    logic_CTRL_PHASE_0 |= ((state_delta_U   != 0) && ((current_settings_prt.control_ctrl_phase & CTR_CTRL_PHASE_U  ) != 0)) << 0;
-    logic_CTRL_PHASE_0 |= ((state_delta_phi != 0) && ((current_settings_prt.control_ctrl_phase & CTR_CTRL_PHASE_PHI) != 0)) << 1;
-    logic_CTRL_PHASE_0 |= ((state_delta_f   != 0) && ((current_settings_prt.control_ctrl_phase & CTR_CTRL_PHASE_F  ) != 0)) << 2;
-  }
-  else
-  {
-    state_delta_U = 0;
-    state_delta_phi = 0;
-    state_delta_f = 0;
-  }
-  
-  _TIMER_T_0(INDEX_TIMER_CTRL_PHASE_U  , current_settings_prt.timeout_ctrl_phase_U  [number_group_stp], logic_CTRL_PHASE_0, 0, logic_CTRL_PHASE_0, 3);
-  _TIMER_0_T(INDEX_TIMER_CTRL_PHASE_U_D, current_settings_prt.timeout_ctrl_phase_U_d[number_group_stp], logic_CTRL_PHASE_0, 3, logic_CTRL_PHASE_0, 4);
-
-  _TIMER_T_0(INDEX_TIMER_CTRL_PHASE_PHI  , current_settings_prt.timeout_ctrl_phase_phi  [number_group_stp], logic_CTRL_PHASE_0, 1, logic_CTRL_PHASE_0, 5);
-  _TIMER_0_T(INDEX_TIMER_CTRL_PHASE_PHI_D, current_settings_prt.timeout_ctrl_phase_phi_d[number_group_stp], logic_CTRL_PHASE_0, 5, logic_CTRL_PHASE_0, 6);
-
-  _TIMER_T_0(INDEX_TIMER_CTRL_PHASE_F  , current_settings_prt.timeout_ctrl_phase_f  [number_group_stp], logic_CTRL_PHASE_0, 2, logic_CTRL_PHASE_0, 7);
-  _TIMER_0_T(INDEX_TIMER_CTRL_PHASE_F_D, current_settings_prt.timeout_ctrl_phase_f_d[number_group_stp], logic_CTRL_PHASE_0, 7, logic_CTRL_PHASE_0, 8);
-
-  logic_CTRL_PHASE_0 |= ((sequence_TN1 == CONST_SEQ_FAIL) && ((current_settings_prt.control_ctrl_phase & CTR_CTRL_PHASE_SEQ_TN1) != 0) && (TN1_bilshe_porogu != 0)) << 9;
-  logic_CTRL_PHASE_0 |= ((sequence_TN2 == CONST_SEQ_FAIL) && ((current_settings_prt.control_ctrl_phase & CTR_CTRL_PHASE_SEQ_TN2) != 0) && (TN2_bilshe_porogu != 0)) << 10;
-  
-  _TIMER_T_0(INDEX_TIMER_CTRL_PHASE_TMP1_100MS, 100, logic_CTRL_PHASE_0, 9 , logic_CTRL_PHASE_0, 11);
-  _TIMER_T_0(INDEX_TIMER_CTRL_PHASE_TMP2_100MS, 100, logic_CTRL_PHASE_0, 10, logic_CTRL_PHASE_0, 12);
-  
-  if (_GET_OUTPUT_STATE(logic_CTRL_PHASE_0, 4)) _SET_BIT(p_active_functions, RANG_ERROR_DELTA_U_CTRL_PHASE);
-  else  _CLEAR_BIT(p_active_functions, RANG_ERROR_DELTA_U_CTRL_PHASE);
-  
-  if (_GET_OUTPUT_STATE(logic_CTRL_PHASE_0, 6)) _SET_BIT(p_active_functions, RANG_ERROR_DELTA_PHI_CTRL_PHASE);
-  else  _CLEAR_BIT(p_active_functions, RANG_ERROR_DELTA_PHI_CTRL_PHASE);
-  
-  if (_GET_OUTPUT_STATE(logic_CTRL_PHASE_0, 8)) _SET_BIT(p_active_functions, RANG_ERROR_DELTA_F_CTRL_PHASE);
-  else  _CLEAR_BIT(p_active_functions, RANG_ERROR_DELTA_F_CTRL_PHASE);
-  
-  if (_GET_OUTPUT_STATE(logic_CTRL_PHASE_0, 11)) _SET_BIT(p_active_functions, RANG_ERROR_SEC_TN1_CTRL_PHASE);
-  else  _CLEAR_BIT(p_active_functions, RANG_ERROR_SEC_TN1_CTRL_PHASE);
-  
-  if (_GET_OUTPUT_STATE(logic_CTRL_PHASE_0, 12)) _SET_BIT(p_active_functions, RANG_ERROR_SEC_TN2_CTRL_PHASE);
-  else  _CLEAR_BIT(p_active_functions, RANG_ERROR_SEC_TN2_CTRL_PHASE);
 }
 /*****************************************************/
 
@@ -1500,46 +1410,8 @@ inline unsigned int stop_regisrator(volatile unsigned int* carrent_active_functi
     {
       //Зафіксовано, що ні одне джерело активації реєстратора зараз не активне
       
-      if (
-          ((carrent_active_functions[0] & MASKA_FOR_CONTINUE_GET_DR_ACTINE_WORD_0) == 0) &&
-          ((carrent_active_functions[1] & MASKA_FOR_CONTINUE_GET_DR_ACTINE_WORD_1) == 0) &&
-          ((carrent_active_functions[2] & MASKA_FOR_CONTINUE_GET_DR_ACTINE_WORD_2) == 0) &&
-          ((carrent_active_functions[3] & MASKA_FOR_CONTINUE_GET_DR_ACTINE_WORD_3) == 0) &&
-          ((carrent_active_functions[4] & MASKA_FOR_CONTINUE_GET_DR_ACTINE_WORD_4) == 0) &&
-          ((carrent_active_functions[5] & MASKA_FOR_CONTINUE_GET_DR_ACTINE_WORD_5) == 0) &&
-          ((carrent_active_functions[6] & MASKA_FOR_CONTINUE_GET_DR_ACTINE_WORD_6) == 0)
-        )
-      {
-        //Зафіксовано, що всі функції, які можуть утримувати реєстратор активним зараз скинуті
-          
-        //Перевіряємо, чи всі таймери, які працють у логіці схеми виключені
-        unsigned int global_timers_work = 0, i = INDEX_TIMER_DF_PAUSE_START;
-        while ((i < NEXT_TIMER) && (global_timers_work == 0))
-        {
-          if (global_timers[i] >= 0) 
-          {
-            if (
-                (
-                 (i != INDEX_TIMER_PRYVOD_VV) ||
-                 (  
-                  ((current_settings_prt.control_switch & CTR_PRYVOD_VV) != 0) &&
-                  (global_timers[i] < current_settings_prt.timeout_pryvoda_VV) 
-                 )   
-                ) 
-               )
-            global_timers_work = 1;
-          }
-          i++;
-        }
-          
-        if (global_timers_work == 0)
-        {
-          //Зафіксовано, що всі таймери, які працюють у лозіці неактивні
-        
-          //Помічаємо, що реєстратор може бути зупиненим
-          stop = 0xff;
-        }
-      }
+      //Помічаємо, що реєстратор може бути зупиненим
+      stop = 0xff;
     }
   }
   
@@ -1693,303 +1565,6 @@ inline void routine_for_queue_dr(void)
 /*****************************************************/
 inline void digital_registrator(volatile unsigned int* carrent_active_functions)
 {
-  static unsigned int previous_active_functions[N_BIG];
-  
-  static unsigned int number_items_dr;
-  static unsigned int number_changes_into_dr_record;
-  static unsigned int time_from_start_record_dr;
-  static unsigned int blocking_continue_monitoring_min_U;
-  
-  switch (state_dr_record)
-  {
-  case STATE_DR_NO_RECORD:
-  case STATE_DR_FORCE_START_NEW_RECORD:
-    {
-      //Попередньо скидаємо невизначену помилку  роботи дискретного реєстратора
-      _SET_BIT(clear_diagnostyka, ERROR_DR_UNDEFINED_BIT);
-      if(number_records_dr_waiting_for_saving_operation < (WIGHT_OF_DR_WAITING - 1))
-      {
-        //Ця ситуація означає, що як мінімум на один новий запис у нас є вільне місц, тому скидаємо сигналізацію про втрату даних
-        _SET_BIT(clear_diagnostyka, ERROR_DR_TEMPORARY_BUSY_BIT);
-      }
-      
-      //На початок аналізу покищо ще дискретний реєстратор не запущений
-      
-      //Аналізуємо, чи стоїть умова запуску дискретного реєстратора
-      if (
-          (
-           ((carrent_active_functions[0] & current_settings_prt.ranguvannja_digital_registrator[0]) != 0) ||
-           ((carrent_active_functions[1] & current_settings_prt.ranguvannja_digital_registrator[1]) != 0) ||
-           ((carrent_active_functions[2] & current_settings_prt.ranguvannja_digital_registrator[2]) != 0) ||
-           ((carrent_active_functions[3] & current_settings_prt.ranguvannja_digital_registrator[3]) != 0) ||
-           ((carrent_active_functions[4] & current_settings_prt.ranguvannja_digital_registrator[4]) != 0) ||
-           ((carrent_active_functions[5] & current_settings_prt.ranguvannja_digital_registrator[5]) != 0) ||
-           ((carrent_active_functions[6] & current_settings_prt.ranguvannja_digital_registrator[6]) != 0) ||
-           (state_dr_record == STATE_DR_FORCE_START_NEW_RECORD)
-          )   
-         )
-      {
-        //Є умова запуску дискретного реєстратора
-        
-        //Перевіряємо, чи при початку нового запису ми не втратимо попередню інформацію
-        if(number_records_dr_waiting_for_saving_operation < WIGHT_OF_DR_WAITING)
-        {
-          //Можна починати новий запис
-          
-          //Переводимо режим роботи із дискретним реєстратором у стан "Іде процес запису реєстратора"
-          state_dr_record = STATE_DR_EXECUTING_RECORD;
-          //Виставляємо активну функцію
-          _SET_BIT(carrent_active_functions, RANG_WORK_D_REJESTRATOR);
-        
-          //Записуємо мітку початку запису
-          buffer_for_save_dr_record[FIRST_INDEX_START_START_RECORD_DR] = LABEL_START_RECORD_DR;
-         
-          //Записуємо час початку запису
-          unsigned char *label_to_time_array;
-          if (copying_time == 0) label_to_time_array = time;
-          else label_to_time_array = time_copy;
-          for(unsigned int i = 0; i < 7; i++) buffer_for_save_dr_record[FIRST_INDEX_DATA_TIME_DR + i] = *(label_to_time_array + i);
-          
-           //І'мя комірки
-          for(unsigned int i=0; i< MAX_CHAR_IN_NAME_OF_CELL; i++) 
-            buffer_for_save_dr_record[FIRST_INDEX_NAME_OF_CELL_DR + i] = current_settings_prt.name_of_cell[i] & 0xff;
-          
-          //Помічаємо скільки часу пройшло з початку запуску запису
-          time_from_start_record_dr = 0;
-          
-          //Скидаємо кількість фіксацій максимальних струмів/напруг
-          number_max_phase_dr = 0;
-          number_min_U_dr = 0;
-          number_max_U_dr = 0;
-          number_max_ZOP_dr = 0;
-          
-      
-          //Записуємо попередній cтан сигналів перед аварією
-          //Мітка часу попереднього стану сигналів до моменту початку запису
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  0] = 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  1] = 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  2] = 0xff;
-          //Попередній стан
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  3] =  previous_active_functions[0]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  4] = (previous_active_functions[0] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  5] = (previous_active_functions[0] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  6] = (previous_active_functions[0] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  7] =  previous_active_functions[1]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  8] = (previous_active_functions[1] >> 8)  & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR +  9] = (previous_active_functions[1] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 10] = (previous_active_functions[1] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 11] =  previous_active_functions[2]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 12] = (previous_active_functions[2] >> 8)  & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 13] = (previous_active_functions[2] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 14] = (previous_active_functions[2] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 15] =  previous_active_functions[3]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 16] = (previous_active_functions[3] >> 8)  & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 17] = (previous_active_functions[3] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 18] = (previous_active_functions[3] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 19] =  previous_active_functions[4]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 20] = (previous_active_functions[4] >> 8)  & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 21] = (previous_active_functions[4] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 22] = (previous_active_functions[4] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 23] =  previous_active_functions[5]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 24] = (previous_active_functions[5] >> 8)  & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 25] = (previous_active_functions[5] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 26] = (previous_active_functions[5] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 27] =  previous_active_functions[6]        & 0xff;
-          //Нулем позначаємо у цій позиції кількість змін
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + 28] = 0;
-
-          //Помічаємо кількість нових зрізів
-          number_items_dr = 1;
-      
-          //Вираховуємо кількість змін сигналів
-          number_changes_into_dr_record = 0;
-          unsigned int number_changes_into_current_item;
-          _NUMBER_CHANGES_INTO_UNSIGNED_INT_ARRAY(previous_active_functions, carrent_active_functions, N_BIG, number_changes_into_current_item);
-          number_changes_into_dr_record += number_changes_into_current_item;
-      
-          //Записуємо текучий cтан сигналів
-          //Мітка часу
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  0] =  time_from_start_record_dr        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  1] = (time_from_start_record_dr >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  2] = (time_from_start_record_dr >> 16) & 0xff;
-          //Текучий стан сигналів
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  3] =  carrent_active_functions[0]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  4] = (carrent_active_functions[0] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  5] = (carrent_active_functions[0] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  6] = (carrent_active_functions[0] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  7] =  carrent_active_functions[1]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  8] = (carrent_active_functions[1] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  9] = (carrent_active_functions[1] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 10] = (carrent_active_functions[1] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 11] =  carrent_active_functions[2]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 12] = (carrent_active_functions[2] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 13] = (carrent_active_functions[2] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 14] = (carrent_active_functions[2] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 15] =  carrent_active_functions[3]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 16] = (carrent_active_functions[3] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 17] = (carrent_active_functions[3] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 18] = (carrent_active_functions[3] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 19] =  carrent_active_functions[4]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 20] = (carrent_active_functions[4] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 21] = (carrent_active_functions[4] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 22] = (carrent_active_functions[4] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 23] =  carrent_active_functions[5]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 24] = (carrent_active_functions[5] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 25] = (carrent_active_functions[5] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 26] = (carrent_active_functions[5] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 27] =  carrent_active_functions[6]        & 0xff;
-          
-          //Кількість змін сигналів у порівнянні із попереднім станом
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 28] = number_changes_into_current_item & 0xff;
-        }
-        else
-        {
-          //Виставляємо помилку, що є умова на роботу дискретного реєстратора тоді, як всі вільні буфери зайняті
-          _SET_BIT(set_diagnostyka, ERROR_DR_TEMPORARY_BUSY_BIT);
-          _SET_BIT(carrent_active_functions, RANG_DEFECT);
-        }
-      }
-      else state_dr_record = STATE_DR_NO_RECORD;
-      
-      break;
-    }
-  case STATE_DR_EXECUTING_RECORD:
-    {
-      //Збільшуємо час з початку запуску запису
-      time_from_start_record_dr++;
-      //Включно до цього часу іде процес запису
-
-      //Дальші дії виконуємо тіьлки у тому випадку, якщо функція end_monitoring_min_max_measurement не зафіксувала помилку і не скинула state_dr_record у STATE_DR_NO_RECORD
-      if(state_dr_record != STATE_DR_NO_RECORD)
-      {
-        //Перевіряємо, чи ще існує умова продовження запису
-        //Якщо такої умови немає - то скидаємо сигнал запущеного дискретного реєстратора, що це зафіксувати у змінених сигналах
-        if (stop_regisrator(carrent_active_functions, current_settings_prt.ranguvannja_digital_registrator) != 0)
-        {
-          //Скидаємо сигнал роботи дискретного реєстратора
-          _CLEAR_BIT(carrent_active_functions, RANG_WORK_D_REJESTRATOR);
-
-          //Переводимо режим роботи із дискретним реєстратором у стан "Виконується безпосередній запис у послідовну DataFlash"
-          state_dr_record = STATE_DR_MAKE_RECORD;
-        }
-      
-        //Перевіряємо чи відбуласа зміна сигналів у порівнянні із попереднім станом. Якщо така зміна є, то формуєм новий зріз сигналів у записі
-        if (
-            ((carrent_active_functions[0] != previous_active_functions[0])) ||
-            ((carrent_active_functions[1] != previous_active_functions[1])) ||
-            ((carrent_active_functions[2] != previous_active_functions[2])) ||
-            ((carrent_active_functions[3] != previous_active_functions[3])) ||
-            ((carrent_active_functions[4] != previous_active_functions[4])) ||
-            ((carrent_active_functions[5] != previous_active_functions[5])) ||
-            ((carrent_active_functions[6] != previous_active_functions[6]))
-           )
-        {
-          //Теперішній стан сигналів не співпадає з попереднім станом сигналів
-
-          //Збільшуємо на один кількість нових зрізів
-          number_items_dr++;
-      
-          //Вираховуємо кількість змін сигналів
-          unsigned int number_changes_into_current_item;
-          _NUMBER_CHANGES_INTO_UNSIGNED_INT_ARRAY(previous_active_functions, carrent_active_functions, N_BIG, number_changes_into_current_item);
-          number_changes_into_dr_record += number_changes_into_current_item;
-      
-          //Записуємо текучий cтан сигналів
-          //Мітка часу
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  0] =  time_from_start_record_dr        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  1] = (time_from_start_record_dr >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  2] = (time_from_start_record_dr >> 16) & 0xff;
-          //Текучий стан сигналів
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  3] =  carrent_active_functions[0]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  4] = (carrent_active_functions[0] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  5] = (carrent_active_functions[0] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  6] = (carrent_active_functions[0] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  7] =  carrent_active_functions[1]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  8] = (carrent_active_functions[1] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 +  9] = (carrent_active_functions[1] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 10] = (carrent_active_functions[1] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 11] =  carrent_active_functions[2]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 12] = (carrent_active_functions[2] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 13] = (carrent_active_functions[2] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 14] = (carrent_active_functions[2] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 15] =  carrent_active_functions[3]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 16] = (carrent_active_functions[3] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 17] = (carrent_active_functions[3] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 18] = (carrent_active_functions[3] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 19] =  carrent_active_functions[4]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 20] = (carrent_active_functions[4] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 21] = (carrent_active_functions[4] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 22] = (carrent_active_functions[4] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 23] =  carrent_active_functions[5]        & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 24] = (carrent_active_functions[5] >> 8 ) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 25] = (carrent_active_functions[5] >> 16) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 26] = (carrent_active_functions[5] >> 24) & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 27] =  carrent_active_functions[6]        & 0xff;
-
-          //Кількість змін сигналів у порівнянні із попереднім станом
-          buffer_for_save_dr_record[FIRST_INDEX_FIRST_DATA_DR + number_items_dr*29 + 28] = number_changes_into_current_item & 0xff;
-        }
-        
-        //Перевіряємо, чи стоїть умова завершення запису
-        if (
-            (state_dr_record == STATE_DR_MAKE_RECORD)                  ||
-            (time_from_start_record_dr >= MAX_TIME_OFFSET_FROM_START)  ||  
-            ((number_items_dr + 1)     >= MAX_EVENTS_IN_ONE_RECORD  )  
-           )
-        {
-          //Немає умови продовження запису, або є умова завершення запису - завершуємо формування запису і подаємо команду на запис
-          buffer_for_save_dr_record[FIRST_INDEX_NUMBER_ITEMS_DR      ] = number_items_dr;
-          buffer_for_save_dr_record[FIRST_INDEX_NUMBER_CHANGES_DR    ] =  number_changes_into_dr_record       & 0xff;
-          buffer_for_save_dr_record[FIRST_INDEX_NUMBER_CHANGES_DR + 1] = (number_changes_into_dr_record >> 8) & 0xff;
-
-          //Дальші дії виконуємо тіьлки у тому випадку, якщо функція end_monitoring_min_max_measurement не зафіксувала помилку і не скинула state_dr_record у STATE_DR_NO_RECORD
-          if(state_dr_record != STATE_DR_NO_RECORD)
-          {
-            //Записуємо кількість зафіксованих максимальних вимірювань всіх типів
-            buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_PHASE_DR  ] = number_max_phase_dr;
-            buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MIN_U_DR      ] = number_min_U_dr;
-            buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_U_DR      ] = number_max_U_dr;
-            buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_ZOP_DR    ] = number_max_ZOP_dr;
-
-            //Переводимо режим роботи із дискретним реєстратором у стан "Виконується безпосередній запис у DataFlash"
-            if (state_dr_record != STATE_DR_MAKE_RECORD)
-            {
-              if (time_from_start_record_dr >= MAX_TIME_OFFSET_FROM_START)
-              {
-                //Якщо відбулося перевищення по часу запису, то подаємо команду завершити запис без продовження потім цього запису у наступному записі
-                state_dr_record = STATE_DR_MAKE_RECORD;
-              }
-              else
-              {
-                //Якщо відбулося перевищення по досягнкнні максимальної кількості зрізів (або іншої причини, яка покищо не оговорена, але може з'явитися у майбутньому), то подаємо команду завершити запис але на наступному проході почати новий запис
-                state_dr_record = STATE_DR_CUT_RECORD;
-              }
-            }
-          }
-        
-          //Скидаємо сигнал роботи дискретного реєстратора
-          _CLEAR_BIT(carrent_active_functions, RANG_WORK_D_REJESTRATOR);
-        }
-      }
-
-      break;
-    }
-  default:
-    {
-      //По ідеї сюди програма ніколи не мала б зайти
-      fix_undefined_error_dr(carrent_active_functions);
-      break;
-    }
-  }
-  
-  //Перевіряємо, чи стоїть умова сформований запис передати на запис у DataFlash
-  routine_for_queue_dr();
-
-  /*********************/
-  //Формуємо попереденій стан сигналів для функції ввімкнення/вимкнення
-  /*********************/
-  for (unsigned int i = 0; i < N_BIG; i++) previous_active_functions[i] = carrent_active_functions[i];
-  /*********************/
 }
 /*****************************************************/
 
@@ -2409,138 +1984,6 @@ inline void main_protection(void)
     //Якщо  функції активовувалися через кнопки то переносимо їх у тимчасовий масив функцій, які мають бути зараз активавані
     if(temp_value_for_activated_function != 0) 
     {
-      //Опреділювані функції
-      for (unsigned int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
-      {
-        unsigned int tmp_state_df = 0;
-        switch (i)
-        {
-        case 0:
-          {
-            tmp_state_df = _GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DF1_IN);
-            if (tmp_state_df) 
-              _SET_BIT(active_functions, RANG_DF1_IN);
-
-            break;
-          }
-        case 1:
-          {
-            tmp_state_df = _GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DF2_IN);
-            if (tmp_state_df) 
-              _SET_BIT(active_functions, RANG_DF2_IN);
-
-            break;
-          }
-        case 2:
-          {
-            tmp_state_df = _GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DF3_IN);
-            if (tmp_state_df) 
-              _SET_BIT(active_functions, RANG_DF3_IN);
-
-            break;
-          }
-        case 3:
-          {
-            tmp_state_df = _GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DF4_IN);
-            if (tmp_state_df) 
-              _SET_BIT(active_functions, RANG_DF4_IN);
-
-            break;
-          }
-        case 4:
-          {
-            tmp_state_df = _GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DF5_IN);
-            if (tmp_state_df) 
-              _SET_BIT(active_functions, RANG_DF5_IN);
-
-            break;
-          }
-        case 5:
-          {
-            tmp_state_df = _GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DF6_IN);
-            if (tmp_state_df) 
-              _SET_BIT(active_functions, RANG_DF6_IN);
-
-            break;
-          }
-        case 6:
-          {
-            tmp_state_df = _GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DF7_IN);
-            if (tmp_state_df) 
-              _SET_BIT(active_functions, RANG_DF7_IN);
-
-            break;
-          }
-        case 7:
-          {
-            tmp_state_df = _GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DF8_IN);
-            if (tmp_state_df) 
-              _SET_BIT(active_functions, RANG_DF8_IN);
-
-            break;
-          }
-        default: break;
-        }
-        
-        if (tmp_state_df != 0)
-        {
-          //Зараз має активуватися ОФx, тому треба запустити таймер її утримування,
-          //для того, щоб потім час цей можна було зрівняти з часом таймера павзи
-          if (global_timers[INDEX_TIMER_DF_PROLONG_SET_FOR_BUTTON_INTERFACE_START + i] <0)
-          {
-            //Запускаємо таймер таймер утримування цієї функції в активному стані (емітація активного входу)
-            //Запуск робимо тільки ту тому випадкук, якщо він ще не почався
-            global_timers[INDEX_TIMER_DF_PROLONG_SET_FOR_BUTTON_INTERFACE_START + i] = 0;
-          }
-        }
-        
-      }
-      
-      //Опреділювані триґери
-      for (unsigned int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)
-      {
-        switch (i)
-        {
-        case 0:
-          {
-            if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DT1_SET)) 
-              _SET_BIT(active_functions, RANG_DT1_SET);
-            if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DT1_RESET)) 
-              _SET_BIT(active_functions, RANG_DT1_RESET);
-
-            break;
-          }
-        case 1:
-          {
-            if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DT2_SET)) 
-              _SET_BIT(active_functions, RANG_DT2_SET);
-            if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DT2_RESET)) 
-              _SET_BIT(active_functions, RANG_DT2_RESET);
-
-            break;
-          }
-        case 2:
-          {
-            if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DT3_SET)) 
-              _SET_BIT(active_functions, RANG_DT3_SET);
-            if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DT3_RESET)) 
-              _SET_BIT(active_functions, RANG_DT3_RESET);
-
-            break;
-          }
-        case 3:
-          {
-            if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DT4_SET)) 
-              _SET_BIT(active_functions, RANG_DT4_SET);
-            if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_DT4_RESET)) 
-              _SET_BIT(active_functions, RANG_DT4_RESET);
-
-            break;
-          }
-        default: break;
-        }
-      }
-      
       //Скидання світлодіодів і реле
       if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_RESET_LEDS)) 
         _SET_BIT(active_functions, RANG_RESET_LEDS);
@@ -2566,20 +2009,12 @@ inline void main_protection(void)
       if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_RESET_BLOCK_READY_TU_VID_ZAHYSTIV)) 
         _SET_BIT(active_functions, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
     }
-
-    //Команди АВР
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_OTKL_AVR)) 
-        _SET_BIT(active_functions, RANG_OTKL_AVR);
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_SBROS_BLOCK_AVR)) 
-        _SET_BIT(active_functions, RANG_SBROS_BLOCK_AVR);
   }
   /**************************/
 
   //"Місц./Дистанц."  з функціональних кнопок меню
   active_functions[RANG_MISCEVE_DYSTANCIJNE >> 5] |= (misceve_dystancijne & 0x1) << (RANG_MISCEVE_DYSTANCIJNE & 0x1f);
 
-  unsigned int blocking_commands_from_DI = 0;
-  unsigned int active_inputs_grupa_ustavok = 0;
   /**************************/
   //Опрацьовуємо дискретні входи
   /**************************/
@@ -2603,89 +2038,7 @@ inline void main_protection(void)
        (temp_value_for_activated_function_2[1] != 0)
       ) 
     {
-      //Опреділювані функції
-      for (unsigned int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
-      {
-        switch (i)
-        {
-        case 0:
-          {
-            active_functions[RANG_DF1_IN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DF1_IN) != 0) << (RANG_DF1_IN & 0x1f);
-            break;
-          }
-        case 1:
-          {
-            active_functions[RANG_DF2_IN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DF2_IN) != 0) << (RANG_DF2_IN & 0x1f);
-            break;
-          }
-        case 2:
-          {
-            active_functions[RANG_DF3_IN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DF3_IN) != 0) << (RANG_DF3_IN & 0x1f);
-            break;
-          }
-        case 3:
-          {
-            active_functions[RANG_DF4_IN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DF4_IN) != 0) << (RANG_DF4_IN & 0x1f);
-            break;
-          }
-        case 4:
-          {
-            active_functions[RANG_DF5_IN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DF5_IN) != 0) << (RANG_DF5_IN & 0x1f);
-            break;
-          }
-        case 5:
-          {
-            active_functions[RANG_DF6_IN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DF6_IN) != 0) << (RANG_DF6_IN & 0x1f);
-            break;
-          }
-        case 6:
-          {
-            active_functions[RANG_DF7_IN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DF7_IN) != 0) << (RANG_DF7_IN & 0x1f);
-            break;
-          }
-        case 7:
-          {
-            active_functions[RANG_DF8_IN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DF8_IN) != 0) << (RANG_DF8_IN & 0x1f);
-            break;
-          }
-        default: break;
-        }
-      }
-
-      //Опреділювані триґери
-      for (unsigned int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)
-      {
-        switch (i)
-        {
-        case 0:
-          {
-            active_functions[RANG_DT1_SET   >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DT1_SET  ) != 0) << (RANG_DT1_SET   & 0x1f);
-            active_functions[RANG_DT1_RESET >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DT1_RESET) != 0) << (RANG_DT1_RESET & 0x1f);
-            break;
-          }
-        case 1:
-          {
-            active_functions[RANG_DT2_SET   >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DT2_SET  ) != 0) << (RANG_DT2_SET   & 0x1f);
-            active_functions[RANG_DT2_RESET >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DT2_RESET) != 0) << (RANG_DT2_RESET & 0x1f);
-            break;
-          }
-        case 2:
-          {
-            active_functions[RANG_DT3_SET   >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DT3_SET  ) != 0) << (RANG_DT3_SET   & 0x1f);
-            active_functions[RANG_DT3_RESET >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DT3_RESET) != 0) << (RANG_DT3_RESET & 0x1f);
-            break;
-          }
-        case 3:
-          {
-            active_functions[RANG_DT4_SET   >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DT4_SET  ) != 0) << (RANG_DT4_SET   & 0x1f);
-            active_functions[RANG_DT4_RESET >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_DT4_RESET) != 0) << (RANG_DT4_RESET & 0x1f);
-            break;
-          }
-        default: break;
-        }
-      }
-      
-      //Загальні функції (без ОФ-ій і функцій, які можуть блокуватися у місцевому управлінні)
+      //Загальні функції (без ОФ-ій)
       active_functions[RANG_BLOCK_VKL_VV                      >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_VKL_VV                     ) != 0) << (RANG_BLOCK_VKL_VV                      & 0x1f);
       active_functions[RANG_RESET_LEDS                        >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_RESET_LEDS                       ) != 0) << (RANG_RESET_LEDS                        & 0x1f);
       active_functions[RANG_RESET_RELES                       >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_RESET_RELES                      ) != 0) << (RANG_RESET_RELES                       & 0x1f);
@@ -2697,80 +2050,9 @@ inline void main_protection(void)
       active_functions[RANG_CTRL_OTKL                         >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_CTRL_OTKL                        ) != 0) << (RANG_CTRL_OTKL                         & 0x1f);
       active_functions[RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) != 0) << (RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV & 0x1f);
       active_functions[RANG_OTKL_VID_ZOVN_ZAHYSTIV            >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_OTKL_VID_ZOVN_ZAHYSTIV           ) != 0) << (RANG_OTKL_VID_ZOVN_ZAHYSTIV            & 0x1f);
-
-      active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_1_GRUPA_USTAVOK    ) != 0) << (RANG_INPUT_1_GRUPA_USTAVOK - RANG_INPUT_1_GRUPA_USTAVOK);
-      active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_2_GRUPA_USTAVOK    ) != 0) << (RANG_INPUT_2_GRUPA_USTAVOK - RANG_INPUT_1_GRUPA_USTAVOK);
-      active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_3_GRUPA_USTAVOK    ) != 0) << (RANG_INPUT_3_GRUPA_USTAVOK - RANG_INPUT_1_GRUPA_USTAVOK);
-      active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_4_GRUPA_USTAVOK    ) != 0) << (RANG_INPUT_4_GRUPA_USTAVOK - RANG_INPUT_1_GRUPA_USTAVOK);
-      
-      //Загальні функції (які блокувються у місцевому управлінні)
-      //Ввімкнення ВВ
-      if (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_VKL_VV ))
-      {
-        if (
-            (_CHECK_SET_BIT(active_functions, RANG_MISCEVE_DYSTANCIJNE )) &&
-            (current_settings_prt.control_extra_settings_1 & CTR_EXTRA_SETTINGS_1_BLK_ON_CB_MISCEVE)
-           ) 
-        {
-          //Умова блокування командви "Ввімкнення ВВ" від ДВх.
-          blocking_commands_from_DI |= CTR_EXTRA_SETTINGS_1_BLK_ON_CB_MISCEVE;
-        }
-        else _SET_BIT(active_functions, RANG_VKL_VV);
-      }
-      if (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_OTKL_VV ))
-      {
-        if (
-            (_CHECK_SET_BIT(active_functions, RANG_MISCEVE_DYSTANCIJNE )) &&
-            (current_settings_prt.control_extra_settings_1 & CTR_EXTRA_SETTINGS_1_BLK_OFF_CB_MISCEVE)
-           ) 
-        {
-          //Умова блокування командви "Вимкнення ВВ" від ДВх.
-          blocking_commands_from_DI |= CTR_EXTRA_SETTINGS_1_BLK_OFF_CB_MISCEVE;
-        }
-        else _SET_BIT(active_functions, RANG_OTKL_VV);
-      }
-
-      //Блок для МТЗ
-      active_functions[RANG_BLOCK_MTZ1     >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_MTZ1    ) != 0) << (RANG_BLOCK_MTZ1     & 0x1f);
-      active_functions[RANG_BLOCK_MTZ2     >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_MTZ2    ) != 0) << (RANG_BLOCK_MTZ2     & 0x1f);
-      active_functions[RANG_BLOCK_USK_MTZ2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_USK_MTZ2) != 0) << (RANG_BLOCK_USK_MTZ2 & 0x1f);
-      active_functions[RANG_BLOCK_MTZ3     >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_MTZ3    ) != 0) << (RANG_BLOCK_MTZ3     & 0x1f);
-      active_functions[RANG_BLOCK_USK_MTZ3 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_USK_MTZ3) != 0) << (RANG_BLOCK_USK_MTZ3 & 0x1f);
-      active_functions[RANG_BLOCK_MTZ4     >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_MTZ4    ) != 0) << (RANG_BLOCK_MTZ4     & 0x1f);
-
-      //Блок для ЗДЗ
-      active_functions[RANG_PUSK_ZDZ_VID_DV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_PUSK_ZDZ_VID_DV) != 0) << (RANG_PUSK_ZDZ_VID_DV & 0x1f);
-
-      //Блок АПВ
-      active_functions[RANG_STAT_BLK_APV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_STAT_BLK_APV) != 0) << (RANG_STAT_BLK_APV & 0x1f);
-      
-      //ЧАПВ
-//      active_functions[RANG_ACHR_CHAPV_VID_DV  >> 5] |=(_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_ACHR_CHAPV_VID_DV ) != 0) << (RANG_ACHR_CHAPV_VID_DV & 0x1f);
-
-      //Блок для УРОВ
-      active_functions[RANG_PUSK_UROV_VID_DV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_PUSK_UROV_VID_DV) != 0) << (RANG_PUSK_UROV_VID_DV & 0x1f);
-
-      //Блок ЗОП(КОФ)
-      active_functions[RANG_BLOCK_ZOP >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_ZOP) != 0) << (RANG_BLOCK_ZOP & 0x1f);
-
-      //Блок для Umin
-      active_functions[RANG_BLOCK_UMIN1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_UMIN1) != 0) << (RANG_BLOCK_UMIN1 & 0x1f);
-      active_functions[RANG_START_UMIN1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_START_UMIN1) != 0) << (RANG_START_UMIN1 & 0x1f);
-      active_functions[RANG_BLOCK_UMIN2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_UMIN2) != 0) << (RANG_BLOCK_UMIN2 & 0x1f);
-      active_functions[RANG_START_UMIN2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_START_UMIN2) != 0) << (RANG_START_UMIN2 & 0x1f);
-      
-      //Блок для Umax
-      active_functions[RANG_BLOCK_UMAX1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_UMAX1) != 0) << (RANG_BLOCK_UMAX1 & 0x1f);
-      active_functions[RANG_BLOCK_UMAX2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_BLOCK_UMAX2) != 0) << (RANG_BLOCK_UMAX2 & 0x1f);
+      active_functions[RANG_VKL_VV                            >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_VKL_VV                           ) != 0) << (RANG_VKL_VV                            & 0x1f);
+      active_functions[RANG_OTKL_VV                           >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_OTKL_VV                          ) != 0) << (RANG_VKL_VV                            & 0x1f);
     }
-      
-    //Блок для АВР
-    active_functions[RANG_OTKL_AVR         >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_OTKL_AVR        ) != 0) << (RANG_OTKL_AVR         & 0x1f);
-    active_functions[RANG_SBROS_BLOCK_AVR  >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_SBROS_BLOCK_AVR ) != 0) << (RANG_SBROS_BLOCK_AVR  & 0x1f);
-    active_functions[RANG_STAT_BLOCK_AVR_1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_STAT_BLOCK_AVR_1) != 0) << (RANG_STAT_BLOCK_AVR_1 & 0x1f);
-    active_functions[RANG_STAT_BLOCK_AVR_2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_STAT_BLOCK_AVR_2) != 0) << (RANG_STAT_BLOCK_AVR_2 & 0x1f);
-    active_functions[RANG_OZT_AVR_1        >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_OZT_AVR_1       ) != 0) << (RANG_OZT_AVR_1        & 0x1f);
-    active_functions[RANG_OZT_AVR_2        >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function_2, RANG_INPUT_OZT_AVR_2       ) != 0) << (RANG_OZT_AVR_2        & 0x1f);
   }
   /**************************/
 
@@ -2797,11 +2079,6 @@ inline void main_protection(void)
 
     //Сигнал "Скидання блокування готовності до ТУ"
     _SET_BIT(temp_maska_filter_function, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
-  
-    //Сигнал "Внешний отключение АВР"
-    _SET_BIT(temp_maska_filter_function, RANG_OTKL_AVR);
-    //Сигнал "Внешний сброс блокировки АВР"
-    _SET_BIT(temp_maska_filter_function, RANG_SBROS_BLOCK_AVR);
     
     for (unsigned int i = 0; i < N_BIG; i++)
     {
@@ -2831,7 +2108,7 @@ inline void main_protection(void)
   /***********************************************************/
   //Розрахунок вимірювань
   /***********************************************************/
-  calc_measurement(number_group_stp);
+  calc_measurement();
 
 #ifdef DEBUG_TEST
   /***/
@@ -2971,7 +2248,7 @@ inline void main_protection(void)
     /**************************/
     if ((current_settings_prt.configuration & (1 << CTRL_PHASE_BIT_CONFIGURATION)) != 0) 
     {
-      ctrl_phase_handler(active_functions, number_group_stp);
+      ctrl_phase_handler(active_functions);
     } 
     else 
     {

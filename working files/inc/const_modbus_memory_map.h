@@ -802,7 +802,7 @@
 /*****************************************************/
 #define M_ADDRESS_FIRST_SETPOINTS_PART1 10300
 
-#define MA_GROUP_USTAVOK                  10300
+//#define MA_GROUP_USTAVOK                  10300
 
 #define MA_TYPE_MTZ1                      10301
 #define MA_TYPE_MTZ2                      10302

@@ -2467,12 +2467,6 @@ void main_manu_function(void)
                   //Переходимо на меню відображення списку настроювання функціональних кнопок
                   current_ekran.current_level = EKRAN_LIST_BUTTONS_FOR_RANGUVANNJA;
                 }
-                else if(current_ekran.index_position == INDEX_OF_GRUPA_USTAVOK)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню вибору груп уставок
-                  current_ekran.current_level = EKRAN_VIEW_GRUPA_USTAVOK;
-                }
                 else if(current_ekran.index_position == INDEX_OF_EXTRA_SETTINGS)
                 {
                   //Запам'ятовуємо поперердній екран
@@ -4306,7 +4300,6 @@ void main_manu_function(void)
     case EKRAN_TIMEOUT_ANALOG_REGISTRATOR:
     case EKRAN_VIEW_SETTING_LANGUAGE:
     case EKRAN_CHOSE_EXTRA_SETTINGS:
-    case EKRAN_VIEW_GRUPA_USTAVOK:
       {
         //Очищаємо всі біти краім упралінських
         unsigned int maska_keyboard_bits = (1<<BIT_KEY_ENTER)| (1<<BIT_KEY_ESC)|(1<<BIT_REWRITE);
@@ -4748,13 +4741,6 @@ void main_manu_function(void)
               position_in_current_level_menu[EKRAN_CHOSE_EXTRA_SETTINGS] = current_ekran.index_position;
               //Формуємо екран відображення додаткових налаштувань
               make_ekran_chose_extra_settings();
-            }
-            else if(current_ekran.current_level == EKRAN_VIEW_GRUPA_USTAVOK)
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_VIEW_GRUPA_USTAVOK) current_ekran.index_position = 0;
-              position_in_current_level_menu[EKRAN_VIEW_GRUPA_USTAVOK] = current_ekran.index_position;
-              //Формуємо екран інформації по групах уставок
-              make_ekran_grupa_ustavok();
             }
 
             //Очищаємо біт обновлення екрану
@@ -5684,10 +5670,6 @@ void main_manu_function(void)
                 {
                   edition_settings.control_extra_settings_1 = current_settings.control_extra_settings_1;
                 }
-                else if(current_ekran.current_level == EKRAN_VIEW_GRUPA_USTAVOK)
-                {
-                  edition_settings.grupa_ustavok = current_settings.grupa_ustavok;
-                }
 
                 //Підготовка до режиму редагування - включаємо мигаючий курсор
                 current_ekran.cursor_on = 1;
@@ -6498,10 +6480,6 @@ void main_manu_function(void)
                 else if(current_ekran.current_level == EKRAN_CHOSE_EXTRA_SETTINGS)
                 {
                   if (edition_settings.control_extra_settings_1 != current_settings.control_extra_settings_1) found_changes = 1;
-                }
-                else if(current_ekran.current_level == EKRAN_VIEW_GRUPA_USTAVOK)
-                {
-                  if (edition_settings.grupa_ustavok != current_settings.grupa_ustavok) found_changes = 1;
                 }
 
                 //Виходимо з режиму редагування
@@ -9416,23 +9394,6 @@ void main_manu_function(void)
                     current_ekran.edition = 0;
                   }
                 }
-                else if(current_ekran.current_level == EKRAN_VIEW_GRUPA_USTAVOK)
-                {
-                  if (check_data_setpoint(edition_settings.grupa_ustavok, SETPOINT_GRUPA_USTAVOK_MIN, SETPOINT_GRUPA_USTAVOK_MAX) == 1)
-                  {
-                    if (edition_settings.grupa_ustavok != current_settings.grupa_ustavok)
-                    {
-                      //Помічаємо, що поле структури зараз буде змінене
-                      changed_settings = CHANGED_ETAP_EXECUTION;
-                        
-                      current_settings.grupa_ustavok = edition_settings.grupa_ustavok;
-                      //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                      fix_change_settings(0, 1);
-                    }
-                    //Виходимо з режиму редагування
-                    current_ekran.edition = 0;
-                  }
-                }
                 
               }
               else if (current_ekran.edition == 3)
@@ -10454,23 +10415,6 @@ void main_manu_function(void)
                 //Формуємо екран відображення додаткових налаштувань
                 make_ekran_chose_extra_settings();
               }
-              else if(current_ekran.current_level == EKRAN_VIEW_GRUPA_USTAVOK)
-              {
-                if(current_ekran.edition == 0)
-                {
-                  if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_VIEW_GRUPA_USTAVOK - 1;
-                  position_in_current_level_menu[EKRAN_VIEW_GRUPA_USTAVOK] = current_ekran.index_position;
-                }
-                else
-                {
-                  //Редагування числа
-                  edition_settings.grupa_ustavok--;
-                  if (edition_settings.grupa_ustavok < SETPOINT_GRUPA_USTAVOK_MIN)
-                    edition_settings.grupa_ustavok = SETPOINT_GRUPA_USTAVOK_MAX;
-                }
-                //Формуємо екран інформації по групах уставок
-                make_ekran_grupa_ustavok();
-              }
 
               //Очистити сигналізацію, що натиснута кнопка 
               new_state_keyboard &= (unsigned int)(~(1<<BIT_KEY_UP));
@@ -11433,23 +11377,6 @@ void main_manu_function(void)
                 position_in_current_level_menu[EKRAN_CHOSE_EXTRA_SETTINGS] = current_ekran.index_position;
                 //Формуємо екран відображення додаткових налаштувань
                 make_ekran_chose_extra_settings();
-              }
-              else if(current_ekran.current_level == EKRAN_VIEW_GRUPA_USTAVOK)
-              {
-                if(current_ekran.edition == 0)
-                {
-                  if(++current_ekran.index_position >= MAX_ROW_FOR_VIEW_GRUPA_USTAVOK) current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_VIEW_GRUPA_USTAVOK] = current_ekran.index_position;
-                }
-                else
-                {
-                  //Редагування числа
-                  edition_settings.grupa_ustavok++;
-                  if (edition_settings.grupa_ustavok > SETPOINT_GRUPA_USTAVOK_MAX)
-                    edition_settings.grupa_ustavok = SETPOINT_GRUPA_USTAVOK_MIN;
-                }
-                //Формуємо екран інформації по групах уставок
-                make_ekran_grupa_ustavok();
               }
 
               //Очистити сигналізацію, що натиснута кнопка 

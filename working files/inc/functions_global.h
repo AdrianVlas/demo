@@ -158,7 +158,6 @@ void make_ekran_changing_signals_digital_registrator(void);
 void make_ekran_list_titles_for_record_of_pr_err_registrator(void);
 void make_ekran_changing_diagnostics_pr_err_registrator(void);
 void make_ekran_setting_language(void);
-void make_ekran_grupa_ustavok(void);
 void make_ekran_vidkluchenja(void);
 
 unsigned int action_after_changing_of_configuration(unsigned int, __SETTINGS *);

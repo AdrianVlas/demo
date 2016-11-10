@@ -102,12 +102,6 @@ typedef struct
   
   unsigned int configuration;         //Конфігурація приладу
   
-  unsigned int grupa_ustavok;         //Група уставок
-                                      // 1 - Група 1
-                                      // 2 - Група 2
-                                      // 3 - Група 3
-                                      // 4 - Група 4
-  
   //МТЗ
   int type_mtz1;                                                //Тип МТЗ1 (0 - Проста, 1 - Направлена, 2 -  З пуском по напрузі)
   unsigned int setpoint_mtz_1[NUMBER_GROUP_USTAVOK];            //Уставка МТЗ першої ступені (проста)

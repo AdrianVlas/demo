@@ -3213,11 +3213,6 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
   {
     switch (address_data)
     {
-    case MA_GROUP_USTAVOK:
-      {
-        temp_value = current_settings_interfaces.grupa_ustavok;
-        break;
-      }
     case MA_TYPE_MTZ1:
       {
         temp_value = current_settings_interfaces.type_mtz1;
@@ -4653,21 +4648,6 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
   {
     switch (address_data)
     {
-    case MA_GROUP_USTAVOK:
-      {
-        temp_value = data;
-        
-#if (SETPOINT_GRUPA_USTAVOK_MIN != 0)          
-        if ((temp_value >= SETPOINT_GRUPA_USTAVOK_MIN) && (temp_value <= SETPOINT_GRUPA_USTAVOK_MAX))
-#else
-        if (temp_value <= SETPOINT_GRUPA_USTAVOK_MAX)
-#endif            
-          target_label->grupa_ustavok = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
     case MA_TYPE_MTZ1:
       {
         temp_value = data;

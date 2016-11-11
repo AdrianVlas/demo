@@ -804,10 +804,10 @@
 
 //#define MA_GROUP_USTAVOK                  10300
 
-#define MA_TYPE_MTZ1                      10301
-#define MA_TYPE_MTZ2                      10302
-#define MA_TYPE_MTZ3                      10303
-#define MA_TYPE_MTZ4                      10304
+//#define MA_TYPE_MTZ1                      10301
+//#define MA_TYPE_MTZ2                      10302
+//#define MA_TYPE_MTZ3                      10303
+//#define MA_TYPE_MTZ4                      10304
 
 //#define MA_TYPE_MTZ04_2                   10306
 
@@ -815,60 +815,60 @@
 
 #define M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV 10307
 #define SHIFT_G1        0
-#define SHIFT_G2        (10482 - M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV)
-#define SHIFT_G3        (10657 - M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV)
-#define SHIFT_G4        (10832 - M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV)
+//#define SHIFT_G2        (10482 - M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV)
+//#define SHIFT_G3        (10657 - M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV)
+//#define SHIFT_G4        (10832 - M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV)
 
-#define MA_STP_MTZ1                       10307
-#define MA_STP_MTZ1_N_VPERED              10308
-#define MA_STP_MTZ1_N_NAZAD               10309
-#define MA_STP_MTZ1_PO_NAPRUZI            10310
-#define MA_STP_MTZ1_U                     10311
-#define MA_STP_MTZ1_ANGLE                 10312
-#define MA_TO_MTZ1                        10313
-#define MA_TO_MTZ1_N_VPERED               10314
-#define MA_TO_MTZ1_N_NAZAD                10315
-#define MA_TO_MTZ1_PO_NAPRUZI             10316
-#define MA_STP_MTZ2                       10317
-#define MA_STP_MTZ2_N_VPERED              10318
-#define MA_STP_MTZ2_N_NAZAD               10319
-#define MA_STP_MTZ2_PO_NAPRUZI            10320
-#define MA_STP_MTZ2_U                     10321
-#define MA_STP_MTZ2_ANGLE                 10322
-#define MA_TO_MTZ2                        10323
-#define MA_TO_MTZ2_N_VPERED               10324
-#define MA_TO_MTZ2_N_NAZAD                10325
-#define MA_TO_MTZ2_PO_NAPRUZI             10326
-#define MA_TO_MTZ2_VVID_PR                10327
-#define MA_TO_MTZ2_PR                     10328
-#define MA_TO_MTZ2_N_VPERED_PR            10329
-#define MA_TO_MTZ2_N_NAZAD_PR             10330
-#define MA_TO_MTZ2_PO_NAPRUZI_PR          10331
-#define MA_STP_MTZ3                       10332
-#define MA_STP_MTZ3_N_VPERED              10333
-#define MA_STP_MTZ3_N_NAZAD               10334
-#define MA_STP_MTZ3_PO_NAPRUZI            10335
-#define MA_STP_MTZ3_U                     10336
-#define MA_STP_MTZ3_ANGLE                 10337
-#define MA_TO_MTZ3                        10338
-#define MA_TO_MTZ3_N_VPERED               10339
-#define MA_TO_MTZ3_N_NAZAD                10340
-#define MA_TO_MTZ3_PO_NAPRUZI             10341
-#define MA_TO_MTZ3_VVID_PR                10342
-#define MA_TO_MTZ3_PR                     10343
-#define MA_TO_MTZ3_N_VPERED_PR            10344
-#define MA_TO_MTZ3_N_NAZAD_PR             10345
-#define MA_TO_MTZ3_PO_NAPRUZI_PR          10346
-#define MA_STP_MTZ4                       10347
-#define MA_STP_MTZ4_N_VPERED              10348
-#define MA_STP_MTZ4_N_NAZAD               10349
-#define MA_STP_MTZ4_PO_NAPRUZI            10350
-#define MA_STP_MTZ4_U                     10351
-#define MA_STP_MTZ4_ANGLE                 10352
-#define MA_TO_MTZ4                        10353
-#define MA_TO_MTZ4_N_VPERED               10354
-#define MA_TO_MTZ4_N_NAZAD                10355
-#define MA_TO_MTZ4_PO_NAPRUZI             10356
+//#define MA_STP_MTZ1                       10307
+//#define MA_STP_MTZ1_N_VPERED              10308
+//#define MA_STP_MTZ1_N_NAZAD               10309
+//#define MA_STP_MTZ1_PO_NAPRUZI            10310
+//#define MA_STP_MTZ1_U                     10311
+//#define MA_STP_MTZ1_ANGLE                 10312
+//#define MA_TO_MTZ1                        10313
+//#define MA_TO_MTZ1_N_VPERED               10314
+//#define MA_TO_MTZ1_N_NAZAD                10315
+//#define MA_TO_MTZ1_PO_NAPRUZI             10316
+//#define MA_STP_MTZ2                       10317
+//#define MA_STP_MTZ2_N_VPERED              10318
+//#define MA_STP_MTZ2_N_NAZAD               10319
+//#define MA_STP_MTZ2_PO_NAPRUZI            10320
+//#define MA_STP_MTZ2_U                     10321
+//#define MA_STP_MTZ2_ANGLE                 10322
+//#define MA_TO_MTZ2                        10323
+//#define MA_TO_MTZ2_N_VPERED               10324
+//#define MA_TO_MTZ2_N_NAZAD                10325
+//#define MA_TO_MTZ2_PO_NAPRUZI             10326
+//#define MA_TO_MTZ2_VVID_PR                10327
+//#define MA_TO_MTZ2_PR                     10328
+//#define MA_TO_MTZ2_N_VPERED_PR            10329
+//#define MA_TO_MTZ2_N_NAZAD_PR             10330
+//#define MA_TO_MTZ2_PO_NAPRUZI_PR          10331
+//#define MA_STP_MTZ3                       10332
+//#define MA_STP_MTZ3_N_VPERED              10333
+//#define MA_STP_MTZ3_N_NAZAD               10334
+//#define MA_STP_MTZ3_PO_NAPRUZI            10335
+//#define MA_STP_MTZ3_U                     10336
+//#define MA_STP_MTZ3_ANGLE                 10337
+//#define MA_TO_MTZ3                        10338
+//#define MA_TO_MTZ3_N_VPERED               10339
+//#define MA_TO_MTZ3_N_NAZAD                10340
+//#define MA_TO_MTZ3_PO_NAPRUZI             10341
+//#define MA_TO_MTZ3_VVID_PR                10342
+//#define MA_TO_MTZ3_PR                     10343
+//#define MA_TO_MTZ3_N_VPERED_PR            10344
+//#define MA_TO_MTZ3_N_NAZAD_PR             10345
+//#define MA_TO_MTZ3_PO_NAPRUZI_PR          10346
+//#define MA_STP_MTZ4                       10347
+//#define MA_STP_MTZ4_N_VPERED              10348
+//#define MA_STP_MTZ4_N_NAZAD               10349
+//#define MA_STP_MTZ4_PO_NAPRUZI            10350
+//#define MA_STP_MTZ4_U                     10351
+//#define MA_STP_MTZ4_ANGLE                 10352
+//#define MA_TO_MTZ4                        10353
+//#define MA_TO_MTZ4_N_VPERED               10354
+//#define MA_TO_MTZ4_N_NAZAD                10355
+//#define MA_TO_MTZ4_PO_NAPRUZI             10356
 //#define MA_STP_MTZ04_1                    10357
 //#define MA_TO_MTZ04_1                     10358
 //#define MA_STP_MTZ04_2                    10359

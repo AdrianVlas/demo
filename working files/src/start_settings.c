@@ -1697,94 +1697,8 @@ void min_settings(__SETTINGS *target_label)
 
   target_label->configuration = 0;
   
-  target_label->grupa_ustavok = SETPOINT_GRUPA_USTAVOK_MIN;
-  
   for (unsigned int i = 0; i < NUMBER_GROUP_USTAVOK; i++)
   {
-    unsigned int angle;
-    float angle_f;
-    target_label->setpoint_mtz_1[i] = SETPOINT_MTZ1_MIN;
-    target_label->setpoint_mtz_1_n_vpered[i] = SETPOINT_MTZ1_N_VPERED_MIN;
-    target_label->setpoint_mtz_1_n_nazad[i] = SETPOINT_MTZ1_N_NAZAD_MIN;
-    
-    angle = SETPOINT_MTZ1_ANGLE_MIN;
-    angle_f = (float)angle;
-    target_label->setpoint_mtz_1_angle[i] = angle;
-    target_label->setpoint_mtz_1_angle_cos[i] = (int) (AMPLITUDA_FI*/*cos*/arm_cos_f32(/*(double)*/(PI*angle_f/180.0f)));
-    target_label->setpoint_mtz_1_angle_sin[i] = (int) (AMPLITUDA_FI*/*sin*/arm_sin_f32(/*(double)*/(PI*angle_f/180.0f)));
-    
-    target_label->setpoint_mtz_1_po_napruzi[i] = SETPOINT_MTZ1_PO_NAPRUZI_MIN;
-    target_label->setpoint_mtz_1_U[i] = SETPOINT_MTZ1_U_MIN;
-
-    target_label->setpoint_mtz_2[i] = SETPOINT_MTZ2_MIN;
-    target_label->setpoint_mtz_2_n_vpered[i] = SETPOINT_MTZ2_N_VPERED_MIN;
-    target_label->setpoint_mtz_2_n_nazad[i] = SETPOINT_MTZ2_N_NAZAD_MIN;
-    
-    angle = SETPOINT_MTZ2_ANGLE_MIN;
-    angle_f = (float)angle;
-    target_label->setpoint_mtz_2_angle[i] = angle;
-    target_label->setpoint_mtz_2_angle_cos[i] = (int) (AMPLITUDA_FI*/*cos*/arm_cos_f32(/*(double)*/(PI*angle_f/180.0f)));
-    target_label->setpoint_mtz_2_angle_sin[i] = (int) (AMPLITUDA_FI*/*sin*/arm_sin_f32(/*(double)*/(PI*angle_f/180.0f)));
-    
-    target_label->setpoint_mtz_2_po_napruzi[i] = SETPOINT_MTZ2_PO_NAPRUZI_MIN;
-    target_label->setpoint_mtz_2_U[i] = SETPOINT_MTZ2_U_MIN;
-
-    target_label->setpoint_mtz_3[i] = SETPOINT_MTZ3_MIN;
-    target_label->setpoint_mtz_3_n_vpered[i] = SETPOINT_MTZ3_N_VPERED_MIN;
-    target_label->setpoint_mtz_3_n_nazad[i] = SETPOINT_MTZ3_N_NAZAD_MIN;
-    
-    angle = SETPOINT_MTZ3_ANGLE_MIN;
-    angle_f = (float)angle;
-    target_label->setpoint_mtz_3_angle[i] = angle;
-    target_label->setpoint_mtz_3_angle_cos[i] = (int) (AMPLITUDA_FI*/*cos*/arm_cos_f32(/*(double)*/(PI*angle_f/180.0f)));
-    target_label->setpoint_mtz_3_angle_sin[i] = (int) (AMPLITUDA_FI*/*sin*/arm_sin_f32(/*(double)*/(PI*angle_f/180.0f)));
-    
-    target_label->setpoint_mtz_3_po_napruzi[i] = SETPOINT_MTZ3_PO_NAPRUZI_MIN;
-    target_label->setpoint_mtz_3_U[i] = SETPOINT_MTZ3_U_MIN;
-
-    target_label->setpoint_mtz_4[i] = SETPOINT_MTZ4_MIN;
-    target_label->setpoint_mtz_4_n_vpered[i] = SETPOINT_MTZ4_N_VPERED_MIN;
-    target_label->setpoint_mtz_4_n_nazad[i] = SETPOINT_MTZ4_N_NAZAD_MIN;
-    
-    angle = SETPOINT_MTZ4_ANGLE_MIN;
-    angle_f = (float)angle;
-    target_label->setpoint_mtz_4_angle[i] = angle;
-    target_label->setpoint_mtz_4_angle_cos[i] = (int) (AMPLITUDA_FI*/*cos*/arm_cos_f32(/*(double)*/(PI*angle_f/180.0f)));
-    target_label->setpoint_mtz_4_angle_sin[i] = (int) (AMPLITUDA_FI*/*sin*/arm_sin_f32(/*(double)*/(PI*angle_f/180.0f)));
-    
-    target_label->setpoint_mtz_4_po_napruzi[i] = SETPOINT_MTZ4_PO_NAPRUZI_MIN;
-    target_label->setpoint_mtz_4_U[i] = SETPOINT_MTZ4_U_MIN;
-    
-    target_label->timeout_mtz_1[i] = TIMEOUT_MTZ1_MIN; 
-    target_label->timeout_mtz_1_n_vpered[i] = TIMEOUT_MTZ1_N_VPERED_MIN; 
-    target_label->timeout_mtz_1_n_nazad[i] = TIMEOUT_MTZ1_N_NAZAD_MIN; 
-    target_label->timeout_mtz_1_po_napruzi[i] = TIMEOUT_MTZ1_PO_NAPRUZI_MIN; 
-
-    target_label->timeout_mtz_2[i] = TIMEOUT_MTZ2_MIN; 
-    target_label->timeout_mtz_2_pr[i] = TIMEOUT_MTZ2_PR_MIN; 
-    target_label->timeout_mtz_2_n_vpered[i] = TIMEOUT_MTZ2_N_VPERED_MIN; 
-    target_label->timeout_mtz_2_n_vpered_pr[i] = TIMEOUT_MTZ2_N_VPERED_PR_MIN; 
-    target_label->timeout_mtz_2_n_nazad[i] = TIMEOUT_MTZ2_N_NAZAD_MIN; 
-    target_label->timeout_mtz_2_n_nazad_pr[i] = TIMEOUT_MTZ2_N_NAZAD_PR_MIN; 
-    target_label->timeout_mtz_2_po_napruzi[i] = TIMEOUT_MTZ2_PO_NAPRUZI_MIN; 
-    target_label->timeout_mtz_2_po_napruzi_pr[i] = TIMEOUT_MTZ2_PO_NAPRUZI_PR_MIN; 
-    target_label->timeout_mtz_2_vvid_pr[i] = TIMEOUT_MTZ2_VVID_PR_MIN;
-
-    target_label->timeout_mtz_3[i] = TIMEOUT_MTZ3_MIN; 
-    target_label->timeout_mtz_3_pr[i] = TIMEOUT_MTZ3_PR_MIN; 
-    target_label->timeout_mtz_3_n_vpered[i] = TIMEOUT_MTZ3_N_VPERED_MIN; 
-    target_label->timeout_mtz_3_n_vpered_pr[i] = TIMEOUT_MTZ3_N_VPERED_PR_MIN; 
-    target_label->timeout_mtz_3_n_nazad[i] = TIMEOUT_MTZ3_N_NAZAD_MIN; 
-    target_label->timeout_mtz_3_n_nazad_pr[i] = TIMEOUT_MTZ3_N_NAZAD_PR_MIN; 
-    target_label->timeout_mtz_3_po_napruzi[i] = TIMEOUT_MTZ3_PO_NAPRUZI_MIN; 
-    target_label->timeout_mtz_3_po_napruzi_pr[i] = TIMEOUT_MTZ3_PO_NAPRUZI_PR_MIN; 
-    target_label->timeout_mtz_3_vvid_pr[i] = TIMEOUT_MTZ3_VVID_PR_MIN;
-
-    target_label->timeout_mtz_4[i] = TIMEOUT_MTZ4_MIN; 
-    target_label->timeout_mtz_4_n_vpered[i] = TIMEOUT_MTZ4_N_VPERED_MIN; 
-    target_label->timeout_mtz_4_n_nazad[i] = TIMEOUT_MTZ4_N_NAZAD_MIN; 
-    target_label->timeout_mtz_4_po_napruzi[i] = TIMEOUT_MTZ4_PO_NAPRUZI_MIN; 
-
     target_label->timeout_apv_1[i] = TIMEOUT_APV1_MIN;    
     target_label->timeout_apv_2[i] = TIMEOUT_APV2_MIN;    
     target_label->timeout_apv_3[i] = TIMEOUT_APV3_MIN;    
@@ -1850,7 +1764,6 @@ void min_settings(__SETTINGS *target_label)
     target_label->timeout_ctrl_phase_f_d[i] = TIMEOUT_CTRL_PHASE_F_D_MIN;
   }
 
-  target_label->control_mtz = 0;
   target_label->control_zdz = 0;
   target_label->control_apv = 0;
   target_label->control_urov = 0;

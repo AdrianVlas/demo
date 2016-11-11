@@ -102,9 +102,6 @@ typedef struct
   
   unsigned int configuration;         //Конфігурація приладу
   
-  //ЗДЗ
-  unsigned int control_zdz;                                 //Поле для управління ЗДЗ
-
   //АПВ
   int timeout_apv_1[NUMBER_GROUP_USTAVOK];                    //Витримка 1 Циклу АПВ
   int timeout_apv_2[NUMBER_GROUP_USTAVOK];                    //Витримка 2 Циклу АПВ

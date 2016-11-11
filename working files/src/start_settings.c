@@ -1764,7 +1764,6 @@ void min_settings(__SETTINGS *target_label)
     target_label->timeout_ctrl_phase_f_d[i] = TIMEOUT_CTRL_PHASE_F_D_MIN;
   }
 
-  target_label->control_zdz = 0;
   target_label->control_apv = 0;
   target_label->control_urov = 0;
   target_label->control_zop = 0;

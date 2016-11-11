@@ -1514,9 +1514,6 @@
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_urov.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zdz.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zop.h</name>
         </file>
       </group>
@@ -1698,9 +1695,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_view_measurement.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\src\menu_zdz.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_zop.c</name>

@@ -4475,9 +4475,6 @@
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_measurement.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_mtz.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_outputs.h</name>
         </file>
         <file>
@@ -4509,9 +4506,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_urov.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zdz.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zop.h</name>
@@ -4664,9 +4658,6 @@
           <name>$PROJ_DIR$\..\..\working files\src\menu_main.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\working files\src\menu_mtz.c</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_point_time_settings.c</name>
         </file>
         <file>
@@ -4698,9 +4689,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_view_measurement.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\src\menu_zdz.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_zop.c</name>

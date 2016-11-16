@@ -1,6 +1,47 @@
 #include "header.h"
 
 /*****************************************************/
+//Вираховуваня символу і поміщення його в робочий екран
+/*****************************************************/
+void calc_symbol_and_put_into_working_ekran(unsigned char* point_in_working_ekran, void* point_value, void* point_vaga, unsigned int* point_first_symbol, unsigned int current_position_x, unsigned int position_comma, unsigned int v_32_64)
+{
+  unsigned int temp_data;
+  if (v_32_64 == 0)
+  {
+    temp_data = (*((unsigned int*)point_value)) / (*((unsigned int*)point_vaga)); //виділяємо число, яке треба перетворити у символ і помістити у дану позицію екрану
+    *((unsigned int*)point_value) %= *((unsigned int*)point_vaga); //вираховуємо число без символа, який ми зараз будемо виводити на екран
+    *((unsigned int*)point_vaga) /=10; //зменшуємо ваговий коефіцієнт в 10 разів
+  }
+  else
+  {
+    temp_data = (*((unsigned long long*)point_value)) / (*((unsigned long long*)point_vaga)); //виділяємо число, яке треба перетворити у символ і помістити у дану позицію екрану
+    *((unsigned long long*)point_value) %= *((unsigned long long*)point_vaga); //вираховуємо число без символа, який ми зараз будемо виводити на екран
+    *((unsigned long long*)point_vaga) /=10; //зменшуємо ваговий коефіцієнт в 10 разів
+  }
+  
+  if(current_ekran.edition != 0) *point_in_working_ekran = temp_data + 0x30;
+  else
+  {
+    //У випадку, якщо ми не у режимі редагування, то нулі перед комою (за винятком останнього, якщо такий є) приховуємо
+    if ((temp_data !=0) || ((*point_first_symbol) != 0))
+    {
+      *point_in_working_ekran = temp_data + 0x30;
+      if ((*point_first_symbol) == 0) *point_first_symbol = 1;
+    }
+    else
+    {
+      if (current_position_x < (position_comma - 1) ) *point_in_working_ekran = ' ';
+      else
+      {
+        *point_in_working_ekran = temp_data + 0x30;
+        if ((*point_first_symbol) == 0) *point_first_symbol = 1;
+      }
+    }
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
 //Формуємо екран відображення уставок "Перевірки фазування"
 /*****************************************************/
 void make_ekran_setpoint_ctrl_phase(unsigned int group)

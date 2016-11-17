@@ -1699,20 +1699,6 @@ void min_settings(__SETTINGS *target_label)
   
   for (unsigned int i = 0; i < NUMBER_GROUP_USTAVOK; i++)
   {
-    target_label->timeout_apv_1[i] = TIMEOUT_APV1_MIN;    
-    target_label->timeout_apv_2[i] = TIMEOUT_APV2_MIN;    
-    target_label->timeout_apv_3[i] = TIMEOUT_APV3_MIN;    
-    target_label->timeout_apv_4[i] = TIMEOUT_APV4_MIN;    
-    target_label->timeout_apv_block_vid_apv1[i] = TIMEOUT_APV_BLOCK_VID_APV1_MIN;
-    target_label->timeout_apv_block_vid_apv2[i] = TIMEOUT_APV_BLOCK_VID_APV2_MIN;
-    target_label->timeout_apv_block_vid_apv3[i] = TIMEOUT_APV_BLOCK_VID_APV3_MIN;
-    target_label->timeout_apv_block_vid_apv4[i] = TIMEOUT_APV_BLOCK_VID_APV4_MIN;
-    target_label->timeout_apv_block_vid_VV[i] = TIMEOUT_APV_BLOCK_VID_VV_MIN;
-    
-    target_label->setpoint_urov[i]  = SETPOINT_UROV_MIN;
-    target_label->timeout_urov_1[i] = TIMEOUT_UROV1_MIN;
-    target_label->timeout_urov_2[i] = TIMEOUT_UROV2_MIN;
-
     target_label->setpoint_zop[i] = SETPOINT_ZOP_MIN;
     target_label->timeout_zop[i] = TIMEOUT_ZOP_MIN; 
 
@@ -1764,8 +1750,6 @@ void min_settings(__SETTINGS *target_label)
     target_label->timeout_ctrl_phase_f_d[i] = TIMEOUT_CTRL_PHASE_F_D_MIN;
   }
 
-  target_label->control_apv = 0;
-  target_label->control_urov = 0;
   target_label->control_zop = 0;
   target_label->control_Umin = 0;
   target_label->control_Umax = 0;

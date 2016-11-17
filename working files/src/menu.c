@@ -1206,11 +1206,6 @@ void main_manu_function(void)
     case EKRAN_MEASURMENT_FREQUENCY:
     case EKRAN_MEASURMENT_ANGLE:
     case EKRAN_MEASURMENT_POWER:
-    case EKRAN_CHOOSE_SETTINGS_UROV:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UROV:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_UROV:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP3_UROV:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UROV:
     case EKRAN_CHOOSE_SETTINGS_ZOP:
     case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_ZOP:
     case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_ZOP:
@@ -1366,7 +1361,6 @@ void main_manu_function(void)
               make_ekran_power(pervynna_vtorynna);
             }
             else if (
-                     (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UROV      )|| 
                      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZOP       )|| 
                      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMIN      )||
                      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMAX      )||
@@ -1381,11 +1375,6 @@ void main_manu_function(void)
               make_ekran_chose_settings_protection_with_groups();
             }
             else if (
-                     (
-                      (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UROV) &&
-                      (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UROV)
-                     )
-                     ||  
                      (
                       (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_ZOP) &&
                       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_ZOP)
@@ -1901,50 +1890,6 @@ void main_manu_function(void)
                 
                 //Переключаємося між відображенням для первинної обмотки і вторинної обмотки
                 pervynna_vtorynna ^= 0x1;
-              }
-              else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UROV)
-              {
-                //Натисну кнопка Enter у вікні вибору група1-...-групаN-настройки УРОВ
-                if(
-                   (current_ekran.index_position >= INDEX_ML_GROUP1) &&
-                   (current_ekran.index_position <= INDEX_ML_GROUP4)
-                  )  
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення обраної групи уставок для УРОВ
-                  current_ekran.current_level = EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UROV + (current_ekran.index_position - INDEX_ML_GROUP1);
-                }
-                else if (current_ekran.index_position == INDEX_ML_CONTROL_WITH_GROUPS)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення управлінської інформації для УРОВ
-                  current_ekran.current_level = EKRAN_CONTROL_UROV;
-                } 
-                current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-                current_ekran.edition = 0;
-                current_ekran.cursor_on = 1;
-                current_ekran.cursor_blinking_on = 0;
-              }
-              else if (
-                       (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UROV) &&
-                       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UROV)
-                      )
-              {
-                //Натисну кнопка Enter у вікні вибору уставок-витримок УРОВ
-                if(current_ekran.index_position == INDEX_ML_SETPOINT)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення уставок для УРОВ
-                  current_ekran.current_level = EKRAN_SETPOINT_UROV_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UROV);
-                }
-                else if(current_ekran.index_position == INDEX_ML_TIMEOUT)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення витримок для УРОВ
-                  current_ekran.current_level = EKRAN_TIMEOUT_UROV_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UROV);
-                }
-                current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-                current_ekran.edition = 0;
               }
               else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZOP)
               {
@@ -3021,7 +2966,6 @@ void main_manu_function(void)
                 make_ekran_power(pervynna_vtorynna);
               }
               else if (
-                       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UROV      )|| 
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZOP       )||
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMIN      )||
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMAX      )||
@@ -3035,11 +2979,6 @@ void main_manu_function(void)
                 make_ekran_chose_settings_protection_with_groups();
               }
               else if (
-                       (
-                        (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UROV) &&
-                        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UROV)
-                       )
-                       ||  
                        (
                         (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_ZOP) &&
                         (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_ZOP)
@@ -3533,7 +3472,6 @@ void main_manu_function(void)
                 make_ekran_power(pervynna_vtorynna);
               }
               else if (
-                       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UROV      )||
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZOP       )||
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMIN      )||
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMAX      )||
@@ -3548,11 +3486,6 @@ void main_manu_function(void)
                 make_ekran_chose_settings_protection_with_groups();
               }
               else if (
-                       (
-                        (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UROV) &&
-                        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UROV)
-                       )
-                       ||  
                        (
                         (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_ZOP) &&
                         (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_ZOP)
@@ -4003,15 +3936,6 @@ void main_manu_function(void)
 /****************************************************************************************************************************************/ 
 
 /******************************************************************************************************************************************/      
-    case EKRAN_SETPOINT_UROV_GROUP1:
-    case EKRAN_SETPOINT_UROV_GROUP2:
-    case EKRAN_SETPOINT_UROV_GROUP3:
-    case EKRAN_SETPOINT_UROV_GROUP4:
-    case EKRAN_TIMEOUT_UROV_GROUP1:
-    case EKRAN_TIMEOUT_UROV_GROUP2:
-    case EKRAN_TIMEOUT_UROV_GROUP3:
-    case EKRAN_TIMEOUT_UROV_GROUP4:
-    case EKRAN_CONTROL_UROV:
     case EKRAN_SETPOINT_ZOP_GROUP1:
     case EKRAN_SETPOINT_ZOP_GROUP2:
     case EKRAN_SETPOINT_ZOP_GROUP3:
@@ -4114,41 +4038,9 @@ void main_manu_function(void)
           if((new_state_keyboard & (1<<BIT_REWRITE)) !=0)
           {
             if(
-               (current_ekran.current_level >= EKRAN_SETPOINT_UROV_GROUP1) &&
-               (current_ekran.current_level <= EKRAN_SETPOINT_UROV_GROUP4)
+               (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
+               (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
               )   
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_SETPOINT_UROV) current_ekran.index_position = 0;
-              position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-
-              //Формуємо екран уставок УРОВ
-              int group = (current_ekran.current_level - EKRAN_SETPOINT_UROV_GROUP1);
-              make_ekran_setpoint_urov(group);
-            }
-            else if(
-                    (current_ekran.current_level >= EKRAN_TIMEOUT_UROV_GROUP1) &&
-                    (current_ekran.current_level <= EKRAN_TIMEOUT_UROV_GROUP4)
-                   )   
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_TIMEOUT_UROV) current_ekran.index_position = 0;
-              position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-
-              //Формуємо екран витримок УРОВ
-              int group = (current_ekran.current_level - EKRAN_TIMEOUT_UROV_GROUP1);
-              make_ekran_timeout_urov(group);
-            }
-            else if(current_ekran.current_level == EKRAN_CONTROL_UROV)
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_UROV) current_ekran.index_position = 0;
-              position_in_current_level_menu[EKRAN_CONTROL_UROV] = current_ekran.index_position;
-
-              //Формуємо екран управлінської інформації для УРОВ
-              make_ekran_control_urov();
-            }
-            else if(
-                    (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
-                    (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
-                   )   
             {
               if(current_ekran.index_position >= MAX_ROW_FOR_SETPOINT_ZOP) current_ekran.index_position = 0;
               position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
@@ -4494,41 +4386,9 @@ void main_manu_function(void)
                 
                 //Копіюємо текчі настройки у структуру для редагування
                 if(
-                   (current_ekran.current_level >= EKRAN_SETPOINT_UROV_GROUP1) &&
-                   (current_ekran.current_level <= EKRAN_SETPOINT_UROV_GROUP4)
+                   (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
+                   (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
                   )   
-                {
-                  int group = (current_ekran.current_level - EKRAN_SETPOINT_UROV_GROUP1);
-
-                  edition_settings.setpoint_urov[group] = current_settings.setpoint_urov[group];
-                  current_ekran.position_cursor_x = COL_SETPOINT_UROV_BEGIN;
-                }
-                else if(
-                        (current_ekran.current_level >= EKRAN_TIMEOUT_UROV_GROUP1) &&
-                        (current_ekran.current_level <= EKRAN_TIMEOUT_UROV_GROUP4)
-                       )   
-                {
-                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_UROV_GROUP1);
-
-                  if (current_ekran.index_position == INDEX_ML_TMOUROV1)
-                  {
-                    edition_settings.timeout_urov_1[group] = current_settings.timeout_urov_1[group];
-                    current_ekran.position_cursor_x = COL_TMO_UROV_1_BEGIN;
-                  }
-                  else
-                  {
-                    edition_settings.timeout_urov_2[group] = current_settings.timeout_urov_2[group];
-                    current_ekran.position_cursor_x = COL_TMO_UROV_2_BEGIN;
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_CONTROL_UROV)
-                {
-                  edition_settings.control_urov = current_settings.control_urov;
-                }
-                else if(
-                        (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
-                        (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
-                       )   
                 {
                   int group = (current_ekran.current_level - EKRAN_SETPOINT_ZOP_GROUP1);
 
@@ -5095,38 +4955,9 @@ void main_manu_function(void)
                 unsigned int found_changes = 0;
 
                 if(
-                   (current_ekran.current_level >= EKRAN_SETPOINT_UROV_GROUP1) &&
-                   (current_ekran.current_level <= EKRAN_SETPOINT_UROV_GROUP4)
+                   (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
+                   (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
                   )   
-                {
-                  int group = (current_ekran.current_level - EKRAN_SETPOINT_UROV_GROUP1);
-                 
-                  if (edition_settings.setpoint_urov[group] != current_settings.setpoint_urov[group]) found_changes = 1;
-                }
-                else if(
-                        (current_ekran.current_level >= EKRAN_TIMEOUT_UROV_GROUP1) &&
-                        (current_ekran.current_level <= EKRAN_TIMEOUT_UROV_GROUP4)
-                       )   
-                {
-                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_UROV_GROUP1);
-                 
-                  if (current_ekran.index_position == INDEX_ML_TMOUROV1)
-                  {
-                    if (edition_settings.timeout_urov_1[group] != current_settings.timeout_urov_1[group]) found_changes = 1;
-                  }
-                  else
-                  {
-                    if (edition_settings.timeout_urov_2[group] != current_settings.timeout_urov_2[group]) found_changes = 1;
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_CONTROL_UROV)
-                {
-                  if (edition_settings.control_urov != current_settings.control_urov) found_changes = 1;
-                }
-                else if(
-                        (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
-                        (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
-                       )   
                 {
                   int group = (current_ekran.current_level - EKRAN_SETPOINT_ZOP_GROUP1);
                  
@@ -5618,90 +5449,9 @@ void main_manu_function(void)
                 current_ekran.edition = 3;
                 //Перевіряємо достовірність даних
                 if(
-                   (current_ekran.current_level >= EKRAN_SETPOINT_UROV_GROUP1) &&
-                   (current_ekran.current_level <= EKRAN_SETPOINT_UROV_GROUP4)
+                   (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
+                   (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
                   )   
-                {
-                  int group = (current_ekran.current_level - EKRAN_SETPOINT_UROV_GROUP1);
-                  
-                  if (check_data_setpoint(edition_settings.setpoint_urov[group], SETPOINT_UROV_MIN, SETPOINT_UROV_MAX) == 1)
-                  {
-                    if (edition_settings.setpoint_urov[group] != current_settings.setpoint_urov[group])
-                    {
-                      //Помічаємо, що поле структури зараз буде змінене
-                      changed_settings = CHANGED_ETAP_EXECUTION;
-                        
-                      current_settings.setpoint_urov[group] = edition_settings.setpoint_urov[group];
-                      //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                      fix_change_settings(0, 1);
-                    }
-                    //Виходимо з режиму редагування
-                    current_ekran.edition = 0;
-                  }
-                }
-                else if(
-                        (current_ekran.current_level >= EKRAN_TIMEOUT_UROV_GROUP1) &&
-                        (current_ekran.current_level <= EKRAN_TIMEOUT_UROV_GROUP4)
-                       )
-                {
-                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_UROV_GROUP1);
-                  
-                  if (current_ekran.index_position == INDEX_ML_TMOUROV1)
-                  {
-                    if (check_data_setpoint(edition_settings.timeout_urov_1[group], TIMEOUT_UROV1_MIN, TIMEOUT_UROV1_MAX) == 1)
-                    {
-                      if (edition_settings.timeout_urov_1[group] != current_settings.timeout_urov_1[group])
-                      {
-                        //Помічаємо, що поле структури зараз буде змінене
-                        changed_settings = CHANGED_ETAP_EXECUTION;
-                        
-                        current_settings.timeout_urov_1[group] = edition_settings.timeout_urov_1[group];
-                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                        fix_change_settings(0, 1);
-                      }
-                      //Виходимо з режиму редагування
-                      current_ekran.edition = 0;
-                    }
-                  }
-                  else
-                  {
-                    if (check_data_setpoint(edition_settings.timeout_urov_2[group], TIMEOUT_UROV2_MIN, TIMEOUT_UROV2_MAX) == 1)
-                    {
-                      if (edition_settings.timeout_urov_2[group] != current_settings.timeout_urov_2[group])
-                      {
-                        //Помічаємо, що поле структури зараз буде змінене
-                        changed_settings = CHANGED_ETAP_EXECUTION;
-                        
-                        current_settings.timeout_urov_2[group] = edition_settings.timeout_urov_2[group];
-                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                        fix_change_settings(0, 1);
-                      }
-                      //Виходимо з режиму редагування
-                      current_ekran.edition = 0;
-                    }
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_CONTROL_UROV)
-                {
-                  if ((edition_settings.control_urov  & ((unsigned int)(~CTR_UROV_MASKA))) == 0)
-                  {
-                    if (edition_settings.control_urov != current_settings.control_urov)
-                    {
-                      //Помічаємо, що поле структури зараз буде змінене
-                      changed_settings = CHANGED_ETAP_EXECUTION;
-                        
-                      current_settings.control_urov = edition_settings.control_urov;
-                      //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                      fix_change_settings(0, 1);
-                    }
-                    //Виходимо з режиму редагування
-                    current_ekran.edition = 0;
-                  }
-                }
-                else if(
-                        (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
-                        (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
-                       )   
                 {
                   int group = (current_ekran.current_level - EKRAN_SETPOINT_ZOP_GROUP1);
                   
@@ -7473,62 +7223,9 @@ void main_manu_function(void)
             {
               //Натиснута кнопка UP
               if(
-                 (current_ekran.current_level >= EKRAN_SETPOINT_UROV_GROUP1) &&
-                 (current_ekran.current_level <= EKRAN_SETPOINT_UROV_GROUP4)
+                 (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
+                 (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
                 )   
-              {
-                int group = (current_ekran.current_level - EKRAN_SETPOINT_UROV_GROUP1);
-                
-                if(current_ekran.edition == 0)
-                {
-                  if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_SETPOINT_UROV - 1;
-                  position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-                }
-                else
-                {
-                  //Редагування числа
-                  edition_settings.setpoint_urov[group] = edit_setpoint(1, edition_settings.setpoint_urov[group], 1, COL_SETPOINT_UROV_COMMA, COL_SETPOINT_UROV_END, 10);
-                }
-                //Формуємо екран уставок УРОВ
-                make_ekran_setpoint_urov(group);
-              }
-              else if(
-                      (current_ekran.current_level >= EKRAN_TIMEOUT_UROV_GROUP1) &&
-                      (current_ekran.current_level <= EKRAN_TIMEOUT_UROV_GROUP4)
-                     )   
-              {
-                int group = (current_ekran.current_level - EKRAN_TIMEOUT_UROV_GROUP1);
-                
-                if(current_ekran.edition == 0)
-                {
-                  if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_TIMEOUT_UROV - 1;
-                  position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-                }
-                else
-                {
-                  //Редагування числа
-                  if (current_ekran.index_position == INDEX_ML_TMOUROV1)
-                    edition_settings.timeout_urov_1[group] = edit_setpoint(1, edition_settings.timeout_urov_1[group], 1, COL_TMO_UROV_1_COMMA, COL_TMO_UROV_1_END, 10);
-                  else
-                    edition_settings.timeout_urov_2[group] = edit_setpoint(1, edition_settings.timeout_urov_2[group], 1, COL_TMO_UROV_2_COMMA, COL_TMO_UROV_2_END, 10);
-                }
-                //Формуємо екран витримок УРОВ
-                make_ekran_timeout_urov(group);
-              }
-              else if(current_ekran.current_level == EKRAN_CONTROL_UROV)
-              {
-                current_ekran.index_position--;
-                
-                if(current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CONTROL_UROV - 1;
-                position_in_current_level_menu[EKRAN_CONTROL_UROV] = current_ekran.index_position;
-
-                //Формуємо екран управлінської інформації для УРОВ
-                make_ekran_control_urov();
-              }
-              else if(
-                      (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
-                      (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
-                     )   
               {
                 int group = (current_ekran.current_level - EKRAN_SETPOINT_ZOP_GROUP1);
                 
@@ -8235,62 +7932,9 @@ void main_manu_function(void)
             {
               //Натиснута кнопка DOWN
               if(
-                 (current_ekran.current_level >= EKRAN_SETPOINT_UROV_GROUP1) &&
-                 (current_ekran.current_level <= EKRAN_SETPOINT_UROV_GROUP4)
+                 (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
+                 (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
                 )   
-              {
-                int group = (current_ekran.current_level - EKRAN_SETPOINT_UROV_GROUP1);
-
-                if(current_ekran.edition == 0)
-                {
-                  if(++current_ekran.index_position >= MAX_ROW_FOR_SETPOINT_UROV) current_ekran.index_position = 0;
-                  position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-                }
-                else
-                {
-                  //Редагування числа
-                  edition_settings.setpoint_urov[group] = edit_setpoint(0, edition_settings.setpoint_urov[group], 1, COL_SETPOINT_UROV_COMMA, COL_SETPOINT_UROV_END, 10);
-                }
-                //Формуємо екран уставок УРОВ
-                make_ekran_setpoint_urov(group);
-              }
-              else if(
-                      (current_ekran.current_level >= EKRAN_TIMEOUT_UROV_GROUP1) &&
-                      (current_ekran.current_level <= EKRAN_TIMEOUT_UROV_GROUP4)
-                     )   
-              {
-                int group = (current_ekran.current_level - EKRAN_TIMEOUT_UROV_GROUP1);
-
-                if(current_ekran.edition == 0)
-                {
-                  if(++current_ekran.index_position >= MAX_ROW_FOR_TIMEOUT_UROV) current_ekran.index_position = 0;
-                  position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-                }
-                else
-                {
-                  //Редагування числа
-                  if (current_ekran.index_position == INDEX_ML_TMOUROV1)
-                    edition_settings.timeout_urov_1[group] = edit_setpoint(0, edition_settings.timeout_urov_1[group], 1, COL_TMO_UROV_1_COMMA, COL_TMO_UROV_1_END, 10);
-                  else
-                    edition_settings.timeout_urov_2[group] = edit_setpoint(0, edition_settings.timeout_urov_2[group], 1, COL_TMO_UROV_2_COMMA, COL_TMO_UROV_2_END, 10);
-                }
-                //Формуємо екран витримок УРОВ
-                make_ekran_timeout_urov(group);
-              }
-              else if(current_ekran.current_level == EKRAN_CONTROL_UROV)
-              {
-                current_ekran.index_position++;
-                
-                if(current_ekran.index_position >= MAX_ROW_FOR_CONTROL_UROV) current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_CONTROL_UROV] = current_ekran.index_position;
-
-                //Формуємо екран управлінської інформації для УРОВ
-                make_ekran_control_urov();
-              }
-              else if(
-                      (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
-                      (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
-                     )   
               {
                 int group = (current_ekran.current_level - EKRAN_SETPOINT_ZOP_GROUP1);
 
@@ -8998,70 +8642,9 @@ void main_manu_function(void)
               current_ekran.position_cursor_x++;
               //Перевіряємо, чи ми не вийшли за межі виділені для значення даної уставки, або позицію коми
               if(
-                 (current_ekran.current_level >= EKRAN_SETPOINT_UROV_GROUP1) &&
-                 (current_ekran.current_level <= EKRAN_SETPOINT_UROV_GROUP4)
+                 (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
+                 (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
                 )   
-              {
-                if (current_ekran.position_cursor_x == COL_SETPOINT_UROV_COMMA )current_ekran.position_cursor_x++;
-                if ((current_ekran.position_cursor_x < COL_SETPOINT_UROV_BEGIN) ||
-                    (current_ekran.position_cursor_x > COL_SETPOINT_UROV_END))
-                  current_ekran.position_cursor_x = COL_SETPOINT_UROV_BEGIN;
-
-                //Формуємо екран уставок УРОВ
-                int group = (current_ekran.current_level - EKRAN_SETPOINT_UROV_GROUP1);
-                make_ekran_setpoint_urov(group);
-              }
-              else if(
-                      (current_ekran.current_level >= EKRAN_TIMEOUT_UROV_GROUP1) &&
-                      (current_ekran.current_level <= EKRAN_TIMEOUT_UROV_GROUP4)
-                     )   
-              {
-                if(current_ekran.index_position == INDEX_ML_TMOUROV1)
-                {
-                  if (current_ekran.position_cursor_x == COL_TMO_UROV_1_COMMA )current_ekran.position_cursor_x++;
-                  if ((current_ekran.position_cursor_x < COL_TMO_UROV_1_BEGIN) ||
-                      (current_ekran.position_cursor_x > COL_TMO_UROV_1_END))
-                    current_ekran.position_cursor_x = COL_TMO_UROV_1_BEGIN;
-                }
-                else
-                {
-                  if (current_ekran.position_cursor_x == COL_TMO_UROV_2_COMMA )current_ekran.position_cursor_x++;
-                  if ((current_ekran.position_cursor_x < COL_TMO_UROV_2_BEGIN) ||
-                      (current_ekran.position_cursor_x > COL_TMO_UROV_2_END))
-                    current_ekran.position_cursor_x = COL_TMO_UROV_2_BEGIN;
-                }
-
-                //Формуємо екран витримок УРОВ
-                int group = (current_ekran.current_level - EKRAN_TIMEOUT_UROV_GROUP1);
-                make_ekran_timeout_urov(group);
-              }
-              else if(current_ekran.current_level == EKRAN_CONTROL_UROV)
-              {
-                unsigned int maska = 0;
-          
-                //Виділяємо, який біт треба міняти
-                if (current_ekran.index_position == INDEX_ML_CTRUROV_STATE) maska = CTR_UROV_STATE;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1   ) maska = CTR_UROV_STARTED_FROM_MTZ1;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2   ) maska = CTR_UROV_STARTED_FROM_MTZ2;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3   ) maska = CTR_UROV_STARTED_FROM_MTZ3;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4   ) maska = CTR_UROV_STARTED_FROM_MTZ4;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ    ) maska = CTR_UROV_STARTED_FROM_ZDZ;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1   ) maska = CTR_UROV_STARTED_FROM_ZOP1;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1  ) maska = CTR_UROV_STARTED_FROM_UMIN1;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2  ) maska = CTR_UROV_STARTED_FROM_UMIN2;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1  ) maska = CTR_UROV_STARTED_FROM_UMAX1;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2  ) maska = CTR_UROV_STARTED_FROM_UMAX2;
-                
-                //Міняємо на протилежний відповідний біт для вибраної позиції
-                edition_settings.control_urov ^= maska;
-
-                //Формуємо екран управлінської інформації для УРОВ
-                 make_ekran_control_urov();
-              }
-              else if(
-                      (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
-                      (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
-                     )   
               {
                 if (current_ekran.position_cursor_x == COL_SETPOINT_ZOP_COMMA )current_ekran.position_cursor_x++;
                 if ((current_ekran.position_cursor_x < COL_SETPOINT_ZOP_BEGIN) ||
@@ -9895,70 +9478,9 @@ void main_manu_function(void)
               current_ekran.position_cursor_x--;
               //Перевіряємо, чи ми не вийшли за межі виділені для значення даної уставки, або позицію коми
               if(
-                 (current_ekran.current_level >= EKRAN_SETPOINT_UROV_GROUP1) &&
-                 (current_ekran.current_level <= EKRAN_SETPOINT_UROV_GROUP4)
+                 (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
+                 (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
                 )   
-              {
-                if (current_ekran.position_cursor_x == COL_SETPOINT_UROV_COMMA )current_ekran.position_cursor_x--;
-                if ((current_ekran.position_cursor_x < COL_SETPOINT_UROV_BEGIN) ||
-                    (current_ekran.position_cursor_x > COL_SETPOINT_UROV_END))
-                  current_ekran.position_cursor_x = COL_SETPOINT_UROV_END;
-
-                //Формуємо екран уставок УРОВ
-                int group = (current_ekran.current_level - EKRAN_SETPOINT_UROV_GROUP1);
-                make_ekran_setpoint_urov(group);
-              }
-              else if(
-                      (current_ekran.current_level >= EKRAN_TIMEOUT_UROV_GROUP1) &&
-                      (current_ekran.current_level <= EKRAN_TIMEOUT_UROV_GROUP4)
-                     )   
-              {
-                if(current_ekran.index_position == INDEX_ML_TMOUROV1)
-                {
-                  if (current_ekran.position_cursor_x == COL_TMO_UROV_1_COMMA )current_ekran.position_cursor_x--;
-                  if ((current_ekran.position_cursor_x < COL_TMO_UROV_1_BEGIN) ||
-                      (current_ekran.position_cursor_x > COL_TMO_UROV_1_END))
-                    current_ekran.position_cursor_x = COL_TMO_UROV_1_END;
-                }
-                else
-                {
-                  if (current_ekran.position_cursor_x == COL_TMO_UROV_2_COMMA )current_ekran.position_cursor_x--;
-                  if ((current_ekran.position_cursor_x < COL_TMO_UROV_2_BEGIN) ||
-                      (current_ekran.position_cursor_x > COL_TMO_UROV_2_END))
-                    current_ekran.position_cursor_x = COL_TMO_UROV_2_END;
-                }
-
-                //Формуємо екран витримок УРОВ
-                int group = (current_ekran.current_level - EKRAN_TIMEOUT_UROV_GROUP1);
-                 make_ekran_timeout_urov(group);
-              }
-              else if(current_ekran.current_level == EKRAN_CONTROL_UROV)
-              {
-                unsigned int maska = 0;
-          
-                //Виділяємо, який біт треба міняти
-                if (current_ekran.index_position == INDEX_ML_CTRUROV_STATE) maska = CTR_UROV_STATE;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1   ) maska = CTR_UROV_STARTED_FROM_MTZ1;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2   ) maska = CTR_UROV_STARTED_FROM_MTZ2;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3   ) maska = CTR_UROV_STARTED_FROM_MTZ3;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4   ) maska = CTR_UROV_STARTED_FROM_MTZ4;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ    ) maska = CTR_UROV_STARTED_FROM_ZDZ;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1   ) maska = CTR_UROV_STARTED_FROM_ZOP1;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1  ) maska = CTR_UROV_STARTED_FROM_UMIN1;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2  ) maska = CTR_UROV_STARTED_FROM_UMIN2;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1  ) maska = CTR_UROV_STARTED_FROM_UMAX1;
-                else if (current_ekran.index_position == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2  ) maska = CTR_UROV_STARTED_FROM_UMAX2;
-                
-                //Міняємо на протилежний відповідний біт для вибраної позиції
-                edition_settings.control_urov ^= maska;
-
-                //Формуємо екран управлінської інформації для УРОВ
-                 make_ekran_control_urov();
-              }
-              else if(
-                      (current_ekran.current_level >= EKRAN_SETPOINT_ZOP_GROUP1) &&
-                      (current_ekran.current_level <= EKRAN_SETPOINT_ZOP_GROUP4)
-                     )   
               {
                 if (current_ekran.position_cursor_x == COL_SETPOINT_ZOP_COMMA )current_ekran.position_cursor_x--;
                 if ((current_ekran.position_cursor_x < COL_SETPOINT_ZOP_BEGIN) ||

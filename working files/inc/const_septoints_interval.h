@@ -7,42 +7,6 @@
 #define KOEF_TN_MIN                   50
 #define KOEF_TN_MAX                   1800
 
-#define TIMEOUT_APV1_MIN              100
-#define TIMEOUT_APV1_MAX              200000
-
-#define TIMEOUT_APV2_MIN              100
-#define TIMEOUT_APV2_MAX              200000
-
-#define TIMEOUT_APV3_MIN              100
-#define TIMEOUT_APV3_MAX              200000
-
-#define TIMEOUT_APV4_MIN              100
-#define TIMEOUT_APV4_MAX              200000
-
-#define TIMEOUT_APV_BLOCK_VID_APV1_MIN  200
-#define TIMEOUT_APV_BLOCK_VID_APV1_MAX  200000
-
-#define TIMEOUT_APV_BLOCK_VID_APV2_MIN  200
-#define TIMEOUT_APV_BLOCK_VID_APV2_MAX  200000
-
-#define TIMEOUT_APV_BLOCK_VID_APV3_MIN  200
-#define TIMEOUT_APV_BLOCK_VID_APV3_MAX  200000
-
-#define TIMEOUT_APV_BLOCK_VID_APV4_MIN  200
-#define TIMEOUT_APV_BLOCK_VID_APV4_MAX  200000
-
-#define TIMEOUT_APV_BLOCK_VID_VV_MIN  200
-#define TIMEOUT_APV_BLOCK_VID_VV_MAX  200000
-
-#define SETPOINT_UROV_MIN             250
-#define SETPOINT_UROV_MAX             5000
-
-#define TIMEOUT_UROV1_MIN             0
-#define TIMEOUT_UROV1_MAX             32000
-
-#define TIMEOUT_UROV2_MIN             0
-#define TIMEOUT_UROV2_MAX             32000
-
 #define SETPOINT_ZOP_MIN              10
 #define SETPOINT_ZOP_MAX              1000
 

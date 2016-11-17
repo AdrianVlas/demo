@@ -926,9 +926,9 @@
 //#define MA_TO_U_OL                        10413
 //#define MA_TO_U_RL                        10414
 
-#define MA_STP_UROV                       10423
-#define MA_TO_UROV1                       10424
-#define MA_TO_UROV2                       10425
+//#define MA_STP_UROV                       10423
+//#define MA_TO_UROV1                       10424
+//#define MA_TO_UROV2                       10425
 
 #define MA_STP_AVR_TN1_U1_UMIN            10426
 #define MA_STP_AVR_TN1_U2_LOW_WORK        10427
@@ -954,15 +954,15 @@
 #define MA_TO_AVR_GENERAL_VYMK_ROB_K2     10447
 #define MA_TO_AVR_GENERAL_VYMK_K2         10448
 
-#define MA_TO_APV_BLOCK_VID_VV            10449
-#define MA_TO_APV_CYCLE_1                 10450
-#define MA_TO_APV_CYCLE_2                 10451
-#define MA_TO_APV_CYCLE_3                 10452
-#define MA_TO_APV_CYCLE_4                 10453
-#define MA_TO_APV_BLOCK_VID_APV1          10454
-#define MA_TO_APV_BLOCK_VID_APV2          10455
-#define MA_TO_APV_BLOCK_VID_APV3          10456
-#define MA_TO_APV_BLOCK_VID_APV4          10457
+//#define MA_TO_APV_BLOCK_VID_VV            10449
+//#define MA_TO_APV_CYCLE_1                 10450
+//#define MA_TO_APV_CYCLE_2                 10451
+//#define MA_TO_APV_CYCLE_3                 10452
+//#define MA_TO_APV_CYCLE_4                 10453
+//#define MA_TO_APV_BLOCK_VID_APV1          10454
+//#define MA_TO_APV_BLOCK_VID_APV2          10455
+//#define MA_TO_APV_BLOCK_VID_APV3          10456
+//#define MA_TO_APV_BLOCK_VID_APV4          10457
 
 //#define MA_STP_APV_ZMN1                   10458
 //#define MA_STP_APV_ZMN2                   10459

@@ -3312,21 +3312,6 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
         temp_value = current_settings_interfaces.timeout_Umax2[num_gr]/10;
         break;
       }
-    case MA_STP_UROV:
-      {
-        temp_value = current_settings_interfaces.setpoint_urov[num_gr]/10;
-        break;
-      }
-    case MA_TO_UROV1:
-      {
-        temp_value = current_settings_interfaces.timeout_urov_1[num_gr]/10;
-        break;
-      }
-    case MA_TO_UROV2:
-      {
-        temp_value = current_settings_interfaces.timeout_urov_2[num_gr]/10;
-        break;
-      }
     case MA_STP_AVR_TN1_U1_UMIN:
       {
         temp_value = current_settings_interfaces.setpoint_avr_tn1_U1_Umin[num_gr]/100;
@@ -3415,41 +3400,6 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
     case MA_TO_AVR_GENERAL_VYMK_K2:
       {
         temp_value = current_settings_interfaces.timeout_avr_vymk_k2[num_gr]/10;
-        break;
-      }
-    case MA_TO_APV_CYCLE_2:
-      {
-        temp_value = current_settings_interfaces.timeout_apv_2[num_gr]/10;
-        break;
-      }
-    case MA_TO_APV_CYCLE_3:
-      {
-        temp_value = current_settings_interfaces.timeout_apv_3[num_gr]/10;
-        break;
-      }
-    case MA_TO_APV_CYCLE_4:
-      {
-        temp_value = current_settings_interfaces.timeout_apv_4[num_gr]/10;
-        break;
-      }
-    case MA_TO_APV_BLOCK_VID_APV1:
-      {
-        temp_value = current_settings_interfaces.timeout_apv_block_vid_apv1[num_gr]/10;
-        break;
-      }
-    case MA_TO_APV_BLOCK_VID_APV2:
-      {
-        temp_value = current_settings_interfaces.timeout_apv_block_vid_apv2[num_gr]/10;
-        break;
-      }
-    case MA_TO_APV_BLOCK_VID_APV3:
-      {
-        temp_value = current_settings_interfaces.timeout_apv_block_vid_apv3[num_gr]/10;
-        break;
-      }
-    case MA_TO_APV_BLOCK_VID_APV4:
-      {
-        temp_value = current_settings_interfaces.timeout_apv_block_vid_apv4[num_gr]/10;
         break;
       }
     case MA_STP_CTRL_PHASE_U:
@@ -4575,51 +4525,6 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
 
         break;
       }
-    case MA_STP_UROV:
-      {
-        temp_value = data*10;
-    
-        if ((temp_value >= SETPOINT_UROV_MIN) && (temp_value <= SETPOINT_UROV_MAX))
-          target_label->setpoint_urov[num_gr] = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_UROV1:
-      {
-        temp_value = data*10;
-        
-#if (TIMEOUT_UROV1_MIN != 0)          
-        if ((temp_value >= TIMEOUT_UROV1_MIN) && (temp_value <= TIMEOUT_UROV1_MAX))
-#else
-        if (temp_value <= TIMEOUT_UROV1_MAX)
-#endif            
-        {
-          target_label->timeout_urov_1[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_UROV2:
-      {
-        temp_value = data*10;
-        
-#if (TIMEOUT_UROV2_MIN != 0)          
-        if ((temp_value >= TIMEOUT_UROV2_MIN) && (temp_value <= TIMEOUT_UROV2_MAX))
-#else
-        if (temp_value <= TIMEOUT_UROV2_MAX)
-#endif            
-        {
-          target_label->timeout_urov_2[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
     case MA_STP_AVR_TN1_U1_UMIN:
       {
         temp_value = data*100;
@@ -4869,159 +4774,6 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         if (temp_value <= TIMEOUT_AVR_GENERAL_VYMK_K2_MAX)
 #endif            
           target_label->timeout_avr_vymk_k2[num_gr] = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_APV_BLOCK_VID_VV:
-      {
-        temp_value = data*10;
-
-#if (TIMEOUT_APV_BLOCK_VID_VV_MIN != 0)          
-        if ((temp_value >= TIMEOUT_APV_BLOCK_VID_VV_MIN) && (temp_value <= TIMEOUT_APV_BLOCK_VID_VV_MAX))
-#else
-        if (temp_value <= TIMEOUT_APV_BLOCK_VID_VV_MAX)
-#endif            
-        {
-          target_label->timeout_apv_block_vid_VV[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_APV_CYCLE_1:
-      {
-        temp_value = data*10;
-
-#if (TIMEOUT_APV1_MIN != 0)          
-        if ((temp_value >= TIMEOUT_APV1_MIN) && (temp_value <= TIMEOUT_APV1_MAX))
-#else
-        if (temp_value <= TIMEOUT_APV1_MAX)
-#endif            
-        {
-          target_label->timeout_apv_1[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_APV_CYCLE_2:
-      {
-        temp_value = data*10;
-
-#if (TIMEOUT_APV2_MIN != 0)          
-        if ((temp_value >= TIMEOUT_APV2_MIN) && (temp_value <= TIMEOUT_APV2_MAX))
-#else
-        if (temp_value <= TIMEOUT_APV2_MAX)
-#endif            
-        {
-          target_label->timeout_apv_2[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_APV_CYCLE_3:
-      {
-        temp_value = data*10;
-
-#if (TIMEOUT_APV3_MIN != 0)          
-        if ((temp_value >= TIMEOUT_APV3_MIN) && (temp_value <= TIMEOUT_APV3_MAX))
-#else
-        if (temp_value <= TIMEOUT_APV3_MAX)
-#endif            
-        {
-          target_label->timeout_apv_3[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_APV_CYCLE_4:
-      {
-        temp_value = data*10;
-
-#if (TIMEOUT_APV4_MIN != 0)          
-        if ((temp_value >= TIMEOUT_APV4_MIN) && (temp_value <= TIMEOUT_APV4_MAX))
-#else
-        if (temp_value <= TIMEOUT_APV4_MAX)
-#endif            
-        {
-          target_label->timeout_apv_4[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_APV_BLOCK_VID_APV1:
-      {
-        temp_value = data*10;
-
-#if (TIMEOUT_APV_BLOCK_VID_APV1_MIN != 0)          
-        if ((temp_value >= TIMEOUT_APV_BLOCK_VID_APV1_MIN) && (temp_value <= TIMEOUT_APV_BLOCK_VID_APV1_MAX))
-#else
-        if (temp_value <= TIMEOUT_APV_BLOCK_VID_APV1_MAX)
-#endif            
-        {
-          target_label->timeout_apv_block_vid_apv1[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_APV_BLOCK_VID_APV2:
-      {
-        temp_value = data*10;
-
-#if (TIMEOUT_APV_BLOCK_VID_APV2_MIN != 0)          
-        if ((temp_value >= TIMEOUT_APV_BLOCK_VID_APV2_MIN) && (temp_value <= TIMEOUT_APV_BLOCK_VID_APV2_MAX))
-#else
-        if (temp_value <= TIMEOUT_APV_BLOCK_VID_APV2_MAX)
-#endif            
-        {
-          target_label->timeout_apv_block_vid_apv2[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_APV_BLOCK_VID_APV3:
-      {
-        temp_value = data*10;
-
-#if (TIMEOUT_APV_BLOCK_VID_APV3_MIN != 0)          
-        if ((temp_value >= TIMEOUT_APV_BLOCK_VID_APV3_MIN) && (temp_value <= TIMEOUT_APV_BLOCK_VID_APV3_MAX))
-#else
-        if (temp_value <= TIMEOUT_APV_BLOCK_VID_APV3_MAX)
-#endif            
-        {
-          target_label->timeout_apv_block_vid_apv3[num_gr] = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_APV_BLOCK_VID_APV4:
-      {
-        temp_value = data*10;
-
-#if (TIMEOUT_APV_BLOCK_VID_APV4_MIN != 0)          
-        if ((temp_value >= TIMEOUT_APV_BLOCK_VID_APV4_MIN) && (temp_value <= TIMEOUT_APV_BLOCK_VID_APV4_MAX))
-#else
-        if (temp_value <= TIMEOUT_APV_BLOCK_VID_APV4_MAX)
-#endif            
-        {
-          target_label->timeout_apv_block_vid_apv4[num_gr] = temp_value;
-        }
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
 

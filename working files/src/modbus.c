@@ -4150,7 +4150,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
             output_value |= ((data >> (BIT_MA_CONTROL_CTRL_PHASE_SEQ_TN1 - BIT_MA_CONTROL_CTRL_PHASE_BASE)) & 0x1) << INDEX_CTR_CTRL_PHASE_SEQ_TN1;
             output_value |= ((data >> (BIT_MA_CONTROL_CTRL_PHASE_SEQ_TN2 - BIT_MA_CONTROL_CTRL_PHASE_BASE)) & 0x1) << INDEX_CTR_CTRL_PHASE_SEQ_TN2;
         
-            target_label->control_Umax = output_value;
+            target_label->control_ctrl_phase = output_value;
           }
           else
             error = ERROR_ILLEGAL_DATA_VALUE;

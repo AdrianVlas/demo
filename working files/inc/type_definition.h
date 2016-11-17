@@ -102,13 +102,6 @@ typedef struct
   
   unsigned int configuration;         //Конфігурація приладу
   
-  //Umax
-  unsigned int setpoint_Umax1[NUMBER_GROUP_USTAVOK];        //уставка Umax1
-  unsigned int setpoint_Umax2[NUMBER_GROUP_USTAVOK];        //уставка Umax2
-  int timeout_Umax1[NUMBER_GROUP_USTAVOK];                  //Витримка  Umax1
-  int timeout_Umax2[NUMBER_GROUP_USTAVOK];                  //Витримка  Umax2
-  unsigned int control_Umax;                                //Поле для управління Umax
-
   //АВР
   unsigned int setpoint_avr_tn1_U1_Umin[NUMBER_GROUP_USTAVOK];          //уставка АВР "U1min < U1x"
   unsigned int setpoint_avr_tn1_U2_low_work[NUMBER_GROUP_USTAVOK];      //уставка АВР "U2min > U2x"

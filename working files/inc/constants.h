@@ -13,7 +13,6 @@
 #include "const_menu_chose_settings.h"
 #include "const_menu_chose_extra_settings.h"
 #include "const_menu_ctrl_phase.h"
-#include "const_menu_Umin.h"
 #include "const_menu_Umax.h"
 #include "const_menu_avr.h"
 #include "const_menu_inputs.h"

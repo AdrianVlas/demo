@@ -76,9 +76,6 @@ extern void calc_symbol_and_put_into_working_ekran(unsigned char*, void*, void*,
 extern void calc_int_symbol_and_put_into_working_ekran(unsigned char*, unsigned int*, unsigned int*, unsigned int*);
 extern unsigned int edit_setpoint(unsigned int,  unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
 extern unsigned int check_data_setpoint(unsigned int, unsigned int, unsigned int);
-extern void make_ekran_setpoint_Umin(unsigned int);
-extern void make_ekran_timeout_Umin(unsigned int);
-extern void make_ekran_control_Umin(void);
 extern void make_ekran_setpoint_Umax(unsigned int);
 extern void make_ekran_timeout_Umax(unsigned int);
 extern void make_ekran_control_Umax(void);

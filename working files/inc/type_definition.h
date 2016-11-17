@@ -102,15 +102,6 @@ typedef struct
   
   unsigned int configuration;         //Конфігурація приладу
   
-  //Umin
-  unsigned int setpoint_Umin1[NUMBER_GROUP_USTAVOK];        //уставка Umin1
-  unsigned int setpoint_Umin1_Iblk[NUMBER_GROUP_USTAVOK];   //уставка блокування по струму Umin1
-  unsigned int setpoint_Umin2[NUMBER_GROUP_USTAVOK];        //уставка Umin2
-  unsigned int setpoint_Umin2_Iblk[NUMBER_GROUP_USTAVOK];   //уставка блокування по струму Umin2
-  int timeout_Umin1[NUMBER_GROUP_USTAVOK];                    //Витримка  Umin1
-  int timeout_Umin2[NUMBER_GROUP_USTAVOK];                    //Витримка  Umin2
-  unsigned int control_Umin;                                 //Поле для управління Umin
-  
   //Umax
   unsigned int setpoint_Umax1[NUMBER_GROUP_USTAVOK];        //уставка Umax1
   unsigned int setpoint_Umax2[NUMBER_GROUP_USTAVOK];        //уставка Umax2

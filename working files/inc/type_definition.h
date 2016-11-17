@@ -102,11 +102,6 @@ typedef struct
   
   unsigned int configuration;         //Конфігурація приладу
   
-  //ЗОП(КОФ)
-  unsigned int setpoint_zop[NUMBER_GROUP_USTAVOK];          //уставка ЗОП(КОФ)
-  int timeout_zop[NUMBER_GROUP_USTAVOK];                    //Витримка  ЗОП(КОФ)
-  unsigned int control_zop;                                 //Поле для управління ЗОП(КОФ)
-
   //Umin
   unsigned int setpoint_Umin1[NUMBER_GROUP_USTAVOK];        //уставка Umin1
   unsigned int setpoint_Umin1_Iblk[NUMBER_GROUP_USTAVOK];   //уставка блокування по струму Umin1

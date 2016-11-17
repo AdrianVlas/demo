@@ -906,20 +906,20 @@
 //#define MA_TO_TZNP3_NAZAD                 10390
 //#define MA_STP_TZNP3_ANGLE                10391
 
-#define MA_STP_ZOP1                       10392
-#define MA_TO_ZOP1                        10383
+//#define MA_STP_ZOP1                       10392
+//#define MA_TO_ZOP1                        10383
 
-#define MA_STP_UMIN1                      10398
-#define MA_TO_UMIN1                       10399
-#define MA_STP_UMIN2                      10400
-#define MA_TO_UMIN2                       10401
-#define MA_STP_BLK_UMIN1_BY_I             10402
-#define MA_STP_BLK_UMIN2_BY_I             10403
+//#define MA_STP_UMIN1                      10398
+//#define MA_TO_UMIN1                       10399
+//#define MA_STP_UMIN2                      10400
+//#define MA_TO_UMIN2                       10401
+//#define MA_STP_BLK_UMIN1_BY_I             10402
+//#define MA_STP_BLK_UMIN2_BY_I             10403
 
-#define MA_STP_UMAX1                      10404
-#define MA_TO_UMAX1                       10405
-#define MA_STP_UMAX2                      10406
-#define MA_TO_UMAX2                       10407
+//#define MA_STP_UMAX1                      10404
+//#define MA_TO_UMAX1                       10405
+//#define MA_STP_UMAX2                      10406
+//#define MA_TO_UMAX2                       10407
 
 //#define MA_STP_U_OL                       10411
 //#define MA_STP_U_RL                       10412
@@ -930,29 +930,29 @@
 //#define MA_TO_UROV1                       10424
 //#define MA_TO_UROV2                       10425
 
-#define MA_STP_AVR_TN1_U1_UMIN            10426
-#define MA_STP_AVR_TN1_U2_LOW_WORK        10427
-#define MA_STP_AVR_TN2_U2_UMIN            10428
-#define MA_STP_AVR_TN2_U1_LOW_WORK        10429
-//#define MA_TO_AVR_RL                      10430
+//#define MA_STP_AVR_TN1_U1_UMIN            10426
+//#define MA_STP_AVR_TN1_U2_LOW_WORK        10427
+//#define MA_STP_AVR_TN2_U2_UMIN            10428
+//#define MA_STP_AVR_TN2_U1_LOW_WORK        10429
+////#define MA_TO_AVR_RL                      10430
 //#define MA_TO_AVR_OL                      10431
 //#define MA_STP_KRATN_AVR                  10432
 //#define MA_TO_AVR_ZAVERSHENNJA            10433
 //#define MA_TO_AVR_RESET_BLK               10434
-#define MA_TO_AVR_GENERAL_BLK_K1          10435
-#define MA_TO_AVR_GENERAL_PUSK_K1         10436
-#define MA_TO_AVR_GENERAL_D_DIJI_K1       10437
-#define MA_TO_AVR_GENERAL_VVIMK_REZ_K1    10438
-#define MA_TO_AVR_GENERAL_VVIMK_K1        10439
-#define MA_TO_AVR_GENERAL_VYMK_ROB_K1     10440
-#define MA_TO_AVR_GENERAL_VYMK_K1         10441
-#define MA_TO_AVR_GENERAL_BLK_K2          10442
-#define MA_TO_AVR_GENERAL_PUSK_K2         10443
-#define MA_TO_AVR_GENERAL_D_DIJI_K2       10444
-#define MA_TO_AVR_GENERAL_VVIMK_REZ_K2    10445
-#define MA_TO_AVR_GENERAL_VVIMK_K2        10446
-#define MA_TO_AVR_GENERAL_VYMK_ROB_K2     10447
-#define MA_TO_AVR_GENERAL_VYMK_K2         10448
+//#define MA_TO_AVR_GENERAL_BLK_K1          10435
+//#define MA_TO_AVR_GENERAL_PUSK_K1         10436
+//#define MA_TO_AVR_GENERAL_D_DIJI_K1       10437
+//#define MA_TO_AVR_GENERAL_VVIMK_REZ_K1    10438
+//#define MA_TO_AVR_GENERAL_VVIMK_K1        10439
+//#define MA_TO_AVR_GENERAL_VYMK_ROB_K1     10440
+//#define MA_TO_AVR_GENERAL_VYMK_K1         10441
+//#define MA_TO_AVR_GENERAL_BLK_K2          10442
+//#define MA_TO_AVR_GENERAL_PUSK_K2         10443
+//#define MA_TO_AVR_GENERAL_D_DIJI_K2       10444
+//#define MA_TO_AVR_GENERAL_VVIMK_REZ_K2    10445
+//#define MA_TO_AVR_GENERAL_VVIMK_K2        10446
+//#define MA_TO_AVR_GENERAL_VYMK_ROB_K2     10447
+//#define MA_TO_AVR_GENERAL_VYMK_K2         10448
 
 //#define MA_TO_APV_BLOCK_VID_VV            10449
 //#define MA_TO_APV_CYCLE_1                 10450

@@ -1507,9 +1507,6 @@
         <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_Umin.h</name>
         </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zop.h</name>
-        </file>
       </group>
       <group>
         <name>microcontriller</name>
@@ -1683,9 +1680,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_view_measurement.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\src\menu_zop.c</name>
         </file>
       </group>
       <group>

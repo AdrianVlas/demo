@@ -1,7 +1,7 @@
 #ifndef __CONST_LCD_AND_KEYBOARD__
 #define __CONST_LCD_AND_KEYBOARD__
 
-#define MAX_LEVEL_MENU          (165 + NUMBER_INPUTS + NUMBER_OUTPUTS + NUMBER_LEDS + 5*NUMBER_DEFINED_FUNCTIONS + 7*NUMBER_DEFINED_TRIGGERS + NUMBER_DEFINED_AND + NUMBER_DEFINED_OR + NUMBER_DEFINED_XOR + NUMBER_DEFINED_NOT + NUMBER_DEFINED_BUTTONS)   //Максимальна кількість допустимих вікон у системі меню
+#define MAX_LEVEL_MENU          (154 + NUMBER_INPUTS + NUMBER_OUTPUTS + NUMBER_LEDS + 5*NUMBER_DEFINED_FUNCTIONS + 7*NUMBER_DEFINED_TRIGGERS + NUMBER_DEFINED_AND + NUMBER_DEFINED_OR + NUMBER_DEFINED_XOR + NUMBER_DEFINED_NOT + NUMBER_DEFINED_BUTTONS)   //Максимальна кількість допустимих вікон у системі меню
 #define MAX_TIME_REWRITE_EKRAN  100 //x10 - Максимальний час у мс для автоматичного обновлення екранів меню, які треба обновляти
 
 #define INDEX_VIEWING_DF                            0

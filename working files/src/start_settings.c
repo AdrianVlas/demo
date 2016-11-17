@@ -1699,46 +1699,6 @@ void min_settings(__SETTINGS *target_label)
   
   for (unsigned int i = 0; i < NUMBER_GROUP_USTAVOK; i++)
   {
-    target_label->setpoint_zop[i] = SETPOINT_ZOP_MIN;
-    target_label->timeout_zop[i] = TIMEOUT_ZOP_MIN; 
-
-    target_label->setpoint_Umin1[i] = SETPOINT_UMIN1_MIN;
-    target_label->setpoint_Umin1_Iblk[i] = SETPOINT_UMIN1_IBLK_MIN;
-    target_label->setpoint_Umin2[i] = SETPOINT_UMIN2_MIN;
-    target_label->setpoint_Umin2_Iblk[i] = SETPOINT_UMIN2_IBLK_MIN;
-    target_label->timeout_Umin1[i] = TIMEOUT_UMIN1_MIN; 
-    target_label->timeout_Umin2[i] = TIMEOUT_UMIN2_MIN;
-    
-    target_label->setpoint_Umax1[i] = SETPOINT_UMAX1_MIN;
-    target_label->setpoint_Umax2[i] = SETPOINT_UMAX2_MIN;
-    target_label->timeout_Umax1[i] = TIMEOUT_UMAX1_MIN;
-    target_label->timeout_Umax2[i] = TIMEOUT_UMAX2_MIN;
-
-    target_label->setpoint_avr_tn1_U1_Umin[i] = SETPOINT_AVR_TN1_U1_UMIN_MIN;
-    target_label->setpoint_avr_tn1_U2_low_work[i] = SETPOINT_AVR_TN1_U2_LOW_WORK_MIN;
-    target_label->setpoint_avr_tn2_U2_Umin[i] = SETPOINT_AVR_TN2_U2_UMIN_MIN;
-    target_label->setpoint_avr_tn2_U1_low_work[i] = SETPOINT_AVR1_TN2_U1_LOW_WORK_MIN;
-    target_label->setpoint_avr_tn1_U1_Umax[i] = SETPOINT_AVR_TN1_U1_UMAX_MIN;
-    target_label->setpoint_avr_tn1_U2_high_work[i] = SETPOINT_AVR1_TN1_U2_HIGH_WORK_MIN;
-    target_label->setpoint_avr_tn2_U2_Umax[i] = SETPOINT_AVR_TN2_U2_UMAX_MIN;
-    target_label->setpoint_avr_tn2_U1_high_work[i] = SETPOINT_AVR1_TN2_U1_HIGH_WORK_MIN;
-    target_label->timeout_avr_blk_k1[i] = TIMEOUT_AVR_GENERAL_BLK_K1_MIN;
-    target_label->timeout_avr_pusk_k1[i] = TIMEOUT_AVR_GENERAL_PUSK_K1_MIN;
-    target_label->timeout_avr_d_diji_k1[i] = TIMEOUT_AVR_GENERAL_D_DIJI_K1_MIN;
-    target_label->timeout_avr_vvimk_rez_k1[i] = TIMEOUT_AVR_GENERAL_VVIMK_REZ_K1_MIN;
-    target_label->timeout_avr_vvimk_k1[i] = TIMEOUT_AVR_GENERAL_VVIMK_K1_MIN;
-    target_label->timeout_avr_vymk_rob_k1_Umin[i] = TIMEOUT_AVR_UMIN_VYMK_ROB_K1_MIN;
-    target_label->timeout_avr_vymk_rob_k1_Umax[i] = TIMEOUT_AVR_UMAX_VYMK_ROB_K1_MIN;
-    target_label->timeout_avr_vymk_k1[i] = TIMEOUT_AVR_GENERAL_VYMK_K1_MIN;
-    target_label->timeout_avr_blk_k2[i] = TIMEOUT_AVR_GENERAL_BLK_K2_MIN;
-    target_label->timeout_avr_pusk_k2[i] = TIMEOUT_AVR_GENERAL_PUSK_K2_MIN;
-    target_label->timeout_avr_d_diji_k2[i] = TIMEOUT_AVR_GENERAL_D_DIJI_K2_MIN;
-    target_label->timeout_avr_vvimk_rez_k2[i] = TIMEOUT_AVR_GENERAL_VVIMK_REZ_K2_MIN;
-    target_label->timeout_avr_vvimk_k2[i] = TIMEOUT_AVR_GENERAL_VVIMK_K2_MIN;
-    target_label->timeout_avr_vymk_rob_k2_Umin[i] = TIMEOUT_AVR_UMIN_VYMK_ROB_K2_MIN;
-    target_label->timeout_avr_vymk_rob_k2_Umax[i] = TIMEOUT_AVR_UMAX_VYMK_ROB_K2_MIN;
-    target_label->timeout_avr_vymk_k2[i] = TIMEOUT_AVR_GENERAL_VYMK_K2_MIN;
-
     target_label->setpoint_ctrl_phase_U[i] = SETPOINT_CTRL_PHASE_U_MIN;
     target_label->setpoint_ctrl_phase_phi[i] = SETPOINT_CTRL_PHASE_PHI_MIN;
     target_label->setpoint_ctrl_phase_f[i] = SETPOINT_CTRL_PHASE_F_MIN;
@@ -1750,10 +1710,6 @@ void min_settings(__SETTINGS *target_label)
     target_label->timeout_ctrl_phase_f_d[i] = TIMEOUT_CTRL_PHASE_F_D_MIN;
   }
 
-  target_label->control_zop = 0;
-  target_label->control_Umin = 0;
-  target_label->control_Umax = 0;
-  target_label->control_avr = 0;
   target_label->control_ctrl_phase = 0;
   
   target_label->setpoint_Inom = SETPOINT_Inom_MIN;

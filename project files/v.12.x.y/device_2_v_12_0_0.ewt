@@ -1400,9 +1400,6 @@
           <name>$PROJ_DIR$\..\..\working files\inc\const_lcd_and_keyboard.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_avr.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_buttons.h</name>
         </file>
         <file>
@@ -1590,9 +1587,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\src\menu_avr.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_chose_communication_parameters.c</name>

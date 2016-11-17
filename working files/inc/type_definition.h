@@ -102,34 +102,6 @@ typedef struct
   
   unsigned int configuration;         //Конфігурація приладу
   
-  //АВР
-  unsigned int setpoint_avr_tn1_U1_Umin[NUMBER_GROUP_USTAVOK];          //уставка АВР "U1min < U1x"
-  unsigned int setpoint_avr_tn1_U2_low_work[NUMBER_GROUP_USTAVOK];      //уставка АВР "U2min > U2x"
-  unsigned int setpoint_avr_tn2_U2_Umin[NUMBER_GROUP_USTAVOK];          //уставка АВР "U2min < U2x"
-  unsigned int setpoint_avr_tn2_U1_low_work[NUMBER_GROUP_USTAVOK];      //уставка АВР "U1min > U1x"
-  unsigned int setpoint_avr_tn1_U1_Umax[NUMBER_GROUP_USTAVOK];          //уставка АВР "U1max > U1x"
-  unsigned int setpoint_avr_tn1_U2_high_work[NUMBER_GROUP_USTAVOK];     //уставка АВР "U2max < U2x"
-  unsigned int setpoint_avr_tn2_U2_Umax[NUMBER_GROUP_USTAVOK];          //уставка АВР "U2max > U2x"
-  unsigned int setpoint_avr_tn2_U1_high_work[NUMBER_GROUP_USTAVOK];     //уставка АВР "U1max < U1x"
-  int timeout_avr_blk_k1[NUMBER_GROUP_USTAVOK];               //Витримка "T блок. АВР кан.1"
-  int timeout_avr_pusk_k1[NUMBER_GROUP_USTAVOK];              //Витримка "T пуска кан.1"
-  int timeout_avr_d_diji_k1[NUMBER_GROUP_USTAVOK];            //Витримка "T разр.деств.кан.1"
-  int timeout_avr_vvimk_rez_k1[NUMBER_GROUP_USTAVOK];         //Витримка "T вкл.рез.кан.1"
-  int timeout_avr_vvimk_k1[NUMBER_GROUP_USTAVOK];             //Витримка "T вкл.кан.1"
-  int timeout_avr_vymk_rob_k1_Umin[NUMBER_GROUP_USTAVOK];     //Витримка "T откл.раб.кан.1 Umin"
-  int timeout_avr_vymk_rob_k1_Umax[NUMBER_GROUP_USTAVOK];     //Витримка "T откл.раб.кан.1 Umax"
-  int timeout_avr_vymk_k1[NUMBER_GROUP_USTAVOK];              //Витримка "T откл.кан.1"
-  int timeout_avr_blk_k2[NUMBER_GROUP_USTAVOK];               //Витримка "T блок. АВР кан.2"
-  int timeout_avr_pusk_k2[NUMBER_GROUP_USTAVOK];              //Витримка "T пуска кан.2"
-  int timeout_avr_d_diji_k2[NUMBER_GROUP_USTAVOK];            //Витримка "T разр.деств.кан.2"
-  int timeout_avr_vvimk_rez_k2[NUMBER_GROUP_USTAVOK];         //Витримка "T вкл.рез.кан.2"
-  int timeout_avr_vvimk_k2[NUMBER_GROUP_USTAVOK];             //Витримка "T вкл.кан.2"
-  int timeout_avr_vymk_rob_k2_Umin[NUMBER_GROUP_USTAVOK];     //Витримка "T откл.раб.кан.2 Umin"
-  int timeout_avr_vymk_rob_k2_Umax[NUMBER_GROUP_USTAVOK];     //Витримка "T откл.раб.кан.2 Umax"
-  int timeout_avr_vymk_k2[NUMBER_GROUP_USTAVOK];              //Витримка "T откл.кан.2"
-
-  unsigned int control_avr;                                   //Поле для управління АВР
-  
   //Перевірка фазування
   unsigned int setpoint_ctrl_phase_U[NUMBER_GROUP_USTAVOK];   //Уставка UФАЗ
   unsigned int setpoint_ctrl_phase_phi[NUMBER_GROUP_USTAVOK]; //Уставка PHIФАЗ

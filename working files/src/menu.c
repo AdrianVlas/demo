@@ -1206,21 +1206,6 @@ void main_manu_function(void)
     case EKRAN_MEASURMENT_FREQUENCY:
     case EKRAN_MEASURMENT_ANGLE:
     case EKRAN_MEASURMENT_POWER:
-    case EKRAN_CHOOSE_SETTINGS_UMIN:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMIN:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_UMIN:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP3_UMIN:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMIN:
-    case EKRAN_CHOOSE_SETTINGS_UMAX:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMAX:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_UMAX:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP3_UMAX:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMAX:
-    case EKRAN_CHOOSE_SETTINGS_AVR:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_AVR:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_AVR:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP3_AVR:
-    case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_AVR:
     case EKRAN_CHOOSE_SETTINGS_CTRL_PHASE:
     case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_CTRL_PHASE:
     case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_CTRL_PHASE:
@@ -1356,9 +1341,6 @@ void main_manu_function(void)
               make_ekran_power(pervynna_vtorynna);
             }
             else if (
-                     (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMIN      )||
-                     (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMAX      )||
-                     (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_AVR       )||
                      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CTRL_PHASE)
                     )   
             {
@@ -1370,16 +1352,6 @@ void main_manu_function(void)
             }
             else if (
                      (
-                      (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMIN) &&
-                      (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMIN)
-                     )
-                     ||  
-                     (
-                      (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMAX) &&
-                      (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMAX)
-                     )
-                     ||  
-                     (
                       (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_CTRL_PHASE) &&
                       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_CTRL_PHASE)
                      )
@@ -1390,19 +1362,6 @@ void main_manu_function(void)
 
               //Формуємо екран уставки-витримки для захистів у яких є дві групи уставок
               make_ekran_chose_setpoint_and_timeout();
-            }
-            else if (
-                     (
-                      (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_AVR) &&
-                      (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_AVR)
-                     )
-                    )
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETPOINTS_TIMEOUTS_AVR) current_ekran.index_position = 0;
-              position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-
-              //Формуємо екран уставки Umin-уставки Umax-витримки для АВР у якого є дві групи уставок
-              make_ekran_chose_setpoint_and_timeout_avr();
             }
             else if (current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO)
             {
@@ -2761,9 +2720,6 @@ void main_manu_function(void)
                 make_ekran_power(pervynna_vtorynna);
               }
               else if (
-                       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMIN      )||
-                       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMAX      )||
-                       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_AVR       )||
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CTRL_PHASE)
                       )   
               {
@@ -2773,16 +2729,6 @@ void main_manu_function(void)
                 make_ekran_chose_settings_protection_with_groups();
               }
               else if (
-                       (
-                        (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMIN) &&
-                        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMIN)
-                       )
-                       ||  
-                       (
-                        (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMAX) &&
-                        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMAX)
-                       )
-                       ||  
                        (
                         (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_CTRL_PHASE) &&
                         (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_CTRL_PHASE)
@@ -2795,20 +2741,6 @@ void main_manu_function(void)
 
                 //Формуємо екран уставки-витримки для захистів у яких є дві групи уставок
                 make_ekran_chose_setpoint_and_timeout();
-              }
-              else if (
-                       (
-                        (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_AVR) &&
-                        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_AVR)
-                       )
-                      )
-              {
-                if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CHOSE_SETPOINTS_TIMEOUTS_AVR - 1;
-              
-                position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-
-                //Формуємо екран уставки Umin-уставки Umax-витримки для АВР у якої є дві групи уставок
-                make_ekran_chose_setpoint_and_timeout_avr();
               }
               else if (current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO)
               {
@@ -3261,9 +3193,6 @@ void main_manu_function(void)
                 make_ekran_power(pervynna_vtorynna);
               }
               else if (
-                       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMIN      )||
-                       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMAX      )||
-                       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_AVR       )||
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CTRL_PHASE)
                       )   
               {
@@ -3274,16 +3203,6 @@ void main_manu_function(void)
                 make_ekran_chose_settings_protection_with_groups();
               }
               else if (
-                       (
-                        (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMIN) &&
-                        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMIN)
-                       )
-                       ||  
-                       (
-                        (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMAX) &&
-                        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMAX)
-                       )
-                       ||  
                        (
                         (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_CTRL_PHASE) &&
                         (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_CTRL_PHASE)
@@ -3296,20 +3215,6 @@ void main_manu_function(void)
 
                 //Формуємо екран уставки-витримки для захистів у яких є дві групи уставок
                 make_ekran_chose_setpoint_and_timeout();
-              }
-              else if (
-                       (
-                        (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_AVR) &&
-                        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_AVR)
-                       )
-                      )
-              {
-                if(++current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETPOINTS_TIMEOUTS_AVR) current_ekran.index_position = 0;
-              
-                position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-
-                //Формуємо екран уставки Umin-уставки Umax-витримки для АВР у якої є дві групи уставок
-                make_ekran_chose_setpoint_and_timeout_avr();
               }
               else if (current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO)
               {

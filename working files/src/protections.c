@@ -1985,13 +1985,13 @@ inline void main_protection(void)
     if(temp_value_for_activated_function != 0) 
     {
       //Скидання світлодіодів і реле
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_RESET_LEDS)) 
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_RESET_LEDS)) 
         _SET_BIT(active_functions, RANG_RESET_LEDS);
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_RESET_RELES)) 
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_RESET_RELES)) 
         _SET_BIT(active_functions, RANG_RESET_RELES);
 
       //"Місцеве/Дистанційне" управління
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_MISCEVE_DYSTANCIJNE))
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_MISCEVE_DYSTANCIJNE))
       {
         //Активована команда з функціональної кнопки "Місцеве/Дистанційне"
         misceve_dystancijne = (misceve_dystancijne ^ 0x1) & 0x1;
@@ -2000,13 +2000,13 @@ inline void main_protection(void)
       }
       
       //Включення-виключення вимикача
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_VKL_VV)) 
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_VKL_VV)) 
         _SET_BIT(active_functions, RANG_VKL_VV);
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_OTKL_VV)) 
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_OTKL_VV)) 
         _SET_BIT(active_functions, RANG_OTKL_VV);
 
       //скидання блокування готовності до ТУ
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_BUTTON_RESET_BLOCK_READY_TU_VID_ZAHYSTIV)) 
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV)) 
         _SET_BIT(active_functions, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
     }
   }

@@ -74,22 +74,22 @@ TOTAL_NUMBER_PROTECTION
 //Константи для ранжування функціональних кнопок
 /*****************************************/
 enum __rang_button {
-RANG_BUTTON_RESET_LEDS  = 0,
-RANG_BUTTON_RESET_RELES,
-RANG_BUTTON_MISCEVE_DYSTANCIJNE,
-RANG_BUTTON_VKL_VV,
-RANG_BUTTON_OTKL_VV,
-RANG_BUTTON_RESET_BLOCK_READY_TU_VID_ZAHYSTIV
+RANG_TU_RESET_LEDS  = 0,
+RANG_TU_RESET_RELES,
+RANG_TU_MISCEVE_DYSTANCIJNE,
+RANG_TU_VKL_VV,
+RANG_TU_OTKL_VV,
+RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV
 };
 
-#define NUMBER_GENERAL_SIGNAL_FOR_RANG_BUTTON     6
-#define NUMBER_EL_SIGNAL_FOR_RANG_BUTTON          0
-#define NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_BUTTON  0
+#define NUMBER_GENERAL_SIGNAL_FOR_RANG_TU     6
+#define NUMBER_EL_SIGNAL_FOR_RANG_TU          0
+#define NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_TU  0
 
-#define NUMBER_TOTAL_SIGNAL_FOR_RANG_BUTTON       (                                            \
-                                                   NUMBER_GENERAL_SIGNAL_FOR_RANG_BUTTON     + \
-                                                   NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_BUTTON  + \
-                                                   NUMBER_EL_SIGNAL_FOR_RANG_BUTTON            \
+#define NUMBER_TOTAL_SIGNAL_FOR_RANG_TU       (                                            \
+                                                   NUMBER_GENERAL_SIGNAL_FOR_RANG_TU     + \
+                                                   NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_TU  + \
+                                                   NUMBER_EL_SIGNAL_FOR_RANG_TU            \
                                                   ) 
 /*****************************************/
 

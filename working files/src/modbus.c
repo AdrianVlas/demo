@@ -6724,11 +6724,11 @@ void modbus_rountines(unsigned int type_interface)
               Тут ми використовуємо каонстанти активації функцій з допомогою ф-кнопок, бо механізм обробки однаковий що активацшя
               функції з ф-кнопкт, що активація функції з інтерейсу
               */
-                   if  (add_data == BIT_MA_VKL_VV                           ) activation_function_from_interface |= 1 << RANG_BUTTON_VKL_VV;                            /*Вкл.  виключателя*/
-              else if  (add_data == BIT_MA_OTKL_VV                          ) activation_function_from_interface |= 1 << RANG_BUTTON_OTKL_VV;                           /*Викл. виключателя*/
-              else if  (add_data == BIT_MA_RESET_LEDS                       ) activation_function_from_interface |= 1 << RANG_BUTTON_RESET_LEDS;                        /*Очищення індикації*/
-              else if  (add_data == BIT_MA_RESET_RELES                      ) activation_function_from_interface |= 1 << RANG_BUTTON_RESET_RELES;                       /*Скидання реле*/
-              else if  (add_data == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) activation_function_from_interface |= 1 << RANG_BUTTON_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;                            /*Вкл.  виключателя*/
+                   if  (add_data == BIT_MA_VKL_VV                           ) activation_function_from_interface |= 1 << RANG_TU_VKL_VV;                            /*Вкл.  виключателя*/
+              else if  (add_data == BIT_MA_OTKL_VV                          ) activation_function_from_interface |= 1 << RANG_TU_OTKL_VV;                           /*Викл. виключателя*/
+              else if  (add_data == BIT_MA_RESET_LEDS                       ) activation_function_from_interface |= 1 << RANG_TU_RESET_LEDS;                        /*Очищення індикації*/
+              else if  (add_data == BIT_MA_RESET_RELES                      ) activation_function_from_interface |= 1 << RANG_TU_RESET_RELES;                       /*Скидання реле*/
+              else if  (add_data == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) activation_function_from_interface |= 1 << RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;                            /*Вкл.  виключателя*/
               else if  (add_data == BIT_MA_RESET_GENERAL_AF) 
               {
                 //Скидання загальних функцій 
@@ -7370,15 +7370,15 @@ void modbus_rountines(unsigned int type_interface)
                 if (value_of_bit != 0)
                 {
                        if  (number_activated_function == BIT_MA_VKL_VV                           )
-                   activation_function_from_interface_tmp |= 1 << RANG_BUTTON_VKL_VV;                        /*Вкл.  виключателя*/
+                   activation_function_from_interface_tmp |= 1 << RANG_TU_VKL_VV;                        /*Вкл.  виключателя*/
                   else if  (number_activated_function == BIT_MA_OTKL_VV                          )
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_OTKL_VV;                       /*Викл. виключателя*/
+                    activation_function_from_interface_tmp |= 1 << RANG_TU_OTKL_VV;                       /*Викл. виключателя*/
                   else if  (number_activated_function == BIT_MA_RESET_LEDS                       )
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_RESET_LEDS;                    /*Очищення індикації*/
+                    activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_LEDS;                    /*Очищення індикації*/
                   else if  (number_activated_function == BIT_MA_RESET_RELES                      )
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_RESET_RELES;                   /*Скидання реле*/
+                    activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_RELES;                   /*Скидання реле*/
                   else if  (number_activated_function == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV)
-                    activation_function_from_interface_tmp |= 1 << RANG_BUTTON_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;/*Скидання блокування готовності до ТУ від захистів*/
+                    activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;/*Скидання блокування готовності до ТУ від захистів*/
                   else if  (number_activated_function == BIT_MA_RESET_GENERAL_AF                 ) 
                   {
                     //Скидання загальних функцій 

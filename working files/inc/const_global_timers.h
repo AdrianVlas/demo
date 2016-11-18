@@ -1,11 +1,6 @@
 #ifndef __CONST_GLOBAL_TIMERS__
 #define __CONST_GLOBAL_TIMERS__
 
-#define MAX_VALUE_TIMER_FOR_COUNT_SIGNAL_ACHR_CHAPV            4 //мс - досягнення цього значення є умовою спроби запустити сигнал АПВ (якщо він не блокується)
-#define TIMEOUT_ACHR_CHAPV_100MS                               100 //мс
-#define TIMEOUT_CHAPV_1MS                                      (1 + 1) /*попревка на 1 зроблена, щоб правильно працював макрос з реалізацією логіки АЧР/ЧАПВ*/
-#define TIMEOUT_BLOCK_CHAPV_5MS                                5
-
 enum _timers
 {
   INDEX_TIMER_INPUT_START = 0,

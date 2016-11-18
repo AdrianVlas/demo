@@ -1060,68 +1060,64 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
 
       //Перевіряємо, чи можна цю функцію встановляти на дане джерело, або чи розширена логіка зараз не знята з конфігурвації
       if (
-          ((target_label->configuration & (1 << EL_BIT_CONFIGURATION)) == 0 )
+          (
+           (
+            (source == SOURCE_DF_PLUS_RANG)  ||
+            (source == SOURCE_DF_MINUS_RANG) ||
+            (source == SOURCE_DF_BLK_RANG)
+           )   
+           &
+           (
+            ((number == 0) && ((data == BIT_MA_INPUT_DF1) || (data == BIT_MA_OUTPUT_DF1))) ||
+            ((number == 1) && ((data == BIT_MA_INPUT_DF2) || (data == BIT_MA_OUTPUT_DF2))) ||
+            ((number == 2) && ((data == BIT_MA_INPUT_DF3) || (data == BIT_MA_OUTPUT_DF3))) ||
+            ((number == 3) && ((data == BIT_MA_INPUT_DF4) || (data == BIT_MA_OUTPUT_DF4))) ||
+            ((number == 4) && ((data == BIT_MA_INPUT_DF5) || (data == BIT_MA_OUTPUT_DF5))) ||
+            ((number == 5) && ((data == BIT_MA_INPUT_DF6) || (data == BIT_MA_OUTPUT_DF6))) ||
+            ((number == 6) && ((data == BIT_MA_INPUT_DF7) || (data == BIT_MA_OUTPUT_DF7))) ||
+            ((number == 7) && ((data == BIT_MA_INPUT_DF8) || (data == BIT_MA_OUTPUT_DF8)))
+           )
+          )
           ||
-          (  
+          (
            (
-            (
-             (source == SOURCE_DF_PLUS_RANG)  ||
-             (source == SOURCE_DF_MINUS_RANG) ||
-             (source == SOURCE_DF_BLK_RANG)
-            )   
-            &
-            (
-             ((number == 0) && ((data == BIT_MA_INPUT_DF1) || (data == BIT_MA_OUTPUT_DF1))) ||
-             ((number == 1) && ((data == BIT_MA_INPUT_DF2) || (data == BIT_MA_OUTPUT_DF2))) ||
-             ((number == 2) && ((data == BIT_MA_INPUT_DF3) || (data == BIT_MA_OUTPUT_DF3))) ||
-             ((number == 3) && ((data == BIT_MA_INPUT_DF4) || (data == BIT_MA_OUTPUT_DF4))) ||
-             ((number == 4) && ((data == BIT_MA_INPUT_DF5) || (data == BIT_MA_OUTPUT_DF5))) ||
-             ((number == 5) && ((data == BIT_MA_INPUT_DF6) || (data == BIT_MA_OUTPUT_DF6))) ||
-             ((number == 6) && ((data == BIT_MA_INPUT_DF7) || (data == BIT_MA_OUTPUT_DF7))) ||
-             ((number == 7) && ((data == BIT_MA_INPUT_DF8) || (data == BIT_MA_OUTPUT_DF8)))
-            )
+            (source == SOURCE_SET_DT_PLUS_RANG)    ||
+            (source == SOURCE_SET_DT_MINUS_RANG)   ||
+            (source == SOURCE_RESET_DT_PLUS_RANG)  ||
+            (source == SOURCE_RESET_DT_MINUS_RANG)
            )
-           ||
+           &
            (
-            (
-             (source == SOURCE_SET_DT_PLUS_RANG)    ||
-             (source == SOURCE_SET_DT_MINUS_RANG)   ||
-             (source == SOURCE_RESET_DT_PLUS_RANG)  ||
-             (source == SOURCE_RESET_DT_MINUS_RANG)
-            )
-            &
-            (
-             ( (number == 0) && ((data == BIT_MA_DT1_SET) || (data == BIT_MA_DT1_RESET) || (data == BIT_MA_DT1_OUT) ) ) ||
-             ( (number == 1) && ((data == BIT_MA_DT2_SET) || (data == BIT_MA_DT2_RESET) || (data == BIT_MA_DT2_OUT) ) ) ||
-             ( (number == 2) && ((data == BIT_MA_DT3_SET) || (data == BIT_MA_DT3_RESET) || (data == BIT_MA_DT3_OUT) ) ) ||
-             ( (number == 3) && ((data == BIT_MA_DT4_SET) || (data == BIT_MA_DT4_RESET) || (data == BIT_MA_DT4_OUT) ) )
-            )
+            ( (number == 0) && ((data == BIT_MA_DT1_SET) || (data == BIT_MA_DT1_RESET) || (data == BIT_MA_DT1_OUT) ) ) ||
+            ( (number == 1) && ((data == BIT_MA_DT2_SET) || (data == BIT_MA_DT2_RESET) || (data == BIT_MA_DT2_OUT) ) ) ||
+            ( (number == 2) && ((data == BIT_MA_DT3_SET) || (data == BIT_MA_DT3_RESET) || (data == BIT_MA_DT3_OUT) ) ) ||
+            ( (number == 3) && ((data == BIT_MA_DT4_SET) || (data == BIT_MA_DT4_RESET) || (data == BIT_MA_DT4_OUT) ) )
            )
-           ||
-           (
-            (source == SOURCE_D_AND_RANG)
-            &
-            (data == (BIT_MA_D_AND1 + number))
-           )
-           ||
-           (
-            (source == SOURCE_D_OR_RANG)
-            &
-            (data == (BIT_MA_D_OR1 + number))
-           )
-           ||
-           (
-            (source == SOURCE_D_XOR_RANG)
-            &
-            (data == (BIT_MA_D_XOR1 + number))
-           )
-           ||
-           (
-            (source == SOURCE_D_NOT_RANG)
-            &
-            (data == (BIT_MA_D_NOT1 + number))
-           )
-          )   
+          )
+          ||
+          (
+           (source == SOURCE_D_AND_RANG)
+           &
+           (data == (BIT_MA_D_AND1 + number))
+          )
+          ||
+          (
+           (source == SOURCE_D_OR_RANG)
+           &
+           (data == (BIT_MA_D_OR1 + number))
+          )
+          ||
+          (
+           (source == SOURCE_D_XOR_RANG)
+           &
+           (data == (BIT_MA_D_XOR1 + number))
+          )
+          ||
+          (
+           (source == SOURCE_D_NOT_RANG)
+           &
+           (data == (BIT_MA_D_NOT1 + number))
+          )
          ) error = ERROR_ILLEGAL_DATA_VALUE;  
     }
     else
@@ -2627,9 +2623,7 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
       }
     case M_ADDRESS_CONTROL_EL:
       {
-        int input_conf = current_settings_interfaces.configuration;
-        
-        temp_value = (((input_conf >> EL_BIT_CONFIGURATION) & 0x1 ) << (BIT_MA_CONFIGURATION_EL - BIT_MA_CONTROL_EL_BASE));
+        temp_value = 1 << (BIT_MA_CONFIGURATION_EL - BIT_MA_CONTROL_EL_BASE);
         break;
       }
     default:
@@ -3590,14 +3584,8 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
       }
     case M_ADDRESS_CONTROL_EL:
       {
-        unsigned int output_conf = target_label->configuration & ((unsigned int)(~(1 << EL_BIT_CONFIGURATION)));
-        output_conf |= ((data >> (BIT_MA_CONFIGURATION_EL  - BIT_MA_CONTROL_EL_BASE)) & 0x1) << EL_BIT_CONFIGURATION;
-        if (target_label->configuration != output_conf)
-        {
-          //Обновлюємо всі поля структури настройок. які зв'язані із конфігурацією приладу, якщо ця операція доступна (ми не знаходимося у вікні, яке не дозволяє конфігурацію)
-          if(action_after_changing_of_configuration(output_conf, target_label) != 0)
-            error = ERROR_SLAVE_DEVICE_BUSY;
-        }
+        //Для ЦС розширену логіку не можна вимикати
+        if (((data >> (BIT_MA_CONFIGURATION_EL  - BIT_MA_CONTROL_EL_BASE)) & 0x1) == 0) error = ERROR_ILLEGAL_DATA_VALUE;
 
         break;
       }

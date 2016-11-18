@@ -2247,93 +2247,71 @@ inline void main_protection(void)
     /**************************/
     //Розширена логіка
     /**************************/
-    if ((current_settings_prt.configuration & (1 << EL_BIT_CONFIGURATION)) != 0)
+    unsigned int active_functions_tmp[NUMBER_ITERATION_EL_MAX][N_BIG];
+    unsigned int iteration = 0;
+	unsigned int repeat_state = false;
+    unsigned int df_changed_state_with_start_new_timeout = 0;
+    do
     {
-      unsigned int active_functions_tmp[NUMBER_ITERATION_EL_MAX][N_BIG];
-      unsigned int iteration = 0;
-	  unsigned int repeat_state = false;
-      unsigned int df_changed_state_with_start_new_timeout = 0;
-      do
+      for (unsigned int i = 0; i < iteration; i++)
       {
-        for (unsigned int i = 0; i < iteration; i++)
+        if (
+            (active_functions_tmp[i][0] == active_functions[0]) &&
+            (active_functions_tmp[i][1] == active_functions[1]) &&
+            (active_functions_tmp[i][2] == active_functions[2]) &&
+            (active_functions_tmp[i][3] == active_functions[3]) &&
+            (active_functions_tmp[i][4] == active_functions[4]) &&
+            (active_functions_tmp[i][5] == active_functions[5]) &&
+            (active_functions_tmp[i][6] == active_functions[6])
+           )
         {
-          if (
-              (active_functions_tmp[i][0] == active_functions[0]) &&
-              (active_functions_tmp[i][1] == active_functions[1]) &&
-              (active_functions_tmp[i][2] == active_functions[2]) &&
-              (active_functions_tmp[i][3] == active_functions[3]) &&
-              (active_functions_tmp[i][4] == active_functions[4]) &&
-              (active_functions_tmp[i][5] == active_functions[5]) &&
-              (active_functions_tmp[i][6] == active_functions[6])
-             )
-          {
-            repeat_state = true;
-            break;
-          }
+          repeat_state = true;
+          break;
         }
-        if (repeat_state != false ) break;
+      }
+      if (repeat_state != false ) break;
         
-        active_functions_tmp[iteration][0] = active_functions[0];
-        active_functions_tmp[iteration][1] = active_functions[1];
-        active_functions_tmp[iteration][2] = active_functions[2];
-        active_functions_tmp[iteration][3] = active_functions[3];
-        active_functions_tmp[iteration][4] = active_functions[4];
-        active_functions_tmp[iteration][5] = active_functions[5];
-        active_functions_tmp[iteration][6] = active_functions[6];
+      active_functions_tmp[iteration][0] = active_functions[0];
+      active_functions_tmp[iteration][1] = active_functions[1];
+      active_functions_tmp[iteration][2] = active_functions[2];
+      active_functions_tmp[iteration][3] = active_functions[3];
+      active_functions_tmp[iteration][4] = active_functions[4];
+      active_functions_tmp[iteration][5] = active_functions[5];
+      active_functions_tmp[iteration][6] = active_functions[6];
 
-        d_and_handler(active_functions);
-        d_or_handler(active_functions);
-        d_xor_handler(active_functions);
-        d_not_handler(active_functions);
-        df_handler(active_functions, &df_changed_state_with_start_new_timeout);
-        dt_handler(active_functions);
+      d_and_handler(active_functions);
+      d_or_handler(active_functions);
+      d_xor_handler(active_functions);
+      d_not_handler(active_functions);
+      df_handler(active_functions, &df_changed_state_with_start_new_timeout);
+      dt_handler(active_functions);
         
-        iteration++;
-      }
-      while (
-             (iteration < current_settings_prt.number_iteration_el)
-             &&
-             (
-              (active_functions_tmp[iteration - 1][0] != active_functions[0]) ||
-              (active_functions_tmp[iteration - 1][1] != active_functions[1]) ||
-              (active_functions_tmp[iteration - 1][2] != active_functions[2]) ||
-              (active_functions_tmp[iteration - 1][3] != active_functions[3]) ||
-              (active_functions_tmp[iteration - 1][4] != active_functions[4]) ||
-              (active_functions_tmp[iteration - 1][5] != active_functions[5]) ||
-              (active_functions_tmp[iteration - 1][6] != active_functions[6])
-             ) 
-            );
+      iteration++;
+    }
+    while (
+           (iteration < current_settings_prt.number_iteration_el)
+           &&
+           (
+            (active_functions_tmp[iteration - 1][0] != active_functions[0]) ||
+            (active_functions_tmp[iteration - 1][1] != active_functions[1]) ||
+            (active_functions_tmp[iteration - 1][2] != active_functions[2]) ||
+            (active_functions_tmp[iteration - 1][3] != active_functions[3]) ||
+            (active_functions_tmp[iteration - 1][4] != active_functions[4]) ||
+            (active_functions_tmp[iteration - 1][5] != active_functions[5]) ||
+            (active_functions_tmp[iteration - 1][6] != active_functions[6])
+           ) 
+          );
       
-      if (
-          (repeat_state != false ) ||
-          (iteration >= current_settings_prt.number_iteration_el)
-         )
-      {
-        _SET_BIT(active_functions, RANG_ERROR_CONF_EL);
-      }
-      else
-      {
-        _CLEAR_BIT(active_functions, RANG_ERROR_CONF_EL);
-      }
+    if (
+        (repeat_state != false ) ||
+        (iteration >= current_settings_prt.number_iteration_el)
+       )
+    {
+      _SET_BIT(active_functions, RANG_ERROR_CONF_EL);
     }
     else
     {
-      //Очищуємо сигнали, які не можуть бути у даній конфігурації
-      const unsigned int maska_el_signals[N_BIG] = 
-      {
-        MASKA_EL_SIGNALS_0, 
-        MASKA_EL_SIGNALS_1, 
-        MASKA_EL_SIGNALS_2,
-        MASKA_EL_SIGNALS_3, 
-        MASKA_EL_SIGNALS_4, 
-        MASKA_EL_SIGNALS_5, 
-        MASKA_EL_SIGNALS_6
-      };
-      for (unsigned int i = 0; i < N_BIG; i++) active_functions[i] &= (unsigned int)(~maska_el_signals[i]);
-      
-      //Скидаємо всі таймери, які відповідають за розширену логіку
-      for(unsigned int i = INDEX_TIMER_DF_PROLONG_SET_FOR_BUTTON_INTERFACE_START; i < (INDEX_TIMER_DF_WORK_START + NUMBER_DEFINED_FUNCTIONS); i++)
-        global_timers[i] = -1;
+      _CLEAR_BIT(active_functions, RANG_ERROR_CONF_EL);
     }
     /**************************/
   }

@@ -24,15 +24,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       )
       error_window |= (1 << CTRL_PHASE_BIT_CONFIGURATION );
   }
-  //Перевірка "Розширеної логіки"
-  if ((new_configuration & (1<<EL_BIT_CONFIGURATION)) == 0)
-  {
-    if(
-       (current_ekran.current_level >= EKRAN_EXTENDED_LIGIC) &&
-       (current_ekran.current_level <= EKRAN_RANGUVANNJA_D_NOT16)  
-      )
-      error_window |= (1 << EL_BIT_CONFIGURATION );
-  }
   /************************/
   
   if (error_window == 0)
@@ -134,24 +125,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     unsigned int array_full[N_BIG] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
     unsigned int *point_to_mask_array;
     for (unsigned int i = 0; i < N_BIG; i++ ) maska[i] = 0;
-
-    if ((target_label->configuration & (1<<EL_BIT_CONFIGURATION)) == 0)
-    {
-      //Видаляємо всі сигнали розгиреної логіки
-      for (int i = 0; i < NUMBER_EL_SIGNAL_FOR_RANG; i++)
-        _SET_BIT(
-                 maska, 
-                 (
-                  NUMBER_GENERAL_SIGNAL_FOR_RANG    + 
-                  NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG +
-                  i
-                 )
-                );
-
-
-      point_to_mask_array = array_full;
-    }
-//    else
 //    {
 //      //Формуємо маски тільки тих сигналів розширеної логіки, які виведені з конфігурації у кількісному значенні
 //      unsigned int array_defined_logic[NUMBER_DEFINED_ELEMENTS][2] =

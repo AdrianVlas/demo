@@ -1374,15 +1374,6 @@ void main_manu_function(void)
             else if (current_ekran.current_level == EKRAN_CHOSE_SETTINGS)
             {
               if(current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS) current_ekran.index_position = 0;
-              while(
-                    ((current_settings.configuration & (1 << EL_BIT_CONFIGURATION)) == 0)
-                    &&
-                    (current_ekran.index_position == INDEX_OF_EXTENDED_LOGIC)
-                   )
-              {
-                if(++current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS) current_ekran.index_position = 0;
-              }
-
               position_in_current_level_menu[EKRAN_CHOSE_SETTINGS] = current_ekran.index_position;
             
               //Формуємо екран заголовків настроювання
@@ -2674,15 +2665,6 @@ void main_manu_function(void)
               else if (current_ekran.current_level == EKRAN_CHOSE_SETTINGS)
               {
                 if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CHOSE_SETTINGS - 1;
-                while(
-                      ((current_settings.configuration & (1 << EL_BIT_CONFIGURATION)) == 0)
-                      &&
-                      (current_ekran.index_position == INDEX_OF_EXTENDED_LOGIC)
-                    )
-                {
-                  if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CHOSE_SETTINGS - 1;
-                }
-                
                 position_in_current_level_menu[EKRAN_CHOSE_SETTINGS] = current_ekran.index_position;
                 //Формуємо екран заголовків настроювання
                 make_ekran_chose_settings();
@@ -3121,15 +3103,6 @@ void main_manu_function(void)
               {
                 //Натиснута кнопка DOWN
                 if(++current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS) current_ekran.index_position = 0;
-                while(
-                      ((current_settings.configuration & (1 << EL_BIT_CONFIGURATION)) == 0)
-                      &&
-                      (current_ekran.index_position == INDEX_OF_EXTENDED_LOGIC)
-                    )
-                {
-                  if(++current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS) current_ekran.index_position = 0;
-                }
-                
                 position_in_current_level_menu[EKRAN_CHOSE_SETTINGS] = current_ekran.index_position;
             
                 //Формуємо екран заголовків настроювання

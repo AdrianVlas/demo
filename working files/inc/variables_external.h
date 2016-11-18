@@ -145,12 +145,6 @@ extern const int ec[2];
 extern unsigned int sequence_TN1;
 extern unsigned int sequence_TN2;
 
-extern int sector_1_mtz_tznp[8];
-extern int sector_2_mtz_tznp[8];
-
-extern unsigned int i1_bilshe_porogu, i2_bilshe_porogu;
-
-extern unsigned int TN1_TN2;
 extern volatile unsigned int state_inputs;
 extern volatile unsigned int active_inputs;
 extern unsigned int state_outputs;
@@ -179,12 +173,6 @@ extern int global_timers[MAX_NUMBER_GLOBAL_TIMERS];
 extern unsigned int timer_prt_signal_output_mode_2;
 extern unsigned int output_timer_prt_signal_output_mode_2;
 extern unsigned int etap_execution_df[NUMBER_DEFINED_FUNCTIONS];
-
-extern unsigned int previous_states_APV_0;
-extern unsigned int trigger_APV_0;
-
-extern unsigned int previous_states_AVR_0;
-extern unsigned int trigger_AVR_0;
 
 extern _Bool previous_states_ready_tu;
 extern _Bool trigger_ready_tu;

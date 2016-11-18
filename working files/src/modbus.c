@@ -240,120 +240,6 @@ unsigned int convert_order_list_buttons_to_gmm(unsigned int number, unsigned int
 
 /***********************************************************************************/
 /*
-Переформатування ранжування входів
-який передається системою захистів у формат для "унверсальної карти пам'яті"
-*/
-/***********************************************************************************/
-unsigned int convert_order_list_inputs_to_gmm(unsigned int number, unsigned int number_position)
-{
-  unsigned int input_value[N_SMALL];
-  input_value[0] =current_settings_interfaces.ranguvannja_inputs[2*number    ];
-  input_value[1] =current_settings_interfaces.ranguvannja_inputs[2*number + 1];
-  unsigned int index_in_gmm = 0;
-  unsigned int rezultat = 0;
-  
-  //Шукаємо потрібний індекс функції у полі бітових настройок
-  unsigned int i = 0;
-  while ( (i < NUMBER_TOTAL_SIGNAL_FOR_RANG_INPUT) && (index_in_gmm < number_position) )
-  {
-    unsigned int offset, shift;
-    offset = i >> 5; //Це є, фактично, ділення на 32
-    shift  = (i & (32 - 1)); //Це є, фактично, визначення остачі від ділення на 32
-
-    if ((input_value[offset] & (1 << shift)) != 0) index_in_gmm++;
-    if (index_in_gmm < number_position) i++;
-  }
-
-  //Визначаємо код функції для інтерпретації в "універсальній карті пам'яті"
-  if (index_in_gmm == number_position)
-  {
-    switch (i)
-    {
-    case RANG_INPUT_BLOCK_VKL_VV:
-      {
-        rezultat = BIT_MA_BLOCK_VKL_VV;
-        break;
-      }
-    case RANG_INPUT_RESET_LEDS:
-      {
-        rezultat = BIT_MA_RESET_LEDS;
-        break;
-      }
-    case RANG_INPUT_RESET_RELES:
-      {
-        rezultat = BIT_MA_RESET_RELES;
-        break;
-      }
-    case RANG_INPUT_MISCEVE_DYSTANCIJNE:
-      {
-        rezultat = BIT_MA_MISCEVE_DYSTANCIJNE;
-        break;
-      }
-    case RANG_INPUT_STATE_VV:
-      {
-        rezultat = BIT_MA_STATE_VV;
-        break;
-      }
-    case RANG_INPUT_OTKL_VID_ZOVN_ZAHYSTIV:
-      {
-        rezultat = BIT_MA_OTKL_VID_ZOVN_ZAHYSTIV;
-        break;
-      }
-    case RANG_INPUT_VKL_VV:
-      {
-        rezultat = BIT_MA_VKL_VV;
-        break;
-      }
-    case RANG_INPUT_CTRL_VKL:
-      {
-        rezultat = BIT_MA_CONTROL_VKL;
-        break;
-      }
-    case RANG_INPUT_OTKL_VV:
-      {
-        rezultat = BIT_MA_OTKL_VV;
-        break;
-      }
-    case RANG_INPUT_CTRL_OTKL:
-      {
-        rezultat = BIT_MA_CONTROL_VIDKL;
-        break;
-      }
-    case RANG_INPUT_1_GRUPA_USTAVOK:
-      {
-        rezultat = BIT_MA_1_GRUPA_USTAVOK;
-        break;
-      }
-    case RANG_INPUT_2_GRUPA_USTAVOK:
-      {
-        rezultat = BIT_MA_2_GRUPA_USTAVOK;
-        break;
-      }
-    case RANG_INPUT_3_GRUPA_USTAVOK:
-      {
-        rezultat = BIT_MA_3_GRUPA_USTAVOK;
-        break;
-      }
-    case RANG_INPUT_4_GRUPA_USTAVOK:
-      {
-        rezultat = BIT_MA_4_GRUPA_USTAVOK;
-        break;
-      }
-    case RANG_INPUT_RESET_BLOCK_READY_TU_VID_ZAHYSTIV:
-      {
-        rezultat = BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;
-        break;
-      }
-    default: break;
-    }
-  }
-    
-  return rezultat;
-}
-/***********************************************************************************/
-
-/***********************************************************************************/
-/*
 Переформатування ранжування виходів
 який передається системою захистів у формат для "унверсальної карти пам'яті"
 */
@@ -996,235 +882,6 @@ void set_previous_ranguvannja(void)
   point_to_edited_rang = NULL;
 }
 /***********************************************************************************/
-
-/***********************************************************************************/
-// Виконання ранжування дискретного входу
-/***********************************************************************************/
-unsigned int save_new_rang_inputs_from_gmm(unsigned int number, unsigned int number_position, unsigned short int data, unsigned int method_setting)
-{
-  __SETTINGS *target_label;
-  if (method_setting == SET_DATA_IMMEDITATE) target_label = &current_settings_interfaces;
-  else target_label = &edition_settings;
-  
-  unsigned int *point_to_target;
-  unsigned int input_value[N_SMALL];
-  input_value[0] = current_settings_interfaces.ranguvannja_inputs[2*number    ];
-  input_value[1] = current_settings_interfaces.ranguvannja_inputs[2*number + 1];
-  unsigned int number_function_in_source = 0, index_function_in_source;
-  unsigned short error = 0;
-  
-  //Встановлюємо мітку на об'кт, який зараз редагується
-  point_to_target = (unsigned int *)target_label->ranguvannja_inputs + N_SMALL*number;
-
-  //Перевіряємо, чи треба попередні зміни (якщо такі були) ввести в цільовий масив
-  if (point_to_edited_rang != NULL)
-  {
-    //Вже відбувалися попередньо ранжування з цього пакету зміни ранжування
-    if (point_to_edited_rang != point_to_target)
-    {
-      //Зараз ми приступаємо до ранжування нового входу, тому попереднє ранжування треба ввести у попередній вхід
-      set_previous_ranguvannja();
-      
-      point_to_edited_rang = point_to_target;
-    }
-  }
-  else
-  {
-    //Це є перша операція по ранжуванню з пакету зміни ранжування
-    point_to_edited_rang = point_to_target;
-  }
-  
-  number_32bit_in_target = N_SMALL;
-  
-  //Перевіряємо, чи таку функцію можна встановлювати
-  if (data != 0)
-  {
-    //Якщо data == 0, то це означає, що треба якусь функцію скинути
-    
-    if (
-        (data == BIT_MA_BLOCK_VKL_VV          ) || 
-        (data == BIT_MA_RESET_LEDS            ) || 
-        (data == BIT_MA_RESET_RELES           ) ||
-        (data == BIT_MA_MISCEVE_DYSTANCIJNE   ) ||
-        (data == BIT_MA_STATE_VV              ) || 
-        (data == BIT_MA_OTKL_VID_ZOVN_ZAHYSTIV) ||
-        (data == BIT_MA_VKL_VV                ) || 
-        (data == BIT_MA_CONTROL_VKL           ) || 
-        (data == BIT_MA_OTKL_VV               ) ||
-        (data == BIT_MA_CONTROL_VIDKL         ) || 
-        (data == BIT_MA_1_GRUPA_USTAVOK       ) || 
-        (data == BIT_MA_2_GRUPA_USTAVOK       ) || 
-        (data == BIT_MA_3_GRUPA_USTAVOK       ) || 
-        (data == BIT_MA_4_GRUPA_USTAVOK       ) ||
-        (data == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV)
-       )
-    {
-      //Зараз є намагання зранжувати загальну функцю і номер її є допустимим
-      error = 0;
-    }
-    else if (
-             (
-              (data >= BIT_MA_INPUT_DF1 ) && 
-              (data <= BIT_MA_INPUT_DF8 )
-             )
-             ||
-             (
-              (data >= BIT_MA_DT1_SET  ) && 
-              (data <= BIT_MA_DT4_RESET)
-             )
-            )
-    {
-      //Зараз є намагання зранжувати функцю розширеної логіки і номер її є допустимим
-
-      //Перевіряємо, чи розширена логіка зараз не знята з конфігурвації
-      if ((target_label->configuration & (1 << EL_BIT_CONFIGURATION)) == 0 ) error = ERROR_ILLEGAL_DATA_VALUE;  
-    }
-    else
-    {
-      error = ERROR_ILLEGAL_DATA_VALUE;
-    }
-  }
-  
-  //Якщо номер функції є недопустимим, то подальшу обробку виконувати немає сенсу
-  if (error != 0) return error;
-  
-  //Підраховуємо кількість функцій, які зранжовані на даний вхід
-  if (
-      (input_value[0] != 0) ||
-      (input_value[1] != 0)
-     )
-  {
-    //Якщо ця величина не нульова, то це означає, що якісь функції зранжовані
-    //Інакше кількість функцій залишається рівною 0, яким змінна number_function_in_source ініціалізується при вході
-    for (unsigned int i = 0; i < NUMBER_TOTAL_SIGNAL_FOR_RANG_INPUT; i++)
-    {
-      unsigned int offset, shift;
-      offset = i >> 5;          //Це є, фактично, ділення на 32
-      shift  = (i & (32 - 1));  //Це є, фактично, визначення остачі від ділення на 32
-      if ((input_value[offset] & (1 << shift)) != 0) number_function_in_source++;
-    }
-  }
-  
-  if (number_position <= number_function_in_source)
-  {
-    //Цей випадок означає, що треба замість якоїсь вже встановленої функції поставити інакшу
-    //Інакше просто добавляємо нову функцію у нову позицію
-    
-    //Тобто, нам треба знайти позицію, яка відповідає за номером встановленого біта відповідного регістра і  спочатку скинути цей біт
-    //А потім встановити нову функцію  
-
-    //Шукаємо позицію у бітовому полі змінної (захистів), який відповідає даному номеру регістра Modbus-RTU
-    unsigned int i = 0;
-    index_function_in_source = 0;
-    while ( (i < NUMBER_TOTAL_SIGNAL_FOR_RANG_INPUT) && (index_function_in_source < number_position) )
-    {
-      unsigned int offset, shift;
-      offset = i >> 5;          //Це є, фактично, ділення на 32
-      shift  = (i & (32 - 1));  //Це є, фактично, визначення остачі від ділення на 32
-      if ((input_value[offset] & (1 << shift)) != 0) index_function_in_source++;
-      if (index_function_in_source < number_position) i++;
-    }
-    
-    if(index_function_in_source == number_position)
-    {
-      //Якщо сюди дійшла програма, то це означає, що відповідний біт знайдений
-      //Помічаємо що замість цієї функції бкде встановлюватися іншп функція
-      _SET_BIT(clear_array_rang, i);
-    }
-  }
-  
-  if (data != 0)
-  {
-    //Встановлюємо відповідну функцію
-    switch (data)
-    {
-    case BIT_MA_BLOCK_VKL_VV:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_BLOCK_VKL_VV);
-        break;
-      }
-    case BIT_MA_RESET_LEDS:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_RESET_LEDS);
-        break;
-      }
-    case BIT_MA_RESET_RELES:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_RESET_RELES);
-        break;
-      }
-    case BIT_MA_MISCEVE_DYSTANCIJNE:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_MISCEVE_DYSTANCIJNE);
-        break;
-      }
-    case BIT_MA_STATE_VV:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_STATE_VV);
-        break;
-      }
-    case BIT_MA_OTKL_VID_ZOVN_ZAHYSTIV:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_OTKL_VID_ZOVN_ZAHYSTIV);
-        break;
-      }
-    case BIT_MA_VKL_VV:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_VKL_VV);
-        break;
-      }
-    case BIT_MA_CONTROL_VKL:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_CTRL_VKL);
-        break;
-      }
-    case BIT_MA_OTKL_VV:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_OTKL_VV);
-        break;
-      }
-    case BIT_MA_CONTROL_VIDKL:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_CTRL_OTKL);
-        break;
-      }
-    case BIT_MA_1_GRUPA_USTAVOK:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_1_GRUPA_USTAVOK);
-        break;
-      }
-    case BIT_MA_2_GRUPA_USTAVOK:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_2_GRUPA_USTAVOK);
-        break;
-      }
-    case BIT_MA_3_GRUPA_USTAVOK:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_3_GRUPA_USTAVOK);
-        break;
-      }
-    case BIT_MA_4_GRUPA_USTAVOK:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_4_GRUPA_USTAVOK);
-        break;
-      }
-    case BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV:
-      {
-        _SET_BIT(set_array_rang, RANG_INPUT_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
-        break;
-      }
-    default:
-      {
-        //Теоретично сюди б програма ніколи не мала б доходити
-        //Але якщо дійшла, то виставляємо повідомлення про помилку
-        error = ERROR_ILLEGAL_DATA_VALUE;
-        break;
-      }
-    }
-  }
-    
-  return error;
-}
 
 /***********************************************************************************/
 
@@ -3064,13 +2721,13 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
   else if ((address_data >= M_ADDRESS_FIRST_DI_RANG) && (address_data <= M_ADDRESS_LAST_DI_RANG))
   {
     //Взначаємо, який вхід зараз верхній рівень намагається прочитати
-    unsigned int number_input = (address_data - M_ADDRESS_FIRST_DI_RANG)>> VAGA_MAX_FUNCTIONS_IN_INPUT;
+//    unsigned int number_input = (address_data - M_ADDRESS_FIRST_DI_RANG)>> VAGA_MAX_FUNCTIONS_IN_INPUT;
     
-    if(number_input < NUMBER_INPUTS)
+    /*if(number_input < NUMBER_INPUTS)
     {
       temp_value = convert_order_list_inputs_to_gmm(number_input, (((address_data - M_ADDRESS_FIRST_DI_RANG) & (MAX_FUNCTIONS_IN_INPUT - 1)) + 1));
     }
-    else temp_value = 0;
+    else*/ temp_value = 0;
   }
   else if ((address_data >= M_ADDRESS_FIRST_LED_RANG) && (address_data <= M_ADDRESS_LAST_LED_RANG))
   {
@@ -3978,15 +3635,15 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
   }
   else if ((address_data >= M_ADDRESS_FIRST_DI_RANG) && (address_data <= M_ADDRESS_LAST_DI_RANG))
   {
-    //Запис ранжування дискретних входів
-    
-    //Взначаємо, який вхід зараз верхній рівень намагається записати
-    unsigned int number_input = (address_data - M_ADDRESS_FIRST_DI_RANG)>>VAGA_MAX_FUNCTIONS_IN_INPUT;
-    
-    if(number_input < NUMBER_INPUTS)
-    {
-      error = save_new_rang_inputs_from_gmm(number_input, (((address_data -  M_ADDRESS_FIRST_DI_RANG) & (MAX_FUNCTIONS_IN_INPUT - 1)) + 1), data, method_setting);
-    }
+//    //Запис ранжування дискретних входів
+//    
+//    //Взначаємо, який вхід зараз верхній рівень намагається записати
+//    unsigned int number_input = (address_data - M_ADDRESS_FIRST_DI_RANG)>>VAGA_MAX_FUNCTIONS_IN_INPUT;
+//    
+//    if(number_input < NUMBER_INPUTS)
+//    {
+//      error = save_new_rang_inputs_from_gmm(number_input, (((address_data -  M_ADDRESS_FIRST_DI_RANG) & (MAX_FUNCTIONS_IN_INPUT - 1)) + 1), data, method_setting);
+//    }
   }
   else if ((address_data >= M_ADDRESS_FIRST_LED_RANG) && (address_data <= M_ADDRESS_LAST_LED_RANG))
   {

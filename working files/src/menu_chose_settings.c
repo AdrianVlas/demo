@@ -10,7 +10,6 @@ void make_ekran_chose_settings(void)
     {
       " Версия ПО и КП ",
       " Метка настроек ",
-      " Входы          ",
       " Выходы         ",
       " Светоиндикаторы",
       " Выключатель    ",
@@ -26,7 +25,6 @@ void make_ekran_chose_settings(void)
     {
       " Версія ПЗ і КП ",
       " Мітка налашт.  ",
-      " Входи          ",
       " Виходи         ",
       " Світлоіндикат. ",
       " Вимикач        ",
@@ -42,7 +40,6 @@ void make_ekran_chose_settings(void)
     {
       " VER.of F/W & MM",
       " Settings Mark  ",
-      " Inputs         ",
       " Outputs        ",
       " LED            ",
       " Circuit-Breaker",
@@ -58,7 +55,6 @@ void make_ekran_chose_settings(void)
     {
       " Версия ПО и КП ",
       " Метка настроек ",
-      " Входы          ",
       " Выходы         ",
       " Светоиндикаторы",
       " Выключатель    ",

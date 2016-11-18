@@ -4454,9 +4454,6 @@
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_info.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_inputs.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_leds.h</name>
         </file>
         <file>

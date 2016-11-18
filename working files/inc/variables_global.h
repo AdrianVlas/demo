@@ -247,12 +247,6 @@ const int ec[2] = {(int)(((float)(1 << VAGA_E_AMPLITUDE))*( 0.8660f)), (int)(((f
 unsigned int sequence_TN1 = 0;
 unsigned int sequence_TN2 = 0;
 
-int sector_1_mtz_tznp[8];
-int sector_2_mtz_tznp[8];
-
-unsigned int i1_bilshe_porogu = 0, i2_bilshe_porogu = 0;
-
-unsigned int TN1_TN2 = 0; //0 - ТН1; 1 - ТН2
 volatile unsigned int state_inputs = 0; //"є сигнал " - відповідає встановленому біту (1); "немає сигналу" - відповідає скинутому біту (0)
 volatile unsigned int active_inputs = 0; //"вхід активний" - відповідає встановленому біту (1); "вхід пасивний" - відповідає скинутому біту (0)
 unsigned int state_outputs = 0;
@@ -282,12 +276,6 @@ unsigned int timer_prt_signal_output_mode_2 = 0;
 unsigned int output_timer_prt_signal_output_mode_2 = false;
 unsigned int etap_execution_df[NUMBER_DEFINED_FUNCTIONS]; //Етап виконання опреділюваної функції
 //unsigned int state_df = 0; //Текучий стан опреділюваних функцій
-
-unsigned int previous_states_APV_0 = 0;
-unsigned int trigger_APV_0 = 0;
-
-unsigned int previous_states_AVR_0 = 0;
-unsigned int trigger_AVR_0 = 0;
 
 _Bool previous_states_ready_tu = 0;
 _Bool trigger_ready_tu = 0;

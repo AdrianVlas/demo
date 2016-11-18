@@ -149,24 +149,6 @@ void global_vareiables_installation(void)
   poperednij_perechid.Uc2_x2 = 0;
   poperednij_perechid.Uc2_y2 = 0;
   
-  sector_1_mtz_tznp[0] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)( 90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_1_mtz_tznp[1] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)( 90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_1_mtz_tznp[2] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)( 90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_1_mtz_tznp[3] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)( 90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_1_mtz_tznp[4] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)(-90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_1_mtz_tznp[5] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)(-90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_1_mtz_tznp[6] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)(-90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_1_mtz_tznp[7] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)(-90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-
-  sector_2_mtz_tznp[0] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)( 90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_2_mtz_tznp[1] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)( 90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_2_mtz_tznp[2] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)( 90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_2_mtz_tznp[3] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)( 90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_2_mtz_tznp[4] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)(-90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_2_mtz_tznp[5] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)(-90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_2_mtz_tznp[6] = (int) (AMPLITUDA_SECTOR*/*cos*/arm_cos_f32(/*(double)*/(PI*((float)(-90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-  sector_2_mtz_tznp[7] = (int) (AMPLITUDA_SECTOR*/*sin*/arm_sin_f32(/*(double)*/(PI*((float)(-90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP))/180.0f)));
-
   for(unsigned int i=0; i<(NUMBER_POINT*NUMBER_ANALOG_CANALES_VAL_1); i++)
   {
     data_sin_val_1[i] = 0;
@@ -1599,9 +1581,6 @@ void min_settings(__SETTINGS *target_label)
   
   for(unsigned int i = 0; i < NUMBER_INPUTS; i++)
   {
-    target_label->ranguvannja_inputs[N_SMALL*i  ] = 0x0;
-    target_label->ranguvannja_inputs[N_SMALL*i+1] = 0x0;
-    
     if ((target_label->type_of_input_signal & (1<<i)) != 0)
     {
       target_label->dopusk_dv[i] = KOEF_DOPUSK_DV_ZMIN_MIN;

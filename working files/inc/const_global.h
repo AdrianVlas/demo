@@ -2,7 +2,6 @@
 #define __CONST_GLOBAL__
 
 #define N_BIG   7
-#define N_SMALL 2
 
 //Величина, яка необхідна для періодичної (період 1  мс   ) генерації переривань каналом 1 таймеру 2 з прескаллером 2000 = (1999 + 1)
 #define TIM2_CCR1_VAL                   30
@@ -34,6 +33,21 @@
 #define NUMBER_OUTPUTS_1                6
 #define NUMBER_OUTPUTS_2                4
 #define NUMBER_OUTPUTS                  (NUMBER_OUTPUTS_1 + NUMBER_OUTPUTS_2)
+
+enum _ID_RANG_SOURCE 
+{
+  ID_OUTPUT = 0,
+  ID_LED,
+  ID_DTIMER,
+  ID_BUTTON,
+  ID_DTRIGER,
+  ID_DAND,
+  ID_DOR,
+  ID_DXOR,
+  ID_DNOT,
+  
+  MAX_NUMBER_ID_RANG_SOURCE
+};
 
 #define NUMBER_LEDS                     8
 

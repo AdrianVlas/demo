@@ -1697,18 +1697,15 @@ void min_settings(__SETTINGS *target_label)
 
   target_label->configuration = 0;
   
-  for (unsigned int i = 0; i < NUMBER_GROUP_USTAVOK; i++)
-  {
-    target_label->setpoint_ctrl_phase_U[i] = SETPOINT_CTRL_PHASE_U_MIN;
-    target_label->setpoint_ctrl_phase_phi[i] = SETPOINT_CTRL_PHASE_PHI_MIN;
-    target_label->setpoint_ctrl_phase_f[i] = SETPOINT_CTRL_PHASE_F_MIN;
-    target_label->timeout_ctrl_phase_U[i] = TIMEOUT_CTRL_PHASE_U_MIN;
-    target_label->timeout_ctrl_phase_U_d[i] = TIMEOUT_CTRL_PHASE_U_D_MIN;
-    target_label->timeout_ctrl_phase_phi[i] = TIMEOUT_CTRL_PHASE_PHI_MIN;
-    target_label->timeout_ctrl_phase_phi_d[i] = TIMEOUT_CTRL_PHASE_PHI_D_MIN;
-    target_label->timeout_ctrl_phase_f[i] = TIMEOUT_CTRL_PHASE_F_MIN;
-    target_label->timeout_ctrl_phase_f_d[i] = TIMEOUT_CTRL_PHASE_F_D_MIN;
-  }
+  target_label->setpoint_ctrl_phase_U = SETPOINT_CTRL_PHASE_U_MIN;
+  target_label->setpoint_ctrl_phase_phi = SETPOINT_CTRL_PHASE_PHI_MIN;
+  target_label->setpoint_ctrl_phase_f = SETPOINT_CTRL_PHASE_F_MIN;
+  target_label->timeout_ctrl_phase_U = TIMEOUT_CTRL_PHASE_U_MIN;
+  target_label->timeout_ctrl_phase_U_d = TIMEOUT_CTRL_PHASE_U_D_MIN;
+  target_label->timeout_ctrl_phase_phi = TIMEOUT_CTRL_PHASE_PHI_MIN;
+  target_label->timeout_ctrl_phase_phi_d = TIMEOUT_CTRL_PHASE_PHI_D_MIN;
+  target_label->timeout_ctrl_phase_f = TIMEOUT_CTRL_PHASE_F_MIN;
+  target_label->timeout_ctrl_phase_f_d = TIMEOUT_CTRL_PHASE_F_D_MIN;
 
   target_label->control_ctrl_phase = 0;
   

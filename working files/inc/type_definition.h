@@ -103,15 +103,15 @@ typedef struct
   unsigned int configuration;         //Конфігурація приладу
   
   //Перевірка фазування
-  unsigned int setpoint_ctrl_phase_U[NUMBER_GROUP_USTAVOK];   //Уставка UФАЗ
-  unsigned int setpoint_ctrl_phase_phi[NUMBER_GROUP_USTAVOK]; //Уставка PHIФАЗ
-  unsigned int setpoint_ctrl_phase_f[NUMBER_GROUP_USTAVOK];   //Уставка FФАЗ
-  int timeout_ctrl_phase_U[NUMBER_GROUP_USTAVOK];             //Витримка UФАЗ
-  int timeout_ctrl_phase_U_d[NUMBER_GROUP_USTAVOK];           //Витримка UФАЗ подовження
-  int timeout_ctrl_phase_phi[NUMBER_GROUP_USTAVOK];           //Витримка PHIФАЗ
-  int timeout_ctrl_phase_phi_d[NUMBER_GROUP_USTAVOK];         //Витримка PHIФАЗ подовження
-  int timeout_ctrl_phase_f[NUMBER_GROUP_USTAVOK];             //Витримка FФАЗ
-  int timeout_ctrl_phase_f_d[NUMBER_GROUP_USTAVOK];           //Витримка FФАЗ подовження
+  unsigned int setpoint_ctrl_phase_U;                                           //Уставка UФАЗ
+  unsigned int setpoint_ctrl_phase_phi;                                         //Уставка PHIФАЗ
+  unsigned int setpoint_ctrl_phase_f;                                           //Уставка FФАЗ
+  int timeout_ctrl_phase_U;                                                     //Витримка UФАЗ
+  int timeout_ctrl_phase_U_d;                                                   //Витримка UФАЗ подовження
+  int timeout_ctrl_phase_phi;                                                   //Витримка PHIФАЗ
+  int timeout_ctrl_phase_phi_d;                                                 //Витримка PHIФАЗ подовження
+  int timeout_ctrl_phase_f;                                                     //Витримка FФАЗ
+  int timeout_ctrl_phase_f_d;                                                   //Витримка FФАЗ подовження
   unsigned int control_ctrl_phase;
   
 

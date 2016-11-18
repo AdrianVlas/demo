@@ -44,7 +44,7 @@ void calc_symbol_and_put_into_working_ekran(unsigned char* point_in_working_ekra
 /*****************************************************/
 //Формуємо екран відображення уставок "Перевірки фазування"
 /*****************************************************/
-void make_ekran_setpoint_ctrl_phase(unsigned int group)
+void make_ekran_setpoint_ctrl_phase(void)
 {
   const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_SETPOINT_CTRL_PHASE][MAX_COL_LCD] = 
   {
@@ -91,22 +91,22 @@ void make_ekran_setpoint_ctrl_phase(unsigned int group)
         if ((index_of_ekran>>1) == INDEX_ML_STPCTRL_PHASE_U)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для уставки
-          if (current_ekran.edition == 0) value = current_settings.setpoint_ctrl_phase_U[group]; //у змінну value поміщаємо значення уставки
-          else value = edition_settings.setpoint_ctrl_phase_U[group];
+          if (current_ekran.edition == 0) value = current_settings.setpoint_ctrl_phase_U; //у змінну value поміщаємо значення уставки
+          else value = edition_settings.setpoint_ctrl_phase_U;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
         else if ((index_of_ekran>>1) == INDEX_ML_STPCTRL_PHASE_PHI)
         {
           vaga = 100; //максимальний ваговий коефіцієнт для вилілення старшого розряду для уставки
-          if (current_ekran.edition == 0) value = current_settings.setpoint_ctrl_phase_phi[group]; //у змінну value поміщаємо значення уставки
-          else value = edition_settings.setpoint_ctrl_phase_phi[group];
+          if (current_ekran.edition == 0) value = current_settings.setpoint_ctrl_phase_phi; //у змінну value поміщаємо значення уставки
+          else value = edition_settings.setpoint_ctrl_phase_phi;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
         else if ((index_of_ekran>>1) == INDEX_ML_STPCTRL_PHASE_F)
         {
           vaga = 1000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для уставки
-          if (current_ekran.edition == 0) value = current_settings.setpoint_ctrl_phase_f[group]; //у змінну value поміщаємо значення уставки
-          else value = edition_settings.setpoint_ctrl_phase_f[group];
+          if (current_ekran.edition == 0) value = current_settings.setpoint_ctrl_phase_f; //у змінну value поміщаємо значення уставки
+          else value = edition_settings.setpoint_ctrl_phase_f;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
       }
@@ -204,7 +204,7 @@ void make_ekran_setpoint_ctrl_phase(unsigned int group)
 /*****************************************************/
 //Формуємо екран відображення витримок АВР
 /*****************************************************/
-void make_ekran_timeout_ctrl_phase(unsigned int group)
+void make_ekran_timeout_ctrl_phase(void)
 {
   const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_TIMEOUT_CTRL_PHASE][MAX_COL_LCD] = 
   {
@@ -262,43 +262,43 @@ void make_ekran_timeout_ctrl_phase(unsigned int group)
         if ((index_of_ekran>>1) == INDEX_ML_TMOCTRL_PHASE_U)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_U[group]; //у змінну value поміщаємо значення витримки
-          else value = edition_settings.timeout_ctrl_phase_U[group];
+          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_U; //у змінну value поміщаємо значення витримки
+          else value = edition_settings.timeout_ctrl_phase_U;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
         else if ((index_of_ekran>>1) == INDEX_ML_TMOCTRL_PHASE_U_D)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_U_d[group]; //у змінну value поміщаємо значення витримки
-          else value = edition_settings.timeout_ctrl_phase_U_d[group];
+          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_U_d; //у змінну value поміщаємо значення витримки
+          else value = edition_settings.timeout_ctrl_phase_U_d;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
         else if ((index_of_ekran>>1) == INDEX_ML_TMOCTRL_PHASE_PHI)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_phi[group]; //у змінну value поміщаємо значення витримки
-          else value = edition_settings.timeout_ctrl_phase_phi[group];
+          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_phi; //у змінну value поміщаємо значення витримки
+          else value = edition_settings.timeout_ctrl_phase_phi;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
         else if ((index_of_ekran>>1) == INDEX_ML_TMOCTRL_PHASE_PHI_D)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_phi_d[group]; //у змінну value поміщаємо значення витримки
-          else value = edition_settings.timeout_ctrl_phase_phi_d[group];
+          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_phi_d; //у змінну value поміщаємо значення витримки
+          else value = edition_settings.timeout_ctrl_phase_phi_d;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
         else if ((index_of_ekran>>1) == INDEX_ML_TMOCTRL_PHASE_F)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_f[group]; //у змінну value поміщаємо значення витримки
-          else value = edition_settings.timeout_ctrl_phase_f[group];
+          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_f; //у змінну value поміщаємо значення витримки
+          else value = edition_settings.timeout_ctrl_phase_f;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
         else if ((index_of_ekran>>1) == INDEX_ML_TMOCTRL_PHASE_F_D)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_f_d[group]; //у змінну value поміщаємо значення витримки
-          else value = edition_settings.timeout_ctrl_phase_f_d[group];
+          if (current_ekran.edition == 0) value = current_settings.timeout_ctrl_phase_f_d; //у змінну value поміщаємо значення витримки
+          else value = edition_settings.timeout_ctrl_phase_f_d;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
       }

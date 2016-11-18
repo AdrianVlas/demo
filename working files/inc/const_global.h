@@ -50,8 +50,6 @@
 #define NUMBER_IN_AND                   8
 #define NUMBER_IN_OR                    8
 
-#define NUMBER_GROUP_USTAVOK            4
-
 enum _configuration {
 CTRL_PHASE_BIT_CONFIGURATION,
 EL_BIT_CONFIGURATION,

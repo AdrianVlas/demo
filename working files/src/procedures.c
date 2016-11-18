@@ -15,21 +15,10 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
   {
     if(
        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CTRL_PHASE)
-       || 
-       (
-        (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_CTRL_PHASE) &&
-        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_CTRL_PHASE) 
-       )  
        ||
-       (
-        (current_ekran.current_level >= EKRAN_SETPOINT_CTRL_PHASE_GROUP1) &&
-        (current_ekran.current_level <= EKRAN_SETPOINT_CTRL_PHASE_GROUP4)
-       )
+       (current_ekran.current_level == EKRAN_SETPOINT_CTRL_PHASE)
        ||  
-       (
-        (current_ekran.current_level >= EKRAN_TIMEOUT_CTRL_PHASE_GROUP1) &&
-        (current_ekran.current_level <= EKRAN_TIMEOUT_CTRL_PHASE_GROUP4)
-       )
+       (current_ekran.current_level == EKRAN_TIMEOUT_CTRL_PHASE)
        ||  
        (current_ekran.current_level == EKRAN_CONTROL_CTRL_PHASE)
       )

@@ -3228,10 +3228,10 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
           )
   {
     //Уставки, витримки, які мають декілька груп уставок
-     unsigned int num_gr, address_data_tmp = address_data;
+     unsigned int /*num_gr, */address_data_tmp = address_data;
      if ((address_data >= (M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV + SHIFT_G1)) && (address_data <= (M_ADDRESS_LAST_SETPOINTS_ZACHYSTIV + SHIFT_G1)))
      {
-       num_gr = 0;
+//       num_gr = 0;
        address_data_tmp -= SHIFT_G1;
      }
 //     else if ((address_data >= (M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV + SHIFT_G2)) && (address_data <= (M_ADDRESS_LAST_SETPOINTS_ZACHYSTIV + SHIFT_G2)))
@@ -3254,47 +3254,47 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
     {
     case MA_STP_CTRL_PHASE_U:
       {
-        temp_value = current_settings_interfaces.setpoint_ctrl_phase_U[num_gr]/100;
+        temp_value = current_settings_interfaces.setpoint_ctrl_phase_U/100;
         break;
       }
     case MA_STP_CTRL_PHASE_PHI:
       {
-        temp_value = current_settings_interfaces.setpoint_ctrl_phase_phi[num_gr]/100;
+        temp_value = current_settings_interfaces.setpoint_ctrl_phase_phi/100;
         break;
       }
     case MA_STP_CTRL_PHASE_F:
       {
-        temp_value = current_settings_interfaces.setpoint_ctrl_phase_f[num_gr]/10;
+        temp_value = current_settings_interfaces.setpoint_ctrl_phase_f/10;
         break;
       }
     case MA_TO_CTRL_PHASE_U:
       {
-        temp_value = current_settings_interfaces.timeout_ctrl_phase_U[num_gr]/100;
+        temp_value = current_settings_interfaces.timeout_ctrl_phase_U/100;
         break;
       }
     case MA_TO_CTRL_PHASE_U_D:
       {
-        temp_value = current_settings_interfaces.timeout_ctrl_phase_U_d[num_gr]/100;
+        temp_value = current_settings_interfaces.timeout_ctrl_phase_U_d/100;
         break;
       }
     case MA_TO_CTRL_PHASE_PHI:
       {
-        temp_value = current_settings_interfaces.timeout_ctrl_phase_phi[num_gr]/100;
+        temp_value = current_settings_interfaces.timeout_ctrl_phase_phi/100;
         break;
       }
     case MA_TO_CTRL_PHASE_PHI_D:
       {
-        temp_value = current_settings_interfaces.timeout_ctrl_phase_phi_d[num_gr]/100;
+        temp_value = current_settings_interfaces.timeout_ctrl_phase_phi_d/100;
         break;
       }
     case MA_TO_CTRL_PHASE_F:
       {
-        temp_value = current_settings_interfaces.timeout_ctrl_phase_f[num_gr]/100;
+        temp_value = current_settings_interfaces.timeout_ctrl_phase_f/100;
         break;
       }
     case MA_TO_CTRL_PHASE_F_D:
       {
-        temp_value = current_settings_interfaces.timeout_ctrl_phase_f_d[num_gr]/100;
+        temp_value = current_settings_interfaces.timeout_ctrl_phase_f_d/100;
         break;
       }
     default:
@@ -4189,10 +4189,10 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
           )   
   {
     //Уставки, витримки, які мають декілька груп уставок
-     unsigned int num_gr, address_data_tmp = address_data;
+     unsigned int /*num_gr, */address_data_tmp = address_data;
      if ((address_data >= (M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV + SHIFT_G1)) && (address_data <= (M_ADDRESS_LAST_SETPOINTS_ZACHYSTIV + SHIFT_G1)))
      {
-       num_gr = 0;
+//       num_gr = 0;
        address_data_tmp -= SHIFT_G1;
      }
 //     else if ((address_data >= (M_ADDRESS_FIRST_SETPOINTS_ZACHYSTIV + SHIFT_G2)) && (address_data <= (M_ADDRESS_LAST_SETPOINTS_ZACHYSTIV + SHIFT_G2)))
@@ -4218,7 +4218,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         temp_value = data*100;
     
         if ((temp_value >= SETPOINT_CTRL_PHASE_U_MIN) && (temp_value <= SETPOINT_CTRL_PHASE_U_MAX))
-          target_label->setpoint_ctrl_phase_U[num_gr] = temp_value;
+          target_label->setpoint_ctrl_phase_U = temp_value;
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
 
@@ -4229,7 +4229,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         temp_value = data*100;
     
         if ((temp_value >= SETPOINT_CTRL_PHASE_PHI_MIN) && (temp_value <= SETPOINT_CTRL_PHASE_PHI_MAX))
-          target_label->setpoint_ctrl_phase_phi[num_gr] = temp_value;
+          target_label->setpoint_ctrl_phase_phi = temp_value;
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
 
@@ -4240,7 +4240,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         temp_value = data*10;
     
         if ((temp_value >= SETPOINT_CTRL_PHASE_F_MIN) && (temp_value <= SETPOINT_CTRL_PHASE_F_MAX))
-          target_label->setpoint_ctrl_phase_f[num_gr] = temp_value;
+          target_label->setpoint_ctrl_phase_f = temp_value;
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
 
@@ -4256,7 +4256,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         if (temp_value <= TIMEOUT_CTRL_PHASE_U_MAX)
 #endif            
         {
-          target_label->timeout_ctrl_phase_U[num_gr] = temp_value;
+          target_label->timeout_ctrl_phase_U = temp_value;
         }
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
@@ -4273,7 +4273,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         if (temp_value <= TIMEOUT_CTRL_PHASE_U_D_MAX)
 #endif            
         {
-          target_label->timeout_ctrl_phase_U_d[num_gr] = temp_value;
+          target_label->timeout_ctrl_phase_U_d = temp_value;
         }
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
@@ -4290,7 +4290,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         if (temp_value <= TIMEOUT_CTRL_PHASE_PHI_MAX)
 #endif            
         {
-          target_label->timeout_ctrl_phase_phi[num_gr] = temp_value;
+          target_label->timeout_ctrl_phase_phi = temp_value;
         }
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
@@ -4307,7 +4307,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         if (temp_value <= TIMEOUT_CTRL_PHASE_PHI_D_MAX)
 #endif            
         {
-          target_label->timeout_ctrl_phase_phi_d[num_gr] = temp_value;
+          target_label->timeout_ctrl_phase_phi_d = temp_value;
         }
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
@@ -4324,7 +4324,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         if (temp_value <= TIMEOUT_CTRL_PHASE_F_MAX)
 #endif            
         {
-          target_label->timeout_ctrl_phase_f[num_gr] = temp_value;
+          target_label->timeout_ctrl_phase_f = temp_value;
         }
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
@@ -4341,7 +4341,7 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
         if (temp_value <= TIMEOUT_CTRL_PHASE_F_D_MAX)
 #endif            
         {
-          target_label->timeout_ctrl_phase_f_d[num_gr] = temp_value;
+          target_label->timeout_ctrl_phase_f_d = temp_value;
         }
         else
           error = ERROR_ILLEGAL_DATA_VALUE;

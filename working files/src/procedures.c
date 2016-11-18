@@ -40,7 +40,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Вводимо нову конфігурацю у цільову структуру
     target_label->configuration = new_configuration;
     
-    unsigned int maska[N_BIG] = {0, 0, 0, 0, 0, 0, 0}, maska_1 = 0;
+    unsigned int maska[N_BIG] = {0, 0, 0, 0, 0, 0, 0};
 
     //Перевіряємо, чи "Перевірка фазування" зараз знята з конфігурації
     if ((target_label->configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0)
@@ -65,17 +65,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
                 );
 
 
-      maska_1 = 0;
-      for (int i = 0; i < NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_BUTTON; i++) maska_1 = (maska_1 <<1) + 0x1;
-      maska_1 =(
-                maska_1 << (
-                            NUMBER_GENERAL_SIGNAL_FOR_RANG_BUTTON
-                           )
-               );
-
-      //Знімаємо всі функції для ранжування входів
-      for (int i = 0; i < NUMBER_DEFINED_BUTTONS; i++)
-        target_label->ranguvannja_buttons[i] &= ~maska_1;
       //Знімаємо всі функції для ранжування виходів
       for (int i = 0; i < NUMBER_OUTPUTS; i++)
       {
@@ -145,7 +134,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     unsigned int array_full[N_BIG] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
     unsigned int *point_to_mask_array;
     for (unsigned int i = 0; i < N_BIG; i++ ) maska[i] = 0;
-    maska_1 = 0;
+
     if ((target_label->configuration & (1<<EL_BIT_CONFIGURATION)) == 0)
     {
       //Видаляємо всі сигнали розгиреної логіки
@@ -160,14 +149,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
                 );
 
 
-      for (int i = 0; i < NUMBER_EL_SIGNAL_FOR_RANG_BUTTON; i++) maska_1 = (maska_1 <<1) + 0x1;
-      maska_1 =(
-                maska_1 << (
-                            NUMBER_GENERAL_SIGNAL_FOR_RANG_BUTTON    + 
-                            NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_BUTTON
-                           )
-               );
-      
       point_to_mask_array = array_full;
     }
 //    else
@@ -250,9 +231,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 //      point_to_mask_array = maska;
 //    }
 
-    //Знімаємо всі функції для ранжування входів, які відповідають за Розширеної логіки
-    for (int i = 0; i < NUMBER_DEFINED_BUTTONS; i++)
-      target_label->ranguvannja_buttons[i] &= ~maska_1;
     //Знімаємо всі функції для ранжування виходів
     for (int i = 0; i < NUMBER_OUTPUTS; i++)
     {

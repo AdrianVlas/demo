@@ -1962,11 +1962,11 @@ inline void main_protection(void)
     //Активація з кнопуки
     if (pressed_buttons != 0)
     {
-      for (unsigned int i = 0; i < NUMBER_DEFINED_BUTTONS; i++)
-      {
-        if ((pressed_buttons & (1 << i)) != 0)
-          temp_value_for_activated_function |= current_settings_prt.ranguvannja_buttons[i];
-      }
+//      for (unsigned int i = 0; i < NUMBER_DEFINED_BUTTONS; i++)
+//      {
+//        if ((pressed_buttons & (1 << i)) != 0)
+//          temp_value_for_activated_function |= current_settings_prt.ranguvannja_buttons[i];
+//      }
 
       //Очищаємо натиснуті кнопка, які ми вже опрацювали
       pressed_buttons =0;

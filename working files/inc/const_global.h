@@ -39,7 +39,6 @@ enum _ID_RANG_SOURCE
   ID_OUTPUT = 0,
   ID_LED,
   ID_DTIMER,
-  ID_BUTTON,
   ID_DTRIGER,
   ID_DAND,
   ID_DOR,
@@ -92,40 +91,6 @@ RANG_BUTTON_RESET_BLOCK_READY_TU_VID_ZAHYSTIV
                                                    NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_BUTTON  + \
                                                    NUMBER_EL_SIGNAL_FOR_RANG_BUTTON            \
                                                   ) 
-/*****************************************/
-
-/*****************************************/
-//Константи для ранжування дискретних входів
-/*****************************************/
-enum __rang_input {
-RANG_INPUT_BLOCK_VKL_VV = 0,
-RANG_INPUT_RESET_LEDS,
-RANG_INPUT_RESET_RELES,
-RANG_INPUT_MISCEVE_DYSTANCIJNE,
-RANG_INPUT_STATE_VV,
-RANG_INPUT_PUSK_K1_AVR,
-RANG_INPUT_PUSK_K2_AVR,
-RANG_INPUT_OTKL_VID_ZOVN_ZAHYSTIV,
-RANG_INPUT_VKL_VV,
-RANG_INPUT_CTRL_VKL,
-RANG_INPUT_OTKL_VV,
-RANG_INPUT_CTRL_OTKL,
-RANG_INPUT_1_GRUPA_USTAVOK,
-RANG_INPUT_2_GRUPA_USTAVOK,
-RANG_INPUT_3_GRUPA_USTAVOK,
-RANG_INPUT_4_GRUPA_USTAVOK,
-RANG_INPUT_RESET_BLOCK_READY_TU_VID_ZAHYSTIV
-};
-
-#define NUMBER_GENERAL_SIGNAL_FOR_RANG_INPUT     17
-#define NUMBER_EL_SIGNAL_FOR_RANG_INPUT          0
-#define NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_INPUT  0
-
-#define NUMBER_TOTAL_SIGNAL_FOR_RANG_INPUT       (                                          \
-                                                  NUMBER_GENERAL_SIGNAL_FOR_RANG_INPUT    + \
-                                                  NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_INPUT + \
-                                                  NUMBER_EL_SIGNAL_FOR_RANG_INPUT           \
-                                                 ) 
 /*****************************************/
 
 /*****************************************/

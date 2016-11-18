@@ -97,8 +97,6 @@ typedef struct
   unsigned int ranguvannja_d_xor[N_BIG*NUMBER_DEFINED_XOR];                     //Ранжування команд джерел визначуваних "Викл.АБО"
   unsigned int ranguvannja_d_not[N_BIG*NUMBER_DEFINED_NOT];                     //Ранжування команд джерел визначуваних "НЕ"
   
-  unsigned int ranguvannja_buttons[NUMBER_DEFINED_BUTTONS];                     //Ранжування опреділюваних кнопок
-  
   unsigned int configuration;         //Конфігурація приладу
   
   //Перевірка фазування

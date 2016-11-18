@@ -116,7 +116,6 @@ void make_ekran_timeout_df(unsigned int);
 void make_ekran_list_type_source_df(void);
 void make_ekran_set_reset_trigger(void);
 void make_ekran_list_type_source_dt(void);
-void make_ekran_set_function_in_button(unsigned int);
 void make_ekran_info(void);
 void make_ekran_date_time_pz(void);
 void make_ekran_chose_item_of_point_time_settings(void);
@@ -173,10 +172,8 @@ unsigned int Set_data(unsigned short int, unsigned int, unsigned int, unsigned i
 unsigned int Get_data_file(unsigned char*, unsigned char*, unsigned int*, unsigned int);
 void convert_order_list_function_to_gmm(unsigned int*, unsigned short int*);
 unsigned int convert_order_list_oldr_to_gmm(unsigned int, unsigned int, unsigned int);
-unsigned int convert_order_list_buttons_to_gmm(unsigned int, unsigned int);
 void set_previous_ranguvannja(void);
 unsigned int save_new_rang_oldr_from_gmm(unsigned int, unsigned int, unsigned int, unsigned short int, unsigned int);
-unsigned int save_new_rang_buttons_from_gmm(unsigned int, unsigned int, unsigned short int, unsigned int);
 
 ErrorStatus check_errors_i2c(void);
 unsigned int start_write_buffer_via_I2C(uint32_t, uint32_t, uint8_t volatile*, uint32_t);

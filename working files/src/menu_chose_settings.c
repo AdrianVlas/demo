@@ -18,7 +18,6 @@ void make_ekran_chose_settings(void)
       " Коммуникация   ",
       " Регистраторы   ",
       " Расш.логика    ",
-      " Ф-кнопки       ",
       " Доп.настройки  ",
       " Пароли         "
     },
@@ -33,7 +32,6 @@ void make_ekran_chose_settings(void)
       " Комунікація    ",
       " Реєстратори    ",
       " Розш.логіка    ",
-      " Ф-кнопки       ",
       " Дод.налашт.    ",
       " Паролі         "
     },
@@ -48,7 +46,6 @@ void make_ekran_chose_settings(void)
       " Communication  ",
       " Recorders      ",
       " Extended logic ",
-      " F-Keys         ",
       " Addit.Settings ",
       " Passwords      "
     },
@@ -63,7 +60,6 @@ void make_ekran_chose_settings(void)
       " Коммуникация   ",
       " Регистраторы   ",
       " Расш.логика    ",
-      " Ф-кнопки       ",
       " Доп.настройки  ",
       " Пароли         "
     }

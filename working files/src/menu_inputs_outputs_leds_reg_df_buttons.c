@@ -587,18 +587,7 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
     unsigned int position_temp = current_ekran.index_position;
     unsigned int index_of_ekran;
     unsigned int i, offset = 0;
-    int min_max_number[TOTAL_NUMBER_PROTECTION][2] =
-    {
-      {
-       (NUMBER_GENERAL_SIGNAL_FOR_RANG),
-       (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG - 1)
-      },
-      {
-       (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG),
-       (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG - 1)
-      }
-    };
-    
+
     /*************************************************************/
     //Фільтруємо сигнали, яких у даній конфігурації неприсутні
     /*************************************************************/
@@ -778,9 +767,173 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
 //      /*************************************************************/
 //    }
 
-    //Функції загального призначення пропускаємо (вони знаходяться у початку списку), тому починаємо з першого записту
+    //Функції загального призначення пропускаємо (вони знаходяться у початку списку), тому починаємо з розширеної длгіки і дальше по конфігурованій сигналізації
     int index_in_list = NUMBER_GENERAL_SIGNAL_FOR_RANG;
     
+    /*
+    Розширена логіка
+    */
+
+    //Відкидати імена функцій і зміщати біти треба тільки у тому випадку, якщо функції присутні у списку для ранжування для даного захисту
+    //Формуємо маску біт, які не треба переміщати при переміщенні імен полів
+    {
+      unsigned int maska[N_BIG] = {0, 0, 0, 0, 0, 0, 0};
+      unsigned int j1;
+      for (j1 = 0; j1 < (NUMBER_GENERAL_SIGNAL_FOR_RANG - offset); j1++) _SET_BIT(maska, j1);
+         
+    //Відкидаємо назви функцій із списку, які є зайвими
+      while(index_in_list <= (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG - 1))
+      {
+        if (
+            (
+             /*
+             (
+              (index_in_list >= (int)(RANG_DF1_IN + 2*current_settings.number_defined_df)) &&
+              (index_in_list <= RANG_DF8_OUT)
+             )
+             ||
+             */
+             (
+              (type_ekran == INDEX_VIEWING_DF) &&
+              (
+               (index_in_list == (RANG_DF1_IN  + 2*(number_ekran - EKRAN_RANGUVANNJA_DF1_PLUS) / 3)) ||
+               (index_in_list == (RANG_DF1_OUT + 2*(number_ekran - EKRAN_RANGUVANNJA_DF1_PLUS) / 3))
+              )  
+             )
+            )   
+            ||  
+            (
+             /*
+             (
+              (index_in_list >= (int)(RANG_DT1_SET + 3*current_settings.number_defined_dt)) &&
+              (index_in_list <= RANG_DT4_OUT)
+             )
+             ||
+             */
+             (
+              (type_ekran == INDEX_VIEWING_DT) &&
+              (
+               (index_in_list == (RANG_DT1_SET   + 3*(number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS) / 4)) ||
+               (index_in_list == (RANG_DT1_RESET + 3*(number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS) / 4)) ||
+               (index_in_list == (RANG_DT1_OUT   + 3*(number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS) / 4))
+              )  
+             ) 
+            )   
+            ||  
+            (
+             /*
+             (
+              (index_in_list >= (int)(RANG_D_AND1 + current_settings.number_defined_and)) &&
+              (index_in_list <= RANG_D_AND8)
+             )   
+             ||
+             */
+             (
+              (type_ekran == INDEX_VIEWING_D_AND) &&
+              (index_in_list == (RANG_D_AND1 + (number_ekran - EKRAN_RANGUVANNJA_D_AND1)))
+             )   
+            )   
+            ||  
+            (
+             /*
+             (
+              (index_in_list >= (int)(RANG_D_OR1 + current_settings.number_defined_or)) &&
+              (index_in_list <= RANG_D_OR8)
+             )   
+             ||
+             */
+             (
+              (type_ekran == INDEX_VIEWING_D_OR) &&
+              (index_in_list == (RANG_D_OR1 + (number_ekran - EKRAN_RANGUVANNJA_D_OR1)))
+             )   
+            )   
+            ||  
+            (
+             /*
+             (
+              (index_in_list >= (int)(RANG_D_XOR1 + current_settings.number_defined_xor)) &&
+              (index_in_list <= RANG_D_XOR8)
+             )   
+             ||
+             */
+             (
+              (type_ekran == INDEX_VIEWING_D_XOR) &&
+              (index_in_list == (RANG_D_XOR1 + (number_ekran - EKRAN_RANGUVANNJA_D_XOR1)))
+             )   
+            )   
+            ||  
+            (
+             /*
+             (
+              (index_in_list >= (int)(RANG_D_NOT1 + current_settings.number_defined_not)) &&
+              (index_in_list <= RANG_D_NOT16)
+             )   
+             ||
+             */
+             (
+              (type_ekran == INDEX_VIEWING_D_NOT) &&
+              (index_in_list == (RANG_D_NOT1 + (number_ekran - EKRAN_RANGUVANNJA_D_NOT1)))
+             )   
+            )   
+           )
+        {
+          /***/
+          //Зміщуємо біти стану реанжування функцій разом із їх назвами
+          /***/
+          unsigned int new_temp_data_1[N_BIG], new_temp_data_2[N_BIG];
+
+          for (unsigned int k = 0; k < N_BIG; k++)
+          {
+            new_temp_data_1[k] = state_viewing_input[k] & maska[k];
+
+            new_temp_data_2[k] = state_viewing_input[k] & (~maska[k]);
+          }
+
+          for (unsigned int k = 0; k < (N_BIG - 1); k++)
+          {
+            new_temp_data_2[k] = ( (new_temp_data_2[k] >> 1) | ((new_temp_data_2[k + 1] & 0x1) << 31) ) & (~maska[k]);
+          }
+          new_temp_data_2[N_BIG - 1] =  (new_temp_data_2[N_BIG - 1] >> 1) & (~maska[N_BIG - 1]);
+         
+          for (unsigned int k = 0; k < N_BIG; k++)
+          {
+            state_viewing_input[k] = new_temp_data_1[k] | new_temp_data_2[k];
+          }
+          /***/
+          for (unsigned int j = (index_in_list - offset); j < (max_row_ranguvannja - offset); j++)
+          {
+            if ((j + 1) < (max_row_ranguvannja - offset))
+            {
+              for (unsigned int k = 0; k < MAX_COL_LCD; k++)
+                name_string_tmp[j + NUMBER_ROW_FOR_NOTHING_INFORMATION][k] = name_string_tmp[j + NUMBER_ROW_FOR_NOTHING_INFORMATION + 1][k];
+            }
+            else 
+            {
+              for (unsigned int k = 0; k<MAX_COL_LCD; k++)
+                name_string_tmp[j + NUMBER_ROW_FOR_NOTHING_INFORMATION][k] = ' ';
+             }
+          }
+          if (current_ekran.index_position >= index_in_list) position_temp--;
+          
+          offset++;
+        }
+        else
+        {
+          _SET_BIT(maska, j1);
+          j1++;
+        }
+         
+        index_in_list++;
+      }
+    }
+            
+    int min_max_number[TOTAL_NUMBER_PROTECTION][2] =
+    {
+      {
+       (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG),
+       (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG + NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG - 1)
+      }
+    };
     for (i = 0; i < TOTAL_NUMBER_PROTECTION; i++)
     {
       
@@ -791,165 +944,7 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
         //бо інкаше ми вже знаходимося на індексі наступного захисту
         if(min_max_number[i][0] >=0)
         {
-          if (i == EL_BIT_CONFIGURATION)
-          {
-            /*
-            Випадок коли деякі сигнали розширеної логіки треба відфільтрувати
-            */
-
-            //Відкидати імена функцій і зміщати біти треба тільки у тому випадку, якщо функції пристні у списку для ранжування для даного захисту
-            //Формуємо маску біт, які не треба переміщати при переміщенні імен полів
-            unsigned int maska[N_BIG] = {0, 0, 0, 0, 0, 0, 0};
-            unsigned int j1;
-            for (j1 = 0; j1 < (min_max_number[i][0] - offset); j1++) _SET_BIT(maska, j1);
-          
-            //Відкидаємо назви функцій із списку, які є зайвими
-            while(index_in_list <= min_max_number[i][1])
-            {
-              if (
-                  (
-                   /*
-                   (
-                    (index_in_list >= (int)(RANG_DF1_IN + 2*current_settings.number_defined_df)) &&
-                    (index_in_list <= RANG_DF8_OUT)
-                   )
-                   ||
-                   */
-                   (
-                    (type_ekran == INDEX_VIEWING_DF) &&
-                    (
-                     (index_in_list == (RANG_DF1_IN  + 2*(number_ekran - EKRAN_RANGUVANNJA_DF1_PLUS) / 3)) ||
-                     (index_in_list == (RANG_DF1_OUT + 2*(number_ekran - EKRAN_RANGUVANNJA_DF1_PLUS) / 3))
-                    )  
-                   )
-                  )   
-                  ||  
-                  (
-                   /*
-                   (
-                    (index_in_list >= (int)(RANG_DT1_SET + 3*current_settings.number_defined_dt)) &&
-                    (index_in_list <= RANG_DT4_OUT)
-                   )
-                   ||
-                   */
-                   (
-                    (type_ekran == INDEX_VIEWING_DT) &&
-                    (
-                     (index_in_list == (RANG_DT1_SET   + 3*(number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS) / 4)) ||
-                     (index_in_list == (RANG_DT1_RESET + 3*(number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS) / 4)) ||
-                     (index_in_list == (RANG_DT1_OUT   + 3*(number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS) / 4))
-                    )  
-                   ) 
-                  )   
-                  ||  
-                  (
-                   /*
-                   (
-                    (index_in_list >= (int)(RANG_D_AND1 + current_settings.number_defined_and)) &&
-                    (index_in_list <= RANG_D_AND8)
-                   )   
-                   ||
-                   */
-                   (
-                    (type_ekran == INDEX_VIEWING_D_AND) &&
-                    (index_in_list == (RANG_D_AND1 + (number_ekran - EKRAN_RANGUVANNJA_D_AND1)))
-                   )   
-                  )   
-                  ||  
-                  (
-                   /*
-                   (
-                    (index_in_list >= (int)(RANG_D_OR1 + current_settings.number_defined_or)) &&
-                    (index_in_list <= RANG_D_OR8)
-                   )   
-                   ||
-                   */
-                   (
-                    (type_ekran == INDEX_VIEWING_D_OR) &&
-                    (index_in_list == (RANG_D_OR1 + (number_ekran - EKRAN_RANGUVANNJA_D_OR1)))
-                   )   
-                  )   
-                  ||  
-                  (
-                   /*
-                   (
-                    (index_in_list >= (int)(RANG_D_XOR1 + current_settings.number_defined_xor)) &&
-                    (index_in_list <= RANG_D_XOR8)
-                   )   
-                   ||
-                   */
-                   (
-                    (type_ekran == INDEX_VIEWING_D_XOR) &&
-                    (index_in_list == (RANG_D_XOR1 + (number_ekran - EKRAN_RANGUVANNJA_D_XOR1)))
-                   )   
-                  )   
-                  ||  
-                  (
-                   /*
-                   (
-                    (index_in_list >= (int)(RANG_D_NOT1 + current_settings.number_defined_not)) &&
-                    (index_in_list <= RANG_D_NOT16)
-                   )   
-                   ||
-                   */
-                   (
-                    (type_ekran == INDEX_VIEWING_D_NOT) &&
-                    (index_in_list == (RANG_D_NOT1 + (number_ekran - EKRAN_RANGUVANNJA_D_NOT1)))
-                   )   
-                  )   
-                 )
-              {
-                /***/
-                //Зміщуємо біти стану реанжування функцій разом із їх назвами
-                /***/
-                unsigned int new_temp_data_1[N_BIG], new_temp_data_2[N_BIG];
-
-                for (unsigned int k = 0; k < N_BIG; k++)
-                {
-                  new_temp_data_1[k] = state_viewing_input[k] & maska[k];
-
-                  new_temp_data_2[k] = state_viewing_input[k] & (~maska[k]);
-                }
-
-                for (unsigned int k = 0; k < (N_BIG - 1); k++)
-                {
-                  new_temp_data_2[k] = ( (new_temp_data_2[k] >> 1) | ((new_temp_data_2[k + 1] & 0x1) << 31) ) & (~maska[k]);
-                }
-                new_temp_data_2[N_BIG - 1] =  (new_temp_data_2[N_BIG - 1] >> 1) & (~maska[N_BIG - 1]);
-                
-                for (unsigned int k = 0; k < N_BIG; k++)
-                {
-                  state_viewing_input[k] = new_temp_data_1[k] | new_temp_data_2[k];
-                }
-                /***/
-                for (unsigned int j = (index_in_list - offset); j < (max_row_ranguvannja - offset); j++)
-                {
-                  if ((j + 1) < (max_row_ranguvannja - offset))
-                  {
-                    for (unsigned int k = 0; k < MAX_COL_LCD; k++)
-                      name_string_tmp[j + NUMBER_ROW_FOR_NOTHING_INFORMATION][k] = name_string_tmp[j + NUMBER_ROW_FOR_NOTHING_INFORMATION + 1][k];
-                  }
-                  else 
-                  {
-                    for (unsigned int k = 0; k<MAX_COL_LCD; k++)
-                      name_string_tmp[j + NUMBER_ROW_FOR_NOTHING_INFORMATION][k] = ' ';
-                  }
-                }
-                if (current_ekran.index_position >= index_in_list) position_temp--;
-          
-                offset++;
-              }
-              else
-              {
-                _SET_BIT(maska, j1);
-                j1++;
-              }
-                
-              index_in_list++;
-            }
-          }
-          else
-            index_in_list += ((min_max_number[i][1] - min_max_number[i][0]) + 1);
+          index_in_list += ((min_max_number[i][1] - min_max_number[i][0]) + 1);
         }
       }
       else if (min_max_number[i][0] >=0)
@@ -1073,7 +1068,7 @@ void check_current_index_is_presented_in_configuration(
                                                                   /*int* add_filter_point,*/
                                                                   /*EL_FILTER_STRUCT el_filter[],*/
                                                                   int plus_minus,
-                                                                  int number_general_function,
+                                                                  int number_general_function_plus_number_el_function,
                                                                   int number_ctrl_phase_function,
                                                                   int number_el_function
                                                         )

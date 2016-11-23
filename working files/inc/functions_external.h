@@ -80,7 +80,7 @@ extern void make_ekran_chose_of_inputs_outputs_leds_df_buttons_for_ranguvannja(u
 extern void make_ekran_transformator(void);
 extern void make_ekran_transformator_control(void);
 extern void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int, unsigned int);
-extern void check_current_index_is_presented_in_configuration(unsigned int*, /*int*,*/ /*EL_FILTER_STRUCT[],*/ int, int, int, int);
+extern void check_current_index_is_presented_in_configuration(unsigned int*, /*int*,*/ /*EL_FILTER_STRUCT[],*/ int, int, int);
 extern void make_ekran_choose_CBOn_CBOff(void);
 extern void make_ekran_setpoint_switch(void);
 extern void make_ekran_timeout_switch(void);

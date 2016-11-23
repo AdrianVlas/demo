@@ -7155,9 +7155,8 @@ void main_manu_function(void)
                                                                      /*add_filter,*/
                                                                      /*el_filter,*/
                                                                      1,
-                                                                     NUMBER_GENERAL_SIGNAL_FOR_RANG,
-                                                                     NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG,
-                                                                     NUMBER_EL_SIGNAL_FOR_RANG
+                                                                     NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG,
+                                                                     NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG
                                                                     );
                   
                   //Перевіряємо, чи ми не  на індексі функцій із списку загальних, яку треба викинути для даного типу ранжування
@@ -8516,9 +8515,8 @@ void main_manu_function(void)
                                                                        /*add_filter,*/
                                                                        /*el_filter,*/
                                                                        0,
-                                                                       NUMBER_GENERAL_SIGNAL_FOR_RANG,
-                                                                       NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG,
-                                                                       NUMBER_EL_SIGNAL_FOR_RANG
+                                                                       NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG,
+                                                                       NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG
                                                                       );
                     //Перевіряємо, чи ми не  на індексі функцій із списку загальних, яку треба викинути для даного типу ранжування
                     if (
@@ -9041,9 +9039,8 @@ void main_manu_function(void)
                                                                        /*add_filter,*/
                                                                        /*el_filter,*/
                                                                        1,
-                                                                       NUMBER_GENERAL_SIGNAL_FOR_RANG,
-                                                                       NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG,
-                                                                       NUMBER_EL_SIGNAL_FOR_RANG
+                                                                       NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG,
+                                                                       NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG
                                                                       );
 
                     //Перевіряємо, чи ми не  на індексі функцій із списку загальних, яку треба викинути для даного типу ранжування

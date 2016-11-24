@@ -47,12 +47,6 @@ inline void Error_modbus(unsigned int address, unsigned int function, unsigned i
 /***********************************************************************************/
 void convert_order_list_function_to_gmm(unsigned int* input_array, unsigned short int* output_array)
 {
-  //Групи уставок
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_1_GRUPA_USTAVOK    , (BIT_MA_1_GRUPA_USTAVOK  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_2_GRUPA_USTAVOK    , (BIT_MA_2_GRUPA_USTAVOK  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_3_GRUPA_USTAVOK    , (BIT_MA_3_GRUPA_USTAVOK  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_4_GRUPA_USTAVOK    , (BIT_MA_4_GRUPA_USTAVOK  - BIT_MA_CURRENT_AF_BASE));
-
   //Перевірка фазування
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_ERROR_DELTA_U_CTRL_PHASE  , (BIT_MA_ERROR_DELTA_U_CTRL_PHASE   - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_ERROR_DELTA_PHI_CTRL_PHASE, (BIT_MA_ERROR_DELTA_PHI_CTRL_PHASE - BIT_MA_CURRENT_AF_BASE));
@@ -145,33 +139,13 @@ void convert_order_list_function_to_gmm(unsigned int* input_array, unsigned shor
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_ERROR_CONF_EL, (BIT_MA_ERROR_CONF_EL - BIT_MA_CURRENT_AF_BASE));
   
   //Функції загального користування
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_VKL_VV                      , (BIT_MA_VKL_VV                       - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_OTKL_VV                     , (BIT_MA_OTKL_VV                      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLOCK_VKL_VV                , (BIT_MA_BLOCK_VKL_VV                 - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_WORK_BO                     , (BIT_MA_WORK_BO                      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_WORK_BV                     , (BIT_MA_WORK_BV                      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_STATE_VV                    , (BIT_MA_STATE_VV                     - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_OTKL_VID_ZOVN_ZAHYSTIV      , (BIT_MA_OTKL_VID_ZOVN_ZAHYSTIV       - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PRYVID_VV                   , (BIT_MA_GEAR_VV                      - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_CTRL_VKL                    , (BIT_MA_CONTROL_VKL                  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_CTRL_OTKL                   , (BIT_MA_CONTROL_VIDKL                - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_PEREVYSHCHENNJA_Inom_VYMK   , (BIT_MA_PEREVYSHCHENNJA_Inom_VYMK    - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_KRYTYCHNYJ_RESURS_VYMYKACHA , (BIT_MA_KRYTYCHNYJ_RESURS_VYMYKACHA  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_VYCHERPANYJ_RESURS_VYMYKACHA, (BIT_MA_VYCHERPANYJ_RESURS_VYMYKACHA - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_DEFECT                      , (BIT_MA_DEFECT                       - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_AVAR_DEFECT                 , (BIT_MA_AVAR_DEFECT                  - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_RESET_LEDS                  , (BIT_MA_RESET_LEDS                   - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_RESET_RELES                 , (BIT_MA_RESET_RELES                  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_MISCEVE_DYSTANCIJNE         , (BIT_MA_MISCEVE_DYSTANCIJNE          - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_WORK_A_REJESTRATOR          , (BIT_MA_WORK_A_REJESTRATOR           - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_WORK_D_REJESTRATOR          , (BIT_MA_WORK_D_REJESTRATOR           - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SETTINGS_CHANGED            , (BIT_MA_SETTINGS_CHANGED             - BIT_MA_CURRENT_AF_BASE));
-
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_VIDKL_VID_ZAKHYSTIV              , (BIT_MA_VIDKL_VID_ZAKHYSTIV               - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_INVERS_DV_GRUPA_USTAVOK          , (BIT_MA_INVERS_DV_GRUPA_USTAVOK           - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_BLK_GRUP_USTAVOK_VID_ZACHYSTIV   , (BIT_MA_BLK_GRUP_USTAVOK_VID_ZACHYSTIV    - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV, (BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_READY_TU                         , (BIT_MA_READY_TU                          - BIT_MA_CURRENT_AF_BASE));
 }
 /***********************************************************************************/
 
@@ -619,11 +593,6 @@ unsigned int convert_order_list_oldr_to_gmm(unsigned int number, unsigned int nu
         rezultat = BIT_MA_ERROR_CONF_EL;
         break;
       }
-    case RANG_BLOCK_VKL_VV:
-      {
-        rezultat = BIT_MA_BLOCK_VKL_VV;
-        break;
-      }
     case RANG_RESET_LEDS:
       {
         rezultat = BIT_MA_RESET_LEDS;
@@ -632,61 +601,6 @@ unsigned int convert_order_list_oldr_to_gmm(unsigned int number, unsigned int nu
     case RANG_RESET_RELES:
       {
         rezultat = BIT_MA_RESET_RELES;
-        break;
-      }
-    case RANG_MISCEVE_DYSTANCIJNE:
-      {
-        rezultat = BIT_MA_MISCEVE_DYSTANCIJNE;
-        break;
-      }
-    case RANG_STATE_VV:
-      {
-        rezultat = BIT_MA_STATE_VV;
-        break;
-      }
-    case RANG_OTKL_VID_ZOVN_ZAHYSTIV:
-      {
-        rezultat = BIT_MA_OTKL_VID_ZOVN_ZAHYSTIV;
-        break;
-      }
-    case RANG_VKL_VV:
-      {
-        rezultat = BIT_MA_VKL_VV;
-        break;
-      }
-    case RANG_CTRL_VKL:
-      {
-        rezultat = BIT_MA_CONTROL_VKL;
-        break;
-      }
-    case RANG_OTKL_VV:
-      {
-        rezultat = BIT_MA_OTKL_VV;
-        break;
-      }
-    case RANG_CTRL_OTKL:
-      {
-        rezultat = BIT_MA_CONTROL_VIDKL;
-        break;
-      }
-    case RANG_PRYVID_VV:
-      {
-        rezultat = BIT_MA_GEAR_VV;
-        break;
-      }
-    case RANG_PEREVYSHCHENNJA_Inom_VYMK:
-      {
-        rezultat = BIT_MA_PEREVYSHCHENNJA_Inom_VYMK;
-        break;
-      }
-    case RANG_KRYTYCHNYJ_RESURS_VYMYKACHA:
-      {
-        rezultat = BIT_MA_KRYTYCHNYJ_RESURS_VYMYKACHA;
-        break;
-      }
-    case RANG_VYCHERPANYJ_RESURS_VYMYKACHA:
-      {
-        rezultat = BIT_MA_VYCHERPANYJ_RESURS_VYMYKACHA;
         break;
       }
     case RANG_DEFECT:
@@ -709,59 +623,9 @@ unsigned int convert_order_list_oldr_to_gmm(unsigned int number, unsigned int nu
         rezultat = BIT_MA_WORK_D_REJESTRATOR;
         break;
       }
-    case RANG_WORK_BO:
+    case RANG_SETTINGS_CHANGED:
       {
-        rezultat = BIT_MA_WORK_BO;
-        break;
-      }
-    case RANG_WORK_BV:
-      {
-        rezultat = BIT_MA_WORK_BV;
-        break;
-      }
-    case RANG_1_GRUPA_USTAVOK:
-      {
-        rezultat = BIT_MA_1_GRUPA_USTAVOK;
-        break;
-      }
-    case RANG_2_GRUPA_USTAVOK:
-      {
-        rezultat = BIT_MA_2_GRUPA_USTAVOK;
-        break;
-      }
-    case RANG_3_GRUPA_USTAVOK:
-      {
-        rezultat = BIT_MA_3_GRUPA_USTAVOK;
-        break;
-      }
-    case RANG_4_GRUPA_USTAVOK:
-      {
-        rezultat = BIT_MA_4_GRUPA_USTAVOK;
-        break;
-      }
-    case RANG_VIDKL_VID_ZAKHYSTIV:
-      {
-        rezultat = BIT_MA_VIDKL_VID_ZAKHYSTIV;
-        break;
-      }
-    case RANG_BLK_GRUP_USTAVOK_VID_ZACHYSTIV:
-      {
-        rezultat = BIT_MA_BLK_GRUP_USTAVOK_VID_ZACHYSTIV;
-        break;
-      }
-    case RANG_INVERS_DV_GRUPA_USTAVOK:
-      {
-        rezultat = BIT_MA_INVERS_DV_GRUPA_USTAVOK;
-        break;
-      }
-    case RANG_READY_TU:
-      {
-        rezultat = BIT_MA_READY_TU;
-        break;
-      }
-    case RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV:
-      {
-        rezultat = BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;
+        rezultat = BIT_MA_SETTINGS_CHANGED;
         break;
       }
     case RANG_ERROR_DELTA_U_CTRL_PHASE:
@@ -950,35 +814,13 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
     //Якщо data == 0, то це означає, що треба якусь сункцію скинути
     
     if (
-        (data == BIT_MA_BLOCK_VKL_VV          ) || 
         (data == BIT_MA_RESET_LEDS            ) ||
         (data == BIT_MA_RESET_RELES           ) || 
-        (data == BIT_MA_MISCEVE_DYSTANCIJNE   ) || 
-        (data == BIT_MA_STATE_VV              ) || 
-        (data == BIT_MA_OTKL_VID_ZOVN_ZAHYSTIV) ||
-        (data == BIT_MA_VKL_VV                ) || 
-        (data == BIT_MA_CONTROL_VKL           ) || 
-        (data == BIT_MA_OTKL_VV               ) || 
-        (data == BIT_MA_CONTROL_VIDKL         ) || 
-        (data == BIT_MA_GEAR_VV               ) || 
-        (data == BIT_MA_PEREVYSHCHENNJA_Inom_VYMK   ) || 
-        (data == BIT_MA_KRYTYCHNYJ_RESURS_VYMYKACHA ) || 
-        (data == BIT_MA_VYCHERPANYJ_RESURS_VYMYKACHA) || 
         (data == BIT_MA_DEFECT                ) || 
         (data == BIT_MA_AVAR_DEFECT           ) || 
         (data == BIT_MA_WORK_A_REJESTRATOR    ) || 
         (data == BIT_MA_WORK_D_REJESTRATOR    ) || 
-        (data == BIT_MA_WORK_BO               ) || 
-        (data == BIT_MA_WORK_BV               ) || 
-        (data == BIT_MA_1_GRUPA_USTAVOK       ) || 
-        (data == BIT_MA_2_GRUPA_USTAVOK       ) || 
-        (data == BIT_MA_3_GRUPA_USTAVOK       ) || 
-        (data == BIT_MA_4_GRUPA_USTAVOK       ) || 
-        (data == BIT_MA_VIDKL_VID_ZAKHYSTIV              ) || 
-        (data == BIT_MA_BLK_GRUP_USTAVOK_VID_ZACHYSTIV   ) || 
-        (data == BIT_MA_INVERS_DV_GRUPA_USTAVOK          ) || 
-        (data == BIT_MA_READY_TU                         ) || 
-        (data == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) 
+        (data == BIT_MA_SETTINGS_CHANGED) 
        )
     {
       //Зараз є намагання зранжувати загальну функцю і номер її є допустимим
@@ -991,14 +833,6 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
           ||
           (
            (source == SOURCE_DR_RANG) & (data == BIT_MA_WORK_D_REJESTRATOR)
-          )
-          ||
-          (
-           (source == SOURCE_ON_CB_RANG) & (data == BIT_MA_WORK_BV)
-          )
-          ||
-          (
-           (source == SOURCE_OFF_CB_RANG) & (data == BIT_MA_WORK_BO)
           )
          ) 
       {
@@ -1529,11 +1363,6 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
         _SET_BIT(set_array_rang, RANG_ERROR_CONF_EL);
         break;
       }
-    case BIT_MA_BLOCK_VKL_VV:
-      {
-         _SET_BIT(set_array_rang, RANG_BLOCK_VKL_VV);
-        break;
-      }
     case BIT_MA_RESET_LEDS:
       {
          _SET_BIT(set_array_rang, RANG_RESET_LEDS);
@@ -1542,61 +1371,6 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
     case BIT_MA_RESET_RELES:
       {
          _SET_BIT(set_array_rang, RANG_RESET_RELES);
-        break;
-      }
-    case BIT_MA_MISCEVE_DYSTANCIJNE:
-      {
-         _SET_BIT(set_array_rang, RANG_MISCEVE_DYSTANCIJNE);
-        break;
-      }
-    case BIT_MA_STATE_VV:
-      {
-         _SET_BIT(set_array_rang, RANG_STATE_VV);
-        break;
-      }
-    case BIT_MA_OTKL_VID_ZOVN_ZAHYSTIV:
-      {
-         _SET_BIT(set_array_rang, RANG_OTKL_VID_ZOVN_ZAHYSTIV);
-        break;
-      }
-    case BIT_MA_VKL_VV:
-      {
-         _SET_BIT(set_array_rang, RANG_VKL_VV);
-        break;
-      }
-    case BIT_MA_CONTROL_VKL:
-      {
-         _SET_BIT(set_array_rang, RANG_CTRL_VKL);
-        break;
-      }
-    case BIT_MA_OTKL_VV:
-      {
-         _SET_BIT(set_array_rang, RANG_OTKL_VV);
-        break;
-      }
-    case BIT_MA_CONTROL_VIDKL:
-      {
-         _SET_BIT(set_array_rang, RANG_CTRL_OTKL);
-        break;
-      }
-    case BIT_MA_GEAR_VV:
-      {
-         _SET_BIT(set_array_rang, RANG_PRYVID_VV);
-        break;
-      }
-    case BIT_MA_PEREVYSHCHENNJA_Inom_VYMK:
-      {
-         _SET_BIT(set_array_rang, RANG_PEREVYSHCHENNJA_Inom_VYMK);
-        break;
-      }
-    case BIT_MA_KRYTYCHNYJ_RESURS_VYMYKACHA:
-      {
-         _SET_BIT(set_array_rang, RANG_KRYTYCHNYJ_RESURS_VYMYKACHA);
-        break;
-      }
-    case BIT_MA_VYCHERPANYJ_RESURS_VYMYKACHA:
-      {
-         _SET_BIT(set_array_rang, RANG_VYCHERPANYJ_RESURS_VYMYKACHA);
         break;
       }
     case BIT_MA_DEFECT:
@@ -1619,59 +1393,9 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
         _SET_BIT(set_array_rang, RANG_WORK_D_REJESTRATOR);
         break;
       }
-    case BIT_MA_WORK_BO:
+    case BIT_MA_SETTINGS_CHANGED:
       {
-        _SET_BIT(set_array_rang, RANG_WORK_BO);
-        break;
-      }
-    case BIT_MA_WORK_BV:
-      {
-        _SET_BIT(set_array_rang, RANG_WORK_BV);
-        break;
-      }
-    case BIT_MA_1_GRUPA_USTAVOK:
-      {
-        _SET_BIT(set_array_rang, RANG_1_GRUPA_USTAVOK);
-        break;
-      }
-    case BIT_MA_2_GRUPA_USTAVOK:
-      {
-        _SET_BIT(set_array_rang, RANG_2_GRUPA_USTAVOK);
-        break;
-      }
-    case BIT_MA_3_GRUPA_USTAVOK:
-      {
-        _SET_BIT(set_array_rang, RANG_3_GRUPA_USTAVOK);
-        break;
-      }
-    case BIT_MA_4_GRUPA_USTAVOK:
-      {
-        _SET_BIT(set_array_rang, RANG_4_GRUPA_USTAVOK);
-        break;
-      }
-    case BIT_MA_VIDKL_VID_ZAKHYSTIV:
-      {
-         _SET_BIT(set_array_rang, RANG_VIDKL_VID_ZAKHYSTIV);
-        break;
-      }
-    case BIT_MA_BLK_GRUP_USTAVOK_VID_ZACHYSTIV:
-      {
-         _SET_BIT(set_array_rang, RANG_BLK_GRUP_USTAVOK_VID_ZACHYSTIV);
-        break;
-      }
-    case BIT_MA_INVERS_DV_GRUPA_USTAVOK:
-      {
-         _SET_BIT(set_array_rang, RANG_INVERS_DV_GRUPA_USTAVOK);
-        break;
-      }
-    case BIT_MA_READY_TU:
-      {
-         _SET_BIT(set_array_rang, RANG_READY_TU);
-        break;
-      }
-    case BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV:
-      {
-         _SET_BIT(set_array_rang, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
+        _SET_BIT(set_array_rang, RANG_SETTINGS_CHANGED);
         break;
       }
     case BIT_MA_ERROR_DELTA_U_CTRL_PHASE:
@@ -1875,12 +1599,6 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
     }
     else
     {
-      if ((information_about_restart_counter & (1 << type_interface)) != 0)
-      {
-        output_array[(BIT_MA_RESET_RESURS_VYMYKACHA - BIT_MA_CURRENT_AF_BASE) >> 4] |= 
-          (0x1 << ((BIT_MA_RESET_RESURS_VYMYKACHA - BIT_MA_CURRENT_AF_BASE) & 0xf));
-      }
-
       if (type_interface == USB_RECUEST)
       {
         for (unsigned int i = 0; i < N_BIG; i++) input_array[i] = trigger_functions_USB[i];
@@ -5340,23 +5058,6 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
           case ( 90 + NUMBER_ANALOG_CANALES):
           case ( 91 + NUMBER_ANALOG_CANALES):
           case ( 92 + NUMBER_ANALOG_CANALES):
-          case ( 93 + NUMBER_ANALOG_CANALES):
-          case ( 94 + NUMBER_ANALOG_CANALES):
-          case ( 95 + NUMBER_ANALOG_CANALES):
-          case ( 96 + NUMBER_ANALOG_CANALES):
-          case ( 97 + NUMBER_ANALOG_CANALES):
-          case ( 98 + NUMBER_ANALOG_CANALES):
-          case ( 99 + NUMBER_ANALOG_CANALES):
-          case (100 + NUMBER_ANALOG_CANALES):
-          case (101 + NUMBER_ANALOG_CANALES):
-          case (102 + NUMBER_ANALOG_CANALES):
-          case (103 + NUMBER_ANALOG_CANALES):
-          case (104 + NUMBER_ANALOG_CANALES):
-          case (105 + NUMBER_ANALOG_CANALES):
-          case (106 + NUMBER_ANALOG_CANALES):
-          case (107 + NUMBER_ANALOG_CANALES):
-          case (108 + NUMBER_ANALOG_CANALES):
-          case (109 + NUMBER_ANALOG_CANALES):
             {
               if (length <= 19)
               {
@@ -5937,23 +5638,6 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
           case 90:
           case 91:
           case 92:
-          case 93:
-          case 94:
-          case 95:
-          case 96:
-          case 97:
-          case 98:
-          case 99:
-          case 100:
-          case 101:
-          case 102:
-          case 103:
-          case 104:
-          case 105:
-          case 106:
-          case 107:
-          case 108:
-          case 109:
             {
               if (length <= 19)
               {
@@ -6564,24 +6248,10 @@ void modbus_rountines(unsigned int type_interface)
                     (add_data == BIT_MA_RESET_GENERAL_AF) /*Скидання загальних функцій*/
                     ||
                     (  
-                     (_CHECK_SET_BIT(active_functions, RANG_MISCEVE_DYSTANCIJNE) == 0)
-                     &&
-                     (  
-                      (add_data == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) /*Скидання блокування готовності до ТУ від спрацьованих захистів*/  
-                      ||
-                      (  
-                       (_CHECK_SET_BIT(active_functions, RANG_READY_TU) != 0)
-                       &&
-                       (
-                        ((add_data >= BIT_MA_INPUT_DF1) && (add_data <= BIT_MA_INPUT_DF8)) || /*Входи Определяємих функцій*/
-                        ((add_data >= BIT_MA_DT1_SET  ) && (add_data <= BIT_MA_DT4_RESET)) || /*Оприділювальні триггери*/
-                        ( add_data == BIT_MA_VKL_VV                                      ) || /*Вкл.  виключателя*/
-                        ( add_data == BIT_MA_OTKL_VV                                     ) || /*Викл. виключателя*/
-                        ( add_data == BIT_MA_RESET_LEDS                                  ) || /*Очищення індикації*/
-                        ( add_data == BIT_MA_RESET_RELES                                 )    /*Скидання реле*/
-                       )   
-                      )
-                     )    
+                     ((add_data >= BIT_MA_INPUT_DF1) && (add_data <= BIT_MA_INPUT_DF8)) || /*Входи Определяємих функцій*/
+                     ((add_data >= BIT_MA_DT1_SET  ) && (add_data <= BIT_MA_DT4_RESET)) || /*Оприділювальні триггери*/
+                     ( add_data == BIT_MA_RESET_LEDS                                  ) || /*Очищення індикації*/
+                     ( add_data == BIT_MA_RESET_RELES                                 )    /*Скидання реле*/
                     )
                    )   
                   )
@@ -6607,21 +6277,10 @@ void modbus_rountines(unsigned int type_interface)
               first_address_of_word_for_function_3_or_4 = M_ADDRESS_DT;
             }
             else if(
-                    (add_data == BIT_MA_OTKL_AVR             ) || /*Відключення АВР*/
-                    (add_data == BIT_MA_SBROS_BLOCK_AVR      )    /*Скидання блокувння АВР*/
-                   )
-            {
-              offset = add_data - BIT_MA_AVR_BASE;
-              first_address_of_word_for_function_3_or_4 = M_ADDRESS_AVR;
-            }
-            else if(
-                    (add_data == BIT_MA_VKL_VV                ) || /*Вкл.  виключателя*/
-                    (add_data == BIT_MA_OTKL_VV               ) || /*Викл. виключателя*/
                     (add_data == BIT_MA_RESET_LEDS            ) || /*Очищення індикації*/
                     (add_data == BIT_MA_RESET_RELES           ) || /*Скидання реле*/
                     (add_data == BIT_MA_RESET_GENERAL_AF      ) || /*Скидання загальних функцій*/
-                    (add_data == BIT_MA_NEW_SETTINGS_SET      ) || /*Команда активації внесених змін у налаштування приладу через інтерфейс*/
-                    (add_data == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) /*Скидання блокування готовності до ТУ від захистів*/
+                    (add_data == BIT_MA_NEW_SETTINGS_SET      )    /*Команда активації внесених змін у налаштування приладу через інтерфейс*/
                    )
             {
               offset = add_data - BIT_MA_COMMAND_BASE;
@@ -6693,8 +6352,6 @@ void modbus_rountines(unsigned int type_interface)
                       ) 
                      )
                      ||  
-                     (first_address_of_word_for_function_3_or_4 == M_ADDRESS_AVR)
-                     ||  
                      (
                       (first_address_of_word_for_function_3_or_4 == M_ADDRESS_COMMAND_BASE)
                       &&
@@ -6712,11 +6369,8 @@ void modbus_rountines(unsigned int type_interface)
               Тут ми використовуємо каонстанти активації функцій з допомогою ф-кнопок, бо механізм обробки однаковий що активацшя
               функції з ф-кнопкт, що активація функції з інтерейсу
               */
-                   if  (add_data == BIT_MA_VKL_VV                           ) activation_function_from_interface |= 1 << RANG_TU_VKL_VV;                            /*Вкл.  виключателя*/
-              else if  (add_data == BIT_MA_OTKL_VV                          ) activation_function_from_interface |= 1 << RANG_TU_OTKL_VV;                           /*Викл. виключателя*/
-              else if  (add_data == BIT_MA_RESET_LEDS                       ) activation_function_from_interface |= 1 << RANG_TU_RESET_LEDS;                        /*Очищення індикації*/
+                   if  (add_data == BIT_MA_RESET_LEDS                       ) activation_function_from_interface |= 1 << RANG_TU_RESET_LEDS;                        /*Очищення індикації*/
               else if  (add_data == BIT_MA_RESET_RELES                      ) activation_function_from_interface |= 1 << RANG_TU_RESET_RELES;                       /*Скидання реле*/
-              else if  (add_data == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) activation_function_from_interface |= 1 << RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;                            /*Вкл.  виключателя*/
               else if  (add_data == BIT_MA_RESET_GENERAL_AF) 
               {
                 //Скидання загальних функцій 
@@ -6760,24 +6414,10 @@ void modbus_rountines(unsigned int type_interface)
                   (add_data == BIT_MA_RESET_GENERAL_AF) /*Скидання загальних функцій*/
                   ||
                   (  
-                   (_CHECK_SET_BIT(active_functions, RANG_MISCEVE_DYSTANCIJNE) == 0)
-                   &&
-                   (  
-                    (add_data == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) /*Скидання блокування готовності до ТУ від спрацьованих захистів*/  
-                    ||
-                    (
-                     (_CHECK_SET_BIT(active_functions, RANG_READY_TU) != 0)
-                     &&
-                     (
-                      ((add_data >= BIT_MA_INPUT_DF1) && (add_data <= BIT_MA_INPUT_DF8)) || /*Входи Определяємих функцій*/
-                      ((add_data >= BIT_MA_DT1_SET ) && (add_data <= BIT_MA_DT4_RESET )) || /*Оприд. триґери*/
-                      ( add_data == BIT_MA_VKL_VV                                      ) || /*Вкл.  виключателя*/
-                      ( add_data == BIT_MA_OTKL_VV                                     ) || /*Викл. виключателя*/
-                      ( add_data == BIT_MA_RESET_LEDS                                  ) || /*Очищення індикації*/
-                      ( add_data == BIT_MA_RESET_RELES                                 )    /*Скидання реле*/
-                     )   
-                    )
-                   )
+                   ((add_data >= BIT_MA_INPUT_DF1) && (add_data <= BIT_MA_INPUT_DF8)) || /*Входи Определяємих функцій*/
+                   ((add_data >= BIT_MA_DT1_SET ) && (add_data <= BIT_MA_DT4_RESET )) || /*Оприд. триґери*/
+                   ( add_data == BIT_MA_RESET_LEDS                                  ) || /*Очищення індикації*/
+                   ( add_data == BIT_MA_RESET_RELES                                 )    /*Скидання реле*/
                   )
                  )   
                 )
@@ -7144,23 +6784,9 @@ void modbus_rountines(unsigned int type_interface)
                    ((add_data >= BIT_MA_NEW_SETTINGS_SET) && ((add_data + number - 1) <= BIT_MA_NEW_SETTINGS_SET))
                    ||
                    (
-                    (_CHECK_SET_BIT(active_functions, RANG_MISCEVE_DYSTANCIJNE) == 0)
-                    &&
-                    (  
-                     ((add_data >= BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) && ((add_data + number - 1) <= BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV))
-                     ||  
-                     (
-                      (_CHECK_SET_BIT(active_functions, RANG_READY_TU) != 0)
-                      &&  
-                      (
-                       ((add_data >= BIT_MA_OTKL_AVR           ) && ((add_data + number - 1) <= BIT_MA_SBROS_BLOCK_AVR       )) || 
-                       ((add_data >= BIT_MA_INPUT_DF1          ) && ((add_data + number - 1) <= BIT_MA_INPUT_DF8             )) || 
-                       ((add_data >= BIT_MA_DT1_SET            ) && ((add_data + number - 1) <= BIT_MA_DT4_RESET             )) ||
-                       ((add_data >= BIT_MA_VKL_VV             ) && ((add_data + number - 1) <= BIT_MA_OTKL_VV               )) ||
-                       ((add_data >= BIT_MA_RESET_LEDS         ) && ((add_data + number - 1) <= BIT_MA_RESET_GENERAL_AF      ))
-                      )
-                     )
-                    )   
+                    ((add_data >= BIT_MA_INPUT_DF1          ) && ((add_data + number - 1) <= BIT_MA_INPUT_DF8             )) || 
+                    ((add_data >= BIT_MA_DT1_SET            ) && ((add_data + number - 1) <= BIT_MA_DT4_RESET             )) ||
+                    ((add_data >= BIT_MA_RESET_LEDS         ) && ((add_data + number - 1) <= BIT_MA_RESET_GENERAL_AF      ))
                    ) 
                   )
           {
@@ -7173,12 +6799,6 @@ void modbus_rountines(unsigned int type_interface)
               offset = add_data - BIT_MA_CONTROL_BASE;
               first_address_of_word_for_function_3_or_4 = M_ADDRESS_CONTROL_BASE;
             }
-            else if((add_data >= BIT_MA_OTKL_AVR) && (add_data <= BIT_MA_SBROS_BLOCK_AVR))
-            {
-              //Команди АВР
-              offset = add_data - BIT_MA_AVR_BASE;
-              first_address_of_word_for_function_3_or_4 = M_ADDRESS_AVR;
-            }
             else if((add_data >= BIT_MA_INPUT_DF1) && (add_data <= BIT_MA_INPUT_DF8)) /*Определяємі функції*/
             {
               offset = add_data - BIT_MA_DF_BASE;
@@ -7190,10 +6810,8 @@ void modbus_rountines(unsigned int type_interface)
               first_address_of_word_for_function_3_or_4 = M_ADDRESS_DT;
             }
             else if(
-                    ((add_data >= BIT_MA_VKL_VV                           ) && (add_data <= BIT_MA_OTKL_VV               )) ||
                     ((add_data >= BIT_MA_RESET_LEDS                       ) && (add_data <= BIT_MA_RESET_GENERAL_AF      )) ||
-                    ( add_data == BIT_MA_NEW_SETTINGS_SET                 ) ||
-                    ( add_data == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV)
+                    ( add_data == BIT_MA_NEW_SETTINGS_SET                 )
                    )
             {
               //Команди загальні
@@ -7313,8 +6931,6 @@ void modbus_rountines(unsigned int type_interface)
                       ) 
                      )
                      ||  
-                     (first_address_of_word_for_function_3_or_4 == M_ADDRESS_AVR)
-                     ||  
                      (
                       (first_address_of_word_for_function_3_or_4 == M_ADDRESS_COMMAND_BASE)
                       &&
@@ -7357,16 +6973,10 @@ void modbus_rountines(unsigned int type_interface)
                 number_activated_function = add_data + i;
                 if (value_of_bit != 0)
                 {
-                       if  (number_activated_function == BIT_MA_VKL_VV                           )
-                   activation_function_from_interface_tmp |= 1 << RANG_TU_VKL_VV;                        /*Вкл.  виключателя*/
-                  else if  (number_activated_function == BIT_MA_OTKL_VV                          )
-                    activation_function_from_interface_tmp |= 1 << RANG_TU_OTKL_VV;                       /*Викл. виключателя*/
-                  else if  (number_activated_function == BIT_MA_RESET_LEDS                       )
+                       if  (number_activated_function == BIT_MA_RESET_LEDS                       )
                     activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_LEDS;                    /*Очищення індикації*/
                   else if  (number_activated_function == BIT_MA_RESET_RELES                      )
                     activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_RELES;                   /*Скидання реле*/
-                  else if  (number_activated_function == BIT_MA_RESET_BLOCK_READY_TU_VID_ZAHYSTIV)
-                    activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV;/*Скидання блокування готовності до ТУ від захистів*/
                   else if  (number_activated_function == BIT_MA_RESET_GENERAL_AF                 ) 
                   {
                     //Скидання загальних функцій 

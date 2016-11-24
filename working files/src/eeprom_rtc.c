@@ -195,7 +195,7 @@ void main_routines_for_i2c(void)
   static int phi_ustuvannja_comp[NUMBER_ANALOG_CANALES];
   static float phi_ustuvannja_sin_cos_comp[2*NUMBER_ANALOG_CANALES];
   static unsigned int state_trigger_leds_comp, state_signal_outputs_comp;
-  static unsigned int misceve_dystancijne_comp, trigger_active_functions_comp[N_BIG];
+  static unsigned int trigger_active_functions_comp[N_BIG];
   static __INFO_REJESTRATOR info_rejestrator_ar_comp;
   static __INFO_REJESTRATOR info_rejestrator_dr_comp;
   static __INFO_REJESTRATOR info_rejestrator_pr_err_comp;
@@ -417,7 +417,7 @@ void main_routines_for_i2c(void)
       offset_from_start = number_block_trg_func_write_to_eeprom*SIZE_PAGE_EEPROM;
 
       //Кількість байт до кінця буферу 
-      size_to_end = (1 + sizeof(trigger_active_functions) + 1) - offset_from_start; 
+      size_to_end = (sizeof(trigger_active_functions) + 1) - offset_from_start; 
       
       if (size_to_end > 0)
       {
@@ -662,7 +662,7 @@ void main_routines_for_i2c(void)
       unsigned int rez;
 
       //Запускаємо процес читання
-      rez = start_read_buffer_via_I2C(EEPROM_ADDRESS, START_ADDRESS_TRG_FUNC, read_write_i2c_buffer, (1 + sizeof(trigger_active_functions) + 1));
+      rez = start_read_buffer_via_I2C(EEPROM_ADDRESS, START_ADDRESS_TRG_FUNC, read_write_i2c_buffer, (sizeof(trigger_active_functions) + 1));
       
       //Аналізуємо успішність запуску
       if (rez > 1)
@@ -923,13 +923,6 @@ void main_routines_for_i2c(void)
       unsigned char  *point_2;
       unsigned int offset = 0;
 
-      //Додаємо інформацію по місцевому/дистанційному управлінню
-      temp_value = misceve_dystancijne & 0xff; /*Достатньо одного байту, так як інформація записується на рівні 0/1*/
-      misceve_dystancijne_comp = misceve_dystancijne;
-      read_write_i2c_buffer[offset] = temp_value;
-      crc_eeprom_trg_func += temp_value; 
-      offset += 1;
-      
       //Додаємо триґерні функції
       point_1 = (unsigned char*)(&trigger_active_functions); 
       point_2 = (unsigned char*)(&trigger_active_functions_comp);
@@ -1717,7 +1710,7 @@ void main_routines_for_i2c(void)
       //Аналізуємо прочитані дані
       //Спочатку аналізуємо, чи прояитаний блок є пустим, чи вже попередньо записаним
       unsigned int empty_block = 1, i = 0; 
-      unsigned int misceve_dystancijne_tmp, trigger_active_functions_tmp[N_BIG];
+      unsigned int trigger_active_functions_tmp[N_BIG];
 
       while ((empty_block != 0) && ( i < (1 + sizeof(trigger_active_functions_tmp) + 1)))
       {
@@ -1736,11 +1729,6 @@ void main_routines_for_i2c(void)
         unsigned char crc_eeprom_trg_func = 0, temp_value;
         unsigned char  *point;
         unsigned int offset = 0;
-
-        temp_value = read_write_i2c_buffer[offset];
-        misceve_dystancijne_tmp = temp_value;
-        crc_eeprom_trg_func += temp_value;
-        offset += 1;
 
         point = (unsigned char*)(&trigger_active_functions_tmp); 
         for (i =0; i < sizeof(trigger_active_functions_tmp); i++)
@@ -1767,7 +1755,6 @@ void main_routines_for_i2c(void)
             //Виконувалося зчитування триґерної інформації
             
             //Перекидаємо триґерну інформацію у робочі змінні
-            misceve_dystancijne = misceve_dystancijne_tmp;
             for(unsigned int k = 0; k < N_BIG; k++) trigger_active_functions[k] = trigger_active_functions_tmp[k];
             restore_trigger_functions(trigger_active_functions);
           }
@@ -1777,7 +1764,6 @@ void main_routines_for_i2c(void)
             
             unsigned int difference = 0;
   
-            if (misceve_dystancijne_comp != misceve_dystancijne_tmp) difference = 0xff;
             i = 0;
             while ((difference == 0) && (i < N_BIG))
             {

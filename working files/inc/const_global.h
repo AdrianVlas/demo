@@ -75,13 +75,9 @@ TOTAL_NUMBER_PROTECTION
 enum __rang_button {
 RANG_TU_RESET_LEDS  = 0,
 RANG_TU_RESET_RELES,
-RANG_TU_MISCEVE_DYSTANCIJNE,
-RANG_TU_VKL_VV,
-RANG_TU_OTKL_VV,
-RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV
 };
 
-#define NUMBER_GENERAL_SIGNAL_FOR_RANG_TU     6
+#define NUMBER_GENERAL_SIGNAL_FOR_RANG_TU     2
 #define NUMBER_EL_SIGNAL_FOR_RANG_TU          0
 #define NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_TU  0
 
@@ -96,40 +92,23 @@ RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV
 //Константи для ранжування дискретних виходів-свтодіодів-О-функцій-реєстраторів
 /*****************************************/
 enum __rang_output_led_df_reg {
-RANG_BLOCK_VKL_VV = 0,
 RANG_RESET_LEDS,
 RANG_RESET_RELES,
-RANG_MISCEVE_DYSTANCIJNE,
-RANG_STATE_VV,
-RANG_PUSK_K1_AVR,
-RANG_PUSK_K2_AVR,
-RANG_TN1,
-RANG_TN2,
-RANG_OTKL_VID_ZOVN_ZAHYSTIV,
-RANG_VKL_VV,
-RANG_CTRL_VKL,
-RANG_OTKL_VV,
-RANG_CTRL_OTKL,
-RANG_PRYVID_VV,
-RANG_PEREVYSHCHENNJA_Inom_VYMK,
-RANG_KRYTYCHNYJ_RESURS_VYMYKACHA,
-RANG_VYCHERPANYJ_RESURS_VYMYKACHA,
 RANG_DEFECT,
 RANG_AVAR_DEFECT,
 RANG_WORK_A_REJESTRATOR,
 RANG_WORK_D_REJESTRATOR,
-RANG_VIDKL_VID_ZAKHYSTIV,
-RANG_WORK_BO,
-RANG_WORK_BV,
-RANG_1_GRUPA_USTAVOK,
-RANG_2_GRUPA_USTAVOK,
-RANG_3_GRUPA_USTAVOK,
-RANG_4_GRUPA_USTAVOK,
-RANG_INVERS_DV_GRUPA_USTAVOK,
-RANG_BLK_GRUP_USTAVOK_VID_ZACHYSTIV,
-RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV,
-RANG_READY_TU,
 RANG_SETTINGS_CHANGED,
+RANG_DI1,
+RANG_DI2,
+RANG_DI3,
+RANG_DI4,
+RANG_DI5,
+RANG_DI6,
+RANG_DI7,
+RANG_DI8,
+RANG_DI9,
+RANG_DI10,
 
 RANG_DF1_IN,
 RANG_DF1_OUT,
@@ -208,7 +187,7 @@ RANG_ERROR_SEC_TN1_CTRL_PHASE,
 RANG_ERROR_SEC_TN2_CTRL_PHASE
 };
 
-#define NUMBER_GENERAL_SIGNAL_FOR_RANG     34
+#define NUMBER_GENERAL_SIGNAL_FOR_RANG     17
 #define NUMBER_EL_SIGNAL_FOR_RANG          69
 #define NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG  5
 
@@ -225,19 +204,18 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 /*****************************************/
 
 #define MASKA_FOR_INPUT_SIGNALS_0        (unsigned int)(              \
-    (1 << (RANG_BLOCK_VKL_VV - 0))                            /* 0*/  \
-  | (1 << (RANG_RESET_LEDS - 0))                              /* 1*/  \
+    (1 << (RANG_RESET_LEDS - 0))                              /* 1*/  \
   | (1 << (RANG_RESET_RELES - 0))                             /* 2*/  \
-  | (1 << (RANG_MISCEVE_DYSTANCIJNE - 0))                     /* 3*/  \
-  | (1 << (RANG_STATE_VV - 0))                                /* 4*/  \
-  | (1 << (RANG_PUSK_K1_AVR - 0))                             /* 5*/  \
-  | (1 << (RANG_PUSK_K2_AVR - 0))                             /* 6*/  \
-  | (1 << (RANG_OTKL_VID_ZOVN_ZAHYSTIV - 0))                  /* 7*/  \
-  | (1 << (RANG_VKL_VV - 0))                                  /*10*/  \
-  | (1 << (RANG_CTRL_VKL - 0))                                /*11*/  \
-  | (1 << (RANG_OTKL_VV - 0))                                 /*12*/  \
-  | (1 << (RANG_CTRL_OTKL - 0))                               /*13*/  \
-  | (1 << (RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV - 0))       /*31*/  \
+  | (1 << (RANG_DI1  - 0))                                    /* 8*/  \
+  | (1 << (RANG_DI2  - 0))                                    /* 9*/  \
+  | (1 << (RANG_DI3  - 0))                                    /*10*/  \
+  | (1 << (RANG_DI4  - 0))                                    /*11*/  \
+  | (1 << (RANG_DI5  - 0))                                    /*12*/  \
+  | (1 << (RANG_DI6  - 0))                                    /*13*/  \
+  | (1 << (RANG_DI7  - 0))                                    /*14*/  \
+  | (1 << (RANG_DI8  - 0))                                    /*15*/  \
+  | (1 << (RANG_DI9  - 0))                                    /*16*/  \
+  | (1 << (RANG_DI10 - 0))                                    /*17*/  \
 )
 
 #define MASKA_FOR_INPUT_SIGNALS_1                  0
@@ -254,16 +232,16 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 /*****************************************/
 #define MASKA_CTRL_PHASE_SIGNALS_0                 0
 #define MASKA_CTRL_PHASE_SIGNALS_1                 0
-#define MASKA_CTRL_PHASE_SIGNALS_2                 0
 
-#define MASKA_CTRL_PHASE_SIGNALS_3 (unsigned int)(                  \
-     (1 << (RANG_ERROR_DELTA_U_CTRL_PHASE - 96))            /*103*/\
-   | (1 << (RANG_ERROR_DELTA_PHI_CTRL_PHASE - 96))          /*104*/\
-   | (1 << (RANG_ERROR_DELTA_F_CTRL_PHASE - 96))            /*105*/\
-   | (1 << (RANG_ERROR_SEC_TN1_CTRL_PHASE - 96))            /*106*/\
-   | (1 << (RANG_ERROR_SEC_TN2_CTRL_PHASE - 96))            /*107*/\
+#define MASKA_CTRL_PHASE_SIGNALS_2 (unsigned int)(                \
+     (1 << (RANG_ERROR_DELTA_U_CTRL_PHASE - 64))            /*87*/\
+   | (1 << (RANG_ERROR_DELTA_PHI_CTRL_PHASE - 64))          /*88*/\
+   | (1 << (RANG_ERROR_DELTA_F_CTRL_PHASE - 64))            /*89*/\
+   | (1 << (RANG_ERROR_SEC_TN1_CTRL_PHASE - 64))            /*90*/\
+   | (1 << (RANG_ERROR_SEC_TN2_CTRL_PHASE - 64))            /*91*/\
 )
 
+#define MASKA_CTRL_PHASE_SIGNALS_3                 0
 #define MASKA_CTRL_PHASE_SIGNALS_4                 0
 #define MASKA_CTRL_PHASE_SIGNALS_5                 0
 #define MASKA_CTRL_PHASE_SIGNALS_6                 0
@@ -274,11 +252,11 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 /*****************************************/
 #define MASKA_TRIGGER_SIGNALES_0                  0
 
-#define MASKA_TRIGGER_SIGNALES_1               (unsigned int)(       \
-     (1 << (RANG_DT1_OUT - 32))                              /*52*/\
-   | (1 << (RANG_DT2_OUT - 32))                              /*55*/\
-   | (1 << (RANG_DT3_OUT - 32))                              /*58*/\
-   | (1 << (RANG_DT4_OUT - 32))                              /*61*/\
+#define MASKA_TRIGGER_SIGNALES_1               (unsigned int)(     \
+     (1 << (RANG_DT1_OUT - 32))                              /*36*/\
+   | (1 << (RANG_DT2_OUT - 32))                              /*39*/\
+   | (1 << (RANG_DT3_OUT - 32))                              /*42*/\
+   | (1 << (RANG_DT4_OUT - 32))                              /*45*/\
 )
 
 #define MASKA_TRIGGER_SIGNALES_2                  0
@@ -294,19 +272,13 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 /*****************************************/
 
 #define MASKA_INFO_SIGNALES_0  (unsigned int)(                      \
-     (1 << (RANG_STATE_VV - 0))                               /* 4*/\
-   | (1 << (RANG_PUSK_K1_AVR - 0))                            /* 5*/\
-   | (1 << (RANG_PUSK_K2_AVR - 0))                            /* 6*/\
-   | (1 << (RANG_DEFECT - 0))                                 /*18*/\
-   | (1 << (RANG_AVAR_DEFECT - 0))                            /*19*/\
-   | (1 << (RANG_WORK_A_REJESTRATOR - 0))                     /*20*/\
-   | (1 << (RANG_WORK_D_REJESTRATOR - 0))                     /*21*/\
+     (1 << (RANG_DEFECT - 0))                                 /* 3*/\
+   | (1 << (RANG_WORK_A_REJESTRATOR - 0))                     /* 5*/\
+   | (1 << (RANG_WORK_D_REJESTRATOR - 0))                     /* 6*/\
+   | (1 << (RANG_SETTINGS_CHANGED - 0))                       /* 7*/\
 )     
 
-#define MASKA_INFO_SIGNALES_1  (unsigned int)(                      \
-     (1 << (RANG_SETTINGS_CHANGED - 32))                      /*33*/\
-)     
-
+#define MASKA_INFO_SIGNALES_1                  0
 #define MASKA_INFO_SIGNALES_2                  0
 #define MASKA_INFO_SIGNALES_3                  0
 #define MASKA_INFO_SIGNALES_4                  0

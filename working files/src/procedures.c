@@ -1151,9 +1151,6 @@ void control_trg_func(void)
   unsigned char  *point; 
   unsigned int i;
   
-  temp_value_1 = misceve_dystancijne_ctrl & 0xff;
-  crc_trg_func_tmp += temp_value_1;
-  
   point = (unsigned char*)(trigger_active_functions_ctrl);
   i = 0;  
   while (i < sizeof(trigger_active_functions_ctrl))

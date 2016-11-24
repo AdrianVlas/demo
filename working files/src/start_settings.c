@@ -1893,7 +1893,6 @@ void error_reading_with_eeprom()
     }
     else if (information_type == 2)
     {
-      misceve_dystancijne = 0;
       for (unsigned int i = 0; i < N_BIG; i++) trigger_active_functions[i] = 0x0;
 
       //Записуємо очищену триґерну інформацію

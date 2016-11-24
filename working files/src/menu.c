@@ -7173,10 +7173,6 @@ void main_manu_function(void)
                       index_deleted_function = RANG_WORK_A_REJESTRATOR;
                     else if (current_ekran.current_level == EKRAN_RANGUVANNJA_DIGITAL_REGISTRATOR)
                       index_deleted_function = RANG_WORK_D_REJESTRATOR;
-                    else if (current_ekran.current_level == EKRAN_RANGUVANNJA_OFF_CB)
-                      index_deleted_function = RANG_WORK_BO;
-                    else if (current_ekran.current_level == EKRAN_RANGUVANNJA_ON_CB)
-                      index_deleted_function = RANG_WORK_BV;
                     
                     if(index_deleted_function == current_ekran.index_position)
                     {
@@ -8532,10 +8528,6 @@ void main_manu_function(void)
                         index_deleted_function = RANG_WORK_A_REJESTRATOR;
                       else if (current_ekran.current_level == EKRAN_RANGUVANNJA_DIGITAL_REGISTRATOR)
                         index_deleted_function = RANG_WORK_D_REJESTRATOR;
-                      else if (current_ekran.current_level == EKRAN_RANGUVANNJA_OFF_CB)
-                        index_deleted_function = RANG_WORK_BO;
-                      else if (current_ekran.current_level == EKRAN_RANGUVANNJA_ON_CB)
-                        index_deleted_function = RANG_WORK_BV;
                     
                       if(index_deleted_function == current_ekran.index_position)
                       {
@@ -9057,10 +9049,6 @@ void main_manu_function(void)
                         index_deleted_function = RANG_WORK_A_REJESTRATOR;
                       else if (current_ekran.current_level == EKRAN_RANGUVANNJA_DIGITAL_REGISTRATOR)
                         index_deleted_function = RANG_WORK_D_REJESTRATOR;
-                      else if (current_ekran.current_level == EKRAN_RANGUVANNJA_OFF_CB)
-                        index_deleted_function = RANG_WORK_BO;
-                      else if (current_ekran.current_level == EKRAN_RANGUVANNJA_ON_CB)
-                        index_deleted_function = RANG_WORK_BV;
                     
                       if(index_deleted_function == current_ekran.index_position)
                       {

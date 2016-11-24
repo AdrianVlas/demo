@@ -1937,14 +1937,10 @@ inline void main_protection(void)
     if ((reset_trigger_function_from_interface & (1 << USB_RECUEST)) != 0)
     {
       for (unsigned int i = 0; i < N_BIG; i++) trigger_functions_USB[i] = 0;
-      
-      information_about_restart_counter  &= (unsigned int)(~(1 << USB_RECUEST));
     }
     if ((reset_trigger_function_from_interface & (1 << RS485_RECUEST)) != 0)
     {
       for (unsigned int i = 0; i < N_BIG; i++) trigger_functions_RS485[i] = 0;
-      
-      information_about_restart_counter  &= (unsigned int)(~(1 << RS485_RECUEST));
     }
     
     //Помічаємо що ми виконали очистку по ВСІХ інтерфейсах
@@ -1989,31 +1985,9 @@ inline void main_protection(void)
         _SET_BIT(active_functions, RANG_RESET_LEDS);
       if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_RESET_RELES)) 
         _SET_BIT(active_functions, RANG_RESET_RELES);
-
-      //"Місцеве/Дистанційне" управління
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_MISCEVE_DYSTANCIJNE))
-      {
-        //Активована команда з функціональної кнопки "Місцеве/Дистанційне"
-        misceve_dystancijne = (misceve_dystancijne ^ 0x1) & 0x1;
-        //Виставляємо повідомлення про те, що в EEPROM треба записати нові значення сигнальних виходів і тригерних світлоіндикаторів
-        _SET_BIT(control_i2c_taskes, TASK_START_WRITE_TRG_FUNC_EEPROM_BIT);
-      }
-      
-      //Включення-виключення вимикача
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_VKL_VV)) 
-        _SET_BIT(active_functions, RANG_VKL_VV);
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_OTKL_VV)) 
-        _SET_BIT(active_functions, RANG_OTKL_VV);
-
-      //скидання блокування готовності до ТУ
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV)) 
-        _SET_BIT(active_functions, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
     }
   }
   /**************************/
-
-  //"Місц./Дистанц."  з функціональних кнопок меню
-  active_functions[RANG_MISCEVE_DYSTANCIJNE >> 5] |= (misceve_dystancijne & 0x1) << (RANG_MISCEVE_DYSTANCIJNE & 0x1f);
 
   /**************************/
   //Опрацьовуємо дискретні входи
@@ -2021,6 +1995,10 @@ inline void main_protection(void)
   //Перевіряємо чи є зараз активні входи
   if (active_inputs !=0)
   {
+    for (unsigned int i = 0; i < NUMBER_INPUTS; i++)
+    {
+      if ((active_inputs & (1 << i)) != 0) _SET_BIT(active_functions, (RANG_DI1 + i));
+    }
   }
   /**************************/
 
@@ -2039,15 +2017,6 @@ inline void main_protection(void)
     //Сигнал "Сблос реле"
     _SET_BIT(temp_maska_filter_function, RANG_RESET_RELES);
 
-    //Сигнал "Включить ВВ"
-    _SET_BIT(temp_maska_filter_function, RANG_VKL_VV);
-    
-    //Сигнал "Отключить ВВ"
-    _SET_BIT(temp_maska_filter_function, RANG_OTKL_VV);
-
-    //Сигнал "Скидання блокування готовності до ТУ"
-    _SET_BIT(temp_maska_filter_function, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
-    
     for (unsigned int i = 0; i < N_BIG; i++)
     {
       //З масиву попередніх станів виділяємо тільки ті функції, якиї нас цікавить фронт змін і поміщаємо їх у тимчасовий масив
@@ -2478,24 +2447,11 @@ inline void main_protection(void)
         }
         else
         {
-          //Вихід командний, тому перевіряємо чи не йде спроба активувати реле, на яке заведено БВ, причому блок БВ з пеквних причин блокований (неактивний)
-          if (_CHECK_SET_BIT((current_settings_prt.ranguvannja_outputs + N_BIG*i), RANG_WORK_BV) == 0)
-          {
-            //На дане реле не заводиться сигнал БВ (блок включення)
+          //Вихід командний
+          //На дане реле не заводиться сигнал БВ (блок включення)
           
-            //Відмічаємо, що даний вихід - ЗАМКНУТИЙ
-            state_outputs |= (1 << i);
-          }
-          else
-          {
-            //На дане реле заводиться сигнал БВ (блок включення)
-          
-            //Відмічаємо, що даний вихід - ЗАМКНУТИЙ тільки тоді, коли функція БВ активна зараз
-            if (_CHECK_SET_BIT(active_functions, RANG_WORK_BV) != 0)
-              state_outputs |= (1 << i);
-            else
-              state_outputs &= ~(1 << i);
-          }
+          //Відмічаємо, що даний вихід - ЗАМКНУТИЙ
+          state_outputs |= (1 << i);
         }
       }
       else
@@ -2799,7 +2755,6 @@ void TIM2_IRQHandler(void)
            ) 
         {
           //На даний моммент не іде читання-запис триґерної інформації, тому можна здійснити копіювання
-          misceve_dystancijne_ctrl = misceve_dystancijne;
           for (unsigned int i = 0; i < N_BIG; i++) trigger_active_functions_ctrl[i] = trigger_active_functions[i];
           crc_trg_func_ctrl = crc_trg_func;
 

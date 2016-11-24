@@ -65,7 +65,6 @@ enum _ID_RANG_SOURCE
 
 enum _configuration {
 CTRL_PHASE_BIT_CONFIGURATION,
-EL_BIT_CONFIGURATION,
 
 TOTAL_NUMBER_PROTECTION
 };
@@ -86,11 +85,11 @@ RANG_TU_RESET_BLOCK_READY_TU_VID_ZAHYSTIV
 #define NUMBER_EL_SIGNAL_FOR_RANG_TU          0
 #define NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_TU  0
 
-#define NUMBER_TOTAL_SIGNAL_FOR_RANG_TU       (                                            \
-                                                   NUMBER_GENERAL_SIGNAL_FOR_RANG_TU     + \
-                                                   NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_TU  + \
-                                                   NUMBER_EL_SIGNAL_FOR_RANG_TU            \
-                                                  ) 
+#define NUMBER_TOTAL_SIGNAL_FOR_RANG_TU       (                                        \
+                                               NUMBER_GENERAL_SIGNAL_FOR_RANG_TU     + \
+                                               NUMBER_EL_SIGNAL_FOR_RANG_TU          + \
+                                               NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG_TU    \
+                                              ) 
 /*****************************************/
 
 /*****************************************/
@@ -213,11 +212,11 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 #define NUMBER_EL_SIGNAL_FOR_RANG          69
 #define NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG  5
 
-#define NUMBER_TOTAL_SIGNAL_FOR_RANG       (                                                      \
-                                                              NUMBER_GENERAL_SIGNAL_FOR_RANG    + \
-                                                              NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG + \
-                                                              NUMBER_EL_SIGNAL_FOR_RANG           \
-                                                             ) 
+#define NUMBER_TOTAL_SIGNAL_FOR_RANG       (                                    \
+                                            NUMBER_GENERAL_SIGNAL_FOR_RANG    + \
+                                            NUMBER_EL_SIGNAL_FOR_RANG         + \
+                                            NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG   \
+                                           ) 
 
 /*****************************************/
 
@@ -256,16 +255,16 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 #define MASKA_CTRL_PHASE_SIGNALS_0                 0
 #define MASKA_CTRL_PHASE_SIGNALS_1                 0
 #define MASKA_CTRL_PHASE_SIGNALS_2                 0
-#define MASKA_CTRL_PHASE_SIGNALS_3                 0
 
-#define MASKA_CTRL_PHASE_SIGNALS_4 (unsigned int)(                  \
-     (1 << (RANG_ERROR_DELTA_U_CTRL_PHASE - 128))            /*130*/\
-   | (1 << (RANG_ERROR_DELTA_PHI_CTRL_PHASE - 128))          /*131*/\
-   | (1 << (RANG_ERROR_DELTA_F_CTRL_PHASE - 128))            /*132*/\
-   | (1 << (RANG_ERROR_SEC_TN1_CTRL_PHASE - 128))            /*133*/\
-   | (1 << (RANG_ERROR_SEC_TN2_CTRL_PHASE - 128))            /*134*/\
+#define MASKA_CTRL_PHASE_SIGNALS_3 (unsigned int)(                  \
+     (1 << (RANG_ERROR_DELTA_U_CTRL_PHASE - 96))            /*103*/\
+   | (1 << (RANG_ERROR_DELTA_PHI_CTRL_PHASE - 96))          /*104*/\
+   | (1 << (RANG_ERROR_DELTA_F_CTRL_PHASE - 96))            /*105*/\
+   | (1 << (RANG_ERROR_SEC_TN1_CTRL_PHASE - 96))            /*106*/\
+   | (1 << (RANG_ERROR_SEC_TN2_CTRL_PHASE - 96))            /*107*/\
 )
 
+#define MASKA_CTRL_PHASE_SIGNALS_4                 0
 #define MASKA_CTRL_PHASE_SIGNALS_5                 0
 #define MASKA_CTRL_PHASE_SIGNALS_6                 0
 /*****************************************/
@@ -274,20 +273,18 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 //Макска сигналів, які мають записуватися у енергонезалежну пам'ять
 /*****************************************/
 #define MASKA_TRIGGER_SIGNALES_0                  0
-#define MASKA_TRIGGER_SIGNALES_1                  0
+
+#define MASKA_TRIGGER_SIGNALES_1               (unsigned int)(       \
+     (1 << (RANG_DT1_OUT - 32))                              /*52*/\
+   | (1 << (RANG_DT2_OUT - 32))                              /*55*/\
+   | (1 << (RANG_DT3_OUT - 32))                              /*58*/\
+   | (1 << (RANG_DT4_OUT - 32))                              /*61*/\
+)
+
 #define MASKA_TRIGGER_SIGNALES_2                  0
 #define MASKA_TRIGGER_SIGNALES_3                  0
-
-#define MASKA_TRIGGER_SIGNALES_4               (unsigned int)(       \
-     (1 << (RANG_DT1_OUT - 128))                              /*153*/\
-   | (1 << (RANG_DT2_OUT - 128))                              /*156*/\
-   | (1 << (RANG_DT3_OUT - 128))                              /*159*/\
-)
-
-#define MASKA_TRIGGER_SIGNALES_5               (unsigned int)(       \
-     (1 << (RANG_DT4_OUT - 160))                              /*162*/\
-)
-
+#define MASKA_TRIGGER_SIGNALES_4                  0
+#define MASKA_TRIGGER_SIGNALES_5                  0
 #define MASKA_TRIGGER_SIGNALES_6                  0
 /*****************************************/
 

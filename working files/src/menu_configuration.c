@@ -10,20 +10,16 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
   const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_EKRAN_CONFIGURATION][MAX_COL_LCD_PART1] = 
   {
     {
-     "Контр.фаз ",
-     "Расш.лог. "
+     "Контр.фаз "
     },
     {
-     "Контр.фаз ",
-     "Розш.лог. "
+     "Контр.фаз "
     },
     {
-     "Контр.фаз ",
-     "Ext.logic "
+     "Контр.фаз "
     },
     {
-     "Контр.фаз ",
-     "Расш.лог. "
+     "Контр.фаз "
     }
   };
   const unsigned char information_on[MAX_NAMBER_LANGUAGE][MAX_COL_LCD - MAX_COL_LCD_PART1] = 

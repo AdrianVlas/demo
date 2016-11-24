@@ -70,7 +70,7 @@ void make_ekran_main(void)
   /******************************************/
   //Виключаємо поля, які не треба відображати
   /******************************************/
-  for (unsigned int zachyst = 0; zachyst < (TOTAL_NUMBER_PROTECTION - 1); zachyst++) /*Мінус один - це попревка на останній пункт конфігурації "Розширена логіка"*/
+  for (unsigned int zachyst = 0; zachyst < TOTAL_NUMBER_PROTECTION; zachyst++)
   {
     if ((current_settings.configuration & (1 << zachyst)) == 0)
     {

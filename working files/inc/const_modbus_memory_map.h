@@ -359,8 +359,8 @@
 //#define BIT_MA_VYCHERPANYJ_RESURS_VYMYKACHA     50476
 #define BIT_MA_DEFECT                           50477
 #define BIT_MA_AVAR_DEFECT                      50478
-#define BIT_MA_RESET_LEDS                       50479
-#define BIT_MA_RESET_RELES                      50480
+//#define BIT_MA_RESET_LEDS                       50479
+//#define BIT_MA_RESET_RELES                      50480
 #define BIT_MA_RESET_GENERAL_AF                 50481
 //#define BIT_MA_RESET_RESURS_VYMYKACHA           50482
 #define BIT_MA_SETTINGS_CHANGED                 50483

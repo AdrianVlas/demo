@@ -271,8 +271,8 @@ volatile unsigned int set_diagnostyka[3] = {0, 0, 0};
 volatile unsigned int clear_diagnostyka[3] = {0, 0, 0};
 
 int global_timers[MAX_NUMBER_GLOBAL_TIMERS]; //Масив глобальних таймерів
-unsigned int timer_prt_signal_output_mode_2 = 0;
-unsigned int output_timer_prt_signal_output_mode_2 = false;
+unsigned int timer_meander = 0;
+unsigned int output_timer_meander = false;
 unsigned int etap_execution_df[NUMBER_DEFINED_FUNCTIONS]; //Етап виконання опреділюваної функції
 //unsigned int state_df = 0; //Текучий стан опреділюваних функцій
 

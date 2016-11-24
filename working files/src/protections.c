@@ -500,10 +500,10 @@ inline void clocking_global_timers(void)
     }
   }
   
-  if (++timer_prt_signal_output_mode_2 >= PERIOD_SIGNAL_OUTPUT_MODE_2)
+  if (++timer_meander >= PERIOD_SIGNAL_MEANDER)
   {
-    timer_prt_signal_output_mode_2 = 0;
-    output_timer_prt_signal_output_mode_2 ^= true;
+    timer_meander = 0;
+    output_timer_meander ^= true;
   }
 }
 /*****************************************************/
@@ -1981,10 +1981,12 @@ inline void main_protection(void)
     if(temp_value_for_activated_function != 0) 
     {
       //Скидання світлодіодів і реле
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_RESET_LEDS)) 
-        _SET_BIT(active_functions, RANG_RESET_LEDS);
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_RESET_RELES)) 
-        _SET_BIT(active_functions, RANG_RESET_RELES);
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_QUIET)) 
+        _SET_BIT(active_functions, RANG_QUIET);
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_RESET)) 
+        _SET_BIT(active_functions, RANG_RESET);
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_TEST)) 
+        _SET_BIT(active_functions, RANG_TEST);
     }
   }
   /**************************/
@@ -2011,11 +2013,14 @@ inline void main_protection(void)
     unsigned int temp_maska_filter_function[N_BIG] = {0, 0, 0, 0, 0, 0, 0};
     unsigned int temp_activating_functions[N_BIG] = {0, 0, 0, 0, 0, 0, 0};
   
-    //Сигнал "Сблос индикации"
-    _SET_BIT(temp_maska_filter_function, RANG_RESET_LEDS);
+    //Сигнал "Тиша"
+    _SET_BIT(temp_maska_filter_function, RANG_QUIET);
   
-    //Сигнал "Сблос реле"
-    _SET_BIT(temp_maska_filter_function, RANG_RESET_RELES);
+    //Сигнал "Скидання"
+    _SET_BIT(temp_maska_filter_function, RANG_RESET);
+
+    //Сигнал "Тест"
+    _SET_BIT(temp_maska_filter_function, RANG_TEST);
 
     for (unsigned int i = 0; i < N_BIG; i++)
     {
@@ -2040,6 +2045,12 @@ inline void main_protection(void)
       active_functions[i] = (active_functions[i] & (~temp_maska_filter_function[i])) | temp_activating_functions[i];
     }
   }
+  /**************************/
+
+  /**************************/
+  //Сигнал меандру
+  /**************************/
+  if (output_timer_meander) _SET_BIT(active_functions, RANG_MEANDER);
   /**************************/
   
   /***********************************************************/
@@ -2373,11 +2384,6 @@ inline void main_protection(void)
   /**************************/
   //Вивід інформації на виходи
   /**************************/
-  //Спочатку перевіряємо, чи не активовувалвся команда "Сблос реле" - і якщо так, то попередньо скидаємо всі реле
-  if (_CHECK_SET_BIT(active_functions, RANG_RESET_RELES) !=0)
-  {
-    state_outputs = 0;
-  }
   
   if (_CHECK_SET_BIT(active_functions, RANG_AVAR_DEFECT) == 0)
   {
@@ -2485,7 +2491,7 @@ inline void main_protection(void)
   }
   
   //Стан виходу з урахуванням імпульсного режиму роботи сигнальних виходів
-  state_outputs_raw = ( state_outputs & ((unsigned int)(~current_settings_prt.type_of_output_modif)) ) | ((state_outputs & current_settings_prt.type_of_output_modif)*output_timer_prt_signal_output_mode_2);
+  state_outputs_raw = ( state_outputs & ((unsigned int)(~current_settings_prt.type_of_output_modif)) ) | ((state_outputs & current_settings_prt.type_of_output_modif)*output_timer_meander);
   
   //Виводимо інформацію по виходах на піни процесора (у зворотньому порядку)
   unsigned int temp_state_outputs = 0;
@@ -2509,10 +2515,6 @@ inline void main_protection(void)
   //Вивід інформації на світлодіоди
   /**************************/
   //Спочатку перевіряємо, чи не активовувалвся команда "Сблос индикации" - і якщо так, то попередньо скидаємо всю індикацію
-  if (_CHECK_SET_BIT(active_functions, RANG_RESET_LEDS) !=0)
-  {
-    state_leds = 0;
-  }
   
   //Визначаємо, які світлоіндикатори зараз мають бути активними
   for (unsigned int i = 0; i < NUMBER_LEDS; i++)

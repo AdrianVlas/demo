@@ -141,8 +141,8 @@ void convert_order_list_function_to_gmm(unsigned int* input_array, unsigned shor
   //Функції загального користування
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_DEFECT                      , (BIT_MA_DEFECT                       - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_AVAR_DEFECT                 , (BIT_MA_AVAR_DEFECT                  - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_RESET_LEDS                  , (BIT_MA_RESET_LEDS                   - BIT_MA_CURRENT_AF_BASE));
-  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_RESET_RELES                 , (BIT_MA_RESET_RELES                  - BIT_MA_CURRENT_AF_BASE));
+//  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_RESET_LEDS                  , (BIT_MA_RESET_LEDS                   - BIT_MA_CURRENT_AF_BASE));
+//  _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_RESET_RELES                 , (BIT_MA_RESET_RELES                  - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_WORK_A_REJESTRATOR          , (BIT_MA_WORK_A_REJESTRATOR           - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_WORK_D_REJESTRATOR          , (BIT_MA_WORK_D_REJESTRATOR           - BIT_MA_CURRENT_AF_BASE));
   _CONVERT_SIGNAL_TO_GMM(input_array, output_array, RANG_SETTINGS_CHANGED            , (BIT_MA_SETTINGS_CHANGED             - BIT_MA_CURRENT_AF_BASE));
@@ -593,16 +593,16 @@ unsigned int convert_order_list_oldr_to_gmm(unsigned int number, unsigned int nu
         rezultat = BIT_MA_ERROR_CONF_EL;
         break;
       }
-    case RANG_RESET_LEDS:
-      {
-        rezultat = BIT_MA_RESET_LEDS;
-        break;
-      }
-    case RANG_RESET_RELES:
-      {
-        rezultat = BIT_MA_RESET_RELES;
-        break;
-      }
+//    case RANG_RESET_LEDS:
+//      {
+//        rezultat = BIT_MA_RESET_LEDS;
+//        break;
+//      }
+//    case RANG_RESET_RELES:
+//      {
+//        rezultat = BIT_MA_RESET_RELES;
+//        break;
+//      }
     case RANG_DEFECT:
       {
         rezultat = BIT_MA_DEFECT;
@@ -814,8 +814,8 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
     //Якщо data == 0, то це означає, що треба якусь сункцію скинути
     
     if (
-        (data == BIT_MA_RESET_LEDS            ) ||
-        (data == BIT_MA_RESET_RELES           ) || 
+//        (data == BIT_MA_RESET_LEDS            ) ||
+//        (data == BIT_MA_RESET_RELES           ) || 
         (data == BIT_MA_DEFECT                ) || 
         (data == BIT_MA_AVAR_DEFECT           ) || 
         (data == BIT_MA_WORK_A_REJESTRATOR    ) || 
@@ -1363,16 +1363,16 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
         _SET_BIT(set_array_rang, RANG_ERROR_CONF_EL);
         break;
       }
-    case BIT_MA_RESET_LEDS:
-      {
-         _SET_BIT(set_array_rang, RANG_RESET_LEDS);
-        break;
-      }
-    case BIT_MA_RESET_RELES:
-      {
-         _SET_BIT(set_array_rang, RANG_RESET_RELES);
-        break;
-      }
+//    case BIT_MA_RESET_LEDS:
+//      {
+//         _SET_BIT(set_array_rang, RANG_RESET_LEDS);
+//        break;
+//      }
+//    case BIT_MA_RESET_RELES:
+//      {
+//         _SET_BIT(set_array_rang, RANG_RESET_RELES);
+//        break;
+//      }
     case BIT_MA_DEFECT:
       {
          _SET_BIT(set_array_rang, RANG_DEFECT);
@@ -5058,6 +5058,8 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
           case ( 90 + NUMBER_ANALOG_CANALES):
           case ( 91 + NUMBER_ANALOG_CANALES):
           case ( 92 + NUMBER_ANALOG_CANALES):
+          case ( 93 + NUMBER_ANALOG_CANALES):
+          case ( 94 + NUMBER_ANALOG_CANALES):
             {
               if (length <= 19)
               {
@@ -5638,6 +5640,8 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
           case 90:
           case 91:
           case 92:
+          case 93:
+          case 94:
             {
               if (length <= 19)
               {
@@ -6249,9 +6253,9 @@ void modbus_rountines(unsigned int type_interface)
                     ||
                     (  
                      ((add_data >= BIT_MA_INPUT_DF1) && (add_data <= BIT_MA_INPUT_DF8)) || /*Входи Определяємих функцій*/
-                     ((add_data >= BIT_MA_DT1_SET  ) && (add_data <= BIT_MA_DT4_RESET)) || /*Оприділювальні триггери*/
-                     ( add_data == BIT_MA_RESET_LEDS                                  ) || /*Очищення індикації*/
-                     ( add_data == BIT_MA_RESET_RELES                                 )    /*Скидання реле*/
+                     ((add_data >= BIT_MA_DT1_SET  ) && (add_data <= BIT_MA_DT4_RESET))/* ||*/ /*Оприділювальні триггери*/
+//                     ( add_data == BIT_MA_RESET_LEDS                                  ) || /*Очищення індикації*/
+//                     ( add_data == BIT_MA_RESET_RELES                                 )    /*Скидання реле*/
                     )
                    )   
                   )
@@ -6277,8 +6281,8 @@ void modbus_rountines(unsigned int type_interface)
               first_address_of_word_for_function_3_or_4 = M_ADDRESS_DT;
             }
             else if(
-                    (add_data == BIT_MA_RESET_LEDS            ) || /*Очищення індикації*/
-                    (add_data == BIT_MA_RESET_RELES           ) || /*Скидання реле*/
+//                    (add_data == BIT_MA_RESET_LEDS            ) || /*Очищення індикації*/
+//                    (add_data == BIT_MA_RESET_RELES           ) || /*Скидання реле*/
                     (add_data == BIT_MA_RESET_GENERAL_AF      ) || /*Скидання загальних функцій*/
                     (add_data == BIT_MA_NEW_SETTINGS_SET      )    /*Команда активації внесених змін у налаштування приладу через інтерфейс*/
                    )
@@ -6369,9 +6373,9 @@ void modbus_rountines(unsigned int type_interface)
               Тут ми використовуємо каонстанти активації функцій з допомогою ф-кнопок, бо механізм обробки однаковий що активацшя
               функції з ф-кнопкт, що активація функції з інтерейсу
               */
-                   if  (add_data == BIT_MA_RESET_LEDS                       ) activation_function_from_interface |= 1 << RANG_TU_RESET_LEDS;                        /*Очищення індикації*/
-              else if  (add_data == BIT_MA_RESET_RELES                      ) activation_function_from_interface |= 1 << RANG_TU_RESET_RELES;                       /*Скидання реле*/
-              else if  (add_data == BIT_MA_RESET_GENERAL_AF) 
+              /*     if  (add_data == BIT_MA_RESET_LEDS                       ) activation_function_from_interface |= 1 << RANG_TU_RESET_LEDS;
+              else if  (add_data == BIT_MA_RESET_RELES                      ) activation_function_from_interface |= 1 << RANG_TU_RESET_RELES;
+              else*/ if  (add_data == BIT_MA_RESET_GENERAL_AF) 
               {
                 //Скидання загальних функцій 
                 reset_trigger_function_from_interface |= (1 << type_interface);
@@ -6415,9 +6419,9 @@ void modbus_rountines(unsigned int type_interface)
                   ||
                   (  
                    ((add_data >= BIT_MA_INPUT_DF1) && (add_data <= BIT_MA_INPUT_DF8)) || /*Входи Определяємих функцій*/
-                   ((add_data >= BIT_MA_DT1_SET ) && (add_data <= BIT_MA_DT4_RESET )) || /*Оприд. триґери*/
-                   ( add_data == BIT_MA_RESET_LEDS                                  ) || /*Очищення індикації*/
-                   ( add_data == BIT_MA_RESET_RELES                                 )    /*Скидання реле*/
+                   ((add_data >= BIT_MA_DT1_SET ) && (add_data <= BIT_MA_DT4_RESET ))/* ||*/ /*Оприд. триґери*/
+//                   ( add_data == BIT_MA_RESET_LEDS                                  ) || /*Очищення індикації*/
+//                   ( add_data == BIT_MA_RESET_RELES                                 )    /*Скидання реле*/
                   )
                  )   
                 )
@@ -6785,8 +6789,8 @@ void modbus_rountines(unsigned int type_interface)
                    ||
                    (
                     ((add_data >= BIT_MA_INPUT_DF1          ) && ((add_data + number - 1) <= BIT_MA_INPUT_DF8             )) || 
-                    ((add_data >= BIT_MA_DT1_SET            ) && ((add_data + number - 1) <= BIT_MA_DT4_RESET             )) ||
-                    ((add_data >= BIT_MA_RESET_LEDS         ) && ((add_data + number - 1) <= BIT_MA_RESET_GENERAL_AF      ))
+                    ((add_data >= BIT_MA_DT1_SET            ) && ((add_data + number - 1) <= BIT_MA_DT4_RESET             ))/* ||
+                    ((add_data >= BIT_MA_RESET_LEDS         ) && ((add_data + number - 1) <= BIT_MA_RESET_GENERAL_AF      ))*/
                    ) 
                   )
           {
@@ -6810,7 +6814,7 @@ void modbus_rountines(unsigned int type_interface)
               first_address_of_word_for_function_3_or_4 = M_ADDRESS_DT;
             }
             else if(
-                    ((add_data >= BIT_MA_RESET_LEDS                       ) && (add_data <= BIT_MA_RESET_GENERAL_AF      )) ||
+                    /*((add_data >= BIT_MA_RESET_LEDS                       ) && (add_data <= BIT_MA_RESET_GENERAL_AF      ))*/(add_data == BIT_MA_RESET_GENERAL_AF) ||
                     ( add_data == BIT_MA_NEW_SETTINGS_SET                 )
                    )
             {
@@ -6973,11 +6977,11 @@ void modbus_rountines(unsigned int type_interface)
                 number_activated_function = add_data + i;
                 if (value_of_bit != 0)
                 {
-                       if  (number_activated_function == BIT_MA_RESET_LEDS                       )
-                    activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_LEDS;                    /*Очищення індикації*/
+                  /*     if  (number_activated_function == BIT_MA_RESET_LEDS                       )
+                    activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_LEDS;
                   else if  (number_activated_function == BIT_MA_RESET_RELES                      )
-                    activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_RELES;                   /*Скидання реле*/
-                  else if  (number_activated_function == BIT_MA_RESET_GENERAL_AF                 ) 
+                    activation_function_from_interface_tmp |= 1 << RANG_TU_RESET_RELES;
+                  else*/ if  (number_activated_function == BIT_MA_RESET_GENERAL_AF                 ) 
                   {
                     //Скидання загальних функцій 
                     reset_trigger_functions = 0xff; /*ненульове значення означає, що треба скинути тригерні функції*/

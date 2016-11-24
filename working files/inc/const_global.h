@@ -294,21 +294,21 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 /*****************************************/
 //Максимальна кількість сигналів (функцій), які можуть бути зранжовані на входи/виходи/світлоіндикатори/д.реєстратор/оф
 /*****************************************/
-#define VAGA_MAX_FUNCTIONS_IN_INPUT             3
-#define MAX_FUNCTIONS_IN_INPUT                  (1 << VAGA_MAX_FUNCTIONS_IN_INPUT)
-#define VAGA_MAX_FUNCTIONS_IN_OUTPUT            4
+//#define VAGA_MAX_FUNCTIONS_IN_INPUT             3
+//#define MAX_FUNCTIONS_IN_INPUT                  (1 << VAGA_MAX_FUNCTIONS_IN_INPUT)
+#define VAGA_MAX_FUNCTIONS_IN_OUTPUT            0
 #define MAX_FUNCTIONS_IN_OUTPUT                 (1 << VAGA_MAX_FUNCTIONS_IN_OUTPUT)
-#define VAGA_MAX_FUNCTIONS_IN_LED               3
+#define VAGA_MAX_FUNCTIONS_IN_LED               0
 #define MAX_FUNCTIONS_IN_LED                    (1 << VAGA_MAX_FUNCTIONS_IN_LED)
-#define VAGA_MAX_FUNCTIONS_IN_DF                4
+#define VAGA_MAX_FUNCTIONS_IN_DF                0
 #define MAX_FUNCTIONS_IN_DF                     (1 << VAGA_MAX_FUNCTIONS_IN_DF)
-#define MAX_FUNCTIONS_IN_DT                     6
+#define MAX_FUNCTIONS_IN_DT                     1
 #define MAX_FUNCTIONS_IN_D_AND                  NUMBER_IN_AND
 #define MAX_FUNCTIONS_IN_D_OR                   NUMBER_IN_OR
 #define MAX_FUNCTIONS_IN_D_XOR                  2
 #define MAX_FUNCTIONS_IN_D_NOT                  1
-#define VAGA_MAX_FUNCTIONS_IN_DB                3
-#define MAX_FUNCTIONS_IN_DB                     (1 << VAGA_MAX_FUNCTIONS_IN_DB)
+//#define VAGA_MAX_FUNCTIONS_IN_DB                3
+//#define MAX_FUNCTIONS_IN_DB                     (1 << VAGA_MAX_FUNCTIONS_IN_DB)
 #define VAGA_MAX_FUNCTIONS_IN_AREG              5
 #define MAX_FUNCTIONS_IN_AREG                   (1 << VAGA_MAX_FUNCTIONS_IN_AREG)
 #define VAGA_MAX_FUNCTIONS_IN_DREG              5

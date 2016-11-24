@@ -1,7 +1,7 @@
 #ifndef __CONST_MENU_MAIN__
 #define __CONST_MENU_MAIN__
 
-#define EKRAN_MAIN              (EKRAN_LEVEL_PASSWORD_HARD + 1)
+#define EKRAN_MAIN              (EKRAN_LEVEL_PASSWORD + 1)
 
 enum __index_ml1
 {

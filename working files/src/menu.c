@@ -1930,12 +1930,6 @@ void main_manu_function(void)
                   //Переходимо на меню відображення списку дискретних входів
                   current_ekran.current_level = EKRAN_DOPUSK_DV_UVV;
                 }
-                else if(current_ekran.index_position == INDEX_ML_UVV_TYPE_INPUT)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення списку дискретних входів
-                  current_ekran.current_level = EKRAN_TYPE_INPUT_UVV;
-                }
                 else if(current_ekran.index_position == INDEX_ML_UVV_TYPE_INPUT_SIGNAL)
                 {
                   //Запам'ятовуємо поперердній екран
@@ -3335,7 +3329,6 @@ void main_manu_function(void)
     case EKRAN_TIMEOUT_SWITCH:
     case EKRAN_CONTROL_SWITCH:
     case EKRAN_DOPUSK_DV_UVV:
-    case EKRAN_TYPE_INPUT_UVV:
     case EKRAN_TYPE_INPUT_SIGNAL_UVV:
     case EKRAN_TYPE_OUTPUT_UVV:
     case EKRAN_TYPE_LED_UVV:
@@ -3427,15 +3420,12 @@ void main_manu_function(void)
               //Формуємо екран інфтрмації по допусках ДВ
               make_ekran_dopusk_dv();
             }
-            else if((current_ekran.current_level == EKRAN_TYPE_INPUT_UVV) || (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV))
+            else if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
             {
               if(current_ekran.index_position >= NUMBER_INPUTS) current_ekran.index_position = 0;
               position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
               //Формуємо екран управлінської інформації для УВВ
-              if (current_ekran.current_level == EKRAN_TYPE_INPUT_UVV)
-                make_ekran_type_input_uvv(0);
-              else
-                make_ekran_type_input_uvv(1);
+              make_ekran_type_input_uvv();
             }
             else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
             {
@@ -3663,10 +3653,6 @@ void main_manu_function(void)
                 {
                   edition_settings.dopusk_dv[current_ekran.index_position] = current_settings.dopusk_dv[current_ekran.index_position];
                   current_ekran.position_cursor_x = COL_DOPUSK_DV_BEGIN;
-                }
-                else if(current_ekran.current_level == EKRAN_TYPE_INPUT_UVV)
-                {
-                  edition_settings.type_of_input = current_settings.type_of_input;
                 }
                 else if(current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
                 {
@@ -3907,10 +3893,6 @@ void main_manu_function(void)
                 {
                   if (edition_settings.dopusk_dv[current_ekran.index_position] != current_settings.dopusk_dv[current_ekran.index_position])
                     found_changes = 1;
-                }
-                else if(current_ekran.current_level == EKRAN_TYPE_INPUT_UVV)
-                {
-                  if (edition_settings.type_of_input != current_settings.type_of_input) found_changes = 1;
                 }
                 else if(current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
                 {
@@ -4436,23 +4418,6 @@ void main_manu_function(void)
                       changed_settings = CHANGED_ETAP_EXECUTION;
 
                       current_settings.dopusk_dv[current_ekran.index_position] = edition_settings.dopusk_dv[current_ekran.index_position];
-                      //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                      fix_change_settings(0, 1);
-                    }
-                    //Виходимо з режиму редагування
-                    current_ekran.edition = 0;
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_TYPE_INPUT_UVV)
-                {
-                  if ((edition_settings.type_of_input & ((unsigned int)(~((1<<NUMBER_INPUTS)-1)))) == 0)
-                  {
-                    if (edition_settings.type_of_input != current_settings.type_of_input)
-                    {
-                      //Помічаємо, що поле структури зараз буде змінене
-                      changed_settings = CHANGED_ETAP_EXECUTION;
-                      
-                      current_settings.type_of_input = edition_settings.type_of_input;
                       //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                       fix_change_settings(0, 1);
                     }
@@ -5089,15 +5054,12 @@ void main_manu_function(void)
                 //Формуємо екран інфтрмації по допусках ДВ
                 make_ekran_dopusk_dv();
               }
-              else if((current_ekran.current_level == EKRAN_TYPE_INPUT_UVV) || (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV))
+              else if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
               {
                 if(--current_ekran.index_position < 0) current_ekran.index_position = NUMBER_INPUTS - 1;
                 position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                 //Формуємо екран управлінської інформації для УВВ
-                if (current_ekran.current_level == EKRAN_TYPE_INPUT_UVV)
-                  make_ekran_type_input_uvv(0);
-                else
-                  make_ekran_type_input_uvv(1);
+                make_ekran_type_input_uvv();
               }
               else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
               {
@@ -5453,15 +5415,12 @@ void main_manu_function(void)
                 //Формуємо екран інфтрмації по допусках ДВ
                 make_ekran_dopusk_dv();
               }
-              else if((current_ekran.current_level == EKRAN_TYPE_INPUT_UVV) || (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV))
+              else if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
               {
                 if(++current_ekran.index_position >= NUMBER_INPUTS) current_ekran.index_position = 0;
                 position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                 //Формуємо екран управлінської інформації для УВВ
-                if (current_ekran.current_level == EKRAN_TYPE_INPUT_UVV)
-                  make_ekran_type_input_uvv(0);
-                else
-                  make_ekran_type_input_uvv(1);
+                make_ekran_type_input_uvv();
               }
               else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
               {
@@ -5896,21 +5855,18 @@ void main_manu_function(void)
                 //Формуємо екран інфтрмації по допусках ДВ
                 make_ekran_dopusk_dv();
               }
-              else if((current_ekran.current_level == EKRAN_TYPE_INPUT_UVV ) || (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV) ||
-                      (current_ekran.current_level == EKRAN_TYPE_LED_UVV   ))
+              else if(
+                      (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV) ||
+                      (current_ekran.current_level == EKRAN_TYPE_LED_UVV         )
+                     )
               {
                 unsigned int value = (1 << current_ekran.index_position);
           
                 //Міняємо на протилежний відповідний біт для вибраної позиції і формуємо екран управлінської інформації для УВВ
-                if (current_ekran.current_level == EKRAN_TYPE_INPUT_UVV)
-                {
-                  edition_settings.type_of_input ^= value;
-                  make_ekran_type_input_uvv(0);
-                }
-                else if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
+                if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
                 {
                   edition_settings.type_of_input_signal ^= value;
-                  make_ekran_type_input_uvv(1);
+                  make_ekran_type_input_uvv();
                 }
                 else 
                 {
@@ -6274,21 +6230,18 @@ void main_manu_function(void)
                 //Формуємо екран інфтрмації по допусках ДВ
                 make_ekran_dopusk_dv();
               }
-              else if((current_ekran.current_level == EKRAN_TYPE_INPUT_UVV ) || (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV) ||
-                      (current_ekran.current_level == EKRAN_TYPE_LED_UVV   ))
+              else if(
+                      (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV) ||
+                      (current_ekran.current_level == EKRAN_TYPE_LED_UVV         )
+                     )
               {
                 unsigned int value = (1 << current_ekran.index_position);
           
                 //Міняємо на протилежний відповідний біт для вибраної позиції і формуємо екран управлінської інформації для УВВ
-                if (current_ekran.current_level == EKRAN_TYPE_INPUT_UVV)
-                {
-                  edition_settings.type_of_input ^= value;
-                  make_ekran_type_input_uvv(0);
-                }
-                else if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
+                if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
                 {
                   edition_settings.type_of_input_signal ^= value;
-                  make_ekran_type_input_uvv(1);
+                  make_ekran_type_input_uvv();
                 }
                 else
                 {

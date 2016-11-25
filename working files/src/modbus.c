@@ -1559,7 +1559,7 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
   }
   else if (address_data == MA_INPUTS)
   {
-    temp_value = active_inputs & ((1 << NUMBER_INPUTS) - 1);
+    temp_value = state_inputs & ((1 << NUMBER_INPUTS) - 1);
   }
   else if (address_data == MA_LEDS)
   {
@@ -2512,11 +2512,6 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
     case MA_UVV_TYPE_SIGNAL_INPUT:
       {
         temp_value = current_settings_interfaces.type_of_input_signal & ((1 << NUMBER_INPUTS) - 1);
-        break;
-      }
-    case MA_UVV_TYPE_INPUT:
-      {
-        temp_value = ((unsigned int)(~current_settings_interfaces.type_of_input)) & ((1 << NUMBER_INPUTS) - 1);
         break;
       }
     case MA_UVV_TYPE_OUTPUT:
@@ -3662,17 +3657,6 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
             }
           }
         }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_UVV_TYPE_INPUT:
-      {
-        temp_value = ((~(unsigned int)data)) & ((1 << NUMBER_INPUTS) - 1);
-
-        if (data <= ((1 << NUMBER_INPUTS) - 1)) 
-          target_label->type_of_input = temp_value;
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
 

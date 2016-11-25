@@ -470,13 +470,6 @@ inline void input_scan(void)
     }
   }
   /***************************/
-  
-  /***************************/
-  //Визначаємо, який сигнал є зараз активним
-  /***************************/
-  active_inputs = (state_inputs ^ current_settings_prt.type_of_input);
-  /***************************/
-  
 }
 /*****************************************************/
 
@@ -1991,11 +1984,11 @@ inline void main_protection(void)
   //Опрацьовуємо дискретні входи
   /**************************/
   //Перевіряємо чи є зараз активні входи
-  if (active_inputs !=0)
+  if (state_inputs !=0)
   {
     for (unsigned int i = 0; i < NUMBER_INPUTS; i++)
     {
-      if ((active_inputs & (1 << i)) != 0) _SET_BIT(active_functions, (RANG_DI1 + i));
+      if ((state_inputs & (1 << i)) != 0) _SET_BIT(active_functions, (RANG_DI1 + i));
     }
   }
   /**************************/

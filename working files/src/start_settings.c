@@ -1576,7 +1576,6 @@ void min_settings(__SETTINGS *target_label)
 {
   target_label->device_id = VERSIA_PZ;
     
-  target_label->type_of_input = 0x0;
   target_label->type_of_input_signal = 0x0;
   
   for(unsigned int i = 0; i < NUMBER_INPUTS; i++)

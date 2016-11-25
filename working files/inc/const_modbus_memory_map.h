@@ -1053,7 +1053,7 @@
 #define MA_POCHATKOVA_K_VYMK_MSW          11059
 
 #define MA_UVV_TYPE_SIGNAL_INPUT          11064
-#define MA_UVV_TYPE_INPUT                 11065
+//#define MA_UVV_TYPE_INPUT                 11065
 #define MA_UVV_TYPE_OUTPUT                11066
 #define MA_UVV_TYPE_OUTPUT_MODIF          11067
 #define MA_TYPE_DF                        11068

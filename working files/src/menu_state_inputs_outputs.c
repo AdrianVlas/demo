@@ -140,7 +140,7 @@ void make_ekran_state_inputs_or_outputs(unsigned int input_output)
   if (input_output == 0)
   {
     max_row = NUMBER_INPUTS;
-    state = active_inputs;
+    state = state_inputs;
   }
   else
   {

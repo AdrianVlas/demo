@@ -86,7 +86,7 @@ extern void make_ekran_setpoint_VMP(int);
 extern void make_ekran_control_VMP(void);
 extern void make_ekran_chose_settings_uvv(void);
 extern void make_ekran_dopusk_dv(void);
-extern void make_ekran_type_input_uvv(unsigned int);
+extern void make_ekran_type_input_uvv(void);
 extern void make_ekran_type_output_uvv(void);
 extern void make_ekran_type_led_uvv(void);
 extern void correct_dopusk_dv_when_type_of_input_signal_is_changed(void);

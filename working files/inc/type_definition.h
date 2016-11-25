@@ -41,7 +41,6 @@ typedef struct
   unsigned int device_id;
   
   //Дискретні входи
-  unsigned int type_of_input;                          //Тип дискретного входу 0 - прямий, 1 - інверсний
   unsigned int type_of_input_signal;                   //Тип сигналу дискретного входу 0 - постійний , 1 - змінний
   unsigned int dopusk_dv[NUMBER_INPUTS];              //Допуски ДВ
     

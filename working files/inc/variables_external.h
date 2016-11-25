@@ -146,7 +146,6 @@ extern unsigned int sequence_TN1;
 extern unsigned int sequence_TN2;
 
 extern volatile unsigned int state_inputs;
-extern volatile unsigned int active_inputs;
 extern unsigned int state_outputs;
 extern unsigned int state_outputs_raw;
 extern volatile unsigned int state_signal_outputs;

@@ -248,7 +248,6 @@ unsigned int sequence_TN1 = 0;
 unsigned int sequence_TN2 = 0;
 
 volatile unsigned int state_inputs = 0; //"є сигнал " - відповідає встановленому біту (1); "немає сигналу" - відповідає скинутому біту (0)
-volatile unsigned int active_inputs = 0; //"вхід активний" - відповідає встановленому біту (1); "вхід пасивний" - відповідає скинутому біту (0)
 unsigned int state_outputs = 0;
 unsigned int state_outputs_raw = 0;
 volatile unsigned int state_signal_outputs = 0;

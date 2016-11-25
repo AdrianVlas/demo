@@ -41,28 +41,24 @@ void make_ekran_chose_settings_uvv(void)
   {
     {
       " Допуск д.входа ",
-      " Вид входа      ",
       " Тип вх.сигнала ",
       " Вид выхода     ",
       " Вид индикатора "
     },
     {
       " Допуск д.входу ",
-      " Вид входу      ",
       " Тип вх.сигналу ",
       " Вид виходу     ",
       " Вид індикатора "
     },
     {
       " BIN Tolerance  ",
-      " Type of Input  ",
       " In.Signal Type ",
       " Type of Output ",
       " Type of LED    "
     },
     {
       " Допуск д.входа ",
-      " Вид входа      ",
       " Тип вх.сигнала ",
       " Вид выхода     ",
       " Вид индикатора "
@@ -214,7 +210,7 @@ void make_ekran_dopusk_dv()
 /*****************************************************/
 //Формуємо екран відображення значення типу входу для УВВ
 /*****************************************************/
-void make_ekran_type_input_uvv(unsigned int type_input_or_signal)
+void make_ekran_type_input_uvv(void)
 {
   const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_COL_LCD] = 
   {
@@ -272,52 +268,26 @@ void make_ekran_type_input_uvv(unsigned int type_input_or_signal)
         unsigned int index_ctr = (index_of_ekran>>1);
         unsigned int temp_data;
           
-        if (type_input_or_signal == 0)
+        const unsigned char information[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] = 
         {
-          const unsigned char information[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] = 
-          {
-            {"     ПРЯМОЙ     ", "   ИНВЕРСНЫЙ    "},
-            {"     ПРЯМИЙ     ", "   ІНВЕРСНИЙ    "},
-            {"     DIRECT     ", "    INVERSE     "},
-            {"     ПРЯМОЙ     ", "   ИНВЕРСНЫЙ    "}
-          };
-          const unsigned int cursor_x[MAX_NAMBER_LANGUAGE][2] = 
-          {
-            {4, 2},
-            {4, 2},
-            {4, 3},
-            {4, 2}
-          };
-
-          if(current_ekran.edition == 0) temp_data = current_settings.type_of_input;
-          else temp_data = edition_settings.type_of_input;
-          
-          for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = information[index_language][(temp_data >> index_ctr) & 0x1][j];
-          current_ekran.position_cursor_x = cursor_x[index_language][(temp_data >> index_ctr) & 0x1];
-        }
-        else
+          {"   ПОСТОЯННЫЙ   ", "   ПЕРЕМЕННЫЙ   "},
+          {"   ПОСТІЙНИЙ    ", "    ЗМІННИЙ     "},
+          {"     DIRECT     ", "   ALTERNATE    "},
+          {"   ПОСТОЯННЫЙ   ", "   ПЕРЕМЕННЫЙ   "}
+        };
+        const unsigned int cursor_x[MAX_NAMBER_LANGUAGE][2] = 
         {
-          const unsigned char information[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] = 
-          {
-            {"   ПОСТОЯННЫЙ   ", "   ПЕРЕМЕННЫЙ   "},
-            {"   ПОСТІЙНИЙ    ", "    ЗМІННИЙ     "},
-            {"     DIRECT     ", "   ALTERNATE    "},
-            {"   ПОСТОЯННЫЙ   ", "   ПЕРЕМЕННЫЙ   "}
-          };
-          const unsigned int cursor_x[MAX_NAMBER_LANGUAGE][2] = 
-          {
-            {2, 2},
-            {2, 3},
-            {4, 2},
-            {2, 2}
-          };
+          {2, 2},
+          {2, 3},
+          {4, 2},
+          {2, 2}
+        };
 
-          if(current_ekran.edition == 0) temp_data = current_settings.type_of_input_signal;
-          else temp_data = edition_settings.type_of_input_signal;
+        if(current_ekran.edition == 0) temp_data = current_settings.type_of_input_signal;
+        else temp_data = edition_settings.type_of_input_signal;
         
-          for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = information[index_language][(temp_data >> index_ctr) & 0x1][j];
-          current_ekran.position_cursor_x = cursor_x[index_language][(temp_data >> index_ctr) & 0x1];
-        }
+        for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = information[index_language][(temp_data >> index_ctr) & 0x1][j];
+        current_ekran.position_cursor_x = cursor_x[index_language][(temp_data >> index_ctr) & 0x1];
       }
     }
     else

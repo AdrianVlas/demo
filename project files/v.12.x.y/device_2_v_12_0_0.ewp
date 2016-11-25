@@ -4397,9 +4397,6 @@
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_communication_parameters.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_extra_settings.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_settings.h</name>
         </file>
         <file>
@@ -4578,9 +4575,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_chose_communication_parameters.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\src\menu_chose_extra_settings .c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_chose_settings.c</name>

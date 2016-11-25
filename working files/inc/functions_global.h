@@ -71,7 +71,6 @@ void make_ekran_chose_control(void);
 void make_ekran_chose_settings_switcher(void);
 void make_ekran_chose_settings(void);
 void make_ekran_chose_passwords(void);
-void make_ekran_chose_extra_settings(void);
 void make_ekran_control_zdz(void);
 void calc_symbol_and_put_into_working_ekran(unsigned char*, void*, void*, unsigned int*, unsigned int, unsigned int, unsigned int);
 void calc_int_symbol_and_put_into_working_ekran(unsigned char*, unsigned int*, unsigned int*, unsigned int*);

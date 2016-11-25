@@ -1937,12 +1937,6 @@ void main_manu_function(void)
                   //Переходимо на меню відображення списку розширеної логіки
                   current_ekran.current_level = EKRAN_EXTENDED_LIGIC;
                 }
-                else if(current_ekran.index_position == INDEX_OF_EXTRA_SETTINGS)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню додаткових нлаштувань
-                  current_ekran.current_level = EKRAN_CHOSE_EXTRA_SETTINGS;
-                }
                 else if(current_ekran.index_position == INDEX_OF_LIST_PASSWORDS)
                 {
                   //Запам'ятовуємо поперердній екран
@@ -3447,7 +3441,6 @@ void main_manu_function(void)
     case EKRAN_TIMEOUT_DF8:
     case EKRAN_TIMEOUT_ANALOG_REGISTRATOR:
     case EKRAN_VIEW_SETTING_LANGUAGE:
-    case EKRAN_CHOSE_EXTRA_SETTINGS:
       {
         //Очищаємо всі біти краім упралінських
         unsigned int maska_keyboard_bits = (1<<BIT_KEY_ENTER)| (1<<BIT_KEY_ESC)|(1<<BIT_REWRITE);
@@ -3626,13 +3619,6 @@ void main_manu_function(void)
               position_in_current_level_menu[EKRAN_VIEW_SETTING_LANGUAGE] = current_ekran.index_position;
               //Формуємо екран інформації по мові меню
               make_ekran_setting_language();
-            }
-            else if(current_ekran.current_level == EKRAN_CHOSE_EXTRA_SETTINGS)
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_CHOSE_EXTRA_SETTINGS) current_ekran.index_position = 0;
-              position_in_current_level_menu[EKRAN_CHOSE_EXTRA_SETTINGS] = current_ekran.index_position;
-              //Формуємо екран відображення додаткових налаштувань
-              make_ekran_chose_extra_settings();
             }
 
             //Очищаємо біт обновлення екрану
@@ -3907,10 +3893,6 @@ void main_manu_function(void)
                 {
                   edition_settings.language = current_settings.language;
                 }
-                else if(current_ekran.current_level == EKRAN_CHOSE_EXTRA_SETTINGS)
-                {
-                  edition_settings.control_extra_settings_1 = current_settings.control_extra_settings_1;
-                }
 
                 //Підготовка до режиму редагування - включаємо мигаючий курсор
                 current_ekran.cursor_on = 1;
@@ -4161,10 +4143,6 @@ void main_manu_function(void)
                 else if(current_ekran.current_level == EKRAN_VIEW_SETTING_LANGUAGE)
                 {
                   if (edition_settings.language != current_settings.language) found_changes = 1;
-                }
-                else if(current_ekran.current_level == EKRAN_CHOSE_EXTRA_SETTINGS)
-                {
-                  if (edition_settings.control_extra_settings_1 != current_settings.control_extra_settings_1) found_changes = 1;
                 }
 
                 //Виходимо з режиму редагування
@@ -5102,24 +5080,6 @@ void main_manu_function(void)
                     current_ekran.edition = 0;
                   }
                 }
-                else if(current_ekran.current_level == EKRAN_CHOSE_EXTRA_SETTINGS)
-                {
-                  if ((edition_settings.control_extra_settings_1  & ((unsigned int)(~CTR_EXTRA_SETTINGS_1_MASKA))) == 0)
-                  {
-                    if (edition_settings.control_extra_settings_1 != current_settings.control_extra_settings_1)
-                    {
-                      //Помічаємо, що поле структури зараз буде змінене
-                      changed_settings = CHANGED_ETAP_EXECUTION;
-                        
-                      current_settings.control_extra_settings_1 = edition_settings.control_extra_settings_1;
-                      
-                      //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                      fix_change_settings(0, 1);
-                    }
-                    //Виходимо з режиму редагування
-                    current_ekran.edition = 0;
-                  }
-                }
                 
               }
               else if (current_ekran.edition == 3)
@@ -5567,13 +5527,6 @@ void main_manu_function(void)
                 //Формуємо екран інформації по мові меню
                 make_ekran_setting_language();
               }
-              else if(current_ekran.current_level == EKRAN_CHOSE_EXTRA_SETTINGS)
-              {
-                if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CHOSE_EXTRA_SETTINGS - 1;
-                position_in_current_level_menu[EKRAN_CHOSE_EXTRA_SETTINGS] = current_ekran.index_position;
-                //Формуємо екран відображення додаткових налаштувань
-                make_ekran_chose_extra_settings();
-              }
 
               //Очистити сигналізацію, що натиснута кнопка 
               new_state_keyboard &= (unsigned int)(~(1<<BIT_KEY_UP));
@@ -5962,13 +5915,6 @@ void main_manu_function(void)
                 }
                 //Формуємо екран інформації по мові меню
                 make_ekran_setting_language();
-              }
-              else if(current_ekran.current_level == EKRAN_CHOSE_EXTRA_SETTINGS)
-              {
-                if(++current_ekran.index_position >= MAX_ROW_FOR_CHOSE_EXTRA_SETTINGS) current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_CHOSE_EXTRA_SETTINGS] = current_ekran.index_position;
-                //Формуємо екран відображення додаткових налаштувань
-                make_ekran_chose_extra_settings();
               }
 
               //Очистити сигналізацію, що натиснута кнопка 
@@ -6370,17 +6316,6 @@ void main_manu_function(void)
                 }
                 //Формуємо екран витримок аналогового реєстратора
                 make_ekran_timeout_analog_registrator();
-              }
-              else if(current_ekran.current_level == EKRAN_CHOSE_EXTRA_SETTINGS)
-              {
-                //Виділяємо, який біт треба міняти
-                unsigned int maska = (1 << current_ekran.index_position);
-                
-                //Міняємо на протилежний відповідний біт для вибраної позиції
-                edition_settings.control_extra_settings_1 ^= maska;
-
-                //Формуємо екран відображення додаткових налаштувань
-                make_ekran_chose_extra_settings();
               }
 
               //Очистити сигналізацію, що натиснута кнопка 
@@ -6787,17 +6722,6 @@ void main_manu_function(void)
                 }
                 //Формуємо екран витримок аналогового реєстратора
                 make_ekran_timeout_analog_registrator();
-              }
-              else if(current_ekran.current_level == EKRAN_CHOSE_EXTRA_SETTINGS)
-              {
-                //Виділяємо, який біт треба міняти
-                unsigned int maska = (1 << current_ekran.index_position);
-                
-                //Міняємо на протилежний відповідний біт для вибраної позиції
-                edition_settings.control_extra_settings_1 ^= maska;
-
-                //Формуємо екран відображення додаткових налаштувань
-                make_ekran_chose_extra_settings();
               }
 
               //Очистити сигналізацію, що натиснута кнопка 

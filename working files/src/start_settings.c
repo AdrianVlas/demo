@@ -1734,8 +1734,6 @@ void min_settings(__SETTINGS *target_label)
   
   target_label->language = LANGUAGE_EN;
   
-  target_label->control_extra_settings_1 = 0;
-
   for(unsigned int i = 0; i < (7+1); i++)
   {
     target_label->time_setpoints[i] = 0;

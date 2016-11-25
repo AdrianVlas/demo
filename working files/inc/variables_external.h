@@ -182,7 +182,6 @@ extern unsigned char working_ekran[MAX_ROW_LCD][MAX_COL_LCD];
 extern unsigned int rewrite_ekran_once_more;
 
 extern volatile unsigned int new_state_keyboard;
-extern unsigned int new_state_keyboard_for_db;
 extern unsigned char time_set_keyboard[NUMBER_KEY_KEYBOARD];
 
 extern unsigned int time_rewrite;

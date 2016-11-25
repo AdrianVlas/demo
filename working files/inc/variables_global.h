@@ -285,7 +285,6 @@ unsigned char working_ekran[MAX_ROW_LCD][MAX_COL_LCD];
 unsigned int rewrite_ekran_once_more = 0;
 
 volatile unsigned int new_state_keyboard = 0;
-unsigned int new_state_keyboard_for_db = 0;
 unsigned char time_set_keyboard[NUMBER_KEY_KEYBOARD];
 
 unsigned int time_rewrite = 0; //Час який пройшов після останнього обновлення

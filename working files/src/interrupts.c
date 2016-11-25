@@ -788,45 +788,8 @@ void TIM4_IRQHandler(void)
     /***************************/
     //Обробка алгоритму функціональних кнопок
     /***************************/
-    new_state_keyboard_for_db |= (unsigned int)(new_state_keyboard & ((1<<BIT_KEY_1)|(1<<BIT_KEY_2)|(1<<BIT_KEY_3)|(1<<BIT_KEY_4)|(1<<BIT_KEY_5)|(1<<BIT_KEY_6)));/*new_state_keyboard змінюється і потім аналізується у функції main_manu_function, тому для аналізу натискування функціональних кнопок натискування цих кнопок аналізуємо через іншу змінну*/
-    new_state_keyboard        &= (unsigned int)(~((1<<BIT_KEY_1)|(1<<BIT_KEY_2)|(1<<BIT_KEY_3)|(1<<BIT_KEY_4)|(1<<BIT_KEY_5)|(1<<BIT_KEY_6)));
-    
-    //Перевірка на те, чи вже кнопка відпущена чи ще натиснута
-    if (time_set_keyboard[BIT_KEY_1] == 0) new_state_keyboard_for_db &= (unsigned int)(~(1<<BIT_KEY_1));
-    if (time_set_keyboard[BIT_KEY_2] == 0) new_state_keyboard_for_db &= (unsigned int)(~(1<<BIT_KEY_2));
-    if (time_set_keyboard[BIT_KEY_3] == 0) new_state_keyboard_for_db &= (unsigned int)(~(1<<BIT_KEY_3));
-    if (time_set_keyboard[BIT_KEY_4] == 0) new_state_keyboard_for_db &= (unsigned int)(~(1<<BIT_KEY_4));
-    if (time_set_keyboard[BIT_KEY_5] == 0) new_state_keyboard_for_db &= (unsigned int)(~(1<<BIT_KEY_5));
-    if (time_set_keyboard[BIT_KEY_6] == 0) new_state_keyboard_for_db &= (unsigned int)(~(1<<BIT_KEY_6));
-
-    if ((new_state_keyboard_for_db & ((1<<BIT_KEY_1)|(1<<BIT_KEY_2)|(1<<BIT_KEY_3)|(1<<BIT_KEY_4)|(1<<BIT_KEY_5)|(1<<BIT_KEY_6))) != 0)
-    {
-      if (
-          ((current_settings.control_extra_settings_1 & CTR_EXTRA_SETTINGS_1_CTRL_FB_ACTIVATION) == 0)
-          ||  
-          ((new_state_keyboard & (1<<BIT_KEY_ENTER)) != 0)
-         )   
-      {
-        /**************************
-        Натиснути функціональна кнопка підтверджена натискуванням кнопки ENTER  
-        Натиснуті кнопки переносимо до спеціальної змінної, щоб їх обслуговувати  у системі захистів
-        ***************************/
-        pressed_buttons    |= (new_state_keyboard_for_db & ((1<<BIT_KEY_1)|(1<<BIT_KEY_2)|(1<<BIT_KEY_3)|(1<<BIT_KEY_4)|(1<<BIT_KEY_5)|(1<<BIT_KEY_6))) >> BIT_KEY_1;
-        new_state_keyboard_for_db &= (unsigned int)(~((1<<BIT_KEY_1)|(1<<BIT_KEY_2)|(1<<BIT_KEY_3)|(1<<BIT_KEY_4)|(1<<BIT_KEY_5)|(1<<BIT_KEY_6)));
-        /***************************/
-
-        if ((current_settings.control_extra_settings_1 & CTR_EXTRA_SETTINGS_1_CTRL_FB_ACTIVATION) != 0)
-        {
-          /**************************
-          Кнопка ENTER вже відпацювала свою функцію активації кнопки, тому 
-          знімаємо повідомлення, що вона була натиснута, щоб не відпацювала ще
-          функція відображення нового пункту меню по натискуванні кнопки ENTER
-          ***************************/
-          new_state_keyboard &= (unsigned int)(~(1<<BIT_KEY_ENTER));
-          /***************************/
-        }
-      }
-    }
+    pressed_buttons    |= (new_state_keyboard & ((1<<BIT_KEY_1)|(1<<BIT_KEY_2)|(1<<BIT_KEY_3)|(1<<BIT_KEY_4)|(1<<BIT_KEY_5)|(1<<BIT_KEY_6))) >> BIT_KEY_1;
+    new_state_keyboard &= (unsigned int)(~((1<<BIT_KEY_1)|(1<<BIT_KEY_2)|(1<<BIT_KEY_3)|(1<<BIT_KEY_4)|(1<<BIT_KEY_5)|(1<<BIT_KEY_6)));
     /***************************/
     /***********************************************************/
   

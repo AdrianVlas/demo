@@ -11,7 +11,6 @@
 #include "const_menu_chose_settings_protection.h"
 #include "const_menu_state_inputs_outputs.h"
 #include "const_menu_chose_settings.h"
-#include "const_menu_chose_extra_settings.h"
 #include "const_menu_ctrl_phase.h"
 #include "const_menu_outputs.h"
 #include "const_menu_leds.h"

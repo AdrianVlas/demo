@@ -1679,10 +1679,6 @@ inline void analog_registrator(volatile unsigned int* carrent_active_functions)
           if (copying_time == 0) label_to_time_array = time;
           else label_to_time_array = time_copy;
           for(unsigned int i = 0; i < 7; i++) header_ar.time[i] = *(label_to_time_array + i);
-          //Коефіцієнт трансформації TT
-          header_ar.TCurrent = current_settings_prt.TCurrent;
-          //Коефіцієнт трансформації TН
-          header_ar.TVoltage = current_settings_prt.TVoltage;
           //І'мя ячейки
           for(unsigned int i=0; i<MAX_CHAR_IN_NAME_OF_CELL; i++)
             header_ar.name_of_cell[i] = current_settings_prt.name_of_cell[i] & 0xff;

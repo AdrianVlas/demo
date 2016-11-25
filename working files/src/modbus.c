@@ -2318,13 +2318,6 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
   {
     switch (address_data)
     {
-    case M_ADDRESS_CONTROL_EXTRA_SETTINGS:
-      {
-        int input_value1 = current_settings_interfaces.control_transformator;
-        
-        temp_value = ((((input_value1 >> INDEX_ML_CTR_TRANSFORMATOR_LINE_PHASE ) & 0x1 ) == 0) << (BIT_MA_CONTROL_PHASE_LINE - BIT_MA_CONTROL_EXTRA_SETTINGS_BASE));
-        break;
-      }
     case M_ADDRESS_CONTROL_CTRL_PHASE:
       {
         int input_value = current_settings_interfaces.control_ctrl_phase;
@@ -2451,16 +2444,6 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
     //Уставки і витримки (ролдовження), настройки
     switch (address_data)
     {
-    case MA_TN1:
-      {
-        temp_value = current_settings_interfaces.TVoltage;
-        break;
-      }
-    case MA_TT:
-      {
-        temp_value = current_settings_interfaces.TCurrent;
-        break;
-      }
     case MA_TO_SWCH_ON:
       {
         temp_value = current_settings_interfaces.timeout_swch_on/10;
@@ -3249,16 +3232,6 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
   {
     switch (address_data)
     {
-    case M_ADDRESS_CONTROL_EXTRA_SETTINGS:
-      {
-        int output_value = target_label->control_transformator & ((unsigned int)(~CTR_TRANSFORMATOR_LINE_PHASE));
-        
-        output_value |= (((data >> (BIT_MA_CONTROL_PHASE_LINE - BIT_MA_CONTROL_EXTRA_SETTINGS_BASE)) & 0x1) == 0) << INDEX_ML_CTR_TRANSFORMATOR_LINE_PHASE;
-        
-        target_label->control_transformator = output_value;
-
-        break;
-      }
     case M_ADDRESS_CONTROL_CTRL_PHASE:
       {
         unsigned int output_conf = target_label->configuration & ((unsigned int)(~(1 << CTRL_PHASE_BIT_CONFIGURATION)));
@@ -3492,28 +3465,6 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
     //Уставки і витримки (продовження), налаштування
     switch (address_data)
     {
-    case MA_TN1:
-      {
-        temp_value = data;
-    
-        if ((temp_value >= KOEF_TN_MIN) && (temp_value <= KOEF_TN_MAX))
-          target_label->TVoltage = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TT:
-      {
-        temp_value = data;
-    
-        if ((temp_value >= KOEF_TT_MIN) && (temp_value <= KOEF_TT_MAX))
-          target_label->TCurrent = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
     case MA_TO_SWCH_ON:
       {
         temp_value = data*10;
@@ -4940,14 +4891,7 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
                   else if ( i == 24)
                   {
                     //Первинний коефіцієнт трансформації
-                    if (number_record <= (2 + I_Ic )) 
-                    {
-                      temp_data  = header_ar_tmp.TCurrent;
-                    }
-                    else
-                    {
-                      temp_data  = header_ar_tmp.TVoltage;
-                    }
+                    temp_data  = 1;
                   }
                   else if ( i == 25)
                   {

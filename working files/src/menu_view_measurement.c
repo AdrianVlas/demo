@@ -449,7 +449,7 @@ void make_ekran_measurement_voltage_type(void)
 /*****************************************************/
 //Формуємо екран відображення струмів
 /*****************************************************/
-void make_ekran_current(unsigned int pervynna_vtorynna)
+void make_ekran_current(void)
 {
   
   unsigned char name_string[MAX_ROW_FOR_MEASURMENT_CURRENT][MAX_COL_LCD] = 
@@ -500,10 +500,7 @@ void make_ekran_current(unsigned int pervynna_vtorynna)
       /********************************/
       unsigned int index = index_array[index_of_ekran];
       unsigned int start_number_digit_after_point = 3;
-      if (pervynna_vtorynna == 0) convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string[index_of_ekran], 7);
-      {
-        convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], current_settings.TCurrent, 1, name_string[index_of_ekran], 7);
-      }
+      convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string[index_of_ekran], 7);
       /********************************/
 
       for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string[index_of_ekran][j];
@@ -530,7 +527,7 @@ void make_ekran_current(unsigned int pervynna_vtorynna)
 /*****************************************************/
 //Формуємо екран відображення фазних напруг 
 /*****************************************************/
-void make_ekran_voltage_phase(unsigned int pervynna_vtorynna)
+void make_ekran_voltage_phase(void)
 {
   unsigned char name_string[MAX_ROW_FOR_MEASURMENT_VOLTAGE_PHASE][MAX_COL_LCD] = 
   {
@@ -582,12 +579,7 @@ void make_ekran_voltage_phase(unsigned int pervynna_vtorynna)
       unsigned int start_number_digit_after_point = 3;
 
       unsigned int index = index_array[index_of_ekran];
-      if (pervynna_vtorynna == 0) convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string[index_of_ekran], 7);
-      else
-      {
-        //Фазні напруги
-        convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], current_settings.TVoltage, 1, name_string[index_of_ekran], 7);
-      }
+      convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string[index_of_ekran], 7);
       /********************************/
 
       for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string[index_of_ekran][j];
@@ -614,7 +606,7 @@ void make_ekran_voltage_phase(unsigned int pervynna_vtorynna)
 /*****************************************************/
 //Формуємо екран відображення лінійних напруг 
 /*****************************************************/
-void make_ekran_voltage_line(unsigned int pervynna_vtorynna)
+void make_ekran_voltage_line(void)
 {
   unsigned char name_string[MAX_ROW_FOR_MEASURMENT_VOLTAGE_LINE][MAX_COL_LCD] = 
   {
@@ -666,12 +658,7 @@ void make_ekran_voltage_line(unsigned int pervynna_vtorynna)
       unsigned int start_number_digit_after_point = 3;
 
       unsigned int index = index_array[index_of_ekran];
-      if (pervynna_vtorynna == 0) convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string[index_of_ekran], 7);
-      else
-      {
-        //Лінійні напруги
-        convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], current_settings.TVoltage, 1, name_string[index_of_ekran], 7);
-      }
+      convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string[index_of_ekran], 7);
       /********************************/
 
       for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string[index_of_ekran][j];
@@ -1004,7 +991,7 @@ void make_ekran_angle(void)
 /*****************************************************/
 //Формуємо екран відображення потужностей
 /*****************************************************/
-void make_ekran_power(unsigned int pervynna_vtorynna)
+void make_ekran_power(void)
 {
   
   unsigned char name_string[MAX_ROW_FOR_MEASURMENT_POWER][MAX_COL_LCD] = 
@@ -1086,10 +1073,7 @@ void make_ekran_power(unsigned int pervynna_vtorynna)
 
       if (index_of_ekran != INDEX_ML_COS_PHI)
       {
-        if (pervynna_vtorynna == 0) 
-          convert_and_insert_char_for_measurement(3, (unsigned int)temp_value, 1, 1, name_string[index_of_ekran], start_position);
-        else
-          convert_and_insert_char_for_measurement(3, (unsigned int)temp_value, current_settings.TVoltage*current_settings.TCurrent, 1, name_string[index_of_ekran], start_position);
+        convert_and_insert_char_for_measurement(3, (unsigned int)temp_value, 1, 1, name_string[index_of_ekran], start_position);
       }
       else
       {

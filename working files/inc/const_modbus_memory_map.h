@@ -1031,9 +1031,9 @@
 //#define MA_DOVGYNA_2_8                    11039
 //#define MA_OPIR_2_8                       11040
 
-#define MA_TN1                            11041
+//#define MA_TN1                            11041
 
-#define MA_TT                             11043
+//#define MA_TT                             11043
 //#define MA_T0                             11044
 //#define MA_TT04                           11045
 

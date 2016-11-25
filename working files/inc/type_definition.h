@@ -110,11 +110,6 @@ typedef struct
   int timeout_ctrl_phase_f;                                                     //Витримка FФАЗ
   int timeout_ctrl_phase_f_d;                                                   //Витримка FФАЗ подовження
   unsigned int control_ctrl_phase;
-  
-
-  unsigned int TCurrent;                //Коефіцієнт трансформації для трансформатора струмів
-  unsigned int TVoltage;                //Коефіцієнт трансформації для трансформатора напруг
-  unsigned int control_transformator;   //налаштування для меню "Трансформатор"
 
   unsigned int password;                                        //Пароль для редагування з меню
   unsigned int timeout_deactivation_password_interface_USB;     //Час деактивації паролю для редагування з інтерфейсу USB
@@ -229,8 +224,6 @@ typedef struct
 {
   unsigned char label_start_record;
   unsigned char time[7]; 
-  unsigned int TCurrent;
-  unsigned int TVoltage;
   unsigned char name_of_cell[MAX_CHAR_IN_NAME_OF_CELL];
 } __HEADER_AR;
 

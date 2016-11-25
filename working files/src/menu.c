@@ -8,8 +8,6 @@ void main_manu_function(void)
   //Перевіряємо чи якась кнопка натиснута
   if (new_state_keyboard !=0)
   {
-    static unsigned int pervynna_vtorynna; //Зміна для відображенні або значень із первинної обмоки, або із вторинної обмотки
-    
     //Аналізуємо в якому ми зараз робочому екрані і виконуємо відповідні дії
     switch (current_ekran.current_level)
     {
@@ -1183,7 +1181,6 @@ void main_manu_function(void)
     case EKRAN_MEASURMENT_ANGLE:
     case EKRAN_MEASURMENT_POWER:
     case EKRAN_CHOOSE_SETTINGS_CTRL_PHASE:
-    case EKRAN_TRANSFORMATOR_INFO:
     case EKRAN_CHOSE_SETTINGS:
     case EKRAN_LEVEL_CHOOSE_PASSWORDS:
     case EKRAN_LIST_OUTPUTS_FOR_RANGUVANNJA:
@@ -1273,21 +1270,21 @@ void main_manu_function(void)
               if(current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_CURRENT) current_ekran.index_position = 0;
               position_in_current_level_menu[EKRAN_MEASURMENT_CURRENT] = current_ekran.index_position;
               //Формуємо екран вимірювання струмів
-              make_ekran_current(pervynna_vtorynna);
+              make_ekran_current();
             }
             else if(current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE)
             {
               if(current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_VOLTAGE_PHASE) current_ekran.index_position = 0;
               position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_PHASE] = current_ekran.index_position;
               //Формуємо екран вимірювання фазних напруг
-              make_ekran_voltage_phase(pervynna_vtorynna);
+              make_ekran_voltage_phase();
             }
             else if(current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE)
             {
               if(current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_VOLTAGE_LINE) current_ekran.index_position = 0;
               position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_LINE] = current_ekran.index_position;
               //Формуємо екран вимірювання лінійних напруг
-              make_ekran_voltage_line(pervynna_vtorynna);
+              make_ekran_voltage_line();
             }
             else if(current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY)
             {
@@ -1308,7 +1305,7 @@ void main_manu_function(void)
               if(current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_POWER) current_ekran.index_position = 0;
               position_in_current_level_menu[EKRAN_MEASURMENT_POWER] = current_ekran.index_position;
               //Формуємо екран відображення потужностей
-              make_ekran_power(pervynna_vtorynna);
+              make_ekran_power();
             }
             else if (
                      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CTRL_PHASE)
@@ -1319,15 +1316,6 @@ void main_manu_function(void)
 
               //Формуємо екран уставки-витримки-настройки для всіх захистів
               make_ekran_chose_settings_any_protection();
-            }
-            else if (current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO)
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_PROTECTION_WITH_SETPOINTS_CONTROL) current_ekran.index_position = 0;
-              
-              position_in_current_level_menu[EKRAN_TRANSFORMATOR_INFO] = current_ekran.index_position;
-
-              //Формуємо екран уставки-настройки
-              make_ekran_chose_setpoint_control();
             }
             else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_SWITCHER)
             {
@@ -1700,17 +1688,11 @@ void main_manu_function(void)
                 {
                   //Переходимо на меню вибору відображення вимірювань струмів
                   current_ekran.current_level = EKRAN_MEASURMENT_CURRENT;
-                
-                  //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення , які поступають на аналогові входи приладу
-                  pervynna_vtorynna = 0;
                 }
                 else if(current_ekran.index_position == INDEX_ML_MEASURMENT_VOLTAGE)
                 {
                   //Переходимо на меню вибору відображення вимірювань напруг
                   current_ekran.current_level = EKRAN_MEASURMENT_VOLTAGE_TYPE;
-                
-                  //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення , які поступають на аналогові входи приладу
-                  pervynna_vtorynna = 0;
                 }
                 else if(current_ekran.index_position == INDEX_ML_MEASURMENT_FREQUENCY)
                 {
@@ -1726,9 +1708,6 @@ void main_manu_function(void)
                 {
                   //Переходимо на меню вибору відображення вимірювань потужностей
                   current_ekran.current_level = EKRAN_MEASURMENT_POWER;
-               
-                  //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення, які поступають на аналогові входи приладу
-                  pervynna_vtorynna = 0;
                 }
                 current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                 current_ekran.edition = 0;
@@ -1742,34 +1721,16 @@ void main_manu_function(void)
                 {
                   //Переходимо на меню вибору відображення вимірювань фазних напруг
                   current_ekran.current_level = EKRAN_MEASURMENT_VOLTAGE_PHASE;
-                
-                  //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення , які поступають на аналогові входи приладу
-                  pervynna_vtorynna = 0;
                 }
                 else if(current_ekran.index_position == INDEX_ML_MEASURMENT_VOLTAGE_LINE)
                 {
                   //Переходимо на меню вибору відображення вимірювань лінійних напруг
                   current_ekran.current_level = EKRAN_MEASURMENT_VOLTAGE_LINE;
-                
-                  //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення , які поступають на аналогові входи приладу
-                  pervynna_vtorynna = 0;
                 }
                 current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                 current_ekran.edition = 0;
                 current_ekran.cursor_on = 1;
                 current_ekran.cursor_blinking_on = 0;
-              }
-              else if (
-                       (current_ekran.current_level == EKRAN_MEASURMENT_CURRENT) ||
-                       (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE) ||
-                       (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE) ||
-                       (current_ekran.current_level == EKRAN_MEASURMENT_POWER)
-                      )   
-              {
-                //Ми у вікні відображення або струмів, напруг, потужностей, опорів, енергій
-                
-                //Переключаємося між відображенням для первинної обмотки і вторинної обмотки
-                pervynna_vtorynna ^= 0x1;
               }
               else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CTRL_PHASE)
               {
@@ -1793,26 +1754,6 @@ void main_manu_function(void)
                   current_ekran.current_level = EKRAN_CONTROL_CTRL_PHASE;
                 } 
 
-                current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-                current_ekran.edition = 0;
-                current_ekran.cursor_on = 1;
-                current_ekran.cursor_blinking_on = 0;
-              }
-              else if (current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO)
-              {
-                //Натисну кнопка Enter у вікні вибору уставок-настройок трансформатора
-                if(current_ekran.index_position == INDEX_ML_WITH_SETPOINT_CONTROL_SETPOINT)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення уставок для вимикача
-                  current_ekran.current_level = EKRAN_TRANSFORMATOR_INFO_SETPOINT;
-                }
-                else if (current_ekran.index_position == INDEX_ML_WITH_SETPOINT_CONTROL_CONTROL)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення управлінської інформації для вимикача
-                  current_ekran.current_level = EKRAN_TRANSFORMATOR_INFO_CONTROL;
-                } 
                 current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                 current_ekran.edition = 0;
                 current_ekran.cursor_on = 1;
@@ -1906,12 +1847,6 @@ void main_manu_function(void)
                   //Запам'ятовуємо поперердній екран
                   //Переходимо на меню відображення вибору настройок виключателя
                   current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_SWITCHER;
-                }
-                else if(current_ekran.index_position == INDEX_OF_TRANSFORMATOR)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення настройок трансорматора
-                  current_ekran.current_level = EKRAN_TRANSFORMATOR_INFO;
                 }
                 else if(current_ekran.index_position == INDEX_OF_CONTROL_INPUTS_OUTPUTS)
                 {
@@ -2535,7 +2470,7 @@ void main_manu_function(void)
                 if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_CURRENT - 1;
                 position_in_current_level_menu[EKRAN_MEASURMENT_CURRENT] = current_ekran.index_position;
                 //Формуємо екран вимірювання струмів вікна
-                make_ekran_current(pervynna_vtorynna);
+                make_ekran_current();
               }
               else if(current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE)
               {
@@ -2547,7 +2482,7 @@ void main_manu_function(void)
                 }
                 position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_PHASE] = current_ekran.index_position;
                 //Формуємо екран вимірювання напруг вікна
-                make_ekran_voltage_phase(pervynna_vtorynna);
+                make_ekran_voltage_phase();
               }
               else if(current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE)
               {
@@ -2559,7 +2494,7 @@ void main_manu_function(void)
                 }
                 position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_LINE] = current_ekran.index_position;
                 //Формуємо екран вимірювання напруг вікна
-                make_ekran_voltage_line(pervynna_vtorynna);
+                make_ekran_voltage_line();
               }
               else if(current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY)
               {
@@ -2580,7 +2515,7 @@ void main_manu_function(void)
                 if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_POWER - 1;
                 position_in_current_level_menu[EKRAN_MEASURMENT_POWER] = current_ekran.index_position;
                 //Формуємо екран відображення вікна потужностей
-                make_ekran_power(pervynna_vtorynna);
+                make_ekran_power();
               }
               else if (
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CTRL_PHASE)
@@ -2590,15 +2525,6 @@ void main_manu_function(void)
                 position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                 //Формуємо екран уставки-витримки-настройки для всіх захистів
                 make_ekran_chose_settings_any_protection();
-              }
-              else if (current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO)
-              {
-                if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_CHOSE_SETTINGS_PROTECTION_WITH_SETPOINTS_CONTROL - 1;
-              
-                position_in_current_level_menu[EKRAN_TRANSFORMATOR_INFO] = current_ekran.index_position;
-
-                //Формуємо екран уставки-настройки
-                make_ekran_chose_setpoint_control();
               }
               else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_SWITCHER)
               {
@@ -2981,21 +2907,21 @@ void main_manu_function(void)
                 if(++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_CURRENT) current_ekran.index_position = 0;
                 position_in_current_level_menu[EKRAN_MEASURMENT_CURRENT] = current_ekran.index_position;
                 //Формуємо екран вимірювання струмів вікна
-                make_ekran_current(pervynna_vtorynna);
+                make_ekran_current();
               }
               else if(current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE)
               {
                 if(++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_VOLTAGE_PHASE) current_ekran.index_position = 0;
                 position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_PHASE] = current_ekran.index_position;
                 //Формуємо екран вимірювання напруг вікна
-                make_ekran_voltage_phase(pervynna_vtorynna);
+                make_ekran_voltage_phase();
               }
               else if(current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE)
               {
                 if(++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_VOLTAGE_LINE) current_ekran.index_position = 0;
                 position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_LINE] = current_ekran.index_position;
                 //Формуємо екран вимірювання напруг вікна
-                make_ekran_voltage_line(pervynna_vtorynna);
+                make_ekran_voltage_line();
               }
               else if(current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY)
               {
@@ -3016,7 +2942,7 @@ void main_manu_function(void)
                 if(++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_POWER) current_ekran.index_position = 0;
                 position_in_current_level_menu[EKRAN_MEASURMENT_POWER] = current_ekran.index_position;
                 //Формуємо екран відображення вікна потужностей
-                make_ekran_power(pervynna_vtorynna);
+                make_ekran_power();
               }
               else if (
                        (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CTRL_PHASE)
@@ -3027,15 +2953,6 @@ void main_manu_function(void)
 
                 //Формуємо екран уставки-витримки-настройки для всіх захистів
                 make_ekran_chose_settings_any_protection();
-              }
-              else if (current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO)
-              {
-                if(++current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_PROTECTION_WITH_SETPOINTS_CONTROL) current_ekran.index_position = 0;
-              
-                position_in_current_level_menu[EKRAN_TRANSFORMATOR_INFO] = current_ekran.index_position;
-
-                //Формуємо екран уставки-настройки
-                make_ekran_chose_setpoint_control();
               }
               else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_SWITCHER)
               {
@@ -3414,8 +3331,6 @@ void main_manu_function(void)
     case EKRAN_SETPOINT_CTRL_PHASE:
     case EKRAN_TIMEOUT_CTRL_PHASE:
     case EKRAN_CONTROL_CTRL_PHASE:
-    case EKRAN_TRANSFORMATOR_INFO_SETPOINT:
-    case EKRAN_TRANSFORMATOR_INFO_CONTROL:
     case EKRAN_SETPOINT_SWITCH:
     case EKRAN_TIMEOUT_SWITCH:
     case EKRAN_CONTROL_SWITCH:
@@ -3490,20 +3405,6 @@ void main_manu_function(void)
               position_in_current_level_menu[EKRAN_SETPOINT_SWITCH] = current_ekran.index_position;
               //Формуємо екран уставок виключателя
               make_ekran_setpoint_switch();
-            }
-            else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_SETPOINT)
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_TRANSFORMATOR_INFO_SETPOINT) current_ekran.index_position = 0;
-              position_in_current_level_menu[EKRAN_TRANSFORMATOR_INFO_SETPOINT] = current_ekran.index_position;
-              //Формуємо екран інфтрмації по трансформаторах
-              make_ekran_transformator();
-            }
-            else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_CONTROL)
-            {
-              if(current_ekran.index_position >= MAX_ROW_FOR_TRANSFORMATOR_INFO_CONTROL) current_ekran.index_position = 0;
-              position_in_current_level_menu[EKRAN_TRANSFORMATOR_INFO_CONTROL] = current_ekran.index_position;
-              //Формуємо екран відображення налаштувань для меню "Трансформатор"
-              make_ekran_transformator_control();
             }
             else if(current_ekran.current_level == EKRAN_TIMEOUT_SWITCH)
             {
@@ -3692,23 +3593,6 @@ void main_manu_function(void)
                 else if(current_ekran.current_level == EKRAN_CONTROL_CTRL_PHASE)
                 {
                   edition_settings.control_ctrl_phase = current_settings.control_ctrl_phase;
-                }
-                else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_SETPOINT)
-                {
-                  if (current_ekran.index_position == INDEX_ML_TT)
-                  {
-                    edition_settings.TCurrent = current_settings.TCurrent;
-                    current_ekran.position_cursor_x = COL_TT_BEGIN;
-                  }
-                  else
-                  {
-                    edition_settings.TVoltage = current_settings.TVoltage;
-                    current_ekran.position_cursor_x = COL_TN_BEGIN;
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_CONTROL)
-                {
-                  edition_settings.control_transformator = current_settings.control_transformator;
                 }
                 else if(current_ekran.current_level == EKRAN_SETPOINT_SWITCH)
                 {
@@ -3964,21 +3848,6 @@ void main_manu_function(void)
                 else if(current_ekran.current_level == EKRAN_CONTROL_CTRL_PHASE)
                 {
                   if (edition_settings.control_ctrl_phase != current_settings.control_ctrl_phase) found_changes = 1;
-                }
-                else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_SETPOINT)
-                {
-                  if (current_ekran.index_position == INDEX_ML_TT)
-                  {
-                    if (edition_settings.TCurrent != current_settings.TCurrent) found_changes = 1;
-                  }
-                  else
-                  {
-                    if (edition_settings.TVoltage != current_settings.TVoltage) found_changes = 1;
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_CONTROL)
-                {
-                  if (edition_settings.control_transformator != current_settings.control_transformator) found_changes = 1;
                 }
                 else if(current_ekran.current_level == EKRAN_SETPOINT_SWITCH)
                 {
@@ -4330,61 +4199,6 @@ void main_manu_function(void)
                       changed_settings = CHANGED_ETAP_EXECUTION;
                         
                       current_settings.control_ctrl_phase = edition_settings.control_ctrl_phase;
-                      //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                      fix_change_settings(0, 1);
-                    }
-                    //Виходимо з режиму редагування
-                    current_ekran.edition = 0;
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_SETPOINT)
-                {
-                  if (current_ekran.index_position == INDEX_ML_TT)
-                  {
-                    if (check_data_setpoint(edition_settings.TCurrent, KOEF_TT_MIN, KOEF_TT_MAX) == 1)
-                    {
-                      if (edition_settings.TCurrent != current_settings.TCurrent)
-                      {
-                        //Помічаємо, що поле структури зараз буде змінене
-                        changed_settings = CHANGED_ETAP_EXECUTION;
-                        
-                        current_settings.TCurrent = edition_settings.TCurrent;
-                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                        fix_change_settings(0, 1);
-                      }
-                      //Виходимо з режиму редагування
-                      current_ekran.edition = 0;
-                    }
-                  }
-                  else
-                  {
-                    if (check_data_setpoint(edition_settings.TVoltage, KOEF_TN_MIN, KOEF_TN_MAX) == 1)
-                    {
-                      if (edition_settings.TVoltage != current_settings.TVoltage)
-                      {
-                        //Помічаємо, що поле структури зараз буде змінене
-                        changed_settings = CHANGED_ETAP_EXECUTION;
-                        
-                        current_settings.TVoltage = edition_settings.TVoltage;
-                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                        fix_change_settings(0, 1);
-                      }
-                      //Виходимо з режиму редагування
-                      current_ekran.edition = 0;
-                    }
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_CONTROL)
-                {
-                  if ((edition_settings.control_transformator  & ((unsigned int)(~CTR_TRANSFORMATOR_MASKA))) == 0)
-                  {
-                    if (edition_settings.control_transformator != current_settings.control_transformator)
-                    {
-                      //Помічаємо, що поле структури зараз буде змінене
-                      changed_settings = CHANGED_ETAP_EXECUTION;
-                        
-                      current_settings.control_transformator = edition_settings.control_transformator;
-                      
                       //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                       fix_change_settings(0, 1);
                     }
@@ -5202,31 +5016,6 @@ void main_manu_function(void)
                 //Формуємо екран управлінської інформації для "Перевірки фаз"
                 make_ekran_control_ctrl_phase();
               }
-              else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_SETPOINT)
-              {
-                if(current_ekran.edition == 0)
-                {
-                  if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_TRANSFORMATOR_INFO_SETPOINT - 1;
-                  position_in_current_level_menu[EKRAN_TRANSFORMATOR_INFO_SETPOINT] = current_ekran.index_position;
-                }
-                else
-                {
-                  //Редагування числа
-                  if (current_ekran.index_position == INDEX_ML_TT)
-                    edition_settings.TCurrent = edit_setpoint(1, edition_settings.TCurrent, 0, 0, COL_TT_END, 1);
-                  else
-                    edition_settings.TVoltage = edit_setpoint(1, edition_settings.TVoltage, 0, 0, COL_TN_END, 1);
-                }
-                //Формуємо екран інфтрмації по трансформаторах
-                make_ekran_transformator();
-              }
-              else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_CONTROL)
-              {
-                if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_TRANSFORMATOR_INFO_CONTROL - 1;
-                position_in_current_level_menu[EKRAN_TRANSFORMATOR_INFO_CONTROL] = current_ekran.index_position;
-                //Формуємо екран відображення налаштувань меню "Трансформатор"
-                make_ekran_transformator_control();
-              }
               else if(current_ekran.current_level == EKRAN_SETPOINT_SWITCH)
               {
                 if(current_ekran.edition == 0)
@@ -5590,31 +5379,6 @@ void main_manu_function(void)
                 position_in_current_level_menu[EKRAN_CONTROL_CTRL_PHASE] = current_ekran.index_position;
                 //Формуємо екран управлінської інформації для "Перевірки фазування"
                 make_ekran_control_ctrl_phase();
-              }
-              else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_SETPOINT)
-              {
-                if(current_ekran.edition == 0)
-                {
-                  if(++current_ekran.index_position >= MAX_ROW_FOR_TRANSFORMATOR_INFO_SETPOINT) current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_TRANSFORMATOR_INFO_SETPOINT] = current_ekran.index_position;
-                }
-                else
-                {
-                  //Редагування числа
-                  if (current_ekran.index_position == INDEX_ML_TT)
-                    edition_settings.TCurrent = edit_setpoint(0, edition_settings.TCurrent, 0, 0, COL_TT_END, 1);
-                  else
-                    edition_settings.TVoltage = edit_setpoint(0, edition_settings.TVoltage, 0, 0, COL_TN_END, 1);
-                }
-                //Формуємо екран інфтрмації по трансформаторах
-                make_ekran_transformator();
-              }
-              else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_CONTROL)
-              {
-                if(++current_ekran.index_position >= MAX_ROW_FOR_TRANSFORMATOR_INFO_CONTROL) current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_TRANSFORMATOR_INFO_CONTROL] = current_ekran.index_position;
-                //Формуємо екран відображення налаштувань меню "Трансформатор"
-                make_ekran_transformator_control();
               }
               else if(current_ekran.current_level == EKRAN_SETPOINT_SWITCH)
               {
@@ -6020,34 +5784,6 @@ void main_manu_function(void)
                 //Формуємо екран управлінської інформації для "Пкпквірки фазування"
                  make_ekran_control_ctrl_phase();
               }
-              else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_SETPOINT)
-              {
-                if (current_ekran.index_position == INDEX_ML_TT)
-                {
-                  if ((current_ekran.position_cursor_x < COL_TT_BEGIN) ||
-                      (current_ekran.position_cursor_x > COL_TT_END))
-                    current_ekran.position_cursor_x = COL_TT_BEGIN;
-                }
-                else
-                {
-                  if ((current_ekran.position_cursor_x < COL_TN_BEGIN) ||
-                      (current_ekran.position_cursor_x > COL_TN_END))
-                    current_ekran.position_cursor_x = COL_TN_BEGIN;
-                }
-                //Формуємо екран відображення інформації по трансформаторах
-                make_ekran_transformator();
-              }
-              else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_CONTROL)
-              {
-                //Виділяємо, який біт треба міняти
-                unsigned int maska = (1 << current_ekran.index_position);
-                
-                //Міняємо на протилежний відповідний біт для вибраної позиції
-                edition_settings.control_transformator ^= maska;
-
-                //Формуємо екран відображення налаштувань меню "Трансформатор"
-                make_ekran_transformator_control();
-              }
               else if(current_ekran.current_level == EKRAN_SETPOINT_SWITCH)
               {
                 if(current_ekran.index_position == INDEX_ML_STPInom)
@@ -6420,34 +6156,6 @@ void main_manu_function(void)
 
                 //Формуємо екран управлінської інформації для "Перевірки фазування"
                  make_ekran_control_ctrl_phase();
-              }
-              else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_SETPOINT)
-              {
-                if(current_ekran.index_position == INDEX_ML_TT)
-                {
-                  if ((current_ekran.position_cursor_x < COL_TT_BEGIN) ||
-                      (current_ekran.position_cursor_x > COL_TT_END))
-                    current_ekran.position_cursor_x = COL_TT_END;
-                }
-                else
-                {
-                  if ((current_ekran.position_cursor_x < COL_TN_BEGIN) ||
-                      (current_ekran.position_cursor_x > COL_TN_END))
-                    current_ekran.position_cursor_x = COL_TN_END;
-                }
-                //Формуємо екран відображення інформації по трансформаторах
-                make_ekran_transformator();
-              }
-              else if(current_ekran.current_level == EKRAN_TRANSFORMATOR_INFO_CONTROL)
-              {
-                //Виділяємо, який біт треба міняти
-                unsigned int maska = (1 << current_ekran.index_position);
-                
-                //Міняємо на протилежний відповідний біт для вибраної позиції
-                edition_settings.control_transformator ^= maska;
-
-                //Формуємо екран відображення налаштувань меню "Трансформатор"
-                make_ekran_transformator_control();
               }
               else if(current_ekran.current_level == EKRAN_SETPOINT_SWITCH)
               {

@@ -1,12 +1,6 @@
 #ifndef __CONST_SETPOINT_INTERVAL__
 #define __CONST_SETPOINT_INTERVAL__
 
-#define KOEF_TT_MIN                   1
-#define KOEF_TT_MAX                   2000
-
-#define KOEF_TN_MIN                   50
-#define KOEF_TN_MAX                   1800
-
 #define SETPOINT_CTRL_PHASE_U_MIN     100
 #define SETPOINT_CTRL_PHASE_U_MAX     50000
 
@@ -35,7 +29,7 @@
 #define TIMEOUT_CTRL_PHASE_F_D_MAX    32000
 
 #define SETPOINT_Inom_MIN             5
-#define SETPOINT_Inom_MAX             (SETPOINT_Inom_MIN*KOEF_TT_MAX)
+#define SETPOINT_Inom_MAX             (SETPOINT_Inom_MIN*1)
 
 #define SETPOINT_RKS_Inom_MIN         1000
 #define SETPOINT_RKS_Inom_MAX         100000

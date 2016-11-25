@@ -116,7 +116,7 @@ typedef struct
   unsigned int TVoltage;                //Коефіцієнт трансформації для трансформатора напруг
   unsigned int control_transformator;   //налаштування для меню "Трансформатор"
 
-  unsigned int password1;                                       //Пароль для редагування з меню
+  unsigned int password;                                        //Пароль для редагування з меню
   unsigned int timeout_deactivation_password_interface_USB;     //Час деактивації паролю для редагування з інтерфейсу USB
   unsigned int password_interface_USB;                          //Пароль для редагування з інтерфейсу USB
   unsigned int timeout_deactivation_password_interface_RS485;   //Час деактивації паролю для редагування з інтерфейсу RS485

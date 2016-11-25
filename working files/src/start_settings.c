@@ -234,7 +234,7 @@ void global_vareiables_installation(void)
  
   for(unsigned int i=0; i<MAX_LEVEL_MENU; i++)
   {
-    if ((i == EKRAN_LEVEL_PASSWORD) || (i == EKRAN_LEVEL_SET_NEW_PASSWORD1)) position_in_current_level_menu[i] = INDEX_LINE_NUMBER_1_FOR_LEVEL_PASSWORD;
+    if ((i == EKRAN_LEVEL_PASSWORD) || (i == EKRAN_LEVEL_SET_NEW_PASSWORD)) position_in_current_level_menu[i] = INDEX_LINE_NUMBER_1_FOR_LEVEL_PASSWORD;
     else  position_in_current_level_menu[i] = 0;
     previous_level_in_current_level_menu[i] = -1;
   }
@@ -1702,7 +1702,7 @@ void min_settings(__SETTINGS *target_label)
   target_label->prefault_number_periods = TIMEOUT_PREFAULT_MIN / 20;
   target_label->postfault_number_periods = TIMEOUT_POSTFAULT_MIN / 20;
 
-  target_label->password1 = 0;
+  target_label->password = 0;
   target_label->timeout_deactivation_password_interface_USB = TIMEOUT_DEACTIVATION_PASSWORD_MIN;
   target_label->password_interface_USB = 0;
   target_label->timeout_deactivation_password_interface_RS485 = TIMEOUT_DEACTIVATION_PASSWORD_MIN;

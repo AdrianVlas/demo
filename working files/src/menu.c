@@ -51,16 +51,7 @@ void main_manu_function(void)
             if (new_state_keyboard == (1<<BIT_KEY_ENTER))
             {
               //Натиснута кнопка ENTER
-              unsigned int password;
-              if (current_ekran.current_level == EKRAN_LEVEL_PASSWORD)
-                password = current_settings.password1;
-              else
-              {
-                //Теоретично цього ніколи не мало б бути
-                total_error_sw_fixed(70);
-              }
-
-              if (new_password == password)
+              if (new_password == current_settings.password)
               {
                 //Пароль зійшовся
                 //Переходимо у попереднє меню у режимі редагування
@@ -175,7 +166,7 @@ void main_manu_function(void)
 /******************************************************************************************************************************************/ 
 
 /******************************************************************************************************************************************/ 
-    case EKRAN_LEVEL_SET_NEW_PASSWORD1:
+    case EKRAN_LEVEL_SET_NEW_PASSWORD:
       {
         //Змінні для фіксації введеного паролю
         static unsigned int new_setting_password;
@@ -191,15 +182,6 @@ void main_manu_function(void)
 
         if (new_state_keyboard !=0)
         {
-          unsigned int *p_password;
-          if (current_ekran.current_level == EKRAN_LEVEL_SET_NEW_PASSWORD1)
-            p_password = &current_settings.password1;
-          else
-          {
-            //Теоретично цього ніколи не мало б бути
-            total_error_sw_fixed(69);
-          }
-            
           //Пріоритет стоїть на обновлені екрану
           if((new_state_keyboard & (1<<BIT_REWRITE)) !=0)
           {
@@ -210,7 +192,7 @@ void main_manu_function(void)
               current_ekran.position_cursor_x = COL_NEW_PASSWORD_BEGIN;
               position_in_current_level_menu[current_ekran.current_level] = 1;
               //Встановлюємо початкове значення нового паролю і скидаємо кількість введених символів
-              new_setting_password = *p_password;
+              new_setting_password = current_settings.password;
               number_symbols_new_setting_password = 0;
               
               unsigned int temp_value = new_setting_password;
@@ -219,7 +201,7 @@ void main_manu_function(void)
                 number_symbols_new_setting_password++;
                 temp_value /= 10;
               }
-              if (number_symbols_new_setting_password == 0) number_symbols_new_setting_password = 1; //Це випадок коли current_settings.password1 = 0, тоді кількість символів рівна 0, бо число є "0"
+              if (number_symbols_new_setting_password == 0) number_symbols_new_setting_password = 1; //Це випадок коли current_settings.password = 0, тоді кількість символів рівна 0, бо число є "0"
             
               //Формуємо екран рівня password
               make_ekran_level_password(new_setting_password, 1);
@@ -244,7 +226,7 @@ void main_manu_function(void)
               if (current_ekran.edition == 1)
               {
                 //Виходимо з режиму редагування
-                if (current_settings.password1 == new_setting_password)
+                if (current_settings.password == new_setting_password)
                 {
                   //Переходимо на попередній рівень
                   current_ekran.edition = 0;
@@ -262,7 +244,7 @@ void main_manu_function(void)
                 changed_settings = CHANGED_ETAP_EXECUTION;
                         
                 //Вводимо нове значення у дію
-                *p_password = new_setting_password;
+                current_settings.password = new_setting_password;
 
                 //Помічаємо, що таблиця змінилася і її треба буде з системи захистів зкопіювати у таблицю з якою працює система захистів (хоч ця операція і є зайвою, бо не було змін тих полів, які використовуються системою захистів, але це я зробив для універсальності, щоб завжди дві таблиці були ідентичні)
                 changed_settings = CHANGED_ETAP_ENDED;
@@ -358,7 +340,7 @@ void main_manu_function(void)
                   }
                   else
                   {
-                    if (current_ekran.current_level != EKRAN_LEVEL_SET_NEW_PASSWORD1) edit_rozrjad = 1;
+                    if (current_ekran.current_level != EKRAN_LEVEL_SET_NEW_PASSWORD) edit_rozrjad = 1;
                     new_setting_password = vyshchi_rozrjady*vaga*10 + edit_rozrjad*vaga; 
                   }
                 }
@@ -406,7 +388,7 @@ void main_manu_function(void)
                     }
                     else
                     {
-                      if (current_ekran.current_level != EKRAN_LEVEL_SET_NEW_PASSWORD1) edit_rozrjad = 4;
+                      if (current_ekran.current_level != EKRAN_LEVEL_SET_NEW_PASSWORD) edit_rozrjad = 4;
                       new_setting_password = vyshchi_rozrjady*vaga*10 + edit_rozrjad*vaga;
                     }
                   }
@@ -418,7 +400,7 @@ void main_manu_function(void)
                 }
                 else
                 {
-                  if (current_ekran.current_level != EKRAN_LEVEL_SET_NEW_PASSWORD1) new_setting_password = 4;
+                  if (current_ekran.current_level != EKRAN_LEVEL_SET_NEW_PASSWORD) new_setting_password = 4;
                   else new_setting_password = 0;
                 }
                   
@@ -738,7 +720,7 @@ void main_manu_function(void)
                 //Підготовка до режиму редагування - включаємо мигаючий курсор
                 current_ekran.cursor_on = 1;
                 current_ekran.cursor_blinking_on = 1;
-                if (current_settings.password1 != 0)
+                if (current_settings.password != 0)
                 {
                   //Переходимо на меню запиту паролю
                   current_ekran.current_level = EKRAN_LEVEL_PASSWORD;
@@ -1076,7 +1058,7 @@ void main_manu_function(void)
                 //Підготовка до режиму редагування - включаємо мигаючий курсор
                 current_ekran.cursor_on = 1;
                 current_ekran.cursor_blinking_on = 1;
-                if (current_settings.password1 != 0)
+                if (current_settings.password != 0)
                 {
                   //Переходимо на меню запиту паролю
                   current_ekran.current_level = EKRAN_LEVEL_PASSWORD;
@@ -1985,7 +1967,7 @@ void main_manu_function(void)
 //                {
                   //Запам'ятовуємо поперердній екран
                   //Переходимо на меню зміни паролю
-                  current_ekran.current_level = EKRAN_LEVEL_SET_NEW_PASSWORD1;
+                  current_ekran.current_level = EKRAN_LEVEL_SET_NEW_PASSWORD;
 //                }
                 current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                 current_ekran.edition = 1;
@@ -2501,13 +2483,13 @@ void main_manu_function(void)
               {
                 previous_level_in_current_level_menu[current_ekran.current_level] = temp_current_level;
               
-                if ((current_ekran.current_level == EKRAN_LEVEL_SET_NEW_PASSWORD1) && (current_settings.password1 != 0))
+                if ((current_ekran.current_level == EKRAN_LEVEL_SET_NEW_PASSWORD) && (current_settings.password != 0))
                 {
                   //У випавдку, якщо ми намагаємося перейти у вікно зміни паролю, то спочатку треба запитати старий пароль доступу, якщо він встановлений
-                  if (current_ekran.current_level == EKRAN_LEVEL_SET_NEW_PASSWORD1) 
+                  if (current_ekran.current_level == EKRAN_LEVEL_SET_NEW_PASSWORD) 
                   {
                     current_ekran.current_level = EKRAN_LEVEL_PASSWORD;
-                    previous_level_in_current_level_menu[current_ekran.current_level] = EKRAN_LEVEL_SET_NEW_PASSWORD1;
+                    previous_level_in_current_level_menu[current_ekran.current_level] = EKRAN_LEVEL_SET_NEW_PASSWORD;
                   }
                   else
                   {
@@ -3933,7 +3915,7 @@ void main_manu_function(void)
                 //Підготовка до режиму редагування - включаємо мигаючий курсор
                 current_ekran.cursor_on = 1;
                 current_ekran.cursor_blinking_on = 1;
-                if (current_settings.password1 != 0)
+                if (current_settings.password != 0)
                 {
                   //Переходимо на меню запиту паролю
                   current_ekran.current_level = EKRAN_LEVEL_PASSWORD;
@@ -7573,7 +7555,7 @@ void main_manu_function(void)
                 int temp_current_level = current_ekran.current_level;
                 current_ekran.cursor_on = 1;
                 current_ekran.cursor_blinking_on = 1;
-                if (current_settings.password1 != 0)
+                if (current_settings.password != 0)
                 {
                   //Переходимо на меню запиту паролю
                   current_ekran.current_level = EKRAN_LEVEL_PASSWORD;

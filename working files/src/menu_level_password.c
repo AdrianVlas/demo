@@ -23,7 +23,7 @@ void make_ekran_level_password(unsigned int password, unsigned int view)
 
   //Визначаємо з яким масивом будемо працювати
   unsigned char *point_to_working_array;
-  if (current_ekran.current_level == EKRAN_LEVEL_SET_NEW_PASSWORD1)
+  if (current_ekran.current_level == EKRAN_LEVEL_SET_NEW_PASSWORD)
     point_to_working_array = (unsigned char *)name_string_2;
   else
     point_to_working_array = (unsigned char *)name_string_1;
@@ -70,7 +70,7 @@ void make_ekran_level_password(unsigned int password, unsigned int view)
     }
     else
     {
-      unsigned char symbol = (current_ekran.current_level == EKRAN_LEVEL_SET_NEW_PASSWORD1) ? '0' : '?';
+      unsigned char symbol = (current_ekran.current_level == EKRAN_LEVEL_SET_NEW_PASSWORD) ? '0' : '?';
       name_string_tmp[INDEX_LINE_NUMBER_2_FOR_LEVEL_PASSWORD][position_cursor++] = symbol;
     }
   }
@@ -114,10 +114,7 @@ void make_ekran_chose_passwords(void)
     //Наступні рядки треба перевірити, чи їх требе відображати у текучій кофігурації
     if (index_of_ekran < MAX_ROW_FOR_CHOOSE_PASSWORDS)
     {
-      unsigned int password;
-      password = current_settings.password1;
-      
-      unsigned int index_of_information = ( password != 0) ? 0 : 1;
+      unsigned int index_of_information = ( current_settings.password != 0) ? 0 : 1;
       for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = password_item[index_language][index_of_information][j];
     } 
     else

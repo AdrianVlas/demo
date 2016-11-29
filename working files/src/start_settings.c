@@ -1259,37 +1259,39 @@ void start_settings_peripherals(void)
   /**********************/
 
   /**********************/
-  //Читаємо збережені дані про сигнальні виходи і тригерні свтлодіоди
+  //Виставляємо початкову інформацію на виходи і світлоіндикатори і дозволяємо з ними роботу
   /**********************/
-  comparison_writing &= (unsigned int)(~COMPARISON_WRITING_STATE_LEDS_OUTPUTS);/*зчитування, а не порівняння*/
-  _SET_BIT(control_i2c_taskes, TASK_START_READ_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-  while(
-        (control_i2c_taskes[0]     != 0) ||
-        (control_i2c_taskes[1]     != 0) ||
-        (driver_i2c.state_execution > 0)
-       )
   {
-    //Робота з watchdogs
-    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
-    {
-      //Змінюємо стан біту зовнішнього Watchdog на протилежний
-      GPIO_WriteBit(
-                    GPIO_EXTERNAL_WATCHDOG,
-                    GPIO_PIN_EXTERNAL_WATCHDOG,
-                    (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG))
-                   );
-    }
+    //Виводимо інформацію по світлоіндикаторах на світлодіоди
+    _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_LEDS) = state_leds;
+    //Виставляємо пін CON-L, щоб можна було управляти свтоіндикаторами
+    GPIO_SetBits(CON_L, CON_L_PIN);
 
-    main_routines_for_i2c();
-    changing_diagnostyka_state();//Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
-    if (_CHECK_SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT) != 0)
+    //Виводимо інформацію по виходах на піни процесора (у зворотньому порядку)
+    unsigned int temp_state_outputs = 0;
+    for (unsigned int index = 0; index < NUMBER_OUTPUTS; index++)
     {
-      //Повне роозблоковування обміну з мікросхемами для драйверу I2C
-      _CLEAR_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);
+      if ((state_outputs_raw & (1 << index)) != 0)
+      {
+        if (index < NUMBER_OUTPUTS_1)
+          temp_state_outputs |= 1 << (NUMBER_OUTPUTS_1 - index - 1);
+        else
+          temp_state_outputs |= 1 << index;
+      }
     }
+    unsigned int temp_state_outputs_1 =  temp_state_outputs                      & ((1 << NUMBER_OUTPUTS_1) - 1);
+    unsigned int temp_state_outputs_2 = (temp_state_outputs >> NUMBER_OUTPUTS_1) & ((1 << NUMBER_OUTPUTS_2) - 1);
+    _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_OUTPUTS_1) = temp_state_outputs_1;
+    _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_OUTPUTS_2) = temp_state_outputs_2;
+    //Виставляємо пін CON-OUTPUTS-1, щоб можна було управляти виходами
+    GPIO_SetBits(CON_OUTPUTS, CON_1_OUTPUTS_PIN);
+    //Знімаємо пін CON-OUTPUTS-2, щоб можна було управляти виходамии
+    GPIO_ResetBits(CON_OUTPUTS, CON_2_OUTPUTS_PIN);
+    //Виставляємо  пін CON-OUTPUTS-3, щоб можна було управляти виходами
+    GPIO_SetBits(CON_OUTPUTS, CON_3_OUTPUTS_PIN);
   }
   /**********************/
-  
+
   /**********************/
   //Читаємо збережені дані про тригерну інформацію
   /**********************/
@@ -1592,14 +1594,11 @@ void min_settings(__SETTINGS *target_label)
       target_label->dopusk_dv[i] = KOEF_DOPUSK_DV_POST_MIN;
   }
 
-  target_label->type_of_output = 0x0;
-  target_label->type_of_output_modif = 0x0;
   for(unsigned int i = 0; i < NUMBER_OUTPUTS; i++)
   {
     for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_outputs[N_BIG*i+j] = 0x0;
   }
 
-  target_label->type_of_led = 0x0;
   for(unsigned int i = 0; i < NUMBER_LEDS; i++)
   {
     for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_leds[N_BIG*i+j] = 0x0;

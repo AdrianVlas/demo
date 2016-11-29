@@ -1555,7 +1555,7 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
   }
   else if (address_data == MA_OUTPUTS)
   {
-    temp_value = state_outputs_raw & ((1 << NUMBER_OUTPUTS) - 1);
+    temp_value = state_outputs & ((1 << NUMBER_OUTPUTS) - 1);
   }
   else if (address_data == MA_INPUTS)
   {
@@ -2514,24 +2514,9 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
         temp_value = current_settings_interfaces.type_of_input_signal & ((1 << NUMBER_INPUTS) - 1);
         break;
       }
-    case MA_UVV_TYPE_OUTPUT:
-      {
-        temp_value = current_settings_interfaces.type_of_output & ((1 << NUMBER_OUTPUTS) - 1);
-        break;
-      }
-    case MA_UVV_TYPE_OUTPUT_MODIF:
-      {
-        temp_value = current_settings_interfaces.type_of_output_modif & ((1 << NUMBER_OUTPUTS) - 1);
-        break;
-      }
     case MA_TYPE_DF:
       {
         temp_value = current_settings_interfaces.type_df & ((1 << NUMBER_DEFINED_FUNCTIONS) - 1);
-        break;
-      }
-    case MA_UVV_TYPE_LED:
-      {
-        temp_value = current_settings_interfaces.type_of_led & ((1 << NUMBER_LEDS) - 1);
         break;
       }
     case MA_DOPUSK_DV_1:
@@ -3662,37 +3647,10 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
 
         break;
       }
-    case MA_UVV_TYPE_OUTPUT:
-      {
-        if (data <= ((1 << NUMBER_OUTPUTS) - 1)) 
-          target_label->type_of_output = data;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_UVV_TYPE_OUTPUT_MODIF:
-      {
-        if (data <= ((1 << NUMBER_OUTPUTS) - 1)) 
-          target_label->type_of_output_modif = data;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
     case MA_TYPE_DF:
       {
         if (data <= ((1 << NUMBER_DEFINED_FUNCTIONS) - 1)) 
           target_label->type_df = data;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_UVV_TYPE_LED:
-      {
-        if (data <= ((1 << NUMBER_LEDS) - 1)) 
-          target_label->type_of_led = data;
         else
           error = ERROR_ILLEGAL_DATA_VALUE;
 

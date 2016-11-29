@@ -364,48 +364,6 @@ void main_routines_for_i2c(void)
         _CLEAR_BIT(control_i2c_taskes, TASK_WRITING_USTUVANNJA_EEPROM_BIT);
       }
     }
-    else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_STATE_LEDS_OUTPUTS_EEPROM_BIT) !=0)
-    {
-      //Стоїть умова запису блоку у EEPROM стану виходів і світлоіндикаторів
-      int size_to_end;
-      unsigned int rez, offset_from_start;
-      
-      //Визначаємо з якого місця треба почати записувати
-      offset_from_start = number_block_state_leds_outputs_write_to_eeprom*SIZE_PAGE_EEPROM;
-
-      //Кількість байт до кінця буферу 
-      size_to_end = (2*(1 + 2)) - offset_from_start; 
-      
-      if (size_to_end > 0)
-      {
-        if (size_to_end < SIZE_PAGE_EEPROM)
-          rez = start_write_buffer_via_I2C(EEPROM_ADDRESS, (START_ADDRESS_STATE_LEDS_OUTPUTS_IN_EEPROM + offset_from_start), (read_write_i2c_buffer + offset_from_start), size_to_end);
-        else
-          rez = start_write_buffer_via_I2C(EEPROM_ADDRESS, (START_ADDRESS_STATE_LEDS_OUTPUTS_IN_EEPROM + offset_from_start), (read_write_i2c_buffer + offset_from_start), SIZE_PAGE_EEPROM);
-        
-        //Аналізуємо успішність запуску нового запису
-        if (rez > 1)
-        {
-          error_start_i2c();          
-          
-          //Покищо просто очищаємо змінну, яка конкретизуєм помилку, у майбутньому її можна буде конкретизувати
-          type_error_of_exchanging_via_i2c = 0;
-        }
-        else if (rez == 0) _SET_BIT(clear_diagnostyka, ERROR_START_VIA_I2C_BIT);
-      }
-      else
-      {
-        //Весь масив станів виходів-світлоіндикаторів вже записаний, тому 
-        
-        //Виставляємо команду контрольного читання для перевідрки достовірності записаної інформації
-        comparison_writing |= COMPARISON_WRITING_STATE_LEDS_OUTPUTS;
-        _SET_BIT(control_i2c_taskes, TASK_START_READ_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-        _SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);        
-
-        //Cкидаємо умову запису станів виходів-світлоіндикаторів у EEPROM
-        _CLEAR_BIT(control_i2c_taskes, TASK_WRITING_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-      }
-    }
     else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_TRG_FUNC_EEPROM_BIT) !=0)
     {
       //Стоїть умова запису блоку триґерної інформації
@@ -632,31 +590,6 @@ void main_routines_for_i2c(void)
         _CLEAR_BIT(control_i2c_taskes, TASK_START_READ_USTUVANNJA_EEPROM_BIT);
       }
     }
-    else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_START_READ_STATE_LEDS_OUTPUTS_EEPROM_BIT) !=0)
-    {
-      unsigned int rez;
-      
-      //Запускаємо процес читання
-      rez = start_read_buffer_via_I2C(EEPROM_ADDRESS, START_ADDRESS_STATE_LEDS_OUTPUTS_IN_EEPROM, read_write_i2c_buffer, (2*(1 + 2)));
-      
-      //Аналізуємо успішність запуску
-      if (rez > 1)
-      {
-        error_start_i2c();
-        
-        //Покищо просто очищаємо змінну, яка конкретизуєм помилку, у майбутньому її можна буде конкретизувати
-        type_error_of_exchanging_via_i2c = 0;
-      }
-      else if (rez == 0)
-      {
-        _SET_BIT(clear_diagnostyka, ERROR_START_VIA_I2C_BIT);
-
-        //При успішнопу запуску читання скидаємо біт запуску читання станів виходів світлоіндикаторів і виставляємо біт процесу читання цієї інформації
-        _SET_BIT(control_i2c_taskes, TASK_READING_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-        _SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);        
-        _CLEAR_BIT(control_i2c_taskes, TASK_START_READ_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-      }
-    }
     else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_START_READ_TRG_FUNC_EEPROM_BIT) !=0)
     {
       unsigned int rez;
@@ -877,35 +810,6 @@ void main_routines_for_i2c(void)
       //Виставляємо перший блок юстування запису у EEPROM
       number_block_ustuvannja_write_to_eeprom = 0;
     }
-    else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_START_WRITE_STATE_LEDS_OUTPUTS_EEPROM_BIT) !=0)
-    {
-      //Стоїть умова початку нового запису у EEPROM стану сигнальних виходів і тригерних світлоігдикаторів
-      
-      //Скидаємо біт запуску нового запису і виставляємо біт запису блоків у EEPROM з блокуванням, щоб запуск почався з синхронізацією
-      _SET_BIT(control_i2c_taskes, TASK_WRITING_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-      _SET_BIT(control_i2c_taskes, TASK_BLK_WRITING_EEPROM_BIT);
-      _CLEAR_BIT(control_i2c_taskes, TASK_START_WRITE_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-      
-      //Робимо копію записуваної інформації для контролю
-
-      //Готуємо буфер для запису
-      unsigned int temp_value = state_trigger_leds;
-      unsigned int temp_value_inv = ((unsigned int)(~temp_value)) & ((1 << NUMBER_LEDS) - 1);
-      state_trigger_leds_comp = temp_value;
-      read_write_i2c_buffer[0] = (unsigned char)(temp_value     & 0xff);
-      read_write_i2c_buffer[1] = (unsigned char)(temp_value_inv & 0xff);
-
-      temp_value = state_signal_outputs;
-      temp_value_inv = ((unsigned int)(~temp_value)) & ((1 << NUMBER_OUTPUTS) - 1);
-      state_signal_outputs_comp = temp_value;
-      read_write_i2c_buffer[2] = (unsigned char)( temp_value           & 0xff);
-      read_write_i2c_buffer[3] = (unsigned char)((temp_value     >> 8) & 0xff);
-      read_write_i2c_buffer[4] = (unsigned char)( temp_value_inv       & 0xff);
-      read_write_i2c_buffer[5] = (unsigned char)((temp_value_inv >> 8) & 0xff);
-
-      //Виставляємо перший блок стану виходів-світлоіндикаторів запису у EEPROM
-      number_block_state_leds_outputs_write_to_eeprom = 0;
-    }
     else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_START_WRITE_TRG_FUNC_EEPROM_BIT) !=0)
     {
       //Стоїть умова початку нового запису у EEPROM по триґерній інформації
@@ -1116,7 +1020,6 @@ void main_routines_for_i2c(void)
     if (
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_SETTINGS_EEPROM_BIT               ) != 0) || 
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_USTUVANNJA_EEPROM_BIT             ) != 0) ||
-        (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_STATE_LEDS_OUTPUTS_EEPROM_BIT     ) != 0) ||
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_TRG_FUNC_EEPROM_BIT               ) != 0) ||
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_INFO_REJESTRATOR_AR_EEPROM_BIT    ) != 0) ||
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_INFO_REJESTRATOR_DR_EEPROM_BIT    ) != 0) ||
@@ -1134,11 +1037,6 @@ void main_routines_for_i2c(void)
       {
         //Виставляємо наступний блок юстування запису у EEPROM
         number_block_ustuvannja_write_to_eeprom++;
-      }
-      else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_STATE_LEDS_OUTPUTS_EEPROM_BIT) != 0)
-      {
-        //Виставляємо наступний блок інформації по триґерних світоіндикаторах і сигнальних виходах у EEPROM
-        number_block_state_leds_outputs_write_to_eeprom++;
       }
       else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_TRG_FUNC_EEPROM_BIT) != 0)
       {
@@ -1519,191 +1417,6 @@ void main_routines_for_i2c(void)
       comparison_writing &= (unsigned int)(~COMPARISON_WRITING_USTUVANNJA);
       //Скидаємо повідомлення про читання даних
       _CLEAR_BIT(control_i2c_taskes, TASK_READING_USTUVANNJA_EEPROM_BIT);
-    }
-    else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_READING_STATE_LEDS_OUTPUTS_EEPROM_BIT) !=0)
-    {
-      //Аналізуємо прочитані дані
-      //Спочатку аналізуємо, чи прояитаний блок є пустим, чи вже попередньо записаним
-      unsigned int empty_block = 1, i = 0; 
-      unsigned int state_trigger_leds_tmp, state_signal_outputs_tmp;
-      
-      while ((empty_block != 0) && ( i < (2*(1 + 2))))
-      {
-        if (read_write_i2c_buffer[i] != 0xff) empty_block = 0;
-        i++;
-      }
-      
-      if(empty_block == 0)
-      {
-        //Помічаємо, що блок не є пустим
-        state_i2c_task &= (unsigned int)(~STATE_STATE_LEDS_OUTPUTS_EEPROM_EMPTY);
-        
-        //Скидаємо повідомлення у слові діагностики, що блок пустий
-        _SET_BIT(clear_diagnostyka, ERROR_STATE_LEDS_OUTPUTS_EEPROM_EMPTY_BIT);
-        
-        //Перевіряємо достовірність стану тригерних індикаторів
-        state_trigger_leds_tmp = read_write_i2c_buffer[0];
-        unsigned int value_1 = read_write_i2c_buffer[1];
-        if (state_trigger_leds_tmp == ((unsigned int)((~value_1) & ((1 << NUMBER_LEDS) - 1))) )
-        {
-          //Контролдь зійшовся
-
-          if ((comparison_writing & COMPARISON_WRITING_STATE_LEDS_OUTPUTS) == 0)
-          {
-            //Виконувалося зчитування станів тригерних світлоіндикаторів/сигнальних виходів
-
-            //Відновлюємо інформацію по тригерних світлоіндикаторах
-            state_leds = state_trigger_leds = state_trigger_leds_tmp;
-          }
-          
-          state_i2c_task &= (unsigned int)(~STATE_STATE_LEDS_EEPROM_FAIL);
-          state_i2c_task |= STATE_STATE_LEDS_EEPROM_GOOD;
-          
-          //Скидаємо повідомлення у слові діагностики
-          _SET_BIT(clear_diagnostyka, ERROR_STATE_LEDS_EEPROM_BIT);
-        }
-        else
-        {
-          //Контролдь не зійшовся
-          state_i2c_task &= (unsigned int)(~STATE_STATE_LEDS_EEPROM_GOOD);
-          state_i2c_task |= STATE_STATE_LEDS_EEPROM_FAIL;
-          
-          //Виствляємо повідомлення у слові діагностики
-          _SET_BIT(set_diagnostyka, ERROR_STATE_LEDS_EEPROM_BIT);
-        }
-
-        //Перевіряємо достовірність стану сигнальних виходів
-        state_signal_outputs_tmp = read_write_i2c_buffer[2] | (read_write_i2c_buffer[3] << 8);
-        value_1 = read_write_i2c_buffer[4] | (read_write_i2c_buffer[5] << 8);
-        if (state_signal_outputs_tmp == ((unsigned int)((~value_1) & ((1 << NUMBER_OUTPUTS) - 1))) )
-        {
-          //Контролдь зійшовся
-
-          if ((comparison_writing & COMPARISON_WRITING_STATE_LEDS_OUTPUTS) == 0)
-          {
-            //Виконувалося зчитування станів тригерних світлоіндикаторів/сигнальних виходів
-
-            //Відновлюємо інформацію по сигнальних виходах
-            state_outputs_raw = state_outputs = state_signal_outputs = state_signal_outputs_tmp;
-          }
-
-          state_i2c_task &= (unsigned int)(~STATE_STATE_OUTPUTS_EEPROM_FAIL);
-          state_i2c_task |= STATE_STATE_OUTPUTS_EEPROM_GOOD;
-          
-          //Скидаємо повідомлення у слові діагностики
-          _SET_BIT(clear_diagnostyka, ERROR_STATE_OUTPUTS_EEPROM_BIT);
-        }
-        else
-        {
-          //Контролдь не зійшовся
-          state_i2c_task &= (unsigned int)(~STATE_STATE_OUTPUTS_EEPROM_GOOD);
-          state_i2c_task |= STATE_STATE_OUTPUTS_EEPROM_FAIL;
-          
-          //Виствляємо повідомлення у слові діагностики
-          _SET_BIT(set_diagnostyka, ERROR_STATE_OUTPUTS_EEPROM_BIT);
-        }
-      }
-      else
-      {
-        //Помічаємо, що прочитаний блок є пустим
-        state_i2c_task &= (unsigned int)(
-                                         ~(
-                                           STATE_STATE_LEDS_EEPROM_FAIL    |
-                                           STATE_STATE_LEDS_EEPROM_GOOD    |
-                                           STATE_STATE_OUTPUTS_EEPROM_FAIL |
-                                           STATE_STATE_OUTPUTS_EEPROM_GOOD
-                                          )
-                                         );
-        state_i2c_task |= STATE_STATE_LEDS_OUTPUTS_EEPROM_EMPTY;
-        
-        //Виствляємо повідомлення у слові діагностики
-        _SET_BIT(clear_diagnostyka, ERROR_STATE_LEDS_EEPROM_BIT);
-        _SET_BIT(clear_diagnostyka, ERROR_STATE_OUTPUTS_EEPROM_BIT);
-        _SET_BIT(set_diagnostyka, ERROR_STATE_LEDS_OUTPUTS_EEPROM_EMPTY_BIT);
-
-        if ((comparison_writing & COMPARISON_WRITING_STATE_LEDS_OUTPUTS) == 0)
-        {
-          /*
-          Виставляємо повідомлення про те, що в EEPROM треба записати нові значення
-          сигнальних виходів і тригерних світлоіндикаторів тільки тоді, коли ми зчитуємо
-          збережені дані для відновлення їх у оперативній пам'яті, а не коли ми проводимо 
-          контроль запису.
-          Бо для контролю запису нам важливо знати чи успішно записалися дані, які є у 
-          оперативній пам'яті і при цьому, навіть, якщо запис відбувся невдало, то,
-          оскільки ми працюємо зі змінними з оперативної пам'яті,  які є у нас достовірні,
-          бо ми їх якраз і записували, то на роботу до перезавантаження програмного забезперечння 
-          збій запису у EEPROM не мав би вплинути
-          */
-          _SET_BIT(control_i2c_taskes, TASK_START_WRITE_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-        }
-      }
-
-      if ((comparison_writing & COMPARISON_WRITING_STATE_LEDS_OUTPUTS) == 0)
-      {
-        //Після виконування зчитування станів тригерних світлоіндикаторів/сигнальних виходів - вводимо їх у МРЗС-05Л
-        
-        //Виводимо інформацію по світлоіндикаторах на світлодіоди
-        _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_LEDS) = state_leds;
-        //Виставляємо пін CON-L, щоб можна було управляти свтоіндикаторами
-        GPIO_SetBits(CON_L, CON_L_PIN);
-
-        //Виводимо інформацію по виходах на піни процесора (у зворотньому порядку)
-        unsigned int temp_state_outputs = 0;
-        for (unsigned int index = 0; index < NUMBER_OUTPUTS; index++)
-        {
-          if ((state_outputs_raw & (1 << index)) != 0)
-          {
-            if (index < NUMBER_OUTPUTS_1)
-              temp_state_outputs |= 1 << (NUMBER_OUTPUTS_1 - index - 1);
-            else
-              temp_state_outputs |= 1 << index;
-          }
-        }
-        unsigned int temp_state_outputs_1 =  temp_state_outputs                      & ((1 << NUMBER_OUTPUTS_1) - 1);
-        unsigned int temp_state_outputs_2 = (temp_state_outputs >> NUMBER_OUTPUTS_1) & ((1 << NUMBER_OUTPUTS_2) - 1);
-        _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_OUTPUTS_1) = temp_state_outputs_1;
-        _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_OUTPUTS_2) = temp_state_outputs_2;
-        //Виставляємо пін CON-OUTPUTS-1, щоб можна було управляти виходами
-        GPIO_SetBits(CON_OUTPUTS, CON_1_OUTPUTS_PIN);
-        //Знімаємо пін CON-OUTPUTS-2, щоб можна було управляти виходамии
-        GPIO_ResetBits(CON_OUTPUTS, CON_2_OUTPUTS_PIN);
-        //Виставляємо  пін CON-OUTPUTS-3, щоб можна було управляти виходами
-        GPIO_SetBits(CON_OUTPUTS, CON_3_OUTPUTS_PIN);
-      }
-      else
-      {
-        //Виконувалося контроль достовірності записаної інформації у EEPROM з записуваною
-        
-        if(
-           (state_i2c_task & (STATE_STATE_LEDS_EEPROM_GOOD | STATE_STATE_OUTPUTS_EEPROM_GOOD)) == 
-                             (STATE_STATE_LEDS_EEPROM_GOOD | STATE_STATE_OUTPUTS_EEPROM_GOOD)
-          )
-        {
-          //Контроль запису здійснюємо тільки тоді, коли коли блок читання не є пустим і помилок не зафіксовано
-          if (
-              (state_trigger_leds_comp   == state_trigger_leds_tmp   ) &&
-              (state_signal_outputs_comp == state_signal_outputs_tmp )
-             )   
-          {
-            //Контроль порівнняння пройшов успішно
-
-            //Скидаємо повідомлення у слові діагностики
-            _SET_BIT(clear_diagnostyka, ERROR_STATE_LEDS_OUTPUTS_EEPROM_COMPARISON_BIT);
-          }
-          else
-          {
-            //Контроль порівнняння зафіксував розбіжності між записаною і записуваною інформацією
-
-            //Виствляємо повідомлення у слові діагностики
-            _SET_BIT(set_diagnostyka, ERROR_STATE_LEDS_OUTPUTS_EEPROM_COMPARISON_BIT);
-          }
-        }
-      }
-
-      //Знімаємо можливу сигналізацію, що виконувалося порівнняння
-      comparison_writing &= (unsigned int)(~COMPARISON_WRITING_STATE_LEDS_OUTPUTS);
-      //Скидаємо повідомлення про читання даних
-      _CLEAR_BIT(control_i2c_taskes, TASK_READING_STATE_LEDS_OUTPUTS_EEPROM_BIT);
     }
     else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_READING_TRG_FUNC_EEPROM_BIT) !=0)
     {
@@ -2841,7 +2554,6 @@ void main_routines_for_i2c(void)
     if (
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_SETTINGS_EEPROM_BIT               ) != 0) ||
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_USTUVANNJA_EEPROM_BIT             ) != 0) ||
-        (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_STATE_LEDS_OUTPUTS_EEPROM_BIT     ) != 0) ||
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_TRG_FUNC_EEPROM_BIT               ) != 0) ||
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_INFO_REJESTRATOR_AR_EEPROM_BIT    ) != 0) ||
         (_CHECK_SET_BIT(control_i2c_taskes, TASK_WRITING_INFO_REJESTRATOR_DR_EEPROM_BIT    ) != 0) ||
@@ -2871,15 +2583,6 @@ void main_routines_for_i2c(void)
       _SET_BIT(control_i2c_taskes, TASK_START_READ_USTUVANNJA_EEPROM_BIT);
       _SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);        
       _CLEAR_BIT(control_i2c_taskes, TASK_READING_USTUVANNJA_EEPROM_BIT);
-    }
-    else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_READING_STATE_LEDS_OUTPUTS_EEPROM_BIT) !=0)
-    {
-      //Стоїть умова читання блоку у EEPROM стану тригерних світлоіндикаторів і сигнальних виходів
-      
-      //Повторно запускаємо процес читання
-      _SET_BIT(control_i2c_taskes, TASK_START_READ_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-      _SET_BIT(control_i2c_taskes, TASK_BLK_OPERATION_BIT);        
-      _CLEAR_BIT(control_i2c_taskes, TASK_READING_STATE_LEDS_OUTPUTS_EEPROM_BIT);
     }
     else if (_CHECK_SET_BIT(control_i2c_taskes, TASK_READING_TRG_FUNC_EEPROM_BIT) !=0)
     {

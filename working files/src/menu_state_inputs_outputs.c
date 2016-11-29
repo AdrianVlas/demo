@@ -145,7 +145,7 @@ void make_ekran_state_inputs_or_outputs(unsigned int input_output)
   else
   {
     max_row = NUMBER_OUTPUTS;
-    state = state_outputs_raw;
+    state = state_outputs;
   }
   
   /*******************************************************/

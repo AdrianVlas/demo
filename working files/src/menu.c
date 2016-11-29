@@ -1936,18 +1936,7 @@ void main_manu_function(void)
                   //Переходимо на меню відображення списку дискретних входів
                   current_ekran.current_level = EKRAN_TYPE_INPUT_SIGNAL_UVV;
                 }
-                else if(current_ekran.index_position == INDEX_ML_UVV_TYPE_OUTPUT)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення типу виходів
-                  current_ekran.current_level = EKRAN_TYPE_OUTPUT_UVV;
-                }
-                else if(current_ekran.index_position == INDEX_ML_UVV_TYPE_LED)
-                {
-                  //Запам'ятовуємо поперердній екран
-                  //Переходимо на меню відображення типу свівтлоіндикаторів
-                  current_ekran.current_level = EKRAN_TYPE_LED_UVV;
-                }
+
                 current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                 current_ekran.edition = 0;
               }
@@ -3330,8 +3319,6 @@ void main_manu_function(void)
     case EKRAN_CONTROL_SWITCH:
     case EKRAN_DOPUSK_DV_UVV:
     case EKRAN_TYPE_INPUT_SIGNAL_UVV:
-    case EKRAN_TYPE_OUTPUT_UVV:
-    case EKRAN_TYPE_LED_UVV:
     case EKRAN_ADDRESS:
     case EKRAN_VIEW_SPEED_RS485:
     case EKRAN_VIEW_PARE_RS485:
@@ -3426,20 +3413,6 @@ void main_manu_function(void)
               position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
               //Формуємо екран управлінської інформації для УВВ
               make_ekran_type_input_uvv();
-            }
-            else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
-            {
-              if(current_ekran.index_position >= NUMBER_OUTPUTS) current_ekran.index_position = 0;
-              position_in_current_level_menu[EKRAN_TYPE_OUTPUT_UVV] = current_ekran.index_position;
-              //Формуємо екран типу виходу
-              make_ekran_type_output_uvv();
-            }
-            else if(current_ekran.current_level == EKRAN_TYPE_LED_UVV)
-            {
-              if(current_ekran.index_position >= NUMBER_LEDS) current_ekran.index_position = 0;
-              position_in_current_level_menu[EKRAN_TYPE_LED_UVV] = current_ekran.index_position;
-              //Формуємо екран типу світилоіндикаторів
-              make_ekran_type_led_uvv();
             }
             else if(current_ekran.current_level == EKRAN_ADDRESS)
             {
@@ -3657,15 +3630,6 @@ void main_manu_function(void)
                 else if(current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
                 {
                   edition_settings.type_of_input_signal = current_settings.type_of_input_signal;
-                }
-                else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
-                {
-                  edition_settings.type_of_output       = current_settings.type_of_output;
-                  edition_settings.type_of_output_modif = current_settings.type_of_output_modif;
-                }
-                else if(current_ekran.current_level == EKRAN_TYPE_LED_UVV)
-                {
-                  edition_settings.type_of_led = current_settings.type_of_led;
                 }
                 else if(current_ekran.current_level == EKRAN_ADDRESS)
                 {
@@ -3897,17 +3861,6 @@ void main_manu_function(void)
                 else if(current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
                 {
                   if (edition_settings.type_of_input_signal != current_settings.type_of_input_signal) found_changes = 1;
-                }
-                else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
-                {
-                  if (
-                      (edition_settings.type_of_output       != current_settings.type_of_output      ) ||
-                      (edition_settings.type_of_output_modif != current_settings.type_of_output_modif)
-                     ) found_changes = 1;
-                }
-                else if(current_ekran.current_level == EKRAN_TYPE_LED_UVV)
-                {
-                  if (edition_settings.type_of_led != current_settings.type_of_led) found_changes = 1;
                 }
                 else if(current_ekran.current_level == EKRAN_ADDRESS)
                 {
@@ -4436,47 +4389,6 @@ void main_manu_function(void)
                       
                       correct_dopusk_dv_when_type_of_input_signal_is_changed();
                       current_settings.type_of_input_signal = edition_settings.type_of_input_signal;
-                      //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                      fix_change_settings(0, 1);
-                    }
-                    //Виходимо з режиму редагування
-                    current_ekran.edition = 0;
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
-                {
-                  if (
-                      ((edition_settings.type_of_output       & ((unsigned int)(~((1<<NUMBER_OUTPUTS)-1)))) == 0) &&
-                      ((edition_settings.type_of_output_modif & ((unsigned int)(~((1<<NUMBER_OUTPUTS)-1)))) == 0)
-                     )
-                  {
-                    if (
-                        (edition_settings.type_of_output       != current_settings.type_of_output      ) ||
-                        (edition_settings.type_of_output_modif != current_settings.type_of_output_modif)
-                       )   
-                    {
-                      //Помічаємо, що поле структури зараз буде змінене
-                      changed_settings = CHANGED_ETAP_EXECUTION;
-
-                      current_settings.type_of_output       = edition_settings.type_of_output;
-                      current_settings.type_of_output_modif = edition_settings.type_of_output_modif;
-                      //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                      fix_change_settings(0, 1);
-                    }
-                    //Виходимо з режиму редагування
-                    current_ekran.edition = 0;
-                  }
-                }
-                else if(current_ekran.current_level == EKRAN_TYPE_LED_UVV)
-                {
-                  if ((edition_settings.type_of_led & ((unsigned int)(~((1<<NUMBER_LEDS)-1)))) == 0)
-                  {
-                    if (edition_settings.type_of_led != current_settings.type_of_led)
-                    {
-                      //Помічаємо, що поле структури зараз буде змінене
-                      changed_settings = CHANGED_ETAP_EXECUTION;
-
-                      current_settings.type_of_led = edition_settings.type_of_led;
                       //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                       fix_change_settings(0, 1);
                     }
@@ -5061,20 +4973,6 @@ void main_manu_function(void)
                 //Формуємо екран управлінської інформації для УВВ
                 make_ekran_type_input_uvv();
               }
-              else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
-              {
-                if(--current_ekran.index_position < 0) current_ekran.index_position = NUMBER_OUTPUTS - 1;
-                position_in_current_level_menu[EKRAN_TYPE_OUTPUT_UVV] = current_ekran.index_position;
-                //Формуємо екран типу виходу
-                make_ekran_type_output_uvv();
-              }
-              else if(current_ekran.current_level == EKRAN_TYPE_LED_UVV)
-              {
-                if(--current_ekran.index_position < 0) current_ekran.index_position = NUMBER_LEDS - 1;
-                position_in_current_level_menu[EKRAN_TYPE_LED_UVV] = current_ekran.index_position;
-                //Формуємо екран типу світлоіндикатора
-                make_ekran_type_led_uvv();
-              }
               else if(current_ekran.current_level == EKRAN_ADDRESS)
               {
                 if(current_ekran.edition == 0)
@@ -5421,20 +5319,6 @@ void main_manu_function(void)
                 position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                 //Формуємо екран управлінської інформації для УВВ
                 make_ekran_type_input_uvv();
-              }
-              else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
-              {
-                if(++current_ekran.index_position >= NUMBER_OUTPUTS) current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_TYPE_OUTPUT_UVV] = current_ekran.index_position;
-                //Формуємо екран типу виходів
-                make_ekran_type_output_uvv();
-              }
-              else if(current_ekran.current_level == EKRAN_TYPE_LED_UVV)
-              {
-                if(++current_ekran.index_position >= NUMBER_LEDS) current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_TYPE_LED_UVV] = current_ekran.index_position;
-                //Формуємо екран типу світлоіндикаторів
-                make_ekran_type_led_uvv();
               }
               else if(current_ekran.current_level == EKRAN_ADDRESS)
               {
@@ -5855,46 +5739,13 @@ void main_manu_function(void)
                 //Формуємо екран інфтрмації по допусках ДВ
                 make_ekran_dopusk_dv();
               }
-              else if(
-                      (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV) ||
-                      (current_ekran.current_level == EKRAN_TYPE_LED_UVV         )
-                     )
+              else if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
               {
                 unsigned int value = (1 << current_ekran.index_position);
           
                 //Міняємо на протилежний відповідний біт для вибраної позиції і формуємо екран управлінської інформації для УВВ
-                if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
-                {
-                  edition_settings.type_of_input_signal ^= value;
-                  make_ekran_type_input_uvv();
-                }
-                else 
-                {
-                  edition_settings.type_of_led ^= value;
-                  make_ekran_type_led_uvv();
-                }
-              }
-              else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
-              {
-                unsigned int maska = (1 << current_ekran.index_position);
-                
-                int value = ((edition_settings.type_of_output & maska) != 0);
-                if (value == true) value += ((edition_settings.type_of_output_modif & maska) != 0); //тільки у випадку, коли вихід сигнальний
-                if ((++value) >= 3) value = 0;
-                
-                if (value == 0)
-                {
-                  edition_settings.type_of_output       &= (unsigned int)(~maska);
-                  edition_settings.type_of_output_modif &= (unsigned int)(~maska);
-                }
-                else
-                {
-                  edition_settings.type_of_output |= maska;
-                  if (value == 1) edition_settings.type_of_output_modif &= (unsigned int)(~maska);
-                  else edition_settings.type_of_output_modif |= maska;
-                }
-
-                make_ekran_type_output_uvv();
+                edition_settings.type_of_input_signal ^= value;
+                make_ekran_type_input_uvv();
               }
               else if(current_ekran.current_level == EKRAN_ADDRESS)
               {
@@ -6230,46 +6081,13 @@ void main_manu_function(void)
                 //Формуємо екран інфтрмації по допусках ДВ
                 make_ekran_dopusk_dv();
               }
-              else if(
-                      (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV) ||
-                      (current_ekran.current_level == EKRAN_TYPE_LED_UVV         )
-                     )
+              else if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
               {
                 unsigned int value = (1 << current_ekran.index_position);
           
                 //Міняємо на протилежний відповідний біт для вибраної позиції і формуємо екран управлінської інформації для УВВ
-                if (current_ekran.current_level == EKRAN_TYPE_INPUT_SIGNAL_UVV)
-                {
-                  edition_settings.type_of_input_signal ^= value;
-                  make_ekran_type_input_uvv();
-                }
-                else
-                {
-                  edition_settings.type_of_led ^= value;
-                  make_ekran_type_led_uvv();
-                }
-              }
-              else if(current_ekran.current_level == EKRAN_TYPE_OUTPUT_UVV)
-              {
-                unsigned int maska = (1 << current_ekran.index_position);
-                
-                int value = ((edition_settings.type_of_output & maska) != 0);
-                if (value == true) value += ((edition_settings.type_of_output_modif & maska) != 0); //тільки у випадку, коли вихід сигнальний
-                if ((--value) < 0) value = 2;
-                
-                if (value == 0)
-                {
-                  edition_settings.type_of_output       &= (unsigned int)(~maska);
-                  edition_settings.type_of_output_modif &= (unsigned int)(~maska);
-                }
-                else
-                {
-                  edition_settings.type_of_output |= maska;
-                  if (value == 1) edition_settings.type_of_output_modif &= (unsigned int)(~maska);
-                  else edition_settings.type_of_output_modif |= maska;
-                }
-
-                make_ekran_type_output_uvv();
+                edition_settings.type_of_input_signal ^= value;
+                make_ekran_type_input_uvv();
               }
               else if(current_ekran.current_level == EKRAN_ADDRESS)
               {

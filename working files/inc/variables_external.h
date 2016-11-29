@@ -147,10 +147,7 @@ extern unsigned int sequence_TN2;
 
 extern volatile unsigned int state_inputs;
 extern unsigned int state_outputs;
-extern unsigned int state_outputs_raw;
-extern volatile unsigned int state_signal_outputs;
 extern volatile unsigned int state_leds;
-extern volatile unsigned int state_trigger_leds;
 extern volatile unsigned int active_functions[N_BIG];
 extern unsigned int trigger_active_functions[N_BIG], trigger_active_functions_ctrl[N_BIG];
 extern unsigned char crc_trg_func, crc_trg_func_ctrl;

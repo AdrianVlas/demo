@@ -91,8 +91,6 @@ void make_ekran_control_VMP(void);
 void make_ekran_chose_settings_uvv(void);
 void make_ekran_dopusk_dv(void);
 void make_ekran_type_input_uvv(void);
-void make_ekran_type_output_uvv(void);
-void make_ekran_type_led_uvv(void);
 void correct_dopusk_dv_when_type_of_input_signal_is_changed(void);
 void make_ekran_chose_communication_parameters(void);
 void make_ekran_name_of_cell(void);

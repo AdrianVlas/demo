@@ -1054,10 +1054,10 @@
 
 #define MA_UVV_TYPE_SIGNAL_INPUT          11064
 //#define MA_UVV_TYPE_INPUT                 11065
-#define MA_UVV_TYPE_OUTPUT                11066
-#define MA_UVV_TYPE_OUTPUT_MODIF          11067
+//#define MA_UVV_TYPE_OUTPUT                11066
+//#define MA_UVV_TYPE_OUTPUT_MODIF          11067
 #define MA_TYPE_DF                        11068
-#define MA_UVV_TYPE_LED                   11069
+//#define MA_UVV_TYPE_LED                   11069
 
 #define MA_DOPUSK_DV_1                    11070
 #define MA_DOPUSK_DV_2                    11071

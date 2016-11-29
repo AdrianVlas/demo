@@ -41,27 +41,19 @@ void make_ekran_chose_settings_uvv(void)
   {
     {
       " Допуск д.входа ",
-      " Тип вх.сигнала ",
-      " Вид выхода     ",
-      " Вид индикатора "
+      " Тип вх.сигнала "
     },
     {
       " Допуск д.входу ",
-      " Тип вх.сигналу ",
-      " Вид виходу     ",
-      " Вид індикатора "
+      " Тип вх.сигналу "
     },
     {
       " BIN Tolerance  ",
-      " In.Signal Type ",
-      " Type of Output ",
-      " Type of LED    "
+      " In.Signal Type "
     },
     {
       " Допуск д.входа ",
-      " Тип вх.сигнала ",
-      " Вид выхода     ",
-      " Вид индикатора "
+      " Тип вх.сигнала "
     }
   };
   int index_language = index_language_in_array(current_settings.language);
@@ -327,218 +319,6 @@ void correct_dopusk_dv_when_type_of_input_signal_is_changed(void)
         current_settings.dopusk_dv[i] = KOEF_DOPUSK_DV_ZMIN_MIN;
     }
   }
-}
-/*****************************************************/
-
-/*****************************************************/
-//Формуємо екран відображення типу виходів
-/*****************************************************/
-void make_ekran_type_output_uvv(void)
-{
-  const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_COL_LCD] = 
-  {
-    "     Двых.      ",
-    "     Двих.      ",
-    "      DO        ",
-    "     Двых.      "
-  };
-  const unsigned int first_index_number[MAX_NAMBER_LANGUAGE] = {10, 10, 8, 10};
-  int index_language = index_language_in_array(current_settings.language);
-  unsigned int first_index_number_1 = first_index_number[index_language];
-  
-  unsigned int position_temp = current_ekran.index_position;
-  unsigned int index_of_ekran;
-  
-  //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
-  index_of_ekran = ((position_temp<<1) >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
-  
-  for (unsigned int i=0; i< MAX_ROW_LCD; i++)
-  {
-    if (index_of_ekran < (NUMBER_OUTPUTS<<1))//Множення на два константи NUMBER_OUTPUTS потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
-    {
-      if ((i & 0x1) == 0)
-      {
-        unsigned int number = (index_of_ekran >> 1) + 1;
-        unsigned int tmp_1 = (number / 10), tmp_2 = number - tmp_1*10;
-        
-        //У непарному номері рядку виводимо заголовок
-        for (unsigned int j = 0; j<MAX_COL_LCD; j++)
-        {
-          if ((j < first_index_number_1) || (j > (first_index_number_1 + 1)))
-            working_ekran[i][j] = name_string[index_language][j];
-          else if (j == first_index_number_1)
-          {
-            if (tmp_1 > 0 ) working_ekran[i][j] = tmp_1 + 0x30;
-          }
-          else     
-          {
-            if (tmp_1 > 0 )
-            {
-              working_ekran[i][j] = tmp_2 + 0x30;
-            }
-            else
-            {
-              working_ekran[i][j - 1] = tmp_2 + 0x30;
-              working_ekran[i][j] = ' ';
-            }
-          }
-        }
-      }
-      else
-      {
-        //У парному номері рядку виводимо значення 
-        unsigned int index_ctr = (index_of_ekran>>1);
-
-        const unsigned char information[MAX_NAMBER_LANGUAGE][4][MAX_COL_LCD] = 
-        {
-          {"   КОМАНДНЫЙ    ", "   СИГНАЛЬНЫЙ   ", " СИГНАЛЬНЫЙ ИМП ", "  ОШИБКА ДАНЫХ  "},
-          {"   КОМАНДНИЙ    ", "   СИГНАЛЬНИЙ   ", " СИГНАЛЬНИЙ ІМП ", "  ПОМИЛКА ДАНИХ "},
-          {"    COMMAND     ", "     SIGNAL     ", "   SIGNAL IMP   ", "   DATA ERROR   "},
-          {"   КОМАНДНЫЙ    ", "   СИГНАЛЬНЫЙ   ", " СИГНАЛЬНЫЙ ИМП ", "  ОШИБКА ДАНЫХ  "}
-        };
-        const unsigned int cursor_x[MAX_NAMBER_LANGUAGE][4] = 
-        {
-          {2, 2, 0, 1},
-          {2, 2, 0, 1},
-          {3, 4, 2, 2},
-          {2, 2, 0, 1}
-        };
-
-        unsigned int *p_temp_data, *p_temp_data_modif;
-        if(current_ekran.edition == 0) 
-        {
-          p_temp_data       = &current_settings.type_of_output;
-          p_temp_data_modif = &current_settings.type_of_output_modif;
-        }
-        else
-        {
-          p_temp_data       = &edition_settings.type_of_output;
-          p_temp_data_modif = &edition_settings.type_of_output_modif;
-        }
-
-        unsigned int maska = (1 << index_ctr);
-        int value = ((*p_temp_data & maska) != 0);
-        if (value == true) value += ((*p_temp_data_modif & maska) != 0); //тільки у випадку, коли вихід сигнальний
-        
-        for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = information[index_language][value][j];
-        current_ekran.position_cursor_x = cursor_x[index_language][value];
-      }
-    }
-    else
-      for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = ' ';
-
-    index_of_ekran++;
-  }
-
-  //Відображення курору по вертикалі і курсор завжди має бути у полі із значенням устаки
-  current_ekran.position_cursor_y = ((position_temp<<1) + 1) & (MAX_ROW_LCD - 1);
-  //Курсор видимий
-  current_ekran.cursor_on = 1;
-  //Курсор не мигає
-  if(current_ekran.edition == 0)current_ekran.cursor_blinking_on = 0;
-  else current_ekran.cursor_blinking_on = 1;
-  //Обновити повністю весь екран
-  current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
-}
-/*****************************************************/
-
-/*****************************************************/
-//Формуємо екран відображення типу світлоіндикаторів
-/*****************************************************/
-void make_ekran_type_led_uvv(void)
-{
-  const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_COL_LCD] = 
-  {
-    "      Cв.       ",
-    "      Cв.       ",
-    "      LED       ",
-    "      Cв.       "
-  };
-  const unsigned int first_index_number[MAX_NAMBER_LANGUAGE] = {9, 9, 9, 9};
-  int index_language = index_language_in_array(current_settings.language);
-  unsigned int first_index_number_1 = first_index_number[index_language];
-  
-  unsigned int position_temp = current_ekran.index_position;
-  unsigned int index_of_ekran;
-  
-  //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
-  index_of_ekran = ((position_temp<<1) >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
-  
-  for (unsigned int i=0; i< MAX_ROW_LCD; i++)
-  {
-    if (index_of_ekran < (NUMBER_LEDS<<1))//Множення на два константи NUMBER_LEDS потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
-    {
-      if ((i & 0x1) == 0)
-      {
-        unsigned int number = (index_of_ekran >> 1) + 1;
-        unsigned int tmp_1 = (number / 10), tmp_2 = number - tmp_1*10;
-        
-        //У непарному номері рядку виводимо заголовок
-        for (unsigned int j = 0; j<MAX_COL_LCD; j++)
-        {
-          if ((j < first_index_number_1) || (j > (first_index_number_1 + 1)))
-            working_ekran[i][j] = name_string[index_language][j];
-          else if (j == first_index_number_1)
-          {
-            if (tmp_1 > 0 ) working_ekran[i][j] = tmp_1 + 0x30;
-          }
-          else     
-          {
-            if (tmp_1 > 0 )
-            {
-              working_ekran[i][j] = tmp_2 + 0x30;
-            }
-            else
-            {
-              working_ekran[i][j - 1] = tmp_2 + 0x30;
-              working_ekran[i][j] = ' ';
-            }
-          }
-        }
-      }
-      else
-      {
-        //У парному номері рядку виводимо значення 
-        unsigned int index_ctr = (index_of_ekran>>1);
-        unsigned int temp_data;
-
-        const unsigned char information[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] = 
-        {
-          {"   НОРМАЛЬНЫЙ   ", "   ТРИГГЕРНЫЙ   "},
-          {"   НОРМАЛЬНИЙ   ", "   ТРИҐЕРНИЙ    "},
-          {"     NORMAL     ", "    TRIGGER     "},
-          {"   НОРМАЛЬНЫЙ   ", "   ТРИГГЕРНЫЙ   "}
-        };
-        const unsigned int cursor_x[MAX_NAMBER_LANGUAGE][2] = 
-        {
-          {2, 2},
-          {2, 2},
-          {4, 3},
-          {2, 2}
-        };
-
-        if(current_ekran.edition == 0) temp_data = current_settings.type_of_led;
-        else temp_data = edition_settings.type_of_led;
-        
-        for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = information[index_language][(temp_data >> index_ctr) & 0x1][j];
-        current_ekran.position_cursor_x = cursor_x[index_language][(temp_data >> index_ctr) & 0x1];
-      }
-    }
-    else
-      for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = ' ';
-
-    index_of_ekran++;
-  }
-
-  //Відображення курору по вертикалі і курсор завжди має бути у полі із значенням устаки
-  current_ekran.position_cursor_y = ((position_temp<<1) + 1) & (MAX_ROW_LCD - 1);
-  //Курсор видимий
-  current_ekran.cursor_on = 1;
-  //Курсор не мигає
-  if(current_ekran.edition == 0)current_ekran.cursor_blinking_on = 0;
-  else current_ekran.cursor_blinking_on = 1;
-  //Обновити повністю весь екран
-  current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
 }
 /*****************************************************/
 

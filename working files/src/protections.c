@@ -2408,7 +2408,7 @@ inline void main_protection(void)
       if(_CHECK_SET_BIT((current_settings_prt.ranguvannja_outputs + N_BIG*i), RANG_DEFECT) !=0)
       {
         //Сигнал "Загальна несправність"  справді зранжовано на даний вихід
-        if (_CHECK_SET_BIT(temp_array_of_outputs, RANG_DEFECT) ==0)
+        if (_CHECK_SET_BIT(temp_array_of_outputs, RANG_DEFECT) == 0)
         {
           //Сигнал "Загальна несправність" не є активним
           //Приимусово встановлюємо його у активний стан у масиві, який є  ЛОГІЧНИМ І анжування виходу, який індексується інедексом "i" і функцій, які зараз є активними
@@ -2433,32 +2433,13 @@ inline void main_protection(void)
           (temp_array_of_outputs[6] != 0)
          )
       {
-        //Для сигнального реле виконуємо його замикання, а для командного перевіряємо чи нема спроби активувати реле при умові що на нього заведено блок включення, причому він блокований
-        if ((current_settings_prt.type_of_output & (1 << i)) != 0)
-        {
-          //Вихід сигнальний, тому у буль якому разі замикаємо реле
-          //Відмічаємо, що даний вихід - ЗАМКНУТИЙ
-          state_outputs |= (1 << i);
-        }
-        else
-        {
-          //Вихід командний
-          //На дане реле не заводиться сигнал БВ (блок включення)
-          
-          //Відмічаємо, що даний вихід - ЗАМКНУТИЙ
-          state_outputs |= (1 << i);
-        }
+        //Відмічаємо, що даний вихід - ЗАМКНУТИЙ
+        state_outputs |= (1 << i);
       }
       else
       {
-        //Перевіряємо, чи вихід командний, чи сигнальний
-        if ((current_settings_prt.type_of_output & (1 << i)) == 0)
-        {
-          //Вихід командний
-        
-          //Відмічаємо, що даний вихід - РОЗІМКНУТИЙ
-          state_outputs &= ~(1 << i);
-        }
+        //Відмічаємо, що даний вихід - РОЗІМКНУТИЙ
+        state_outputs &= ~(1 << i);
       }
     }
   }
@@ -2470,23 +2451,11 @@ inline void main_protection(void)
     state_outputs = 0;
   }
   
-  //Перевіряємо чи треба записувати стан сигнальних виходів у EEPROM
-  unsigned int temp_value_char_for_volatile = state_signal_outputs;
-  if((state_outputs  & current_settings_prt.type_of_output) != temp_value_char_for_volatile)
-  {
-    state_signal_outputs = state_outputs  & current_settings_prt.type_of_output;
-    //Виставляємо повідомлення про те, що в EEPROM треба записати нові значення сигнальних виходів і тригерних світлоіндикаторів
-    _SET_BIT(control_i2c_taskes, TASK_START_WRITE_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-  }
-  
-  //Стан виходу з урахуванням імпульсного режиму роботи сигнальних виходів
-  state_outputs_raw = ( state_outputs & ((unsigned int)(~current_settings_prt.type_of_output_modif)) ) | ((state_outputs & current_settings_prt.type_of_output_modif)*output_timer_meander);
-  
   //Виводимо інформацію по виходах на піни процесора (у зворотньому порядку)
   unsigned int temp_state_outputs = 0;
   for (unsigned int index = 0; index < NUMBER_OUTPUTS; index++)
   {
-    if ((state_outputs_raw & (1 << index)) != 0)
+    if ((state_outputs & (1 << index)) != 0)
     {
       if (index < NUMBER_OUTPUTS_1)
         temp_state_outputs |= 1 << (NUMBER_OUTPUTS_1 - index - 1);
@@ -2529,25 +2498,10 @@ inline void main_protection(void)
     }
     else
     {
-      //Перевіряємо, чи даний світлоіндикатор нормальний, чи тригерний
-      if ((current_settings_prt.type_of_led & (1 << i)) == 0)
-      {
-        //Світлоіндикатор нормальний
-
-        //Відмічаємо, що даний світлоіндикатор - ПОГАШЕНИЙ
-        state_leds &= ~(1 << i);
-      }
+      //Відмічаємо, що даний світлоіндикатор - ПОГАШЕНИЙ
+      state_leds &= ~(1 << i);
     }
   }
-  //Перевіряємо чи треба записувати стан тригерних світлоіндикаторів у EEPROM
-  temp_value_char_for_volatile = state_trigger_leds;
-  if((state_leds  & current_settings_prt.type_of_led) != temp_value_char_for_volatile)
-  {
-    state_trigger_leds = state_leds  & current_settings_prt.type_of_led;
-    //Виставляємо повідомлення про те, що в EEPROM треба записати нові значення сигнальних виходів і тригерних світлоіндикаторів
-    _SET_BIT(control_i2c_taskes, TASK_START_WRITE_STATE_LEDS_OUTPUTS_EEPROM_BIT);
-  }
-
   //Виводимо інформацію по світлоіндикаторах на світлодіоди
   _DEVICE_REGISTER(Bank1_SRAM2_ADDR, OFFSET_LEDS) = state_leds;
   /**************************/
@@ -2684,7 +2638,7 @@ void TIM2_IRQHandler(void)
     unsigned int temp_state_outputs = 0;
     for (unsigned int index = 0; index < NUMBER_OUTPUTS; index++)
     {
-      if ((state_outputs_raw & (1 << index)) != 0) 
+      if ((state_outputs & (1 << index)) != 0) 
       {
         if (index < NUMBER_OUTPUTS_1)
           temp_state_outputs |= 1 << (NUMBER_OUTPUTS_1 - index - 1);

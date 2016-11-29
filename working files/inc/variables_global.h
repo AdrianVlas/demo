@@ -249,10 +249,7 @@ unsigned int sequence_TN2 = 0;
 
 volatile unsigned int state_inputs = 0; //"є сигнал " - відповідає встановленому біту (1); "немає сигналу" - відповідає скинутому біту (0)
 unsigned int state_outputs = 0;
-unsigned int state_outputs_raw = 0;
-volatile unsigned int state_signal_outputs = 0;
 volatile unsigned int state_leds = 0;
-volatile unsigned int state_trigger_leds = 0;
 volatile unsigned int active_functions[N_BIG]  = {0, 0, 0, 0, 0, 0, 0};
 unsigned int trigger_active_functions[N_BIG]  = {0, 0, 0, 0, 0, 0, 0}, trigger_active_functions_ctrl[N_BIG];
 unsigned char crc_trg_func, crc_trg_func_ctrl;

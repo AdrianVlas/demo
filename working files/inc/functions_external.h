@@ -104,7 +104,6 @@ extern void make_ekran_general_pickups_el(void);
 extern void make_ekran_chose_settings_df(void);
 extern void make_ekran_type_df(void);
 extern void make_ekran_timeout_df(unsigned int);
-extern void make_ekran_list_type_source_df(void);
 extern void make_ekran_set_reset_trigger(void);
 extern void make_ekran_list_type_source_dt(void);
 extern void make_ekran_info(void);

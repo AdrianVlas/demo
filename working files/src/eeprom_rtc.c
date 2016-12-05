@@ -176,8 +176,6 @@ void main_routines_for_i2c(void)
   static unsigned int number_block_settings_write_to_eeprom;
   //Статична змінна, яка вказує який блок юстування треба записувати у EEPROM
   static unsigned int number_block_ustuvannja_write_to_eeprom;
-  //Статична змінна, яка вказує який блок станів виходів і світлоіндикаторів треба записувати у EEPROM
-  static unsigned int number_block_state_leds_outputs_write_to_eeprom;
   //Статична змінна, яка вказує який блок триґерної інформації треба записувати у EEPROM
   static unsigned int number_block_trg_func_write_to_eeprom;
   //Статична змінна, яка вказує який блок інформації по аналоговому реєстраторі треба записувати у EEPROM
@@ -194,7 +192,6 @@ void main_routines_for_i2c(void)
   static unsigned int ustuvannja_comp[NUMBER_ANALOG_CANALES], serial_number_dev_comp;
   static int phi_ustuvannja_comp[NUMBER_ANALOG_CANALES];
   static float phi_ustuvannja_sin_cos_comp[2*NUMBER_ANALOG_CANALES];
-  static unsigned int state_trigger_leds_comp, state_signal_outputs_comp;
   static unsigned int trigger_active_functions_comp[N_BIG];
   static __INFO_REJESTRATOR info_rejestrator_ar_comp;
   static __INFO_REJESTRATOR info_rejestrator_dr_comp;

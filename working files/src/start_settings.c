@@ -1271,7 +1271,7 @@ void start_settings_peripherals(void)
     unsigned int temp_state_outputs = 0;
     for (unsigned int index = 0; index < NUMBER_OUTPUTS; index++)
     {
-      if ((state_outputs_raw & (1 << index)) != 0)
+      if ((state_outputs & (1 << index)) != 0)
       {
         if (index < NUMBER_OUTPUTS_1)
           temp_state_outputs |= 1 << (NUMBER_OUTPUTS_1 - index - 1);
@@ -1628,12 +1628,7 @@ void min_settings(__SETTINGS *target_label)
     target_label->timeout_pause_df[i] = TIMEOUT_DF_PAUSE_MIN;
     target_label->timeout_work_df[i] = TIMEOUT_DF_WORK_MIN;
 
-    for (unsigned int j = 0; j < N_BIG; j++ ) 
-    {
-      target_label->ranguvannja_df_source_plus[N_BIG*i+j]  = 0x0;
-      target_label->ranguvannja_df_source_minus[N_BIG*i+j] = 0x0;
-      target_label->ranguvannja_df_source_blk[N_BIG*i+j]   = 0x0;
-    }
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_df[N_BIG*i+j]  = 0x0;
   }
   
   for(unsigned int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)

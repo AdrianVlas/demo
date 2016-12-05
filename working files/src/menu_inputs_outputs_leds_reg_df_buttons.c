@@ -150,56 +150,18 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
   
   if(type_ekran == INDEX_VIEWING_DF)
   {
-    unsigned int index_in_ekran_list = number_ekran - EKRAN_RANGUVANNJA_DF1_PLUS;
-    unsigned int type_source = index_in_ekran_list % 3;
-    unsigned int index_of_df = index_in_ekran_list / 3;
-    
     if(current_ekran.edition == 0)
     {
-      if(type_source == 0)
+      for (unsigned int i = 0; i < N_BIG; i++)
       {
-        for (unsigned int i = 0; i < N_BIG; i++)
-        {
-          state_viewing_input[i] = current_settings.ranguvannja_df_source_plus[N_BIG*index_of_df + i];
-        }
-      }
-      else if(type_source == 1)
-      {
-        for (unsigned int i = 0; i < N_BIG; i++)
-        {
-          state_viewing_input[i] = current_settings.ranguvannja_df_source_minus[N_BIG*index_of_df + i];
-        }
-      }
-      else
-      {
-        for (unsigned int i = 0; i < N_BIG; i++)
-        {
-          state_viewing_input[i] = current_settings.ranguvannja_df_source_blk[N_BIG*index_of_df + i];
-        }
+        state_viewing_input[i] = current_settings.ranguvannja_df[N_BIG*(number_ekran - EKRAN_RANGUVANNJA_DF1) + i];
       }
     }
     else
     {
-      if(type_source == 0)
+      for (unsigned int i = 0; i < N_BIG; i++)
       {
-        for (unsigned int i = 0; i < N_BIG; i++)
-        {
-          state_viewing_input[i] = edition_settings.ranguvannja_df_source_plus[N_BIG*index_of_df + i];
-        }
-      }
-      else if(type_source == 1)
-      {
-        for (unsigned int i = 0; i < N_BIG; i++)
-        {
-          state_viewing_input[i] = edition_settings.ranguvannja_df_source_minus[N_BIG*index_of_df + i];
-        }
-      }
-      else
-      {
-        for (unsigned int i = 0; i < N_BIG; i++)
-        {
-          state_viewing_input[i] = edition_settings.ranguvannja_df_source_blk[N_BIG*index_of_df + i];
-        }
+        state_viewing_input[i] = edition_settings.ranguvannja_df[N_BIG*(number_ekran - EKRAN_RANGUVANNJA_DF1) + i];
       }
     }
     max_row_ranguvannja = MAX_ROW_RANGUVANNJA_DF;
@@ -790,8 +752,8 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
              (
               (type_ekran == INDEX_VIEWING_DF) &&
               (
-               (index_in_list == (RANG_DF1_IN  + 2*(number_ekran - EKRAN_RANGUVANNJA_DF1_PLUS) / 3)) ||
-               (index_in_list == (RANG_DF1_OUT + 2*(number_ekran - EKRAN_RANGUVANNJA_DF1_PLUS) / 3))
+               (index_in_list == (RANG_DF1_IN  + 2*(number_ekran - EKRAN_RANGUVANNJA_DF1))) ||
+               (index_in_list == (RANG_DF1_OUT + 2*(number_ekran - EKRAN_RANGUVANNJA_DF1)))
               )  
              )
             )   

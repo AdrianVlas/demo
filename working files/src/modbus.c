@@ -170,17 +170,9 @@ unsigned int convert_order_list_oldr_to_gmm(unsigned int number, unsigned int nu
   {
     for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_leds[N_BIG*number + i];
   }
-  else if (source == SOURCE_DF_PLUS_RANG)
+  else if (source == SOURCE_DF)
   {
-    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_df_source_plus[N_BIG*number + i];
-  }
-  else if (source == SOURCE_DF_MINUS_RANG)
-  {
-    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_df_source_minus[N_BIG*number + i];
-  }
-  else if (source == SOURCE_DF_BLK_RANG)
-  {
-    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_df_source_blk[N_BIG*number + i];
+    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_df[N_BIG*number + i];
   }
   else if (source == SOURCE_AR_RANG)
   {
@@ -710,20 +702,10 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
     point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_leds + N_BIG*number;
     point_to_target = (unsigned int *)target_label->ranguvannja_leds + N_BIG*number;
   }
-  else if (source == SOURCE_DF_PLUS_RANG)
+  else if (source == SOURCE_DF)
   {
-    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_df_source_plus + N_BIG*number;
-    point_to_target = (unsigned int *)target_label->ranguvannja_df_source_plus + N_BIG*number;
-  }
-  else if (source == SOURCE_DF_MINUS_RANG)
-  {
-    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_df_source_minus + N_BIG*number;
-    point_to_target = (unsigned int *)target_label->ranguvannja_df_source_minus + N_BIG*number;
-  }
-  else if (source == SOURCE_DF_BLK_RANG)
-  {
-    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_df_source_blk + N_BIG*number;
-    point_to_target = (unsigned int *)target_label->ranguvannja_df_source_blk + N_BIG*number;
+    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_df + N_BIG*number;
+    point_to_target = (unsigned int *)target_label->ranguvannja_df + N_BIG*number;
   }
   else if (source == SOURCE_AR_RANG)
   {
@@ -895,11 +877,7 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
       //Перевіряємо, чи можна цю функцію встановляти на дане джерело, або чи розширена логіка зараз не знята з конфігурвації
       if (
           (
-           (
-            (source == SOURCE_DF_PLUS_RANG)  ||
-            (source == SOURCE_DF_MINUS_RANG) ||
-            (source == SOURCE_DF_BLK_RANG)
-           )   
+           (source == SOURCE_DF)
            &
            (
             ((number == 0) && ((data == BIT_MA_INPUT_DF1) || (data == BIT_MA_OUTPUT_DF1))) ||
@@ -2232,9 +2210,9 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
     //Взначаємо, яку 0-функцію зараз верхній рівень намагається прочитати
     unsigned int number_df_mul_3 = (address_data -  M_ADDRESS_FIRST_DF_RANG)>>VAGA_MAX_FUNCTIONS_IN_DF;
     
-    if(number_df_mul_3 <  (NUMBER_DEFINED_FUNCTIONS*3))
+    if ((number_df_mul_3 <  (NUMBER_DEFINED_FUNCTIONS*3)) && ((number_df_mul_3 % 3) == 0))
     {
-      temp_value = convert_order_list_oldr_to_gmm((number_df_mul_3 / 3), (((address_data -  M_ADDRESS_FIRST_DF_RANG) & (MAX_FUNCTIONS_IN_DF - 1)) + 1), (SOURCE_DF_PLUS_RANG + (number_df_mul_3 % 3)));
+      temp_value = convert_order_list_oldr_to_gmm((number_df_mul_3 / 3), (((address_data -  M_ADDRESS_FIRST_DF_RANG) & (MAX_FUNCTIONS_IN_DF - 1)) + 1), SOURCE_DF);
     }
     else temp_value = 0;
   }
@@ -3112,9 +3090,9 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
     //Взначаємо, яку 0-функцію зараз верхній рівень намагається записати
     unsigned int number_df_mul_3 = (address_data -  M_ADDRESS_FIRST_DF_RANG)>>VAGA_MAX_FUNCTIONS_IN_DF;
     
-    if(number_df_mul_3 <  (NUMBER_DEFINED_FUNCTIONS/*target_label->number_defined_df*/*3))
+    if((number_df_mul_3 <  (NUMBER_DEFINED_FUNCTIONS/*target_label->number_defined_df*/*3)) && ((number_df_mul_3 % 3) == 0))
     {
-      error = save_new_rang_oldr_from_gmm((number_df_mul_3 / 3), (((address_data -  M_ADDRESS_FIRST_DF_RANG) & (MAX_FUNCTIONS_IN_DF - 1)) + 1), (SOURCE_DF_PLUS_RANG + (number_df_mul_3 % 3)), data, method_setting);
+      error = save_new_rang_oldr_from_gmm((number_df_mul_3 / 3), (((address_data -  M_ADDRESS_FIRST_DF_RANG) & (MAX_FUNCTIONS_IN_DF - 1)) + 1), SOURCE_DF, data, method_setting);
     }
   }
   else if ((address_data >= M_ADDRESS_FIRST_DB_RANG) && (address_data <= M_ADDRESS_LAST_DB_RANG))

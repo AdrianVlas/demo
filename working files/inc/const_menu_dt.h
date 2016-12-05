@@ -1,7 +1,7 @@
 #ifndef __CONSTANTS_DEFINED_TRIGGERS__
 #define __CONSTANTS_DEFINED_TRIGGERS__
 
-#define EKRAN_LIST_DT                           (EKRAN_RANGUVANNJA_DF8_BLK + 1)
+#define EKRAN_LIST_DT                           (EKRAN_RANGUVANNJA_DF8 + 1)
 #define EKRAN_SET_RESET_DT1                     (EKRAN_LIST_DT + 1)
 #define EKRAN_SET_RESET_DT2                     (EKRAN_SET_RESET_DT1 + 1)
 #define EKRAN_SET_RESET_DT3                     (EKRAN_SET_RESET_DT2 + 1)

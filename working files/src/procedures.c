@@ -77,12 +77,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       //Знімаємо всі функції для ранжування оприділювальних функцій
       for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
       {
-        for (unsigned int j = 0; j < N_BIG; j++ ) 
-        {
-          target_label->ranguvannja_df_source_plus[N_BIG*i+j]  &= ~maska[j];
-          target_label->ranguvannja_df_source_minus[N_BIG*i+j] &= ~maska[j];
-          target_label->ranguvannja_df_source_blk[N_BIG*i+j]   &= ~maska[j];
-        }
+        for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_df[N_BIG*i+j] &= ~maska[j];
       }
       //Знімаємо всі функції для ранжування оприділювальних триґерів
       for (int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)
@@ -122,8 +117,8 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     }
 
     //"Розширена логіка"
-//    unsigned int array_full[N_BIG] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
-    unsigned int *point_to_mask_array;
+    unsigned int array_full[N_BIG] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
+    unsigned int *point_to_mask_array = array_full;
     for (unsigned int i = 0; i < N_BIG; i++ ) maska[i] = 0;
 //    {
 //      //Формуємо маски тільки тих сигналів розширеної логіки, які виведені з конфігурації у кількісному значенні
@@ -225,12 +220,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Очищємо всі функції для ранжування оприділювальних функцій
     for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
     {
-      for (unsigned int j = 0; j < N_BIG; j++ ) 
-      {
-        target_label->ranguvannja_df_source_plus[N_BIG*i+j]  &= ~point_to_mask_array[j];
-        target_label->ranguvannja_df_source_minus[N_BIG*i+j] &= ~point_to_mask_array[j];
-        target_label->ranguvannja_df_source_blk[N_BIG*i+j]   &= ~point_to_mask_array[j];
-      }
+        for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_df[N_BIG*i+j] &= ~maska[j];
     }
     //Очищємо всі функції для ранжування оприділювальних триґерів
     for (int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)
@@ -379,9 +369,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 //  {
 //    for (unsigned int j = 0; j < N_BIG; j++ ) 
 //    {
-//      target_label->ranguvannja_df_source_plus[N_BIG*i+j]  &= ~maska[j];
-//      target_label->ranguvannja_df_source_minus[N_BIG*i+j] &= ~maska[j];
-//      target_label->ranguvannja_df_source_blk[N_BIG*i+j]   &= ~maska[j];
+//        for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_df[N_BIG*i+j] &= ~maska[j];
 //    }
 //  }
 //  //Очищємо всі функції для ранжування оприділювальних триґерів

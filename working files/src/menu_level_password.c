@@ -95,10 +95,10 @@ void make_ekran_chose_passwords(void)
 {
   const unsigned char password_item[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] = 
   {
-    {" Смена пароля 1 ", " Уст.пароля 1   "},
-    {" Зміна паролю 1 ", " Вст.паролю 1   "},
-    {" Pass.1 Change  ", " Password 1 Set "},
-    {" Смена пароля 1 ", " Уст.пароля 1   "}
+    {" Смена пароля   ", " Уст.пароля     "},
+    {" Зміна паролю   ", " Вст.паролю     "},
+    {" Pass.Change    ", " Password  Set  "},
+    {" Смена пароля   ", " Уст.пароля     "}
   };
   int index_language = index_language_in_array(current_settings.language);
   

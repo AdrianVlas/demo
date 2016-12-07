@@ -36,7 +36,7 @@ unsigned int write_command_to_lcd(unsigned char);
 unsigned int hd44780_gotoxy(unsigned char, unsigned char);
 unsigned int hd44780_puts_xy (unsigned char, unsigned char, unsigned char *);
 void view_whole_ekran(void);
-void check_state_key(uint16_t, unsigned int);
+void check_state_key(GPIO_TypeDef*, uint16_t, unsigned int);
 int index_language_in_array(int);
 
 void inc_or_dec_value(unsigned int *, unsigned int);
@@ -109,7 +109,6 @@ void make_ekran_chose_settings_df(void);
 void make_ekran_type_df(void);
 void make_ekran_timeout_df(unsigned int);
 void make_ekran_set_reset_trigger(void);
-void make_ekran_list_type_source_dt(void);
 void make_ekran_info(void);
 void make_ekran_date_time_pz(void);
 void make_ekran_chose_item_of_point_time_settings(void);

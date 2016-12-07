@@ -1250,15 +1250,12 @@
 #define SOURCE_DF                             2
 #define SOURCE_AR_RANG                        3
 #define SOURCE_DR_RANG                        4
-#define SOURCE_SET_DT_PLUS_RANG               5
-#define SOURCE_SET_DT_MINUS_RANG              6
-#define SOURCE_RESET_DT_PLUS_RANG             7
-#define SOURCE_RESET_DT_MINUS_RANG            8
-#define SOURCE_D_AND_RANG                     9
-#define SOURCE_D_OR_RANG                      10
-#define SOURCE_D_XOR_RANG                     11
-#define SOURCE_D_NOT_RANG                     12
-#define SOURCE_ON_CB_RANG                     13
-#define SOURCE_OFF_CB_RANG                    14
+#define SOURCE_SET_DT                         5
+#define SOURCE_D_AND_RANG                     6
+#define SOURCE_D_OR_RANG                      7
+#define SOURCE_D_XOR_RANG                     8
+#define SOURCE_D_NOT_RANG                     9
+#define SOURCE_ON_CB_RANG                     10
+#define SOURCE_OFF_CB_RANG                    11
 
 #endif

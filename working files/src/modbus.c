@@ -182,21 +182,9 @@ unsigned int convert_order_list_oldr_to_gmm(unsigned int number, unsigned int nu
   {
     for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_digital_registrator[i];
   }
-  else if (source == SOURCE_SET_DT_PLUS_RANG)
+  else if (source == SOURCE_SET_DT)
   {
-    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_set_dt_source_plus[N_BIG*number + i];
-  }
-  else if (source == SOURCE_SET_DT_MINUS_RANG)
-  {
-    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_set_dt_source_minus[N_BIG*number + i];
-  }
-  else if (source == SOURCE_RESET_DT_PLUS_RANG)
-  {
-    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_reset_dt_source_plus[N_BIG*number + i];
-  }
-  else if (source == SOURCE_RESET_DT_MINUS_RANG)
-  {
-    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_reset_dt_source_minus[N_BIG*number + i];
+    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_set_dt[N_BIG*number + i];
   }
   else if (source == SOURCE_D_AND_RANG)
   {
@@ -717,25 +705,10 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
     point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_digital_registrator;
     point_to_target = (unsigned int *)target_label->ranguvannja_digital_registrator;
   }
-  else if (source == SOURCE_SET_DT_PLUS_RANG)
+  else if (source == SOURCE_SET_DT)
   {
-    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_set_dt_source_plus + N_BIG*number;
-    point_to_target = (unsigned int *)target_label->ranguvannja_set_dt_source_plus + N_BIG*number;
-  }
-  else if (source == SOURCE_SET_DT_MINUS_RANG)
-  {
-    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_set_dt_source_minus + N_BIG*number;
-    point_to_target = (unsigned int *)target_label->ranguvannja_set_dt_source_minus + N_BIG*number;
-  }
-  else if (source == SOURCE_RESET_DT_PLUS_RANG)
-  {
-    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_reset_dt_source_plus + N_BIG*number;
-    point_to_target = (unsigned int *)target_label->ranguvannja_reset_dt_source_plus + N_BIG*number;
-  }
-  else if (source == SOURCE_RESET_DT_MINUS_RANG)
-  {
-    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_reset_dt_source_minus + N_BIG*number;
-    point_to_target = (unsigned int *)target_label->ranguvannja_reset_dt_source_minus + N_BIG*number;
+    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_set_dt + N_BIG*number;
+    point_to_target = (unsigned int *)target_label->ranguvannja_set_dt + N_BIG*number;
   }
   else if (source == SOURCE_D_AND_RANG)
   {
@@ -892,12 +865,7 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
           )
           ||
           (
-           (
-            (source == SOURCE_SET_DT_PLUS_RANG)    ||
-            (source == SOURCE_SET_DT_MINUS_RANG)   ||
-            (source == SOURCE_RESET_DT_PLUS_RANG)  ||
-            (source == SOURCE_RESET_DT_MINUS_RANG)
-           )
+           (source == SOURCE_SET_DT)
            &
            (
             ( (number == 0) && ((data == BIT_MA_DT1_SET) || (data == BIT_MA_DT1_RESET) || (data == BIT_MA_DT1_OUT) ) ) ||
@@ -2230,13 +2198,13 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
   else if ((address_data >= M_ADDRESS_FIRST_DT_RANG) && (address_data <= M_ADDRESS_LAST_DT_RANG))
   {
     //Визначаємо, який триґер зараз верхній рівень намагається прочитати
-    unsigned int number_defined_triggers = (address_data - M_ADDRESS_FIRST_DT_RANG) / MAX_FUNCTIONS_IN_DT;
+    unsigned int number_defined_triggers = (address_data - M_ADDRESS_FIRST_DT_RANG)>>VAGA_MAX_FUNCTIONS_IN_DT;
     
-    if(number_defined_triggers < (NUMBER_DEFINED_TRIGGERS << 2))
+    if ((number_defined_triggers < (NUMBER_DEFINED_TRIGGERS << 2)) && ((number_defined_triggers % 4) == 0))
     {
       temp_value = convert_order_list_oldr_to_gmm((number_defined_triggers >> 2),
-                               (((address_data -  M_ADDRESS_FIRST_DT_RANG) % MAX_FUNCTIONS_IN_DT) + 1),
-                               (SOURCE_SET_DT_PLUS_RANG + (number_defined_triggers % 4)));
+                               (((address_data -  M_ADDRESS_FIRST_DT_RANG) & (MAX_FUNCTIONS_IN_DT - 1)) + 1),
+                               SOURCE_SET_DT);
     }
     else temp_value = 0;
   }
@@ -3112,14 +3080,14 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
     //Запис ранжування триґера
     
     //Визначаємо, який триггер зараз верхній рівень намагається записати
-    unsigned int number_defined_triggers = (address_data - M_ADDRESS_FIRST_DT_RANG) / MAX_FUNCTIONS_IN_DT;
+    unsigned int number_defined_triggers = (address_data - M_ADDRESS_FIRST_DT_RANG)>>VAGA_MAX_FUNCTIONS_IN_DT;
     
-    if(number_defined_triggers < (NUMBER_DEFINED_TRIGGERS/*target_label->number_defined_dt*/ << 2))
+    if((number_defined_triggers < (NUMBER_DEFINED_TRIGGERS/*target_label->number_defined_dt*/ << 2)) && ((number_defined_triggers % 4) == 0))
     {
       
       error = save_new_rang_oldr_from_gmm((number_defined_triggers >> 2),
-                     (((address_data -  M_ADDRESS_FIRST_DT_RANG) % MAX_FUNCTIONS_IN_DT) + 1),
-                     SOURCE_SET_DT_PLUS_RANG + (number_defined_triggers % 4), data, method_setting);
+                     (((address_data -  M_ADDRESS_FIRST_DT_RANG) & (MAX_FUNCTIONS_IN_DT - 1)) + 1),
+                     SOURCE_SET_DT, data, method_setting);
     }
   }
   else if ((address_data >= M_ADDRESS_FIRST_ON_CB_RANG) && (address_data <= M_ADDRESS_LAST_ON_CB_RANG))

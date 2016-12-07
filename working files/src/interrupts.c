@@ -17,19 +17,19 @@ inline ErrorStatus check_errors_i2c(void)
 /*****************************************************/
 //Перевірка стану кнопки
 /*****************************************************/
-inline void check_state_key(uint16_t mask_bit, unsigned int number_bit)
+inline void check_state_key(GPIO_TypeDef* GPIOx, uint16_t mask_bit, unsigned int number_bit)
 {
   if((time_set_keyboard[number_bit] == 0) && ((new_state_keyboard & (1<< number_bit)) == 0))
   {
     //Кнопка до цього моменту не була зафіксована, що вона натиснута
-    if (GPIO_ReadInputDataBit(KEYBOARD, mask_bit) == RESET) time_set_keyboard[number_bit]++;
+    if (GPIO_ReadInputDataBit(GPIOx, mask_bit) == RESET) time_set_keyboard[number_bit]++;
   }
   else if((time_set_keyboard[number_bit] > 0) && (time_set_keyboard[number_bit] < DEREVIACIA))
   {
     //Перевіряємо чи пройшов час очікування, і якщо стан кнопки підтверджується, то виставляємо повідомлення. що кнопка натиснута, алеще не оброблена
     if(++time_set_keyboard[number_bit] == DEREVIACIA)
     {
-      if (GPIO_ReadInputDataBit(KEYBOARD, mask_bit) == RESET) new_state_keyboard |= 1<< number_bit;
+      if (GPIO_ReadInputDataBit(GPIOx, mask_bit) == RESET) new_state_keyboard |= 1<< number_bit;
       else time_set_keyboard[number_bit] = 0;
     }
   }
@@ -38,7 +38,7 @@ inline void check_state_key(uint16_t mask_bit, unsigned int number_bit)
     if (time_set_keyboard[number_bit] != 0)
     {
       //Перевіряємо чи кнопка вже відтиснута
-     if (GPIO_ReadInputDataBit(KEYBOARD, mask_bit) != RESET) time_set_keyboard[number_bit] = 0;
+     if (GPIO_ReadInputDataBit(GPIOx, mask_bit) != RESET) time_set_keyboard[number_bit] = 0;
     }
   }
 }
@@ -749,9 +749,9 @@ void TIM4_IRQHandler(void)
     /***************************/
     //Рядок - 1
     GPIO_ResetBits(KEYBOARD, KEYBOARD_SW_1_PIN);
-    check_state_key(KEYBOARD_SW_A_PIN, BIT_KEY_ENTER);
-    check_state_key(KEYBOARD_SW_B_PIN, BIT_KEY_DOWN);
-    check_state_key(KEYBOARD_SW_C_PIN, BIT_KEY_RIGHT);
+    check_state_key(KEYBOARD_SW_A, KEYBOARD_SW_A_PIN, BIT_KEY_ENTER);
+    check_state_key(KEYBOARD_SW_B, KEYBOARD_SW_B_PIN, BIT_KEY_DOWN);
+    check_state_key(KEYBOARD_SW_C, KEYBOARD_SW_C_PIN, BIT_KEY_RIGHT);
     GPIO_SetBits(KEYBOARD, KEYBOARD_SW_1_PIN);
     
     //Робимо невелику затримку
@@ -759,9 +759,9 @@ void TIM4_IRQHandler(void)
     
     //Рядок - 2
     GPIO_ResetBits(KEYBOARD, KEYBOARD_SW_2_PIN);
-    check_state_key(KEYBOARD_SW_A_PIN, BIT_KEY_ESC);
-    check_state_key(KEYBOARD_SW_B_PIN, BIT_KEY_LEFT);
-    check_state_key(KEYBOARD_SW_C_PIN, BIT_KEY_UP);
+    check_state_key(KEYBOARD_SW_A, KEYBOARD_SW_A_PIN, BIT_KEY_ESC);
+    check_state_key(KEYBOARD_SW_B, KEYBOARD_SW_B_PIN, BIT_KEY_LEFT);
+    check_state_key(KEYBOARD_SW_C, KEYBOARD_SW_C_PIN, BIT_KEY_UP);
     GPIO_SetBits(KEYBOARD, KEYBOARD_SW_2_PIN);
 
     //Робимо невелику затримку
@@ -769,9 +769,9 @@ void TIM4_IRQHandler(void)
 
     //Рядок - 3
     GPIO_ResetBits(KEYBOARD, KEYBOARD_SW_3_PIN);
-    check_state_key(KEYBOARD_SW_A_PIN, BIT_KEY_1);
-    check_state_key(KEYBOARD_SW_B_PIN, BIT_KEY_2);
-    check_state_key(KEYBOARD_SW_C_PIN, BIT_KEY_3);
+    check_state_key(KEYBOARD_SW_A, KEYBOARD_SW_A_PIN, BIT_KEY_1);
+    check_state_key(KEYBOARD_SW_B, KEYBOARD_SW_B_PIN, BIT_KEY_2);
+    check_state_key(KEYBOARD_SW_C, KEYBOARD_SW_C_PIN, BIT_KEY_3);
     GPIO_SetBits(KEYBOARD, KEYBOARD_SW_3_PIN);
 
     //Робимо невелику затримку
@@ -779,9 +779,9 @@ void TIM4_IRQHandler(void)
 
     //Рядок - 4
     GPIO_ResetBits(KEYBOARD, KEYBOARD_SW_4_PIN);
-    check_state_key(KEYBOARD_SW_A_PIN, BIT_KEY_4);
-    check_state_key(KEYBOARD_SW_B_PIN, BIT_KEY_5);
-    check_state_key(KEYBOARD_SW_C_PIN, BIT_KEY_6);
+    check_state_key(KEYBOARD_SW_A, KEYBOARD_SW_A_PIN, BIT_KEY_4);
+    check_state_key(KEYBOARD_SW_B, KEYBOARD_SW_B_PIN, BIT_KEY_5);
+    check_state_key(KEYBOARD_SW_C, KEYBOARD_SW_C_PIN, BIT_KEY_6);
     GPIO_SetBits(KEYBOARD, KEYBOARD_SW_4_PIN);
     /***************************/
   

@@ -302,7 +302,8 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 #define MAX_FUNCTIONS_IN_LED                    (1 << VAGA_MAX_FUNCTIONS_IN_LED)
 #define VAGA_MAX_FUNCTIONS_IN_DF                0
 #define MAX_FUNCTIONS_IN_DF                     (1 << VAGA_MAX_FUNCTIONS_IN_DF)
-#define MAX_FUNCTIONS_IN_DT                     1
+#define VAGA_MAX_FUNCTIONS_IN_DT                0
+#define MAX_FUNCTIONS_IN_DT                     (1 << VAGA_MAX_FUNCTIONS_IN_DT)
 #define MAX_FUNCTIONS_IN_D_AND                  NUMBER_IN_AND
 #define MAX_FUNCTIONS_IN_D_OR                   NUMBER_IN_OR
 #define MAX_FUNCTIONS_IN_D_XOR                  2

@@ -168,45 +168,24 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
   }
   else if(type_ekran == INDEX_VIEWING_DT)
   {
-    unsigned int index_in_ekran_list = number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS;
-    unsigned int type_source = index_in_ekran_list % 2;
-    unsigned int type_of_action = (index_in_ekran_list / 2) & 0x1;
-    unsigned int index_of_dt = index_in_ekran_list / 4;
+    unsigned int index_in_ekran_list = number_ekran - EKRAN_RANGUVANNJA_SET_DT1;
+    unsigned int index_of_dt = index_in_ekran_list / 2;
+    unsigned int type_of_action = index_in_ekran_list & 0x1;
     
     if(current_ekran.edition == 0)
     {
       if (type_of_action == INDEX_ML_SET_DT)
       {
-        if(type_source == INDEX_ML_LIST_TYPE_SOURCE_PLUS_DT)
+        for (unsigned int i = 0; i < N_BIG; i++)
         {
-          for (unsigned int i = 0; i < N_BIG; i++)
-          {
-            state_viewing_input[i] = current_settings.ranguvannja_set_dt_source_plus[N_BIG*index_of_dt + i];
-          }
-        }
-        else
-        {
-          for (unsigned int i = 0; i < N_BIG; i++)
-          {
-            state_viewing_input[i] = current_settings.ranguvannja_set_dt_source_minus[N_BIG*index_of_dt + i];
-          }
+          state_viewing_input[i] = current_settings.ranguvannja_set_dt[N_BIG*index_of_dt + i];
         }
       }
       else
       {
-        if(type_source == INDEX_ML_LIST_TYPE_SOURCE_PLUS_DT)
+        for (unsigned int i = 0; i < N_BIG; i++)
         {
-          for (unsigned int i = 0; i < N_BIG; i++)
-          {
-            state_viewing_input[i] = current_settings.ranguvannja_reset_dt_source_plus[N_BIG*index_of_dt + i];
-          }
-        }
-        else
-        {
-          for (unsigned int i = 0; i < N_BIG; i++)
-          {
-            state_viewing_input[i] = current_settings.ranguvannja_reset_dt_source_minus[N_BIG*index_of_dt + i];
-          }
+          state_viewing_input[i] = current_settings.ranguvannja_reset_dt[N_BIG*index_of_dt + i];
         }
       }
     }
@@ -214,36 +193,16 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
     {
       if (type_of_action == INDEX_ML_SET_DT)
       {
-        if(type_source == INDEX_ML_LIST_TYPE_SOURCE_PLUS_DT)
+        for (unsigned int i = 0; i < N_BIG; i++)
         {
-          for (unsigned int i = 0; i < N_BIG; i++)
-          {
-            state_viewing_input[i] = edition_settings.ranguvannja_set_dt_source_plus[N_BIG*index_of_dt + i];
-          }
-        }
-        else
-        { 
-          for (unsigned int i = 0; i < N_BIG; i++)
-          {
-            state_viewing_input[i] = edition_settings.ranguvannja_set_dt_source_minus[N_BIG*index_of_dt + i];
-          }
+          state_viewing_input[i] = edition_settings.ranguvannja_set_dt[N_BIG*index_of_dt + i];
         }
       }
       else
       {
-        if(type_source == INDEX_ML_LIST_TYPE_SOURCE_PLUS_DT)
+        for (unsigned int i = 0; i < N_BIG; i++)
         {
-          for (unsigned int i = 0; i < N_BIG; i++)
-          {
-            state_viewing_input[i] = edition_settings.ranguvannja_reset_dt_source_plus[N_BIG*index_of_dt + i];
-          }
-        }
-        else
-        { 
-          for (unsigned int i = 0; i < N_BIG; i++)
-          {
-            state_viewing_input[i] = edition_settings.ranguvannja_reset_dt_source_minus[N_BIG*index_of_dt + i];
-          }
+          state_viewing_input[i] = edition_settings.ranguvannja_reset_dt[N_BIG*index_of_dt + i];
         }
       }
     }
@@ -769,9 +728,9 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
              (
               (type_ekran == INDEX_VIEWING_DT) &&
               (
-               (index_in_list == (RANG_DT1_SET   + 3*(number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS) / 4)) ||
-               (index_in_list == (RANG_DT1_RESET + 3*(number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS) / 4)) ||
-               (index_in_list == (RANG_DT1_OUT   + 3*(number_ekran - EKRAN_RANGUVANNJA_SET_DT1_PLUS) / 4))
+               (index_in_list == (RANG_DT1_SET   + 3*((number_ekran - EKRAN_RANGUVANNJA_SET_DT1) / 2))) ||
+               (index_in_list == (RANG_DT1_RESET + 3*((number_ekran - EKRAN_RANGUVANNJA_SET_DT1) / 2))) ||
+               (index_in_list == (RANG_DT1_OUT   + 3*((number_ekran - EKRAN_RANGUVANNJA_SET_DT1) / 2)))
               )  
              ) 
             )   

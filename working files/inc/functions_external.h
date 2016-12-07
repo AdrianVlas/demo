@@ -33,7 +33,7 @@ extern unsigned int write_command_to_lcd(unsigned char);
 extern unsigned int hd44780_gotoxy(unsigned char, unsigned char);
 extern unsigned int hd44780_puts_xy (unsigned char, unsigned char, unsigned char *);
 extern void view_whole_ekran(void);
-extern void check_state_key(uint16_t, unsigned int);
+extern void check_state_key(GPIO_TypeDef*, uint16_t, unsigned int);
 extern int index_language_in_array(int);
 
 extern void inc_or_dec_value(unsigned int *, unsigned int);
@@ -105,7 +105,6 @@ extern void make_ekran_chose_settings_df(void);
 extern void make_ekran_type_df(void);
 extern void make_ekran_timeout_df(unsigned int);
 extern void make_ekran_set_reset_trigger(void);
-extern void make_ekran_list_type_source_dt(void);
 extern void make_ekran_info(void);
 extern void make_ekran_date_time_pz(void);
 extern void make_ekran_chose_item_of_point_time_settings(void);

@@ -51,8 +51,7 @@ typedef struct
   unsigned int ranguvannja_digital_registrator[N_BIG];    //Ранжування дискретного реєстратора
   
   //Блок ввімкнення-вимкнення вимикача
-  unsigned int ranguvannja_off_cb[N_BIG];                 //Ранжування блоку вимкнення силового вимикача
-  unsigned int ranguvannja_on_cb[N_BIG];                  //Ранжування блоку ввімкнення силового вимикача
+  unsigned int ranguvannja_alarms[N_BIG*NUMBER_ALARMS];   //Ранжування cигналізацій
   
   unsigned int number_iteration_el;                                             //Максимадбна кількість ітерацій для розширеної логіки
 //  unsigned int number_defined_df;                                               //Кількість визначуваних функцій у конфігурації приладу
@@ -100,19 +99,9 @@ typedef struct
   
   unsigned int timeout_idle_new_settings;
   
-  //Вимикач
-  unsigned int setpoint_Inom;                   //Номінальний струм вимикача
-  unsigned int setpoint_r_kom_st_Inom;          //Ресурс комунікаційної стійкості при номінальному струмі вимикача
-  unsigned int setpoint_Inom_vymk;              //Номінальний струм вимкнення вимикача
-  unsigned int setpoint_r_kom_st_Inom_vymk;     //Ресурс комунікаційної стійкості при номінальному струмі вимкнення вимикача
-  unsigned int setpoint_pochatkovyj_resurs;     //Початковий ресурс вимикача
-  unsigned int setpoint_krytychnyj_resurs;      //Критичний ресурс вимикача
-  unsigned int setpoint_pochatkova_k_vymk;      //Початкова кількість вимкнень
-  int timeout_swch_on;                          //Витримка T вкл.
-  int timeout_swch_off;                         //Витримка T відкл.
-  int timeout_swch_udl_blk_on;                  //Витримка T "удлинение сигнала блокировки включения"
-  int timeout_pryvoda_VV;                       //Витримка T "Привіода ВВ"
-  unsigned int control_switch;                  //Поле для управління вимикачем
+  //Сигналізація
+  int timeout_alarm_sound_period[NUMBER_ALARMS];        //Витримка "Тривалість звукового сигналу"
+  unsigned int control_alarm;                           //Поле для управління сигналізаціями
   
   //Аналоговий реєстратор
   unsigned int prefault_number_periods; //Час доаварійного масиву (кількість періодів промислової частоти)

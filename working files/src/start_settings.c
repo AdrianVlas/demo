@@ -1595,9 +1595,11 @@ void min_settings(__SETTINGS *target_label)
   {
     target_label->ranguvannja_analog_registrator[j]  = 0x0;
     target_label->ranguvannja_digital_registrator[j] = 0x0;
+  }
 
-    target_label->ranguvannja_off_cb[j] = 0x0;
-    target_label->ranguvannja_on_cb[j] = 0x0;
+  for (int i = 0; i < NUMBER_ALARMS; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] = 0;
   }
   
   target_label->number_iteration_el = NUMBER_ITERATION_EL_MAX;
@@ -1657,21 +1659,8 @@ void min_settings(__SETTINGS *target_label)
 
   target_label->control_ctrl_phase = 0;
   
-  target_label->setpoint_Inom = SETPOINT_Inom_MIN;
-  target_label->setpoint_r_kom_st_Inom = SETPOINT_RKS_Inom_MIN;
-  target_label->setpoint_Inom_vymk = SETPOINT_Inom_vymk_MIN;
-  target_label->setpoint_r_kom_st_Inom_vymk = SETPOINT_RKS_Inom_vymk_MIN;
-  
-  unsigned int chastka = target_label->setpoint_r_kom_st_Inom/target_label->setpoint_r_kom_st_Inom_vymk;
-  target_label->setpoint_pochatkovyj_resurs = 2*chastka;
-  target_label->setpoint_krytychnyj_resurs = chastka;
-  target_label->setpoint_pochatkova_k_vymk = 0;
-  
-  target_label->timeout_swch_on = TIMEOUT_SWCH_ON_MIN;
-  target_label->timeout_swch_off = TIMEOUT_SWCH_OFF_MIN;
-  target_label->timeout_swch_udl_blk_on = TIMEOUT_SWCH_UDL_BLK_ON_MIN;
-  target_label->timeout_pryvoda_VV = TIMEOUT_PRYVODA_VV_MIN;
-  target_label->control_switch = 0;
+  for (unsigned int i = 0; i < NUMBER_ALARMS; i++) target_label->timeout_alarm_sound_period[i] = TIMEOUT_ALARM_SOUND_PERIOD_MIN;
+  target_label->control_alarm = 0;
   
   target_label->prefault_number_periods = TIMEOUT_PREFAULT_MIN / 20;
   target_label->postfault_number_periods = TIMEOUT_POSTFAULT_MIN / 20;

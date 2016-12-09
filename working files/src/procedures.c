@@ -71,8 +71,11 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         target_label->ranguvannja_analog_registrator[j]  &= ~maska[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska[j];
-        target_label->ranguvannja_off_cb[j] &= ~maska[j];
-        target_label->ranguvannja_on_cb[j]  &= ~maska[j];
+      }
+      //Знімаємо всі функції для ранжування сигналізацій
+      for (int i = 0; i < NUMBER_ALARMS; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] &= ~maska[j];
       }
       //Знімаємо всі функції для ранжування оприділювальних функцій
       for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
@@ -208,9 +211,12 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     {
       target_label->ranguvannja_analog_registrator[j]  &= ~maska[j];
       target_label->ranguvannja_digital_registrator[j] &= ~maska[j];
-      target_label->ranguvannja_off_cb[j] &= ~maska[j];
-      target_label->ranguvannja_on_cb[j]  &= ~maska[j];
     }
+      //Знімаємо всі функції для ранжування сигналізацій
+      for (int i = 0; i < NUMBER_ALARMS; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] &= ~maska[j];
+      }
     //Очищємо всі функції для ранжування оприділювальних функцій
     for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
     {
@@ -349,9 +355,12 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 //  {
 //    target_label->ranguvannja_analog_registrator[j]  &= ~maska[j];
 //    target_label->ranguvannja_digital_registrator[j] &= ~maska[j];
-//    target_label->ranguvannja_off_cb[j] &= ~maska[j];
-//    target_label->ranguvannja_on_cb[j]  &= ~maska[j];
 //  }
+//      //Знімаємо всі функції для ранжування сигналізацій
+//      for (int i = 0; i < NUMBER_ALARMS; i++)
+//      {
+//        for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] &= ~maska[j];
+//      }
 //  //Очищємо всі функції для ранжування оприділювальних функцій
 //  for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
 //  {

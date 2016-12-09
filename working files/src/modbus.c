@@ -202,13 +202,9 @@ unsigned int convert_order_list_oldr_to_gmm(unsigned int number, unsigned int nu
   {
     for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_d_not[N_BIG*number + i];
   }
-  else if (source == SOURCE_ON_CB_RANG)
+  else if (source == SOURCE_ALARMS_RANG)
   {
-    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_on_cb[i];
-  }
-  else if (source == SOURCE_OFF_CB_RANG)
-  {
-    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_off_cb[i];
+    for (unsigned int i = 0; i < N_BIG; i++ ) input_value[i] = current_settings_interfaces.ranguvannja_alarms[N_BIG*number + i];
   }
   
   //Шукаємо потрібний індекс функції у полі бітових настройок
@@ -730,15 +726,10 @@ unsigned int save_new_rang_oldr_from_gmm(unsigned int number, unsigned int numbe
     point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_d_not + N_BIG*number;
     point_to_target = (unsigned int *)target_label->ranguvannja_d_not + N_BIG*number;
   }
-  else if (source == SOURCE_ON_CB_RANG)
+  else if (source == SOURCE_ALARMS_RANG)
   {
-    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_on_cb;
-    point_to_target = (unsigned int *)target_label->ranguvannja_on_cb;
-  }
-  else if (source == SOURCE_OFF_CB_RANG)
-  {
-    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_off_cb;
-    point_to_target = (unsigned int *)target_label->ranguvannja_off_cb;
+    point_to_source = (unsigned int *)current_settings_interfaces.ranguvannja_alarms + N_BIG*number;
+    point_to_target = (unsigned int *)target_label->ranguvannja_alarms + N_BIG*number;
   }
 
   //Перевіряємо, чи треба попередні зміни (якщо такі були) ввести в цільовий масив
@@ -2208,14 +2199,14 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
     }
     else temp_value = 0;
   }
-  else if ((address_data >= M_ADDRESS_FIRST_ON_CB_RANG) && (address_data <= M_ADDRESS_LAST_ON_CB_RANG))
-  {
-    temp_value  = convert_order_list_oldr_to_gmm(0, (((address_data - M_ADDRESS_FIRST_ON_CB_RANG) & (MAX_FUNCTIONS_IN_ON_CB - 1)) + 1), SOURCE_ON_CB_RANG);
-  }
-  else if ((address_data >= M_ADDRESS_FIRST_OFF_CB_RANG) && (address_data <= M_ADDRESS_LAST_OFF_CB_RANG))
-  {
-    temp_value  = convert_order_list_oldr_to_gmm(0, (((address_data - M_ADDRESS_FIRST_OFF_CB_RANG) & (MAX_FUNCTIONS_IN_OFF_CB - 1)) + 1), SOURCE_OFF_CB_RANG);
-  }
+//  else if ((address_data >= M_ADDRESS_FIRST_ON_CB_RANG) && (address_data <= M_ADDRESS_LAST_ON_CB_RANG))
+//  {
+//    temp_value  = convert_order_list_oldr_to_gmm(0, (((address_data - M_ADDRESS_FIRST_ON_CB_RANG) & (MAX_FUNCTIONS_IN_ON_CB - 1)) + 1), SOURCE_ON_CB_RANG);
+//  }
+//  else if ((address_data >= M_ADDRESS_FIRST_OFF_CB_RANG) && (address_data <= M_ADDRESS_LAST_OFF_CB_RANG))
+//  {
+//    temp_value  = convert_order_list_oldr_to_gmm(0, (((address_data - M_ADDRESS_FIRST_OFF_CB_RANG) & (MAX_FUNCTIONS_IN_OFF_CB - 1)) + 1), SOURCE_OFF_CB_RANG);
+//  }
   else if ((address_data >= M_ADDRESS_FIRST_D_AND_RANG) && (address_data <= M_ADDRESS_LAST_D_AND_RANG))
   {
     //Визначаємо, який В-"І" зараз верхній рівень намагається прочитати
@@ -2390,71 +2381,6 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
     //Уставки і витримки (ролдовження), настройки
     switch (address_data)
     {
-    case MA_TO_SWCH_ON:
-      {
-        temp_value = current_settings_interfaces.timeout_swch_on/10;
-        break;
-      }
-    case MA_TO_SWCH_OFF:
-      {
-        temp_value = current_settings_interfaces.timeout_swch_off/10;
-        break;
-      }
-    case MA_TO_SWCH_UDL_BLK_ON:
-      {
-        temp_value = current_settings_interfaces.timeout_swch_udl_blk_on/10;
-        break;
-      }
-    case MA_TO_FAULT_CONTROL_CIRCUIT:
-      {
-        temp_value = current_settings_interfaces.timeout_pryvoda_VV/10;
-        break;
-      }
-    case MA_STP_Inom:
-      {
-        temp_value = current_settings_interfaces.setpoint_Inom;
-        break;
-      }
-    case MA_STP_RKS_Inom:
-      {
-        temp_value = current_settings_interfaces.setpoint_r_kom_st_Inom/10;
-        break;
-      }
-    case MA_STP_Inom_vymk:
-      {
-        temp_value = current_settings_interfaces.setpoint_Inom_vymk;
-        break;
-      }
-    case MA_STP_RKS_Inom_vymk:
-      {
-        temp_value = current_settings_interfaces.setpoint_r_kom_st_Inom_vymk;
-        break;
-      }
-    case MA_STP_POCHATKOVYJ_RESURS_LSW:
-      {
-        temp_value = current_settings_interfaces.setpoint_pochatkovyj_resurs & 0xffff;
-        break;
-      }
-    case MA_STP_POCHATKOVYJ_RESURS_MSW:
-      {
-        temp_value = (current_settings_interfaces.setpoint_pochatkovyj_resurs >> 16) & 0xffff;
-        break;
-      }
-    case MA_STP_KRYTYCHNYJ_RESURS:
-      {
-        temp_value = current_settings_interfaces.setpoint_krytychnyj_resurs;
-        break;
-      }
-    case MA_POCHATKOVA_K_VYMK_LSW:
-      {
-        temp_value = current_settings_interfaces.setpoint_pochatkova_k_vymk & 0xffff;
-        break;
-      }
-    case MA_POCHATKOVA_K_VYMK_MSW:
-      {
-        temp_value = (current_settings_interfaces.setpoint_pochatkova_k_vymk >> 16) & 0xffff;
-        break;
-      }
     case MA_UVV_TYPE_SIGNAL_INPUT:
       {
         temp_value = current_settings_interfaces.type_of_input_signal & ((1 << NUMBER_INPUTS) - 1);
@@ -2956,7 +2882,7 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
 /***********************************************************************************/
 //Запис даних
 /***********************************************************************************/
-inline unsigned int Set_data(unsigned short int data, unsigned int address_data, unsigned int method_setting, unsigned int to_be_continue, unsigned int type_interface)
+inline unsigned int Set_data(unsigned short int data, unsigned int address_data, unsigned int method_setting, /*unsigned int to_be_continue, */unsigned int type_interface)
 {
   unsigned int error = 0, temp_value;
   
@@ -3090,18 +3016,18 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
                      SOURCE_SET_DT, data, method_setting);
     }
   }
-  else if ((address_data >= M_ADDRESS_FIRST_ON_CB_RANG) && (address_data <= M_ADDRESS_LAST_ON_CB_RANG))
-  {
-    //Запис ранжування Блоку ввімкнення
-    
-    error = save_new_rang_oldr_from_gmm(0, (((address_data - M_ADDRESS_FIRST_ON_CB_RANG) & (MAX_FUNCTIONS_IN_ON_CB - 1)) + 1), SOURCE_ON_CB_RANG, data, method_setting);
-  }
-  else if ((address_data >= M_ADDRESS_FIRST_OFF_CB_RANG) && (address_data <= M_ADDRESS_LAST_OFF_CB_RANG))
-  {
-    //Запис ранжування Блоку вимкнення
-    
-    error = save_new_rang_oldr_from_gmm(0, (((address_data - M_ADDRESS_FIRST_OFF_CB_RANG) & (MAX_FUNCTIONS_IN_OFF_CB - 1)) + 1), SOURCE_OFF_CB_RANG, data, method_setting);
-  }
+//  else if ((address_data >= M_ADDRESS_FIRST_ON_CB_RANG) && (address_data <= M_ADDRESS_LAST_ON_CB_RANG))
+//  {
+//    //Запис ранжування Блоку ввімкнення
+//    
+//    error = save_new_rang_oldr_from_gmm(0, (((address_data - M_ADDRESS_FIRST_ON_CB_RANG) & (MAX_FUNCTIONS_IN_ON_CB - 1)) + 1), SOURCE_ON_CB_RANG, data, method_setting);
+//  }
+//  else if ((address_data >= M_ADDRESS_FIRST_OFF_CB_RANG) && (address_data <= M_ADDRESS_LAST_OFF_CB_RANG))
+//  {
+//    //Запис ранжування Блоку вимкнення
+//    
+//    error = save_new_rang_oldr_from_gmm(0, (((address_data - M_ADDRESS_FIRST_OFF_CB_RANG) & (MAX_FUNCTIONS_IN_OFF_CB - 1)) + 1), SOURCE_OFF_CB_RANG, data, method_setting);
+//  }
   else if ((address_data >= M_ADDRESS_FIRST_D_AND_RANG) && (address_data <= M_ADDRESS_LAST_D_AND_RANG))
   {
     //Запис ранжування В-"І"
@@ -3391,182 +3317,6 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
     //Уставки і витримки (продовження), налаштування
     switch (address_data)
     {
-    case MA_TO_SWCH_ON:
-      {
-        temp_value = data*10;
-        
-#if (TIMEOUT_SWCH_ON_MIN != 0)          
-        if ((temp_value >= TIMEOUT_SWCH_ON_MIN) && (temp_value <= TIMEOUT_SWCH_ON_MAX))
-#else
-        if (temp_value <= TIMEOUT_SWCH_ON_MAX)
-#endif            
-        {
-          target_label->timeout_swch_on = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_SWCH_OFF:
-      {
-        temp_value = data*10;
-        
-#if (TIMEOUT_SWCH_OFF_MIN != 0)          
-        if ((temp_value >= TIMEOUT_SWCH_OFF_MIN) && (temp_value <= TIMEOUT_SWCH_OFF_MAX))
-#else
-        if (temp_value <= TIMEOUT_SWCH_OFF_MAX)
-#endif            
-        {
-          target_label->timeout_swch_off = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_SWCH_UDL_BLK_ON:
-      {
-        temp_value = data*10;
-        
-#if (TIMEOUT_SWCH_UDL_BLK_ON_MIN != 0)          
-        if ((temp_value >= TIMEOUT_SWCH_UDL_BLK_ON_MIN) && (temp_value <= TIMEOUT_SWCH_UDL_BLK_ON_MAX))
-#else
-        if (temp_value <= TIMEOUT_SWCH_UDL_BLK_ON_MAX)
-#endif            
-        {
-          target_label->timeout_swch_udl_blk_on = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_TO_FAULT_CONTROL_CIRCUIT:
-      {
-        temp_value = data*10;
-        
-#if (TIMEOUT_PRYVODA_VV_MIN != 0)          
-        if ((temp_value >= TIMEOUT_PRYVODA_VV_MIN) && (temp_value <= TIMEOUT_PRYVODA_VV_MAX))
-#else
-        if (temp_value <= TIMEOUT_PRYVODA_VV_MAX)
-#endif            
-        {
-          target_label->timeout_pryvoda_VV = temp_value;
-        }
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_STP_Inom:
-      {
-        temp_value = data;
-    
-        if ((temp_value >= SETPOINT_Inom_MIN) && (temp_value <= SETPOINT_Inom_MAX))
-          target_label->setpoint_Inom = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_STP_RKS_Inom:
-      {
-        temp_value = data*10;
-    
-        if ((temp_value >= SETPOINT_RKS_Inom_MIN) && (temp_value <= SETPOINT_RKS_Inom_MAX))
-          target_label->setpoint_r_kom_st_Inom = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_STP_Inom_vymk:
-      {
-        temp_value = data;
-    
-        if ((temp_value >= SETPOINT_Inom_vymk_MIN) && (temp_value <= SETPOINT_Inom_vymk_MAX))
-          target_label->setpoint_Inom_vymk = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_STP_RKS_Inom_vymk:
-      {
-        temp_value = data;
-    
-        if ((temp_value >= SETPOINT_RKS_Inom_vymk_MIN) && (temp_value <= SETPOINT_RKS_Inom_vymk_MAX))
-          target_label->setpoint_r_kom_st_Inom_vymk = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_STP_POCHATKOVYJ_RESURS_LSW:
-      {
-        temp_value = (target_label->setpoint_pochatkovyj_resurs & 0xffff0000) | (data & 0x0000ffff);
-    
-        unsigned int chastka = target_label->setpoint_r_kom_st_Inom/target_label->setpoint_r_kom_st_Inom_vymk;
-        if (
-            (to_be_continue == true) ||
-            ((temp_value >= (2*chastka)) && (temp_value <= target_label->setpoint_r_kom_st_Inom))
-           )   
-          target_label->setpoint_pochatkovyj_resurs = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_STP_POCHATKOVYJ_RESURS_MSW:
-      {
-        temp_value = (data << 16) | (target_label->setpoint_pochatkovyj_resurs & 0x0000ffff);
-    
-        unsigned int chastka = target_label->setpoint_r_kom_st_Inom/target_label->setpoint_r_kom_st_Inom_vymk;
-        if ((temp_value >= (2*chastka)) && (temp_value <= target_label->setpoint_r_kom_st_Inom))
-          target_label->setpoint_pochatkovyj_resurs = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_STP_KRYTYCHNYJ_RESURS:
-      {
-        temp_value = data;
-    
-        unsigned int chastka = target_label->setpoint_r_kom_st_Inom/target_label->setpoint_r_kom_st_Inom_vymk;
-        if ((temp_value >= chastka) && (temp_value <= (2*chastka)))
-          target_label->setpoint_krytychnyj_resurs = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-
-        break;
-      }
-    case MA_POCHATKOVA_K_VYMK_LSW:
-      {
-        temp_value = (target_label->setpoint_pochatkova_k_vymk & 0xffff0000) | (data & 0x0000ffff);
-
-        if (
-            (to_be_continue == true) ||
-            (temp_value <= target_label->setpoint_r_kom_st_Inom)
-           )   
-          target_label->setpoint_pochatkova_k_vymk = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-        
-        break;
-      }
-    case MA_POCHATKOVA_K_VYMK_MSW:
-      {
-        temp_value = (data << 16) | (target_label->setpoint_pochatkova_k_vymk & 0x0000ffff);
-
-        if (temp_value <= target_label->setpoint_r_kom_st_Inom)
-          target_label->setpoint_pochatkova_k_vymk = temp_value;
-        else
-          error = ERROR_ILLEGAL_DATA_VALUE;
-        
-        break;
-      }
     case MA_UVV_TYPE_SIGNAL_INPUT:
       {
         if (data <= ((1 << NUMBER_INPUTS) - 1)) 
@@ -6161,7 +5911,7 @@ void modbus_rountines(unsigned int type_interface)
 
                   if (error == 0)
                   {
-                    error = Set_data(temp_value,first_address_of_word_for_function_3_or_4, SET_DATA_IMMEDITATE, false, type_interface);
+                    error = Set_data(temp_value,first_address_of_word_for_function_3_or_4, SET_DATA_IMMEDITATE, /*false,*/ type_interface);
                     if (error == 0)
                     {
                       //Дійсно відбулася зміна настройки
@@ -6419,7 +6169,7 @@ void modbus_rountines(unsigned int type_interface)
 
               if (error == 0)
               {
-                error = Set_data(data,add_data, SET_DATA_IMMEDITATE, false, type_interface);
+                error = Set_data(data,add_data, SET_DATA_IMMEDITATE, /*false,*/ type_interface);
                 if (error != 0)
                 {
                   if (changing_ustuvannja != 0)
@@ -6728,7 +6478,7 @@ void modbus_rountines(unsigned int type_interface)
                   if ((index_of_bit_in_target_word == 0) || (i == number))
                   {
                     //Записуємо відповідне нове значення
-                    error = Set_data(temp_value, first_address_of_word_for_function_3_or_4, SET_DATA_INTO_EDIT_TABLE, (i < number), type_interface); /*тут і вже збільшений на одиницю, тому перевірка здійснюється (i) з (number)*/
+                    error = Set_data(temp_value, first_address_of_word_for_function_3_or_4, SET_DATA_INTO_EDIT_TABLE, /*(i < number),*/ type_interface); /*тут і вже збільшений на одиницю, тому перевірка здійснюється (i) з (number)*/
                     if (error == 0)
                     {
                       if (reinit_settings == 0) reinit_settings = 1; //Помічаємо, що треба буде виконати запис нових настройок у EEPROM
@@ -7082,7 +6832,7 @@ void modbus_rountines(unsigned int type_interface)
                   if (error == 0)
                   {
                     //Вводимо нові значення через тимчасову структуру
-                    error = Set_data(data, add_data, SET_DATA_INTO_EDIT_TABLE, ((i + 1) < number), type_interface); /*тут і ще не збільшений на одиницю, тому перевірка здійснюється(i + 1) з (number)*/
+                    error = Set_data(data, add_data, SET_DATA_INTO_EDIT_TABLE, /*((i + 1) < number),*/ type_interface); /*тут і ще не збільшений на одиницю, тому перевірка здійснюється(i + 1) з (number)*/
                   }
                 }
               }
@@ -7111,7 +6861,7 @@ void modbus_rountines(unsigned int type_interface)
                   }
                 }
                 //Вводимо нові значення через тимчасовий масив (хоч настравді він використовується тільки для юстування, а для всіх інших регістрів все одно який другий параметра викликаємої функції)
-                error = Set_data(data, add_data, SET_DATA_INTO_EDIT_TABLE, ((i + 1) < number), type_interface); /*тут і ще не збільшений на одиницю, тому перевірка здійснюється(i + 1) з (number)*/
+                error = Set_data(data, add_data, SET_DATA_INTO_EDIT_TABLE, /*((i + 1) < number),*/ type_interface); /*тут і ще не збільшений на одиницю, тому перевірка здійснюється(i + 1) з (number)*/
               }
             }
             else error = ERROR_SLAVE_DEVICE_BUSY;

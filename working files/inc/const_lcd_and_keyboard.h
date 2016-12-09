@@ -1,7 +1,7 @@
 #ifndef __CONST_LCD_AND_KEYBOARD__
 #define __CONST_LCD_AND_KEYBOARD__
 
-#define MAX_LEVEL_MENU          (76 + NUMBER_OUTPUTS + NUMBER_LEDS + 2*NUMBER_DEFINED_FUNCTIONS + 3*NUMBER_DEFINED_TRIGGERS + NUMBER_DEFINED_AND + NUMBER_DEFINED_OR + NUMBER_DEFINED_XOR + NUMBER_DEFINED_NOT)   //Максимальна кількість допустимих вікон у системі меню
+#define MAX_LEVEL_MENU          (75 + 3*NUMBER_ALARMS + NUMBER_OUTPUTS + NUMBER_LEDS + 2*NUMBER_DEFINED_FUNCTIONS + 3*NUMBER_DEFINED_TRIGGERS + NUMBER_DEFINED_AND + NUMBER_DEFINED_OR + NUMBER_DEFINED_XOR + NUMBER_DEFINED_NOT)   //Максимальна кількість допустимих вікон у системі меню
 #define MAX_TIME_REWRITE_EKRAN  100 //x10 - Максимальний час у мс для автоматичного обновлення екранів меню, які треба обновляти
 
 #define INDEX_VIEWING_DF                            0
@@ -9,13 +9,12 @@
 #define INDEX_VIEWING_LED                           2
 #define INDEX_VIEWING_A_REG                         3
 #define INDEX_VIEWING_D_REG                         4
-#define INDEX_VIEWING_OFF_CB                        5
-#define INDEX_VIEWING_ON_CB                         6
-#define INDEX_VIEWING_DT                            7
-#define INDEX_VIEWING_D_AND                         8
-#define INDEX_VIEWING_D_OR                          9
-#define INDEX_VIEWING_D_XOR                         10
-#define INDEX_VIEWING_D_NOT                         11
+#define INDEX_VIEWING_ALARMS                        5
+#define INDEX_VIEWING_DT                            6
+#define INDEX_VIEWING_D_AND                         7
+#define INDEX_VIEWING_D_OR                          8
+#define INDEX_VIEWING_D_XOR                         9
+#define INDEX_VIEWING_D_NOT                         10
 
 #define LCD_BASE          Bank1_SRAM3_ADDR
 

@@ -4394,6 +4394,12 @@
           <name>$PROJ_DIR$\..\..\working files\inc\const_lcd_and_keyboard.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_alarms.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_alarms.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_communication_parameters.h</name>
         </file>
         <file>
@@ -4404,9 +4410,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_settings_registrators.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_settings_switcher.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_settings_uvv.h</name>
@@ -4473,9 +4476,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_state_inputs_outputs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_switch.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_time.h</name>
@@ -4571,6 +4571,9 @@
           <name>$PROJ_DIR$\..\..\working files\src\menu.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\..\..\working files\src\menu_alarms.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_chose_communication_parameters.c</name>
         </file>
         <file>
@@ -4629,9 +4632,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_state_inputs_outputs.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\working files\src\menu_switch.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\working files\src\menu_time.c</name>

@@ -352,41 +352,23 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
     }
     max_row_ranguvannja = MAX_ROW_RANGUVANNJA_DIGITAL_REGISTRATOR;
   }
-  else if(type_ekran == INDEX_VIEWING_OFF_CB)
+  else if(type_ekran == INDEX_VIEWING_ALARMS)
   {
     if(current_ekran.edition == 0)
     {
       for (unsigned int i = 0; i < N_BIG; i++)
       {
-        state_viewing_input[i] = current_settings.ranguvannja_off_cb[i];
+        state_viewing_input[i] = current_settings.ranguvannja_alarms[N_BIG*(number_ekran - EKRAN_RANGUVANNJA_ALARMS1) + i];
       }
     }
     else
     {
       for (unsigned int i = 0; i < N_BIG; i++)
       {
-        state_viewing_input[i] = edition_settings.ranguvannja_off_cb[i];
+        state_viewing_input[i] = edition_settings.ranguvannja_alarms[N_BIG*(number_ekran - EKRAN_RANGUVANNJA_ALARMS1) + i];
       }
     }
-    max_row_ranguvannja = MAX_ROW_RANGUVANNJA_OFF_CB;
-  }
-  else if(type_ekran == INDEX_VIEWING_ON_CB)
-  {
-    if(current_ekran.edition == 0)
-    {
-      for (unsigned int i = 0; i < N_BIG; i++)
-      {
-        state_viewing_input[i] = current_settings.ranguvannja_on_cb[i];
-      }
-    }
-    else
-    {
-      for (unsigned int i = 0; i < N_BIG; i++)
-      {
-        state_viewing_input[i] = edition_settings.ranguvannja_on_cb[i];
-      }
-    }
-    max_row_ranguvannja = MAX_ROW_RANGUVANNJA_ON_CB;
+    max_row_ranguvannja = MAX_ROW_RANGUVANNJA_ALARMS;
   }
 
   if(current_ekran.edition == 0)

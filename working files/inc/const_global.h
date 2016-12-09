@@ -27,6 +27,8 @@
                                          NUMBER_ANALOG_CANALES_VAL_2    \
                                         )
 
+#define NUMBER_ALARMS                   2
+
 #define NUMBER_INPUTS_1                 5
 #define NUMBER_INPUTS_2                 5
 #define NUMBER_INPUTS                   (NUMBER_INPUTS_1 + NUMBER_INPUTS_2)
@@ -96,6 +98,8 @@ enum __rang_output_led_df_reg {
 RANG_QUIET,
 RANG_RESET,
 RANG_TEST,
+RANG_ALARM1,
+RANG_ALARM2,
 RANG_DEFECT,
 RANG_AVAR_DEFECT,
 RANG_WORK_A_REJESTRATOR,
@@ -190,7 +194,7 @@ RANG_ERROR_SEC_TN1_CTRL_PHASE,
 RANG_ERROR_SEC_TN2_CTRL_PHASE
 };
 
-#define NUMBER_GENERAL_SIGNAL_FOR_RANG     19
+#define NUMBER_GENERAL_SIGNAL_FOR_RANG     21
 #define NUMBER_EL_SIGNAL_FOR_RANG          69
 #define NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG  5
 
@@ -314,10 +318,8 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 #define MAX_FUNCTIONS_IN_AREG                   (1 << VAGA_MAX_FUNCTIONS_IN_AREG)
 #define VAGA_MAX_FUNCTIONS_IN_DREG              5
 #define MAX_FUNCTIONS_IN_DREG                   (1 << VAGA_MAX_FUNCTIONS_IN_DREG)
-#define VAGA_MAX_FUNCTIONS_IN_OFF_CB            5
-#define MAX_FUNCTIONS_IN_OFF_CB                 (1 << VAGA_MAX_FUNCTIONS_IN_OFF_CB)
-#define VAGA_MAX_FUNCTIONS_IN_ON_CB             5
-#define MAX_FUNCTIONS_IN_ON_CB                  (1 << VAGA_MAX_FUNCTIONS_IN_ON_CB)
+#define VAGA_MAX_FUNCTIONS_IN_ALARMS            5
+#define MAX_FUNCTIONS_IN_ALARMS                 (1 << VAGA_MAX_FUNCTIONS_IN_ALARMS)
 /*****************************************/
 
 

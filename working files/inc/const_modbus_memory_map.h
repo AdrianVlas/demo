@@ -578,11 +578,11 @@
 #define M_ADDRESS_FIRST_DT_RANG               2092
 #define M_ADDRESS_LAST_DT_RANG                2187
 
-#define M_ADDRESS_FIRST_ON_CB_RANG            2188
-#define M_ADDRESS_LAST_ON_CB_RANG             2219
-
-#define M_ADDRESS_FIRST_OFF_CB_RANG           2220
-#define M_ADDRESS_LAST_OFF_CB_RANG            2251
+//#define M_ADDRESS_FIRST_ON_CB_RANG            2188
+//#define M_ADDRESS_LAST_ON_CB_RANG             2219
+//
+//#define M_ADDRESS_FIRST_OFF_CB_RANG           2220
+//#define M_ADDRESS_LAST_OFF_CB_RANG            2251
 
 #define M_ADDRESS_FIRST_D_AND_RANG            2252
 #define M_ADDRESS_LAST_D_AND_RANG             2315
@@ -1037,20 +1037,20 @@
 //#define MA_T0                             11044
 //#define MA_TT04                           11045
 
-#define MA_TO_SWCH_UDL_BLK_ON             11046
-#define MA_TO_SWCH_ON                     11047
-#define MA_TO_SWCH_OFF                    11048
-#define MA_TO_FAULT_CONTROL_CIRCUIT       11049
+//#define MA_TO_SWCH_UDL_BLK_ON             11046
+//#define MA_TO_SWCH_ON                     11047
+//#define MA_TO_SWCH_OFF                    11048
+//#define MA_TO_FAULT_CONTROL_CIRCUIT       11049
 
-#define MA_STP_Inom                       11051
-#define MA_STP_RKS_Inom                   11052
-#define MA_STP_Inom_vymk                  11053
-#define MA_STP_RKS_Inom_vymk              11054
-#define MA_STP_POCHATKOVYJ_RESURS_LSW     11055
-#define MA_STP_POCHATKOVYJ_RESURS_MSW     11056
-#define MA_STP_KRYTYCHNYJ_RESURS          11057
-#define MA_POCHATKOVA_K_VYMK_LSW          11058
-#define MA_POCHATKOVA_K_VYMK_MSW          11059
+//#define MA_STP_Inom                       11051
+//#define MA_STP_RKS_Inom                   11052
+//#define MA_STP_Inom_vymk                  11053
+//#define MA_STP_RKS_Inom_vymk              11054
+//#define MA_STP_POCHATKOVYJ_RESURS_LSW     11055
+//#define MA_STP_POCHATKOVYJ_RESURS_MSW     11056
+//#define MA_STP_KRYTYCHNYJ_RESURS          11057
+//#define MA_POCHATKOVA_K_VYMK_LSW          11058
+//#define MA_POCHATKOVA_K_VYMK_MSW          11059
 
 #define MA_UVV_TYPE_SIGNAL_INPUT          11064
 //#define MA_UVV_TYPE_INPUT                 11065
@@ -1255,7 +1255,6 @@
 #define SOURCE_D_OR_RANG                      7
 #define SOURCE_D_XOR_RANG                     8
 #define SOURCE_D_NOT_RANG                     9
-#define SOURCE_ON_CB_RANG                     10
-#define SOURCE_OFF_CB_RANG                    11
+#define SOURCE_ALARMS_RANG                    10
 
 #endif

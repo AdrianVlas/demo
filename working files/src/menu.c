@@ -469,9 +469,17 @@ void main_manu_function(void)
             do
             {
               if(current_ekran.index_position >= MAX_ROW_FOR_EKRAN_MAIN) current_ekran.index_position = 0;
-                
-              if ((current_ekran.index_position == INDEX_ML1_CTRL_PHASE) && ((current_settings.configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0))
+              while (
+                     (
+                      (current_ekran.index_position == INDEX_ML1_MEASURMENTS) || 
+                      (current_ekran.index_position == INDEX_ML1_CTRL_PHASE )
+                     )
+                     &&
+                     ((current_settings.configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0)
+                    )
+              {
                 current_ekran.index_position++;
+              }
             }
             while (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_MAIN);
             position_in_current_level_menu[EKRAN_MAIN] = current_ekran.index_position;
@@ -606,8 +614,17 @@ void main_manu_function(void)
               {
                 if(current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_EKRAN_MAIN - 1;
 
-                if ((current_ekran.index_position == INDEX_ML1_CTRL_PHASE) && ((current_settings.configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0))
+                while (
+                       (
+                        (current_ekran.index_position == INDEX_ML1_MEASURMENTS) || 
+                        (current_ekran.index_position == INDEX_ML1_CTRL_PHASE )
+                       )
+                       &&
+                       ((current_settings.configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0)
+                      )
+                {
                   current_ekran.index_position--;
+                }
               }
               while (current_ekran.index_position < 0);
               position_in_current_level_menu[EKRAN_MAIN] = current_ekran.index_position;
@@ -626,8 +643,17 @@ void main_manu_function(void)
               {
                 if(current_ekran.index_position >= MAX_ROW_FOR_EKRAN_MAIN) current_ekran.index_position = 0;
  
-                if ((current_ekran.index_position == INDEX_ML1_CTRL_PHASE) && ((current_settings.configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0))
+                while (
+                       (
+                        (current_ekran.index_position == INDEX_ML1_MEASURMENTS) || 
+                        (current_ekran.index_position == INDEX_ML1_CTRL_PHASE )
+                       )
+                       &&
+                       ((current_settings.configuration & (1<<CTRL_PHASE_BIT_CONFIGURATION)) == 0)
+                      )
+                {
                   current_ekran.index_position++;
+                }
               }
               while (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_MAIN);
               position_in_current_level_menu[EKRAN_MAIN] = current_ekran.index_position;

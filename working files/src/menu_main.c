@@ -74,20 +74,40 @@ void make_ekran_main(void)
   {
     if ((current_settings.configuration & (1 << zachyst)) == 0)
     {
-      unsigned int i = INDEX_ML1_CTRL_PHASE + zachyst - additional_current;
-    
-      if ((i+1) <= position_temp) position_temp--;
-      do
+      if (zachyst == CTRL_PHASE_BIT_CONFIGURATION)
       {
-        for(unsigned int j = 0; j < MAX_COL_LCD; j++)
+        unsigned int i = INDEX_ML1_MEASURMENTS - additional_current;
+    
+        if ((i+1) <= position_temp) position_temp--;
+        do
         {
-          if ((i+1) < (MAX_ROW_FOR_EKRAN_MAIN - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-          else name_string_tmp[i][j] = ' ';
+          for(unsigned int j = 0; j < MAX_COL_LCD; j++)
+          {
+            if ((i+1) < (MAX_ROW_FOR_EKRAN_MAIN - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+            else name_string_tmp[i][j] = ' ';
+          }
+          i++;
         }
-        i++;
+        while (i< (MAX_ROW_FOR_EKRAN_MAIN - additional_current));
+        additional_current++;
       }
-      while (i< (MAX_ROW_FOR_EKRAN_MAIN - additional_current));
-      additional_current++;
+      
+      {
+        unsigned int i = INDEX_ML1_CTRL_PHASE + zachyst - additional_current;
+    
+        if ((i+1) <= position_temp) position_temp--;
+        do
+        {
+          for(unsigned int j = 0; j < MAX_COL_LCD; j++)
+          {
+            if ((i+1) < (MAX_ROW_FOR_EKRAN_MAIN - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+            else name_string_tmp[i][j] = ' ';
+          }
+          i++;
+        }
+        while (i< (MAX_ROW_FOR_EKRAN_MAIN - additional_current));
+        additional_current++;
+      }
     }
   }
   /******************************************/

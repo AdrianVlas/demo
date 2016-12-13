@@ -66,11 +66,13 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_leds[N_BIG*i+j] &= ~maska[j];
       }
-      //Знімаємо всі функції для ранжування аналогового, дискретного реєстраторів, блоків ввімкнення і вимкнення
+      //Знімаємо всі функції для ранжування аналогового, дискретного реєстраторів, тиші і скидання реле
       for (unsigned int j = 0; j < N_BIG; j++ ) 
       {
         target_label->ranguvannja_analog_registrator[j]  &= ~maska[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska[j];
+        target_label->ranguvannja_silence[j] &= ~maska[j];
+        target_label->ranguvannja_reset[j] &= ~maska[j];
       }
       //Знімаємо всі функції для ранжування сигналізацій
       for (int i = 0; i < NUMBER_ALARMS; i++)
@@ -206,17 +208,19 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     {
       for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_leds[N_BIG*i+j] &= ~maska[j];
     }
-    //Знімаємо всі функції для ранжування аналогового, дискретного реєстраторів, блоків ввімкнення і вимкнення
+    //Знімаємо всі функції для ранжування аналогового, дискретного реєстраторів, тиші і скидання реле
     for (unsigned int j = 0; j < N_BIG; j++ ) 
     {
       target_label->ranguvannja_analog_registrator[j]  &= ~maska[j];
       target_label->ranguvannja_digital_registrator[j] &= ~maska[j];
+      target_label->ranguvannja_silence[j] &= ~maska[j];
+      target_label->ranguvannja_reset[j] &= ~maska[j];
     }
-      //Знімаємо всі функції для ранжування сигналізацій
-      for (int i = 0; i < NUMBER_ALARMS; i++)
-      {
-        for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] &= ~maska[j];
-      }
+    //Знімаємо всі функції для ранжування сигналізацій
+    for (int i = 0; i < NUMBER_ALARMS; i++)
+    {
+      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] &= ~maska[j];
+    }
     //Очищємо всі функції для ранжування оприділювальних функцій
     for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
     {
@@ -350,17 +354,19 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 //  {
 //    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_leds[N_BIG*i+j] &= ~maska[j];
 //  }
-//  //Знімаємо всі функції для ранжування аналогового, дискретного реєстраторів, блоків ввімкнення і вимкнення
+//  //Знімаємо всі функції для ранжування аналогового, дискретного реєстраторів, тиші і скидання реле
 //  for (unsigned int j = 0; j < N_BIG; j++ ) 
 //  {
 //    target_label->ranguvannja_analog_registrator[j]  &= ~maska[j];
 //    target_label->ranguvannja_digital_registrator[j] &= ~maska[j];
+//    target_label->ranguvannja_silence[j] &= ~maska[j];
+//    target_label->ranguvannja_reset[j] &= ~maska[j];
 //  }
-//      //Знімаємо всі функції для ранжування сигналізацій
-//      for (int i = 0; i < NUMBER_ALARMS; i++)
-//      {
-//        for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] &= ~maska[j];
-//      }
+//  //Знімаємо всі функції для ранжування сигналізацій
+//  for (int i = 0; i < NUMBER_ALARMS; i++)
+//  {
+//    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] &= ~maska[j];
+//  }
 //  //Очищємо всі функції для ранжування оприділювальних функцій
 //  for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
 //  {

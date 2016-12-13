@@ -1305,8 +1305,8 @@ inline void main_protection(void)
     if(temp_value_for_activated_function != 0) 
     {
       //Скидання світлодіодів і реле
-      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_QUIET)) 
-        _SET_BIT(active_functions, RANG_QUIET);
+      if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_SILENCE)) 
+        _SET_BIT(active_functions, RANG_SILENCE);
       if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_RESET)) 
         _SET_BIT(active_functions, RANG_RESET);
       if (_GET_OUTPUT_STATE(temp_value_for_activated_function, RANG_TU_TEST)) 
@@ -1338,7 +1338,7 @@ inline void main_protection(void)
     unsigned int temp_activating_functions[N_BIG] = {0, 0, 0, 0, 0, 0, 0};
   
     //Сигнал "Тиша"
-    _SET_BIT(temp_maska_filter_function, RANG_QUIET);
+    _SET_BIT(temp_maska_filter_function, RANG_SILENCE);
   
     //Сигнал "Скидання"
     _SET_BIT(temp_maska_filter_function, RANG_RESET);

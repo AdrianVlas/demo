@@ -50,8 +50,12 @@ typedef struct
   unsigned int ranguvannja_analog_registrator[N_BIG];     //Ранжування аналогового реєстратора
   unsigned int ranguvannja_digital_registrator[N_BIG];    //Ранжування дискретного реєстратора
   
-  //Блок ввімкнення-вимкнення вимикача
+  //Блок сигналізації
   unsigned int ranguvannja_alarms[N_BIG*NUMBER_ALARMS];   //Ранжування cигналізацій
+  //Тиша
+  unsigned int ranguvannja_silence[N_BIG];   //Ранжування cигналізацій
+  //Скидання
+  unsigned int ranguvannja_reset[N_BIG];   //Ранжування cигналізацій
   
   unsigned int number_iteration_el;                                             //Максимадбна кількість ітерацій для розширеної логіки
 //  unsigned int number_defined_df;                                               //Кількість визначуваних функцій у конфігурації приладу

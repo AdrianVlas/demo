@@ -75,7 +75,7 @@ TOTAL_NUMBER_PROTECTION
 //Константи для ранжування функціональних кнопок
 /*****************************************/
 enum __rang_button {
-RANG_TU_QUIET  = 0,
+RANG_TU_SILENCE  = 0,
 RANG_TU_RESET,
 RANG_TU_TEST,
 };
@@ -95,7 +95,7 @@ RANG_TU_TEST,
 //Константи для ранжування дискретних виходів-свтодіодів-О-функцій-реєстраторів
 /*****************************************/
 enum __rang_output_led_df_reg {
-RANG_QUIET,
+RANG_SILENCE,
 RANG_RESET,
 RANG_TEST,
 RANG_ALARM1,
@@ -211,10 +211,9 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 /*****************************************/
 
 #define MASKA_FOR_INPUT_SIGNALS_0        (unsigned int)(               \
-    (1 << (RANG_QUIET - 0))                                    /* 0*/  \
+    (1 << (RANG_SILENCE - 0))                                  /* 0*/  \
   | (1 << (RANG_RESET - 0))                                    /* 1*/  \
   | (1 << (RANG_TEST - 0))                                     /* 2*/  \
-  | (1 << (RANG_MEANDER - 0))                                  /* 9*/  \
   | (1 << (RANG_DI1 - 0))                                      /*10*/  \
   | (1 << (RANG_DI2 - 0))                                      /*11*/  \
   | (1 << (RANG_DI3 - 0))                                      /*12*/  \
@@ -320,6 +319,10 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 #define MAX_FUNCTIONS_IN_DREG                   (1 << VAGA_MAX_FUNCTIONS_IN_DREG)
 #define VAGA_MAX_FUNCTIONS_IN_ALARMS            5
 #define MAX_FUNCTIONS_IN_ALARMS                 (1 << VAGA_MAX_FUNCTIONS_IN_ALARMS)
+#define VAGA_MAX_FUNCTIONS_IN_SILENCE           0
+#define MAX_FUNCTIONS_IN_SILENCE                (1 << VAGA_MAX_FUNCTIONS_IN_SILENCE)
+#define VAGA_MAX_FUNCTIONS_IN_RESET             0
+#define MAX_FUNCTIONS_IN_RESET                  (1 << VAGA_MAX_FUNCTIONS_IN_RESET)
 /*****************************************/
 
 

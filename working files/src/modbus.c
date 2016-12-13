@@ -1394,47 +1394,47 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
       }
     case MA_NAME_CHAR_1_2:
       {
-        temp_value = ('K' << 8) + 'i';
+        temp_value = ('i' << 8) + 'K';
         break;
       }
     case MA_NAME_CHAR_3_4:
       {
-        temp_value = ('e' << 8) + 'v';
+        temp_value = ('v' << 8) + 'e';
         break;
       }
     case MA_NAME_CHAR_5_6:
       {
-        temp_value = ('p' << 8) + 'r';
+        temp_value = ('r' << 8) + 'p';
         break;
       }
     case MA_NAME_CHAR_7_8:
       {
-        temp_value = ('i' << 8) + 'b';
+        temp_value = ('b' << 8) + 'i';
         break;
       }
     case MA_NAME_CHAR_9_10:
       {
-        temp_value = ('o' << 8) + 'r';
+        temp_value = ('r' << 8) + 'o';
         break;
       }
     case MA_NAME_CHAR_11_12:
       {
-        temp_value = ('M' << 8) + 'R';
+        temp_value = ('R' << 8) + 'M';
         break;
       }
     case MA_NAME_CHAR_13_14:
       {
-        temp_value = ('Z' << 8) + 'S';
+        temp_value = ('S' << 8) + 'Z';
         break;
       }
     case MA_NAME_CHAR_15_16:
       {
-        temp_value = ('0' << 8) + '5';
+        temp_value = ('5' << 8) + '0';
         break;
       }
     case MA_NAME_CHAR_17_18:
       {
-        temp_value = ('L' << 8) + '_';
+        temp_value = ('_' << 8) + 'L';
         break;
       }
     case MA_VERSION_SW:

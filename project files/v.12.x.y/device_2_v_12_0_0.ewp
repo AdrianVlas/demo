@@ -4397,6 +4397,9 @@
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_alarms.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\..\..\working files\inc\const_menu_choose_settings_silence_reset_test.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_alarms.h</name>
         </file>
         <file>

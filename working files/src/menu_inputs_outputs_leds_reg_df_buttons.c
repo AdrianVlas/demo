@@ -316,6 +316,42 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
     }
     max_row_ranguvannja = MAX_ROW_RANGUVANNJA_LED;
   }
+  else if(type_ekran == INDEX_VIEWING_SILENCE)
+  {
+    if(current_ekran.edition == 0)
+    {
+      for (unsigned int i = 0; i < N_BIG; i++)
+      {
+        state_viewing_input[i] = current_settings.ranguvannja_silence[i];
+      }
+    }
+    else
+    {
+      for (unsigned int i = 0; i < N_BIG; i++)
+      {
+        state_viewing_input[i] = edition_settings.ranguvannja_silence[i];
+      }
+    }
+    max_row_ranguvannja = MAX_ROW_RANGUVANNJA_SILENCE;
+  }
+  else if(type_ekran == INDEX_VIEWING_RESET)
+  {
+    if(current_ekran.edition == 0)
+    {
+      for (unsigned int i = 0; i < N_BIG; i++)
+      {
+        state_viewing_input[i] = current_settings.ranguvannja_reset[i];
+      }
+    }
+    else
+    {
+      for (unsigned int i = 0; i < N_BIG; i++)
+      {
+        state_viewing_input[i] = edition_settings.ranguvannja_reset[i];
+      }
+    }
+    max_row_ranguvannja = MAX_ROW_RANGUVANNJA_SILENCE;
+  }
   else if(type_ekran == INDEX_VIEWING_A_REG)
   {
     if(current_ekran.edition == 0)
@@ -495,8 +531,8 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
     //Фільтруємо сигнали, яких у даній конфігурації неприсутні
     /*************************************************************/
     if(
-       (type_ekran == INDEX_VIEWING_A_REG ) ||
-       (type_ekran == INDEX_VIEWING_D_REG )
+       (type_ekran == INDEX_VIEWING_SILENCE ) ||
+       (type_ekran == INDEX_VIEWING_RESET   )
       )
     {
       /*************************************************************/
@@ -504,7 +540,78 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
       /*************************************************************/
       unsigned int index_deleted_function;
       
-      if (type_ekran == INDEX_VIEWING_A_REG)
+      if (type_ekran == INDEX_VIEWING_SILENCE)
+        index_deleted_function = RANG_SILENCE;
+      else if (type_ekran == INDEX_VIEWING_RESET)
+        index_deleted_function = RANG_RESET;
+      
+      /*************************************************************/
+      //Відкидаємо ім'я даної функції і зміщаємо біти
+      /*************************************************************/
+
+      //Формуємо маску біт, які не треба переміщати при переміщенні імен полів
+      unsigned int maska[N_BIG] = {0, 0, 0, 0, 0, 0, 0};
+      for (unsigned int j = 0; j < (index_deleted_function - offset); j++) _SET_BIT(maska, j);
+          
+      /***/
+      //Зміщуємо біти стану реанжування функцій разом із їх назвами
+      /***/
+      unsigned int new_temp_data_1[N_BIG], new_temp_data_2[N_BIG];
+
+      for (unsigned int k = 0; k < N_BIG; k++)
+      {
+        new_temp_data_1[k] = state_viewing_input[k] & maska[k];
+
+        new_temp_data_2[k] = state_viewing_input[k] & (~maska[k]);
+      }
+
+      for (unsigned int k = 0; k < (N_BIG - 1); k++)
+      {
+        new_temp_data_2[k] = ( (new_temp_data_2[k] >> 1) | ((new_temp_data_2[k + 1] & 0x1) << 31) ) & (~maska[k]);
+      }
+      new_temp_data_2[N_BIG - 1] =  (new_temp_data_2[N_BIG - 1] >> 1) & (~maska[N_BIG - 1]);
+                
+      for (unsigned int k = 0; k < N_BIG; k++)
+      {
+        state_viewing_input[k] = new_temp_data_1[k] | new_temp_data_2[k];
+      }
+      /***/
+      for (unsigned int j = (index_deleted_function - offset); j < (max_row_ranguvannja - offset); j++)
+      {
+        if ((j + 1) < (max_row_ranguvannja - offset))
+        {
+          for (unsigned int k = 0; k<MAX_COL_LCD; k++)
+            name_string_tmp[j + NUMBER_ROW_FOR_NOTHING_INFORMATION][k] = name_string_tmp[j + NUMBER_ROW_FOR_NOTHING_INFORMATION + 1][k];
+        }
+        else 
+        {
+          for (unsigned int k = 0; k<MAX_COL_LCD; k++)
+            name_string_tmp[j + NUMBER_ROW_FOR_NOTHING_INFORMATION][k] = ' ';
+        }
+      }
+      if (current_ekran.index_position >= ((int)index_deleted_function)) position_temp--;
+      offset++;
+      /*************************************************************/
+
+      /*************************************************************/
+    }
+    else if(
+       (type_ekran == INDEX_VIEWING_SILENCE) ||
+       (type_ekran == INDEX_VIEWING_RESET  ) ||
+       (type_ekran == INDEX_VIEWING_A_REG  ) ||
+       (type_ekran == INDEX_VIEWING_D_REG  )
+      )
+    {
+      /*************************************************************/
+      //У випадку, якщо відображення здійснюється вікна аналогового реєстратора чи дискретного реєстратора, то відктдпємо ті функції, які не можуть бути джерелати
+      /*************************************************************/
+      unsigned int index_deleted_function;
+      
+      if (type_ekran == INDEX_VIEWING_SILENCE)
+        index_deleted_function = RANG_SILENCE;
+      else if (type_ekran == INDEX_VIEWING_A_REG)
+        index_deleted_function = RANG_RESET;
+      else if (type_ekran == INDEX_VIEWING_A_REG)
         index_deleted_function = RANG_WORK_A_REJESTRATOR;
       else if (type_ekran == INDEX_VIEWING_D_REG)
         index_deleted_function = RANG_WORK_D_REJESTRATOR;

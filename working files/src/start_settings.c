@@ -1598,6 +1598,7 @@ void min_settings(__SETTINGS *target_label)
     target_label->ranguvannja_silence[j] = 0x0;
     target_label->ranguvannja_reset[j] = 0x0;
   }
+  target_label->ranguvannja_test = 0x0;
 
   for (int i = 0; i < NUMBER_ALARMS; i++)
   {

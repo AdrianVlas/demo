@@ -3,7 +3,7 @@
 /*****************************************************/
 //Формуємо екран вибору ДВ/ДВих/Св для ранжування
 /*****************************************************/
-void make_ekran_chose_of_inputs_outputs_leds_df_buttons_for_ranguvannja(unsigned int type_of_window)
+void make_ekran_choose_of_ranguvannja(unsigned int type_of_window)
 {
   const unsigned char information[MAX_NAMBER_LANGUAGE][MAX_NUMBER_ID_RANG_SOURCE][MAX_COL_LCD] = 
   {
@@ -104,6 +104,251 @@ void make_ekran_chose_of_inputs_outputs_leds_df_buttons_for_ranguvannja(unsigned
   current_ekran.cursor_blinking_on = 0;
   //Обновити повністю весь екран
   current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
+}
+/*****************************************************/
+
+/*****************************************************/
+//Формуємо екран відображення зранжованих сигналів на активацію команди "Тест"
+/*****************************************************/
+void make_ekran_set_function_in_test(void)
+{
+#define NUMBER_ROW_FOR_NOTHING_INFORMATION 2
+  
+  const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_RANGUVANNJA_TEST][MAX_COL_LCD] = 
+  {
+    {
+      "      Нет       ",
+      "  ранжирования  "
+    },
+    {
+      "      Нема      ",
+      "   ранжування   "
+    },
+    {
+      "       No       ",
+      "    ranking     "
+    },
+    {
+      "      Нет       ",
+      "  ранжирования  "
+    }
+  };
+  unsigned char name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + MAX_ROW_RANGUVANNJA_TEST][MAX_COL_LCD];
+
+  int index_language = index_language_in_array(current_settings.language);
+  for(int index_1 = 0; index_1 < NUMBER_ROW_FOR_NOTHING_INFORMATION; index_1++)
+  {
+    for(int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
+      name_string_tmp[index_1][index_2] = name_string[index_language][index_1][index_2];
+  }
+  for(int index_1 = 0; index_1 < MAX_ROW_RANGUVANNJA_TEST; index_1++)
+  {
+    const unsigned char d_input[MAX_NAMBER_LANGUAGE][MAX_COL_LCD] = 
+    {
+      "    Д.Вход xx   ",
+      "    Д.Вхід xx   ",
+      "   D.Input xx   ",
+      "    Д.Вход xx   "
+    };
+    const unsigned int digit_position[MAX_NAMBER_LANGUAGE] = {11, 11, 11, 11};
+    for(int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
+    {
+      if (index_2 == digit_position[index_language])
+      {
+        unsigned int number = index_1 + 1;
+        if (number < 10)
+        {
+          name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + index_1][index_2] = '0' + number;
+        }
+        else if (number < 100)
+        {
+          name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + index_1][index_2] = '0' + (number / 10);
+        }
+      }
+      else if (index_2 == (digit_position[index_language] + 1))
+      {
+        unsigned int number = index_1 + 1;
+        if (number < 10)
+        {
+          name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + index_1][index_2] = ' ';
+        }
+        else if (number < 100)
+        {
+          name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + index_1][index_2] = '0' + (number % 10);
+        }
+      }
+      else name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + index_1][index_2] = d_input[index_language][index_2];
+    }
+  }
+  
+  if(current_ekran.edition == 0)
+  {
+    //Випадок, коли ми продивляємося зранжовані функції
+    unsigned int state_viewing_input = current_settings.ranguvannja_test;
+    
+    if (state_viewing_input == 0)
+    {
+      //Це означає, що нічого не відранжовано на кнопку
+      
+      //Текучу позицію в сипску переводимо на сам початок
+      current_ekran.index_position = 0;
+      position_in_current_level_menu[EKRAN_RANGUVANNJA_TEST] = 0;
+
+      //Копіюємо  рядки у робочий екран
+      for (unsigned int i=0; i< MAX_ROW_LCD; i++)
+      {
+        //Копіюємо в робочий екран інформацію, що нічого не відранжовано
+        if (i < NUMBER_ROW_FOR_NOTHING_INFORMATION)
+          for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string_tmp[i][j];
+        else
+          for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = ' ';
+      }
+
+      //Відображення курсору по вертикалі
+      current_ekran.position_cursor_y = 0;
+      //Курсор невидимий
+      current_ekran.cursor_on = 0;
+    }
+    else
+    {
+      /************************************************************/
+      //Формуємо список із функцій, які реально відранжовані
+      /************************************************************/
+      unsigned int position_temp = current_ekran.index_position;
+      unsigned int index_of_ekran;
+      unsigned int i = 0, offset = 0;
+
+      while ((i + offset) < MAX_ROW_RANGUVANNJA_TEST)
+      {
+        if ((state_viewing_input & (1<<(i + offset))) == 0)
+        {
+          for (unsigned int j = i; j < (MAX_ROW_RANGUVANNJA_TEST - offset); j++)
+          {
+            if ((j + 1) < (MAX_ROW_RANGUVANNJA_TEST - offset))
+            {
+              for (unsigned int k = 0; k<MAX_COL_LCD; k++)
+                name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + j][k] = name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + j + 1][k];
+            }
+            else 
+            {
+              for (unsigned int k = 0; k<MAX_COL_LCD; k++)
+                name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + j][k] = ' ';
+            }
+          }
+          if (current_ekran.index_position >= ((int)(i + offset))) position_temp--;
+          offset++;
+        }
+        else i++;
+      }
+      /************************************************************/
+
+    
+      index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+      
+      //Копіюємо  рядки у робочий екран
+      for (i=0; i< MAX_ROW_LCD; i++)
+      {
+        //Наступні рядки треба перевірити, чи їх требе відображати у текучій коффігурації
+        if (index_of_ekran < (MAX_ROW_RANGUVANNJA_TEST - offset))
+        {
+          for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + index_of_ekran][j];
+
+          //Підтягуємо назву, щоб не було спереді багато пробілів
+          unsigned int iteration = 0;
+          while (
+                 (working_ekran[i][0] == ' ') &&
+                 (working_ekran[i][1] == ' ') &&
+                 (iteration < (MAX_COL_LCD - 1 - 1))
+                )
+          {
+            for (unsigned int j = 1; j < MAX_COL_LCD; j++)
+            {
+              if ((j + 1) < MAX_COL_LCD)
+                working_ekran[i][j] = working_ekran[i][j + 1];
+              else
+                working_ekran[i][j] = ' ';
+            }
+            iteration++;
+          }
+        }
+        else
+          for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = ' ';
+
+        index_of_ekran++;
+      }
+      //Відображення курору по вертикалі
+      current_ekran.position_cursor_y = position_temp & (MAX_ROW_LCD - 1);
+      //Курсор видимий
+      current_ekran.cursor_on = 1;
+    }
+    
+    //Курсор по горизонталі відображається на першій позиції
+    current_ekran.position_cursor_x = 0;
+    //Курсор не мигає
+    current_ekran.cursor_blinking_on = 0;
+  }
+  else
+  {
+    unsigned int temp_data = edition_settings.ranguvannja_test;
+    unsigned int position_temp = current_ekran.index_position;
+    unsigned int index_of_ekran;
+    unsigned int i;
+      
+    //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
+    index_of_ekran = ((position_temp<<1) >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+
+    for (i=0; i< MAX_ROW_LCD; i++)
+    {
+     if (index_of_ekran < (MAX_ROW_RANGUVANNJA_TEST<<1))//Множення на два константи  MAX_ROW_RANGUVANNJA_TEST потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
+     {
+       if ((i & 0x1) == 0)
+       {
+         //У непарному номері рядку виводимо заголовок
+         for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + (index_of_ekran>>1)][j];
+       }
+       else
+       {
+         //У парному номері рядку виводимо значення
+         const unsigned char information[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] = 
+         {
+           {"      ОТКЛ      ", "      ВКЛ       "},
+           {"      ВИМК      ", "     ВВІМК      "},
+           {"      OFF       ", "       ON       "},
+           {"      СЉНД      ", "      КОСУ      "}
+        };
+        unsigned int maska = 1 << (index_of_ekran >> 1);
+          
+        for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = information[index_language][((temp_data & maska) != 0)][j];
+       }
+     }
+     else
+      for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = ' ';
+
+     index_of_ekran++;
+    }
+
+    const unsigned int cursor_x[MAX_NAMBER_LANGUAGE][2] = 
+    {
+      {5, 5},
+      {5, 4},
+      {5, 6},
+      {5, 5}
+    };
+
+    //Відображення курору по вертикалі і курсор завжди має бути у полі із значенням устаки
+    current_ekran.position_cursor_x =  cursor_x[index_language][((temp_data & (1 << position_temp)) != 0)];
+    current_ekran.position_cursor_y = ((position_temp<<1) + 1) & (MAX_ROW_LCD - 1);
+    
+    //Курсор мигає
+    current_ekran.cursor_blinking_on = 1;
+    //Режим відображення у режимі редагування
+  }
+  
+
+  //Обновити повністю весь екран
+  current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
+
+#undef NUMBER_ROW_FOR_NOTHING_INFORMATION
 }
 /*****************************************************/
 

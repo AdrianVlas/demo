@@ -323,6 +323,8 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 #define MAX_FUNCTIONS_IN_SILENCE                (1 << VAGA_MAX_FUNCTIONS_IN_SILENCE)
 #define VAGA_MAX_FUNCTIONS_IN_RESET             0
 #define MAX_FUNCTIONS_IN_RESET                  (1 << VAGA_MAX_FUNCTIONS_IN_RESET)
+#define VAGA_MAX_FUNCTIONS_IN_TEST              0
+#define MAX_FUNCTIONS_IN_TEST                   (1 << VAGA_MAX_FUNCTIONS_IN_TEST)
 /*****************************************/
 
 

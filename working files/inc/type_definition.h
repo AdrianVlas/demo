@@ -53,9 +53,11 @@ typedef struct
   //Блок сигналізації
   unsigned int ranguvannja_alarms[N_BIG*NUMBER_ALARMS];   //Ранжування cигналізацій
   //Тиша
-  unsigned int ranguvannja_silence[N_BIG];   //Ранжування cигналізацій
+  unsigned int ranguvannja_silence[N_BIG];      //Ранжування cигналізацій
   //Скидання
-  unsigned int ranguvannja_reset[N_BIG];   //Ранжування cигналізацій
+  unsigned int ranguvannja_reset[N_BIG];        //Ранжування cигналізацій
+  //Тест
+  unsigned int ranguvannja_test;                //Ранжування Тесту
   
   unsigned int number_iteration_el;                                             //Максимадбна кількість ітерацій для розширеної логіки
 //  unsigned int number_defined_df;                                               //Кількість визначуваних функцій у конфігурації приладу

@@ -804,11 +804,6 @@ void TIM4_IRQHandler(void)
         (current_ekran.current_level == EKRAN_LIST_DIGITAL_REGISTRATOR_RECORDS      )   ||
         (current_ekran.current_level == EKRAN_LIST_REGISTRATOR_PROGRAM_ERROR_RECORDS)   ||
         (current_ekran.current_level == EKRAN_MEASURMENT_CURRENT      ) ||
-        (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE) ||
-        (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE ) ||
-        (current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY    ) ||
-        (current_ekran.current_level == EKRAN_MEASURMENT_ANGLE        ) ||
-        (current_ekran.current_level == EKRAN_MEASURMENT_POWER        ) ||
         (current_ekran.current_level == EKRAN_STATE_INPUTS)   ||
         (current_ekran.current_level == EKRAN_STATE_OUTPUTS)  ||
         (current_ekran.current_level == EKRAN_DIAGNOSTYKA) 

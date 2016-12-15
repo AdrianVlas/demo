@@ -15,7 +15,7 @@
 #define EKRAN_RANGUVANNJA_SET_DT4               (EKRAN_RANGUVANNJA_RESET_DT3 + 1)
 #define EKRAN_RANGUVANNJA_RESET_DT4             (EKRAN_RANGUVANNJA_SET_DT4 + 1)
 
-#define MAX_ROW_FOR_LIST_DT                      NUMBER_DEFINED_TRIGGERS/*((int)current_settings.number_defined_dt)*/
+#define MAX_ROW_FOR_LIST_DT                      /*NUMBER_DEFINED_TRIGGERS*/((int)current_settings.number_defined_dt)
 #define MAX_ROW_FOR_LIST_SET_RESET_DT            2
 #define MAX_ROW_RANGUVANNJA_DT                   NUMBER_TOTAL_SIGNAL_FOR_RANG
 

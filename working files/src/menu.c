@@ -1370,18 +1370,18 @@ void main_manu_function(void)
               {
                 if(current_ekran.index_position >= MAX_ROW_FOR_EXTENDED_LIGIC) current_ekran.index_position = 0;
                 
-//                if ((current_ekran.index_position == INDEX_OF_DEFINED_FUNCTIONS) && (current_settings.number_defined_df  == 0))
-//                  current_ekran.index_position++;
-//                if ((current_ekran.index_position == INDEX_OF_DEFINED_TRIGGERS) && (current_settings.number_defined_dt  == 0))
-//                  current_ekran.index_position++;
-//                if ((current_ekran.index_position == INDEX_OF_DEFINED_AND) && (current_settings.number_defined_and  == 0))
-//                  current_ekran.index_position++;
-//                if ((current_ekran.index_position == INDEX_OF_DEFINED_OR) && (current_settings.number_defined_or  == 0))
-//                  current_ekran.index_position++;
-//                if ((current_ekran.index_position == INDEX_OF_DEFINED_XOR) && (current_settings.number_defined_xor  == 0))
-//                  current_ekran.index_position++;
-//                if ((current_ekran.index_position == INDEX_OF_DEFINED_NOT) && (current_settings.number_defined_not  == 0))
-//                  current_ekran.index_position++;
+                if ((current_ekran.index_position == INDEX_OF_DEFINED_FUNCTIONS) && (current_settings.number_defined_df  == 0))
+                  current_ekran.index_position++;
+                if ((current_ekran.index_position == INDEX_OF_DEFINED_TRIGGERS) && (current_settings.number_defined_dt  == 0))
+                  current_ekran.index_position++;
+                if ((current_ekran.index_position == INDEX_OF_DEFINED_AND) && (current_settings.number_defined_and  == 0))
+                  current_ekran.index_position++;
+                if ((current_ekran.index_position == INDEX_OF_DEFINED_OR) && (current_settings.number_defined_or  == 0))
+                  current_ekran.index_position++;
+                if ((current_ekran.index_position == INDEX_OF_DEFINED_XOR) && (current_settings.number_defined_xor  == 0))
+                  current_ekran.index_position++;
+                if ((current_ekran.index_position == INDEX_OF_DEFINED_NOT) && (current_settings.number_defined_not  == 0))
+                  current_ekran.index_position++;
               }
               while (current_ekran.index_position >= MAX_ROW_FOR_EXTENDED_LIGIC);
 
@@ -2429,18 +2429,18 @@ void main_manu_function(void)
                 {
                   if(current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_EXTENDED_LIGIC - 1;
 
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_NOT) && (current_settings.number_defined_not  == 0))
-//                    current_ekran.index_position--;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_XOR) && (current_settings.number_defined_xor  == 0))
-//                    current_ekran.index_position--;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_OR) && (current_settings.number_defined_or  == 0))
-//                    current_ekran.index_position--;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_AND) && (current_settings.number_defined_and  == 0))
-//                    current_ekran.index_position--;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_TRIGGERS) && (current_settings.number_defined_dt  == 0))
-//                    current_ekran.index_position--;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_FUNCTIONS) && (current_settings.number_defined_df  == 0))
-//                    current_ekran.index_position--;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_NOT) && (current_settings.number_defined_not  == 0))
+                    current_ekran.index_position--;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_XOR) && (current_settings.number_defined_xor  == 0))
+                    current_ekran.index_position--;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_OR) && (current_settings.number_defined_or  == 0))
+                    current_ekran.index_position--;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_AND) && (current_settings.number_defined_and  == 0))
+                    current_ekran.index_position--;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_TRIGGERS) && (current_settings.number_defined_dt  == 0))
+                    current_ekran.index_position--;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_FUNCTIONS) && (current_settings.number_defined_df  == 0))
+                    current_ekran.index_position--;
                 }
                 while (current_ekran.index_position < 0);
                 
@@ -2800,18 +2800,18 @@ void main_manu_function(void)
                 {
                   if(current_ekran.index_position >= MAX_ROW_FOR_EXTENDED_LIGIC) current_ekran.index_position = 0;
                 
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_FUNCTIONS) && (current_settings.number_defined_df == 0))
-//                    current_ekran.index_position++;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_TRIGGERS) && (current_settings.number_defined_dt == 0))
-//                    current_ekran.index_position++;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_AND) && (current_settings.number_defined_and == 0))
-//                    current_ekran.index_position++;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_OR) && (current_settings.number_defined_or == 0))
-//                    current_ekran.index_position++;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_XOR) && (current_settings.number_defined_xor == 0))
-//                    current_ekran.index_position++;
-//                  if ((current_ekran.index_position == INDEX_OF_DEFINED_NOT) && (current_settings.number_defined_not == 0))
-//                    current_ekran.index_position++;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_FUNCTIONS) && (current_settings.number_defined_df == 0))
+                    current_ekran.index_position++;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_TRIGGERS) && (current_settings.number_defined_dt == 0))
+                    current_ekran.index_position++;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_AND) && (current_settings.number_defined_and == 0))
+                    current_ekran.index_position++;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_OR) && (current_settings.number_defined_or == 0))
+                    current_ekran.index_position++;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_XOR) && (current_settings.number_defined_xor == 0))
+                    current_ekran.index_position++;
+                  if ((current_ekran.index_position == INDEX_OF_DEFINED_NOT) && (current_settings.number_defined_not == 0))
+                    current_ekran.index_position++;
                 }
                 while (current_ekran.index_position >= MAX_ROW_FOR_EXTENDED_LIGIC);
               
@@ -3347,36 +3347,36 @@ void main_manu_function(void)
                     edition_settings.number_iteration_el = current_settings.number_iteration_el;
                     current_ekran.position_cursor_x = COL_NUMBER_INERATION_BEGIN;
                   }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//                  {
-//                    edition_settings.number_defined_df = current_settings.number_defined_df;
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_BEGIN;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//                  {
-//                    edition_settings.number_defined_dt = current_settings.number_defined_dt;
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_BEGIN;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
-//                  {
-//                    edition_settings.number_defined_and = current_settings.number_defined_and;
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_AND_BEGIN;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
-//                  {
-//                    edition_settings.number_defined_or = current_settings.number_defined_or;
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_OR_BEGIN;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
-//                  {
-//                    edition_settings.number_defined_xor = current_settings.number_defined_xor;
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_XOR_BEGIN;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
-//                  {
-//                    edition_settings.number_defined_not = current_settings.number_defined_not;
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_NOT_BEGIN;
-//                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+                  {
+                    edition_settings.number_defined_df = current_settings.number_defined_df;
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_BEGIN;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+                  {
+                    edition_settings.number_defined_dt = current_settings.number_defined_dt;
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_BEGIN;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
+                  {
+                    edition_settings.number_defined_and = current_settings.number_defined_and;
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_AND_BEGIN;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
+                  {
+                    edition_settings.number_defined_or = current_settings.number_defined_or;
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_OR_BEGIN;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
+                  {
+                    edition_settings.number_defined_xor = current_settings.number_defined_xor;
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_XOR_BEGIN;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
+                  {
+                    edition_settings.number_defined_not = current_settings.number_defined_not;
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_NOT_BEGIN;
+                  }
                 }
                 else if(current_ekran.current_level == EKRAN_LIST_TYPE_DF)
                 {
@@ -3533,30 +3533,30 @@ void main_manu_function(void)
                   {
                     if (edition_settings.number_iteration_el != current_settings.number_iteration_el) found_changes = 1;
                   }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//                  {
-//                    if (edition_settings.number_defined_df != current_settings.number_defined_df) found_changes = 1;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//                  {
-//                    if (edition_settings.number_defined_dt != current_settings.number_defined_dt) found_changes = 1;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
-//                  {
-//                    if (edition_settings.number_defined_and != current_settings.number_defined_and) found_changes = 1;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
-//                  {
-//                    if (edition_settings.number_defined_or != current_settings.number_defined_or) found_changes = 1;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
-//                  {
-//                    if (edition_settings.number_defined_xor != current_settings.number_defined_xor) found_changes = 1;
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
-//                  {
-//                    if (edition_settings.number_defined_not != current_settings.number_defined_not) found_changes = 1;
-//                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+                  {
+                    if (edition_settings.number_defined_df != current_settings.number_defined_df) found_changes = 1;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+                  {
+                    if (edition_settings.number_defined_dt != current_settings.number_defined_dt) found_changes = 1;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
+                  {
+                    if (edition_settings.number_defined_and != current_settings.number_defined_and) found_changes = 1;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
+                  {
+                    if (edition_settings.number_defined_or != current_settings.number_defined_or) found_changes = 1;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
+                  {
+                    if (edition_settings.number_defined_xor != current_settings.number_defined_xor) found_changes = 1;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
+                  {
+                    if (edition_settings.number_defined_not != current_settings.number_defined_not) found_changes = 1;
+                  }
                 }
                 else if(current_ekran.current_level == EKRAN_LIST_TYPE_DF)
                 {
@@ -3981,126 +3981,126 @@ void main_manu_function(void)
                       current_ekran.edition = 0;
                     }
                   }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//                  {
-//                    if (check_data_setpoint(edition_settings.number_defined_df, NUMBER_DEFINED_FUNCTIONS_MIN, NUMBER_DEFINED_FUNCTIONS_MAX) == 1)
-//                    {
-//                      if (edition_settings.number_defined_df != current_settings.number_defined_df)
-//                      {
-//                        //Помічаємо, що поле структури зараз буде змінене
-//                        changed_settings = CHANGED_ETAP_EXECUTION;
-//
-//                        current_settings.number_defined_df = edition_settings.number_defined_df;
-//                        //Обновляємо значення
-//                        action_after_changing_number_el(&current_settings, 0);
-//                      
-//                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-//                        fix_change_settings(0, 1);
-//                      }
-//                      //Виходимо з режиму редагування
-//                      current_ekran.edition = 0;
-//                    }
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//                  {
-//                    if (check_data_setpoint(edition_settings.number_defined_dt, NUMBER_DEFINED_TRIGGERS_MIN, NUMBER_DEFINED_TRIGGERS_MAX) == 1)
-//                    {
-//                      if (edition_settings.number_defined_dt != current_settings.number_defined_dt)
-//                      {
-//                        //Помічаємо, що поле структури зараз буде змінене
-//                        changed_settings = CHANGED_ETAP_EXECUTION;
-//
-//                        current_settings.number_defined_dt = edition_settings.number_defined_dt;
-//                        //Обновляємо значення
-//                        action_after_changing_number_el(&current_settings, 1);
-//
-//                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-//                        fix_change_settings(0, 1);
-//                      }
-//                      //Виходимо з режиму редагування
-//                      current_ekran.edition = 0;
-//                    }
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
-//                  {
-//                    if (check_data_setpoint(edition_settings.number_defined_and, NUMBER_DEFINED_AND_MIN, NUMBER_DEFINED_AND_MAX) == 1)
-//                    {
-//                      if (edition_settings.number_defined_and != current_settings.number_defined_and)
-//                      {
-//                        //Помічаємо, що поле структури зараз буде змінене
-//                        changed_settings = CHANGED_ETAP_EXECUTION;
-//
-//                        current_settings.number_defined_and = edition_settings.number_defined_and;
-//                        //Обновляємо значення
-//                        action_after_changing_number_el(&current_settings, 2);
-//
-//                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-//                        fix_change_settings(0, 1);
-//                      }
-//                      //Виходимо з режиму редагування
-//                      current_ekran.edition = 0;
-//                    }
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
-//                  {
-//                    if (check_data_setpoint(edition_settings.number_defined_or, NUMBER_DEFINED_OR_MIN, NUMBER_DEFINED_OR_MAX) == 1)
-//                    {
-//                      if (edition_settings.number_defined_or != current_settings.number_defined_or)
-//                      {
-//                        //Помічаємо, що поле структури зараз буде змінене
-//                        changed_settings = CHANGED_ETAP_EXECUTION;
-//
-//                        current_settings.number_defined_or = edition_settings.number_defined_or;
-//                        //Обновляємо значення
-//                        action_after_changing_number_el(&current_settings, 3);
-//
-//                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-//                        fix_change_settings(0, 1);
-//                      }
-//                      //Виходимо з режиму редагування
-//                      current_ekran.edition = 0;
-//                    }
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
-//                  {
-//                    if (check_data_setpoint(edition_settings.number_defined_xor, NUMBER_DEFINED_XOR_MIN, NUMBER_DEFINED_XOR_MAX) == 1)
-//                    {
-//                      if (edition_settings.number_defined_xor != current_settings.number_defined_xor)
-//                      {
-//                        //Помічаємо, що поле структури зараз буде змінене
-//                        changed_settings = CHANGED_ETAP_EXECUTION;
-//
-//                        current_settings.number_defined_xor = edition_settings.number_defined_xor;
-//                        //Обновляємо значення
-//                        action_after_changing_number_el(&current_settings, 4);
-//
-//                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-//                        fix_change_settings(0, 1);
-//                      }
-//                      //Виходимо з режиму редагування
-//                      current_ekran.edition = 0;
-//                    }
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
-//                  {
-//                    if (check_data_setpoint(edition_settings.number_defined_not, NUMBER_DEFINED_NOT_MIN, NUMBER_DEFINED_NOT_MAX) == 1)
-//                    {
-//                      if (edition_settings.number_defined_not != current_settings.number_defined_not)
-//                      {
-//                        //Помічаємо, що поле структури зараз буде змінене
-//                        changed_settings = CHANGED_ETAP_EXECUTION;
-//
-//                        current_settings.number_defined_not = edition_settings.number_defined_not;
-//                        //Обновляємо значення
-//                        action_after_changing_number_el(&current_settings, 5);
-//
-//                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-//                        fix_change_settings(0, 1);
-//                      }
-//                      //Виходимо з режиму редагування
-//                      current_ekran.edition = 0;
-//                    }
-//                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+                  {
+                    if (check_data_setpoint(edition_settings.number_defined_df, NUMBER_DEFINED_FUNCTIONS_MIN, NUMBER_DEFINED_FUNCTIONS_MAX) == 1)
+                    {
+                      if (edition_settings.number_defined_df != current_settings.number_defined_df)
+                      {
+                        //Помічаємо, що поле структури зараз буде змінене
+                        changed_settings = CHANGED_ETAP_EXECUTION;
+
+                        current_settings.number_defined_df = edition_settings.number_defined_df;
+                        //Обновляємо значення
+                        action_after_changing_number_el(&current_settings, 0);
+                      
+                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                        fix_change_settings(0, 1);
+                      }
+                      //Виходимо з режиму редагування
+                      current_ekran.edition = 0;
+                    }
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+                  {
+                    if (check_data_setpoint(edition_settings.number_defined_dt, NUMBER_DEFINED_TRIGGERS_MIN, NUMBER_DEFINED_TRIGGERS_MAX) == 1)
+                    {
+                      if (edition_settings.number_defined_dt != current_settings.number_defined_dt)
+                      {
+                        //Помічаємо, що поле структури зараз буде змінене
+                        changed_settings = CHANGED_ETAP_EXECUTION;
+
+                        current_settings.number_defined_dt = edition_settings.number_defined_dt;
+                        //Обновляємо значення
+                        action_after_changing_number_el(&current_settings, 1);
+
+                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                        fix_change_settings(0, 1);
+                      }
+                      //Виходимо з режиму редагування
+                      current_ekran.edition = 0;
+                    }
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
+                  {
+                    if (check_data_setpoint(edition_settings.number_defined_and, NUMBER_DEFINED_AND_MIN, NUMBER_DEFINED_AND_MAX) == 1)
+                    {
+                      if (edition_settings.number_defined_and != current_settings.number_defined_and)
+                      {
+                        //Помічаємо, що поле структури зараз буде змінене
+                        changed_settings = CHANGED_ETAP_EXECUTION;
+
+                        current_settings.number_defined_and = edition_settings.number_defined_and;
+                        //Обновляємо значення
+                        action_after_changing_number_el(&current_settings, 2);
+
+                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                        fix_change_settings(0, 1);
+                      }
+                      //Виходимо з режиму редагування
+                      current_ekran.edition = 0;
+                    }
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
+                  {
+                    if (check_data_setpoint(edition_settings.number_defined_or, NUMBER_DEFINED_OR_MIN, NUMBER_DEFINED_OR_MAX) == 1)
+                    {
+                      if (edition_settings.number_defined_or != current_settings.number_defined_or)
+                      {
+                        //Помічаємо, що поле структури зараз буде змінене
+                        changed_settings = CHANGED_ETAP_EXECUTION;
+
+                        current_settings.number_defined_or = edition_settings.number_defined_or;
+                        //Обновляємо значення
+                        action_after_changing_number_el(&current_settings, 3);
+
+                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                        fix_change_settings(0, 1);
+                      }
+                      //Виходимо з режиму редагування
+                      current_ekran.edition = 0;
+                    }
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
+                  {
+                    if (check_data_setpoint(edition_settings.number_defined_xor, NUMBER_DEFINED_XOR_MIN, NUMBER_DEFINED_XOR_MAX) == 1)
+                    {
+                      if (edition_settings.number_defined_xor != current_settings.number_defined_xor)
+                      {
+                        //Помічаємо, що поле структури зараз буде змінене
+                        changed_settings = CHANGED_ETAP_EXECUTION;
+
+                        current_settings.number_defined_xor = edition_settings.number_defined_xor;
+                        //Обновляємо значення
+                        action_after_changing_number_el(&current_settings, 4);
+
+                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                        fix_change_settings(0, 1);
+                      }
+                      //Виходимо з режиму редагування
+                      current_ekran.edition = 0;
+                    }
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
+                  {
+                    if (check_data_setpoint(edition_settings.number_defined_not, NUMBER_DEFINED_NOT_MIN, NUMBER_DEFINED_NOT_MAX) == 1)
+                    {
+                      if (edition_settings.number_defined_not != current_settings.number_defined_not)
+                      {
+                        //Помічаємо, що поле структури зараз буде змінене
+                        changed_settings = CHANGED_ETAP_EXECUTION;
+
+                        current_settings.number_defined_not = edition_settings.number_defined_not;
+                        //Обновляємо значення
+                        action_after_changing_number_el(&current_settings, 5);
+
+                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                        fix_change_settings(0, 1);
+                      }
+                      //Виходимо з режиму редагування
+                      current_ekran.edition = 0;
+                    }
+                  }
                 }
                 else if(current_ekran.current_level == EKRAN_LIST_TYPE_DF)
                 {
@@ -4500,30 +4500,30 @@ void main_manu_function(void)
                   {
                     edition_settings.number_iteration_el = edit_setpoint(1, edition_settings.number_iteration_el, 0, 0, COL_NUMBER_INERATION_END, 1);
                   }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//                  {
-//                    edition_settings.number_defined_df = edit_setpoint(1, edition_settings.number_defined_df, 0, 0, COL_NUMBER_DEFINED_FUNCTIONS_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//                  {
-//                    edition_settings.number_defined_dt = edit_setpoint(1, edition_settings.number_defined_dt, 0, 0, COL_NUMBER_DEFINED_TRIGGERS_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
-//                  {
-//                    edition_settings.number_defined_and = edit_setpoint(1, edition_settings.number_defined_and, 0, 0, COL_NUMBER_DEFINED_AND_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
-//                  {
-//                    edition_settings.number_defined_or = edit_setpoint(1, edition_settings.number_defined_or, 0, 0, COL_NUMBER_DEFINED_OR_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
-//                  {
-//                    edition_settings.number_defined_xor = edit_setpoint(1, edition_settings.number_defined_xor, 0, 0, COL_NUMBER_DEFINED_XOR_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
-//                  {
-//                    edition_settings.number_defined_not = edit_setpoint(1, edition_settings.number_defined_not, 0, 0, COL_NUMBER_DEFINED_NOT_END, 1);
-//                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+                  {
+                    edition_settings.number_defined_df = edit_setpoint(1, edition_settings.number_defined_df, 0, 0, COL_NUMBER_DEFINED_FUNCTIONS_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+                  {
+                    edition_settings.number_defined_dt = edit_setpoint(1, edition_settings.number_defined_dt, 0, 0, COL_NUMBER_DEFINED_TRIGGERS_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
+                  {
+                    edition_settings.number_defined_and = edit_setpoint(1, edition_settings.number_defined_and, 0, 0, COL_NUMBER_DEFINED_AND_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
+                  {
+                    edition_settings.number_defined_or = edit_setpoint(1, edition_settings.number_defined_or, 0, 0, COL_NUMBER_DEFINED_OR_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
+                  {
+                    edition_settings.number_defined_xor = edit_setpoint(1, edition_settings.number_defined_xor, 0, 0, COL_NUMBER_DEFINED_XOR_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
+                  {
+                    edition_settings.number_defined_not = edit_setpoint(1, edition_settings.number_defined_not, 0, 0, COL_NUMBER_DEFINED_NOT_END, 1);
+                  }
                 }
                 //Формуємо екран відображення загальних витримок для розширеної логіки
                 make_ekran_general_pickups_el();
@@ -4813,30 +4813,30 @@ void main_manu_function(void)
                   {
                     edition_settings.number_iteration_el = edit_setpoint(0, edition_settings.number_iteration_el, 0, 0, COL_NUMBER_INERATION_END, 1);
                   }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//                  {
-//                    edition_settings.number_defined_df = edit_setpoint(0, edition_settings.number_defined_df, 0, 0, COL_NUMBER_DEFINED_FUNCTIONS_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//                  {
-//                    edition_settings.number_defined_dt = edit_setpoint(0, edition_settings.number_defined_dt, 0, 0, COL_NUMBER_DEFINED_TRIGGERS_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
-//                  {
-//                    edition_settings.number_defined_and = edit_setpoint(0, edition_settings.number_defined_and, 0, 0, COL_NUMBER_DEFINED_AND_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
-//                  {
-//                    edition_settings.number_defined_or = edit_setpoint(0, edition_settings.number_defined_or, 0, 0, COL_NUMBER_DEFINED_OR_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
-//                  {
-//                    edition_settings.number_defined_xor = edit_setpoint(0, edition_settings.number_defined_xor, 0, 0, COL_NUMBER_DEFINED_XOR_END, 1);
-//                  }
-//                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
-//                  {
-//                    edition_settings.number_defined_not = edit_setpoint(0, edition_settings.number_defined_not, 0, 0, COL_NUMBER_DEFINED_NOT_END, 1);
-//                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+                  {
+                    edition_settings.number_defined_df = edit_setpoint(0, edition_settings.number_defined_df, 0, 0, COL_NUMBER_DEFINED_FUNCTIONS_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+                  {
+                    edition_settings.number_defined_dt = edit_setpoint(0, edition_settings.number_defined_dt, 0, 0, COL_NUMBER_DEFINED_TRIGGERS_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
+                  {
+                    edition_settings.number_defined_and = edit_setpoint(0, edition_settings.number_defined_and, 0, 0, COL_NUMBER_DEFINED_AND_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
+                  {
+                    edition_settings.number_defined_or = edit_setpoint(0, edition_settings.number_defined_or, 0, 0, COL_NUMBER_DEFINED_OR_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
+                  {
+                    edition_settings.number_defined_xor = edit_setpoint(0, edition_settings.number_defined_xor, 0, 0, COL_NUMBER_DEFINED_XOR_END, 1);
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
+                  {
+                    edition_settings.number_defined_not = edit_setpoint(0, edition_settings.number_defined_not, 0, 0, COL_NUMBER_DEFINED_NOT_END, 1);
+                  }
                 }
                 //Формуємо екран відображення загальних витримок для розширеної логіки
                 make_ekran_general_pickups_el();
@@ -5100,42 +5100,42 @@ void main_manu_function(void)
                       (current_ekran.position_cursor_x > COL_NUMBER_INERATION_END))
                     current_ekran.position_cursor_x = COL_NUMBER_INERATION_BEGIN;
                 }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_FUNCTIONS_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_FUNCTIONS_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_BEGIN;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_TRIGGERS_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_TRIGGERS_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_BEGIN;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_AND_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_AND_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_AND_BEGIN;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_OR_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_OR_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_OR_BEGIN;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_XOR_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_XOR_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_XOR_BEGIN;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_NOT_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_NOT_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_NOT_BEGIN;
-//                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_FUNCTIONS_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_FUNCTIONS_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_BEGIN;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_TRIGGERS_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_TRIGGERS_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_BEGIN;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_AND_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_AND_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_AND_BEGIN;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_OR_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_OR_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_OR_BEGIN;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_XOR_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_XOR_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_XOR_BEGIN;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_NOT_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_NOT_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_NOT_BEGIN;
+                }
                 
                 //Формуємо екран відображення загальних витримок для розширеної логіки
                 make_ekran_general_pickups_el();
@@ -5372,42 +5372,42 @@ void main_manu_function(void)
                       (current_ekran.position_cursor_x > COL_NUMBER_INERATION_END))
                     current_ekran.position_cursor_x = COL_NUMBER_INERATION_END;
                 }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_FUNCTIONS_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_FUNCTIONS_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_END;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_TRIGGERS_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_TRIGGERS_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_END;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_AND_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_AND_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_AND_END;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_OR_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_OR_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_OR_END;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_XOR_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_XOR_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_XOR_END;
-//                }
-//                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
-//                {
-//                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_NOT_BEGIN) ||
-//                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_NOT_END))
-//                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_NOT_END;
-//                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_FUNCTIONS_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_FUNCTIONS_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_END;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_TRIGGERS_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_TRIGGERS_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_END;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_AND_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_AND_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_AND_END;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_OR_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_OR_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_OR_END;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_XOR_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_XOR_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_XOR_END;
+                }
+                else if(current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
+                {
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_DEFINED_NOT_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_DEFINED_NOT_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_DEFINED_NOT_END;
+                }
                 
                 //Формуємо екран відображення загальних витримок для розширеної логіки
                 make_ekran_general_pickups_el();
@@ -5718,22 +5718,22 @@ void main_manu_function(void)
 //                  RANG_SECTOR_NZZ,
 //                  -1 /*признак завершення масиву*/
 //                };
-//                EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
-//                {
-//                  {1, RANG_DF1_IN , RANG_DF8_OUT, 2, current_settings.number_defined_df },
-//                  {1, RANG_DT1_SET, RANG_DT4_OUT, 3, current_settings.number_defined_dt },
-//                  {1, RANG_D_AND1 , RANG_D_AND8 , 1, current_settings.number_defined_and},
-//                  {1, RANG_D_OR1  , RANG_D_OR8  , 1, current_settings.number_defined_or },
-//                  {1, RANG_D_XOR1 , RANG_D_XOR8 , 1, current_settings.number_defined_xor},
-//                  {1, RANG_D_NOT1 , RANG_D_NOT16, 1, current_settings.number_defined_not}
-//                };
+                EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
+                {
+                  {1, RANG_DF1_IN , RANG_DF8_OUT, 2, current_settings.number_defined_df },
+                  {1, RANG_DT1_SET, RANG_DT4_OUT, 3, current_settings.number_defined_dt },
+                  {1, RANG_D_AND1 , RANG_D_AND8 , 1, current_settings.number_defined_and},
+                  {1, RANG_D_OR1  , RANG_D_OR8  , 1, current_settings.number_defined_or },
+                  {1, RANG_D_XOR1 , RANG_D_XOR8 , 1, current_settings.number_defined_xor},
+                  {1, RANG_D_NOT1 , RANG_D_NOT16, 1, current_settings.number_defined_not}
+                };
                 
                 //Перевіряємо, чи даний індекс функції присутній у даній конфігурації 
                 while (found_new_index == 0)
                 {
                   check_current_index_is_presented_in_configuration(&found_new_index,
                                                                      /*add_filter,*/
-                                                                     /*el_filter,*/
+                                                                     el_filter,
                                                                      1,
                                                                      NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG,
                                                                      NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG
@@ -6981,15 +6981,15 @@ void main_manu_function(void)
 //                    RANG_SECTOR_NZZ,
 //                    -1 /*признак завершення масиву*/
 //                  };
-//                  EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
-//                  {
-//                    {1, RANG_DF1_IN , RANG_DF8_OUT, 2, current_settings.number_defined_df },
-//                    {1, RANG_DT1_SET, RANG_DT4_OUT, 3, current_settings.number_defined_dt },
-//                    {1, RANG_D_AND1 , RANG_D_AND8 , 1, current_settings.number_defined_and},
-//                    {1, RANG_D_OR1  , RANG_D_OR8  , 1, current_settings.number_defined_or },
-//                    {1, RANG_D_XOR1 , RANG_D_XOR8 , 1, current_settings.number_defined_xor},
-//                    {1, RANG_D_NOT1 , RANG_D_NOT16, 1, current_settings.number_defined_not}
-//                  };
+                  EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
+                  {
+                    {1, RANG_DF1_IN , RANG_DF8_OUT, 2, current_settings.number_defined_df },
+                    {1, RANG_DT1_SET, RANG_DT4_OUT, 3, current_settings.number_defined_dt },
+                    {1, RANG_D_AND1 , RANG_D_AND8 , 1, current_settings.number_defined_and},
+                    {1, RANG_D_OR1  , RANG_D_OR8  , 1, current_settings.number_defined_or },
+                    {1, RANG_D_XOR1 , RANG_D_XOR8 , 1, current_settings.number_defined_xor},
+                    {1, RANG_D_NOT1 , RANG_D_NOT16, 1, current_settings.number_defined_not}
+                  };
                   
                   //Переміщаємося на наступну функцію
                   if(--current_ekran.index_position < 0) current_ekran.index_position = max_row_ranguvannja - 1;
@@ -6998,7 +6998,7 @@ void main_manu_function(void)
                   {
                     check_current_index_is_presented_in_configuration(&found_new_index,
                                                                        /*add_filter,*/
-                                                                       /*el_filter,*/
+                                                                       el_filter,
                                                                        0,
                                                                        NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG,
                                                                        NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG
@@ -7508,15 +7508,15 @@ void main_manu_function(void)
 //                    RANG_SECTOR_NZZ,
 //                    -1 /*признак завершення масиву*/
 //                  };
-//                  EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
-//                  {
-//                    {1, RANG_DF1_IN , RANG_DF8_OUT, 2, current_settings.number_defined_df },
-//                    {1, RANG_DT1_SET, RANG_DT4_OUT, 3, current_settings.number_defined_dt },
-//                    {1, RANG_D_AND1 , RANG_D_AND8 , 1, current_settings.number_defined_and},
-//                    {1, RANG_D_OR1  , RANG_D_OR8  , 1, current_settings.number_defined_or },
-//                    {1, RANG_D_XOR1 , RANG_D_XOR8 , 1, current_settings.number_defined_xor},
-//                    {1, RANG_D_NOT1 , RANG_D_NOT16, 1, current_settings.number_defined_not}
-//                  };
+                  EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
+                  {
+                    {1, RANG_DF1_IN , RANG_DF8_OUT, 2, current_settings.number_defined_df },
+                    {1, RANG_DT1_SET, RANG_DT4_OUT, 3, current_settings.number_defined_dt },
+                    {1, RANG_D_AND1 , RANG_D_AND8 , 1, current_settings.number_defined_and},
+                    {1, RANG_D_OR1  , RANG_D_OR8  , 1, current_settings.number_defined_or },
+                    {1, RANG_D_XOR1 , RANG_D_XOR8 , 1, current_settings.number_defined_xor},
+                    {1, RANG_D_NOT1 , RANG_D_NOT16, 1, current_settings.number_defined_not}
+                  };
                   
                   //Переміщаємося на наступну функцію
                   if(++current_ekran.index_position >= max_row_ranguvannja) current_ekran.index_position = 0;
@@ -7525,7 +7525,7 @@ void main_manu_function(void)
                   {
                     check_current_index_is_presented_in_configuration(&found_new_index,
                                                                        /*add_filter,*/
-                                                                       /*el_filter,*/
+                                                                       el_filter,
                                                                        1,
                                                                        NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG,
                                                                        NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG

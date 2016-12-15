@@ -11,7 +11,7 @@
 #define EKRAN_RANGUVANNJA_D_OR7            (EKRAN_RANGUVANNJA_D_OR6 + 1)
 #define EKRAN_RANGUVANNJA_D_OR8            (EKRAN_RANGUVANNJA_D_OR7 + 1)
 
-#define MAX_ROW_FOR_LIST_D_OR              NUMBER_DEFINED_OR/*((int)current_settings.number_defined_or)*/
+#define MAX_ROW_FOR_LIST_D_OR              /*NUMBER_DEFINED_OR*/((int)current_settings.number_defined_or)
 #define MAX_ROW_RANGUVANNJA_D_OR           NUMBER_TOTAL_SIGNAL_FOR_RANG
 
 #endif 

@@ -8,40 +8,40 @@ void make_ekran_general_pickups_el()
   const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_GENERAL_PICKUPS_EL][MAX_COL_LCD] = 
   {
     {
-      "Макс.кол.итерац."/*,
+      "Макс.кол.итерац.",
       " Кол.О-функций  ",
       " Кол.О-триггеров",
       "    Кол.О-И     ",
       "   Кол.О-ИЛИ    ",
       " Кол.О-Искл.ИЛИ ",
-      "    Кол.О-НЕ    "*/
+      "    Кол.О-НЕ    "
     },
     {
-      "Макс.кільк.ітер."/*,
+      "Макс.кільк.ітер.",
       " Кільк.В-функцій",
       "Кільк.В-триґерів",
       "   Кільк.В-І    ",
       "  Кільк.В-АБО   ",
       " Кільк.Викл.АБО ",
-      "   Кільк.В-НЕ   "*/
+      "   Кільк.В-НЕ   "
     },
     {
-      " Max.NR of iter."/*,
+      " Max.NR of iter.",
       " NR of UD Func. ",
       " NR of UD F.-F. ",
       "  NR of UD AND  ",
       "  NR of UD OR   ",
       "  NR of UD XOR  ",
-      "  NR of UD NOT  "*/
+      "  NR of UD NOT  "
     },
     {
-      "Макс.кол.итерац."/*,
+      "Макс.кол.итерац.",
       " Кол.О-функций  ",
       " Кол.О-триггеров",
       "    Кол.О-И     ",
       "   Кол.О-ИЛИ    ",
       " Кол.О-Искл.ИЛИ ",
-      "    Кол.О-НЕ    "*/
+      "    Кол.О-НЕ    "
     }
   };
 
@@ -69,42 +69,42 @@ void make_ekran_general_pickups_el()
           if (current_ekran.edition == 0) value = current_settings.number_iteration_el; //у змінну value поміщаємо значення
           else value = edition_settings.number_iteration_el;
         }
-//        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//        {
-//          vaga = 1; //максимальний ваговий
-//          if (current_ekran.edition == 0) value = current_settings.number_defined_df; //у змінну value поміщаємо значення
-//          else value = edition_settings.number_defined_df;
-//        }
-//        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//        {
-//          vaga = 1; //максимальний ваговий
-//          if (current_ekran.edition == 0) value = current_settings.number_defined_dt; //у змінну value поміщаємо значення
-//          else value = edition_settings.number_defined_dt;
-//        }
-//        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_AND)
-//        {
-//          vaga = 1; //максимальний ваговий
-//          if (current_ekran.edition == 0) value = current_settings.number_defined_and; //у змінну value поміщаємо значення
-//          else value = edition_settings.number_defined_and;
-//        }
-//        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_OR)
-//        {
-//          vaga = 1; //максимальний ваговий
-//          if (current_ekran.edition == 0) value = current_settings.number_defined_or; //у змінну value поміщаємо значення
-//          else value = edition_settings.number_defined_or;
-//        }
-//        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_XOR)
-//        {
-//          vaga = 1; //максимальний ваговий
-//          if (current_ekran.edition == 0) value = current_settings.number_defined_xor; //у змінну value поміщаємо значення
-//          else value = edition_settings.number_defined_xor;
-//        }
-//        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_NOT)
-//        {
-//          vaga = 10; //максимальний ваговий
-//          if (current_ekran.edition == 0) value = current_settings.number_defined_not; //у змінну value поміщаємо значення
-//          else value = edition_settings.number_defined_not;
-//        }
+        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+        {
+          vaga = 1; //максимальний ваговий
+          if (current_ekran.edition == 0) value = current_settings.number_defined_df; //у змінну value поміщаємо значення
+          else value = edition_settings.number_defined_df;
+        }
+        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+        {
+          vaga = 1; //максимальний ваговий
+          if (current_ekran.edition == 0) value = current_settings.number_defined_dt; //у змінну value поміщаємо значення
+          else value = edition_settings.number_defined_dt;
+        }
+        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_AND)
+        {
+          vaga = 1; //максимальний ваговий
+          if (current_ekran.edition == 0) value = current_settings.number_defined_and; //у змінну value поміщаємо значення
+          else value = edition_settings.number_defined_and;
+        }
+        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_OR)
+        {
+          vaga = 1; //максимальний ваговий
+          if (current_ekran.edition == 0) value = current_settings.number_defined_or; //у змінну value поміщаємо значення
+          else value = edition_settings.number_defined_or;
+        }
+        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_XOR)
+        {
+          vaga = 1; //максимальний ваговий
+          if (current_ekran.edition == 0) value = current_settings.number_defined_xor; //у змінну value поміщаємо значення
+          else value = edition_settings.number_defined_xor;
+        }
+        else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_NOT)
+        {
+          vaga = 10; //максимальний ваговий
+          if (current_ekran.edition == 0) value = current_settings.number_defined_not; //у змінну value поміщаємо значення
+          else value = edition_settings.number_defined_not;
+        }
         first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
       }
       else 
@@ -118,42 +118,42 @@ void make_ekran_general_pickups_el()
             else
               calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
           }
-//          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//          {
-//            if ((j < COL_NUMBER_DEFINED_FUNCTIONS_BEGIN) ||  (j > COL_NUMBER_DEFINED_FUNCTIONS_END ))working_ekran[i][j] = ' ';
-//            else
-//              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
-//          }
-//          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//          {
-//            if ((j < COL_NUMBER_DEFINED_TRIGGERS_BEGIN) ||  (j > COL_NUMBER_DEFINED_TRIGGERS_END ))working_ekran[i][j] = ' ';
-//            else
-//              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
-//          }
-//          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_AND)
-//          {
-//            if ((j < COL_NUMBER_DEFINED_AND_BEGIN) ||  (j > COL_NUMBER_DEFINED_AND_END ))working_ekran[i][j] = ' ';
-//            else
-//              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
-//          }
-//          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_OR)
-//          {
-//            if ((j < COL_NUMBER_DEFINED_OR_BEGIN) ||  (j > COL_NUMBER_DEFINED_OR_END ))working_ekran[i][j] = ' ';
-//            else
-//              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
-//          }
-//          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_XOR)
-//          {
-//            if ((j < COL_NUMBER_DEFINED_XOR_BEGIN) ||  (j > COL_NUMBER_DEFINED_XOR_END ))working_ekran[i][j] = ' ';
-//            else
-//              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
-//          }
-//          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_NOT)
-//          {
-//            if ((j < COL_NUMBER_DEFINED_NOT_BEGIN) ||  (j > COL_NUMBER_DEFINED_NOT_END ))working_ekran[i][j] = ' ';
-//            else
-//              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
-//          }
+          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+          {
+            if ((j < COL_NUMBER_DEFINED_FUNCTIONS_BEGIN) ||  (j > COL_NUMBER_DEFINED_FUNCTIONS_END ))working_ekran[i][j] = ' ';
+            else
+              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
+          }
+          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+          {
+            if ((j < COL_NUMBER_DEFINED_TRIGGERS_BEGIN) ||  (j > COL_NUMBER_DEFINED_TRIGGERS_END ))working_ekran[i][j] = ' ';
+            else
+              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
+          }
+          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_AND)
+          {
+            if ((j < COL_NUMBER_DEFINED_AND_BEGIN) ||  (j > COL_NUMBER_DEFINED_AND_END ))working_ekran[i][j] = ' ';
+            else
+              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
+          }
+          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_OR)
+          {
+            if ((j < COL_NUMBER_DEFINED_OR_BEGIN) ||  (j > COL_NUMBER_DEFINED_OR_END ))working_ekran[i][j] = ' ';
+            else
+              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
+          }
+          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_XOR)
+          {
+            if ((j < COL_NUMBER_DEFINED_XOR_BEGIN) ||  (j > COL_NUMBER_DEFINED_XOR_END ))working_ekran[i][j] = ' ';
+            else
+              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
+          }
+          else if (index_of_ekran_shifted == INDEX_ML_NUMBER_DEFINED_NOT)
+          {
+            if ((j < COL_NUMBER_DEFINED_NOT_BEGIN) ||  (j > COL_NUMBER_DEFINED_NOT_END ))working_ekran[i][j] = ' ';
+            else
+              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol);
+          }
         }
       }
         
@@ -175,36 +175,36 @@ void make_ekran_general_pickups_el()
       current_ekran.position_cursor_x = COL_NUMBER_INERATION_BEGIN;
       last_position_cursor_x = COL_NUMBER_INERATION_END;
     }
-//    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
-//    {
-//      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_BEGIN;
-//      last_position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_BEGIN;
-//    }
-//    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
-//    {
-//      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_BEGIN;
-//      last_position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_END;
-//    }
-//    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
-//    {
-//      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_AND_BEGIN;
-//      last_position_cursor_x = COL_NUMBER_DEFINED_AND_END;
-//    }
-//    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
-//    {
-//      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_OR_BEGIN;
-//      last_position_cursor_x = COL_NUMBER_DEFINED_OR_END;
-//    }
-//    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
-//    {
-//      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_XOR_BEGIN;
-//      last_position_cursor_x = COL_NUMBER_DEFINED_XOR_END;
-//    }
-//    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
-//    {
-//      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_NOT_BEGIN;
-//      last_position_cursor_x = COL_NUMBER_DEFINED_NOT_END;
-//    }
+    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_FUNCTIONS)
+    {
+      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_BEGIN;
+      last_position_cursor_x = COL_NUMBER_DEFINED_FUNCTIONS_BEGIN;
+    }
+    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_TRIGGERS)
+    {
+      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_BEGIN;
+      last_position_cursor_x = COL_NUMBER_DEFINED_TRIGGERS_END;
+    }
+    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_AND)
+    {
+      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_AND_BEGIN;
+      last_position_cursor_x = COL_NUMBER_DEFINED_AND_END;
+    }
+    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_OR)
+    {
+      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_OR_BEGIN;
+      last_position_cursor_x = COL_NUMBER_DEFINED_OR_END;
+    }
+    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_XOR)
+    {
+      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_XOR_BEGIN;
+      last_position_cursor_x = COL_NUMBER_DEFINED_XOR_END;
+    }
+    else if (current_ekran.index_position == INDEX_ML_NUMBER_DEFINED_NOT)
+    {
+      current_ekran.position_cursor_x = COL_NUMBER_DEFINED_NOT_BEGIN;
+      last_position_cursor_x = COL_NUMBER_DEFINED_NOT_END;
+    }
 
     //Підтягуємо курсор до першого символу
     while (((working_ekran[current_ekran.position_cursor_y][current_ekran.position_cursor_x + 1]) == ' ') && 

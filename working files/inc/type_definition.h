@@ -60,12 +60,12 @@ typedef struct
   unsigned int ranguvannja_test;                //Ранжування Тесту
   
   unsigned int number_iteration_el;                                             //Максимадбна кількість ітерацій для розширеної логіки
-//  unsigned int number_defined_df;                                               //Кількість визначуваних функцій у конфігурації приладу
-//  unsigned int number_defined_dt;                                               //Кількість визначуваних тригерів у конфігурації приладу
-//  unsigned int number_defined_and;                                              //Кількість визначуваних "І" у конфігурації приладу
-//  unsigned int number_defined_or;                                               //Кількість визначуваних "АБО" у конфігурації приладу
-//  unsigned int number_defined_xor;                                              //Кількість визначуваних "Викл.ВБО" у конфігурації приладу
-//  unsigned int number_defined_not;                                              //Кількість визначуваних "НЕ" у конфігурації приладу
+  unsigned int number_defined_df;                                               //Кількість визначуваних функцій у конфігурації приладу
+  unsigned int number_defined_dt;                                               //Кількість визначуваних тригерів у конфігурації приладу
+  unsigned int number_defined_and;                                              //Кількість визначуваних "І" у конфігурації приладу
+  unsigned int number_defined_or;                                               //Кількість визначуваних "АБО" у конфігурації приладу
+  unsigned int number_defined_xor;                                              //Кількість визначуваних "Викл.ВБО" у конфігурації приладу
+  unsigned int number_defined_not;                                              //Кількість визначуваних "НЕ" у конфігурації приладу
 
   //Опреділювальні функції
   unsigned int type_df;                                                 //Тип опреділювальної функції
@@ -295,13 +295,13 @@ typedef struct
   int Uc2_y2;  
 } POPEREDNJY_PERECHID;
 
-//typedef struct
-//{
-//  unsigned int present;
-//  int start_index;
-//  int stop_index;
-//  int number_per_index;
-//  int real_number;
-//} EL_FILTER_STRUCT;
+typedef struct
+{
+  unsigned int present;
+  int start_index;
+  int stop_index;
+  int number_per_index;
+  int real_number;
+} EL_FILTER_STRUCT;
 
 #endif

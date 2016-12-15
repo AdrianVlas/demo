@@ -11,7 +11,7 @@
 #define EKRAN_RANGUVANNJA_D_AND7            (EKRAN_RANGUVANNJA_D_AND6 + 1)
 #define EKRAN_RANGUVANNJA_D_AND8            (EKRAN_RANGUVANNJA_D_AND7 + 1)
 
-#define MAX_ROW_FOR_LIST_D_AND              NUMBER_DEFINED_AND/*((int)current_settings.number_defined_and)*/
+#define MAX_ROW_FOR_LIST_D_AND              /*NUMBER_DEFINED_AND*/((int)current_settings.number_defined_and)
 #define MAX_ROW_RANGUVANNJA_D_AND           NUMBER_TOTAL_SIGNAL_FOR_RANG
 
 #endif 

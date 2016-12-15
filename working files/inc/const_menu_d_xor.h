@@ -11,7 +11,7 @@
 #define EKRAN_RANGUVANNJA_D_XOR7            (EKRAN_RANGUVANNJA_D_XOR6 + 1)
 #define EKRAN_RANGUVANNJA_D_XOR8            (EKRAN_RANGUVANNJA_D_XOR7 + 1)
 
-#define MAX_ROW_FOR_LIST_D_XOR              NUMBER_DEFINED_XOR/*((int)current_settings.number_defined_xor)*/
+#define MAX_ROW_FOR_LIST_D_XOR              /*NUMBER_DEFINED_XOR*/((int)current_settings.number_defined_xor)
 #define MAX_ROW_RANGUVANNJA_D_XOR           NUMBER_TOTAL_SIGNAL_FOR_RANG
 
 #endif 

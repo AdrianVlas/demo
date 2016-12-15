@@ -23,8 +23,8 @@
 #define EKRAN_RANGUVANNJA_DF8                   (EKRAN_RANGUVANNJA_DF7 + 1)
 
 #define MAX_ROW_SETTINGS_DF                      3
-#define MAX_ROW_FOR_TYPE_DF                      NUMBER_DEFINED_FUNCTIONS/*((int)current_settings.number_defined_df)*/
-#define MAX_ROW_FOR_LIST_DF                      NUMBER_DEFINED_FUNCTIONS/*((int)current_settings.number_defined_df)*/
+#define MAX_ROW_FOR_TYPE_DF                      /*NUMBER_DEFINED_FUNCTIONS*/((int)current_settings.number_defined_df)
+#define MAX_ROW_FOR_LIST_DF                      /*NUMBER_DEFINED_FUNCTIONS*/((int)current_settings.number_defined_df)
 #define MAX_ROW_TIMEOUT_DF                       2
 #define MAX_ROW_RANGUVANNJA_DF                   NUMBER_TOTAL_SIGNAL_FOR_RANG
 

@@ -75,7 +75,7 @@ void make_ekran_control_ctrl_phase(void);
 void make_ekran_choose_of_ranguvannja(unsigned int);
 void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int, unsigned int);
 void make_ekran_set_function_in_test(void);
-void check_current_index_is_presented_in_configuration(unsigned int*, /*int*,*/ /*EL_FILTER_STRUCT[],*/ int, int, int);
+void check_current_index_is_presented_in_configuration(unsigned int*, /*int*,*/ EL_FILTER_STRUCT[], int, int, int);
 void make_ekran_timeout_alarms(unsigned int);
 void make_ekran_control_alarms(unsigned int);
 void make_ekran_setpoint_VMP(int);
@@ -119,7 +119,7 @@ void make_ekran_setting_language(void);
 void make_ekran_vidkluchenja(void);
 
 unsigned int action_after_changing_of_configuration(unsigned int, __SETTINGS *);
-//void action_after_changing_number_el(__SETTINGS *, unsigned int);
+void action_after_changing_number_el(__SETTINGS *, unsigned int);
 void calculate_namber_bit_waiting_for_rs_485(void);
 void fix_change_settings(unsigned int, unsigned int);
 unsigned int set_new_settings_from_interface(unsigned int);

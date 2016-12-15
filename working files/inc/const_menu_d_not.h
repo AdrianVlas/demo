@@ -19,7 +19,7 @@
 #define EKRAN_RANGUVANNJA_D_NOT15           (EKRAN_RANGUVANNJA_D_NOT14 + 1)
 #define EKRAN_RANGUVANNJA_D_NOT16           (EKRAN_RANGUVANNJA_D_NOT15 + 1)
 
-#define MAX_ROW_FOR_LIST_D_NOT              NUMBER_DEFINED_NOT/*((int)current_settings.number_defined_not)*/
+#define MAX_ROW_FOR_LIST_D_NOT              /*NUMBER_DEFINED_NOT*/((int)current_settings.number_defined_not)
 #define MAX_ROW_RANGUVANNJA_D_NOT           NUMBER_TOTAL_SIGNAL_FOR_RANG
 
 #endif 

@@ -525,7 +525,7 @@ inline void d_and_handler(volatile unsigned int *p_active_functions)
   unsigned int state_defined_and = 0;
 
   //Визначаємо стан всіх визначуваних "І" (не виставляючи поки що їх у робочому масиві)
-  for (unsigned int i = 0; i < NUMBER_DEFINED_AND/*current_settings_prt.number_defined_and*/; i++)
+  for (unsigned int i = 0; i < /*NUMBER_DEFINED_AND*/current_settings_prt.number_defined_and; i++)
   {
     if (
         ((current_settings_prt.ranguvannja_d_and[N_BIG*i + 0] & p_active_functions[0]) == current_settings_prt.ranguvannja_d_and[N_BIG*i + 0]) && 
@@ -569,7 +569,7 @@ inline void d_or_handler(volatile unsigned int *p_active_functions)
   unsigned int state_defined_or = 0;
 
   //Визначаємо стан всіх визначуваних "АБО" (не виставляючи поки що їх у робочому масиві)
-  for (unsigned int i = 0; i < NUMBER_DEFINED_OR/*current_settings_prt.number_defined_or*/; i++)
+  for (unsigned int i = 0; i < /*NUMBER_DEFINED_OR*/current_settings_prt.number_defined_or; i++)
   {
     if (
         ((current_settings_prt.ranguvannja_d_or[N_BIG*i + 0] & p_active_functions[0]) != 0) || 
@@ -613,7 +613,7 @@ inline void d_xor_handler(volatile unsigned int *p_active_functions)
   unsigned int state_defined_xor = 0;
 
   //Визначаємо стан всіх визначуваних "Викл.АБО" (не виставляючи поки що їх у робочому масиві)
-  for (unsigned int i = 0; i < NUMBER_DEFINED_XOR/*current_settings_prt.number_defined_xor*/; i++)
+  for (unsigned int i = 0; i < /*NUMBER_DEFINED_XOR*/current_settings_prt.number_defined_xor; i++)
   {
     unsigned int temp_array[N_BIG];
     temp_array[0] = current_settings_prt.ranguvannja_d_xor[N_BIG*i + 0] & p_active_functions[0];
@@ -674,7 +674,7 @@ inline void d_not_handler(volatile unsigned int *p_active_functions)
   unsigned int state_defined_not = 0;
 
   //Визначаємо стан всіх визначуваних "НЕ" (не виставляючи поки що їх у робочому масиві)
-  for (unsigned int i = 0; i < NUMBER_DEFINED_NOT/*current_settings_prt.number_defined_not*/; i++)
+  for (unsigned int i = 0; i < /*NUMBER_DEFINED_NOT*/current_settings_prt.number_defined_not; i++)
   {
     if (
         ((current_settings_prt.ranguvannja_d_not[N_BIG*i + 0] & p_active_functions[0]) == 0) &&

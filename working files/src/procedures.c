@@ -116,87 +116,29 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     }
 
     //"Розширена логіка"
-    unsigned int array_full[N_BIG] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
-    unsigned int *point_to_mask_array = array_full;
     for (unsigned int i = 0; i < N_BIG; i++ ) maska[i] = 0;
-//    {
-//      //Формуємо маски тільки тих сигналів розширеної логіки, які виведені з конфігурації у кількісному значенні
-//      unsigned int array_defined_logic[NUMBER_DEFINED_ELEMENTS][2] =
-//      {
-//        {target_label->number_defined_df , NUMBER_DEFINED_FUNCTIONS},
-//        {target_label->number_defined_dt , NUMBER_DEFINED_TRIGGERS },
-//        {target_label->number_defined_and, NUMBER_DEFINED_AND      },
-//        {target_label->number_defined_or , NUMBER_DEFINED_OR       },
-//        {target_label->number_defined_xor, NUMBER_DEFINED_XOR      },
-//        {target_label->number_defined_not, NUMBER_DEFINED_NOT      }
-//      };
-//      const unsigned int input_signals[NUMBER_DEFINED_ELEMENTS]  = {1, 2, 0, 0, 0, 0};
-//      const unsigned int others_signals[NUMBER_DEFINED_ELEMENTS] = {2, 3, 1, 1, 1, 1};
-//      const unsigned int button_signals[NUMBER_DEFINED_ELEMENTS] = {1, 2, 0, 0, 0, 0};
-//      
-//      unsigned int input_shift = NUMBER_GENERAL_SIGNAL_FOR_RANG_INPUT    + 
-//                                 NUMBER_MTZ_SIGNAL_FOR_RANG_INPUT        +
-//                                 NUMBER_MTZ04_SIGNAL_FOR_RANG_INPUT      +
-//                                 NUMBER_ZDZ_SIGNAL_FOR_RANG_INPUT        +
-//                                 NUMBER_ZZ_SIGNAL_FOR_RANG_INPUT         +
-//                                 NUMBER_TZNP_SIGNAL_FOR_RANG_INPUT       +
-//                                 NUMBER_APV_SIGNAL_FOR_RANG_INPUT        +
-//                                 NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG_INPUT +
-//                                 NUMBER_UROV_SIGNAL_FOR_RANG_INPUT       +
-//                                 NUMBER_ZOP_SIGNAL_FOR_RANG_INPUT        +
-//                                 NUMBER_UMIN_SIGNAL_FOR_RANG_INPUT       +
-//                                 NUMBER_UMAX_SIGNAL_FOR_RANG_INPUT       +
-//                                 NUMBER_VMP_SIGNAL_FOR_RANG_INPUT;
-//      
-//      unsigned int others_shift = NUMBER_GENERAL_SIGNAL_FOR_RANG    + 
-//                                  NUMBER_MTZ_SIGNAL_FOR_RANG        +
-//                                  NUMBER_MTZ04_SIGNAL_FOR_RANG      +
-//                                  NUMBER_ZDZ_SIGNAL_FOR_RANG        +
-//                                  NUMBER_ZZ_SIGNAL_FOR_RANG         +
-//                                  NUMBER_TZNP_SIGNAL_FOR_RANG       +
-//                                  NUMBER_APV_SIGNAL_FOR_RANG        +
-//                                  NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG +
-//                                  NUMBER_UROV_SIGNAL_FOR_RANG       +
-//                                  NUMBER_ZOP_SIGNAL_FOR_RANG        +
-//                                  NUMBER_UMIN_SIGNAL_FOR_RANG       +
-//                                  NUMBER_UMAX_SIGNAL_FOR_RANG       +
-//                                  NUMBER_VMP_SIGNAL_FOR_RANG;
-//      
-//      unsigned int button_shift = NUMBER_GENERAL_SIGNAL_FOR_RANG_BUTTON    + 
-//                                  NUMBER_MTZ_SIGNAL_FOR_RANG_BUTTON        +
-//                                  NUMBER_MTZ04_SIGNAL_FOR_RANG_BUTTON      +
-//                                  NUMBER_ZDZ_SIGNAL_FOR_RANG_BUTTON        +
-//                                  NUMBER_ZZ_SIGNAL_FOR_RANG_BUTTON         +
-//                                  NUMBER_TZNP_SIGNAL_FOR_RANG_BUTTON       +
-//                                  NUMBER_APV_SIGNAL_FOR_RANG_BUTTON        +
-//                                  NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG_BUTTON +
-//                                  NUMBER_UROV_SIGNAL_FOR_RANG_BUTTON       +
-//                                  NUMBER_ZOP_SIGNAL_FOR_RANG_BUTTON        +
-//                                  NUMBER_UMIN_SIGNAL_FOR_RANG_BUTTON       +
-//                                  NUMBER_UMAX_SIGNAL_FOR_RANG_BUTTON       +
-//                                  NUMBER_VMP_SIGNAL_FOR_RANG_BUTTON;
-//      
-//      for (unsigned int index = 0; index < NUMBER_DEFINED_ELEMENTS; index++)
-//      {
-//        //Формуємо маски функцій Розширеної логіки
-//        for (unsigned int i = 0; i < input_signals[index]*(array_defined_logic[index][1] - array_defined_logic[index][0]); i++)
-//          _SET_BIT(maska, (input_shift + input_signals[index]*array_defined_logic[index][0] + i));
-//        
-//        input_shift += input_signals[index]*array_defined_logic[index][1];
-//     
-//        for (unsigned int i = 0; i < others_signals[index]*(array_defined_logic[index][1] - array_defined_logic[index][0]); i++)
-//          _SET_BIT(maska, (others_shift + others_signals[index]*array_defined_logic[index][0] + i));
-//        
-//        others_shift += others_signals[index]*array_defined_logic[index][1];
-//
-//        for (unsigned int i = 0; i < button_signals[index]*(array_defined_logic[index][1] - array_defined_logic[index][0]); i++)
-//          maska_1 |= 1 << (button_shift + button_signals[index]*array_defined_logic[index][0] + i);
-//        
-//        button_shift += button_signals[index]*array_defined_logic[index][1];
-//      }
-//      
-//      point_to_mask_array = maska;
-//    }
+
+    //Формуємо маски тільки тих сигналів розширеної логіки, які виведені з конфігурації у кількісному значенні
+    unsigned int array_defined_logic[NUMBER_DEFINED_ELEMENTS][2] =
+    {
+      {target_label->number_defined_df , NUMBER_DEFINED_FUNCTIONS},
+      {target_label->number_defined_dt , NUMBER_DEFINED_TRIGGERS },
+      {target_label->number_defined_and, NUMBER_DEFINED_AND      },
+      {target_label->number_defined_or , NUMBER_DEFINED_OR       },
+      {target_label->number_defined_xor, NUMBER_DEFINED_XOR      },
+      {target_label->number_defined_not, NUMBER_DEFINED_NOT      }
+    };
+    const unsigned int others_signals[NUMBER_DEFINED_ELEMENTS] = {2, 3, 1, 1, 1, 1};
+      
+    unsigned int others_shift = NUMBER_GENERAL_SIGNAL_FOR_RANG;
+    
+    for (unsigned int index = 0; index < NUMBER_DEFINED_ELEMENTS; index++)
+    {
+      for (unsigned int i = 0; i < others_signals[index]*(array_defined_logic[index][1] - array_defined_logic[index][0]); i++)
+        _SET_BIT(maska, (others_shift + others_signals[index]*array_defined_logic[index][0] + i));
+       
+      others_shift += others_signals[index]*array_defined_logic[index][1];
+    }
 
     //Знімаємо всі функції для ранжування виходів
     for (int i = 0; i < NUMBER_OUTPUTS; i++)
@@ -229,31 +171,31 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Очищємо всі функції для ранжування оприділювальних триґерів
     for (int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)
     {
-      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_set_dt[N_BIG*i+j] &= ~point_to_mask_array[j];
+      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_set_dt[N_BIG*i+j] &= ~maska[j];
     }
   
     //Очищємо всі функції для ранжування визначуваних "І"
     for(unsigned int i = 0; i < NUMBER_DEFINED_AND; i++)
     {
-      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_and[N_BIG*i+j] &= ~point_to_mask_array[j];
+      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_and[N_BIG*i+j] &= ~maska[j];
     }
   
     //Очищємо всі функції для ранжування визначуваних "АБО"
     for(unsigned int i = 0; i < NUMBER_DEFINED_OR; i++)
     {
-      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_or[N_BIG*i+j] &= ~point_to_mask_array[j];
+      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_or[N_BIG*i+j] &= ~maska[j];
     }
   
     //Очищємо всі функції для ранжування визначуваних "Викл.АБО"
     for(unsigned int i = 0; i < NUMBER_DEFINED_XOR; i++)
     {
-      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_xor[N_BIG*i+j] &= ~point_to_mask_array[j];
+      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_xor[N_BIG*i+j] &= ~maska[j];
     }
   
     //Очищємо всі функції для ранжування визначуваних "НЕ"
     for(unsigned int i = 0; i < NUMBER_DEFINED_NOT; i++)
     {
-      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_not[N_BIG*i+j] &= ~point_to_mask_array[j];
+      for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_not[N_BIG*i+j] &= ~maska[j];
     }
   }
   
@@ -261,157 +203,102 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 }
 /*****************************************************/
 
-///*****************************************************/
-////Функція обновлення змінних при зміні кількості елементів розширеної логіки
-///*****************************************************/
-//void action_after_changing_number_el(__SETTINGS *target_label, unsigned int element)
-//{
-//  unsigned int maska[N_BIG] = {0, 0, 0, 0, 0, 0, 0, 0}, maska_1 = 0;
-//
-//  //Формуємо маски тільки тих сигналів розширеної логіки, які виведені з конфігурації у кількісному значенні
-//  unsigned int array_defined_logic[NUMBER_DEFINED_ELEMENTS][2] =
-//  {
-//    {target_label->number_defined_df , NUMBER_DEFINED_FUNCTIONS},
-//    {target_label->number_defined_dt , NUMBER_DEFINED_TRIGGERS },
-//    {target_label->number_defined_and, NUMBER_DEFINED_AND      },
-//    {target_label->number_defined_or , NUMBER_DEFINED_OR       },
-//    {target_label->number_defined_xor, NUMBER_DEFINED_XOR      },
-//    {target_label->number_defined_not, NUMBER_DEFINED_NOT      }
-//  };
-//  const unsigned int input_signals[NUMBER_DEFINED_ELEMENTS]  = {1, 2, 0, 0, 0, 0};
-//  const unsigned int others_signals[NUMBER_DEFINED_ELEMENTS] = {2, 3, 1, 1, 1, 1};
-//  const unsigned int button_signals[NUMBER_DEFINED_ELEMENTS] = {1, 2, 0, 0, 0, 0};
-//  
-//  unsigned int input_shift = NUMBER_GENERAL_SIGNAL_FOR_RANG_INPUT    + 
-//                             NUMBER_MTZ_SIGNAL_FOR_RANG_INPUT        +
-//                             NUMBER_MTZ04_SIGNAL_FOR_RANG_INPUT      +
-//                             NUMBER_ZDZ_SIGNAL_FOR_RANG_INPUT        +
-//                             NUMBER_ZZ_SIGNAL_FOR_RANG_INPUT         +
-//                             NUMBER_TZNP_SIGNAL_FOR_RANG_INPUT       +
-//                             NUMBER_APV_SIGNAL_FOR_RANG_INPUT        +
-//                             NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG_INPUT +
-//                             NUMBER_UROV_SIGNAL_FOR_RANG_INPUT       +
-//                             NUMBER_ZOP_SIGNAL_FOR_RANG_INPUT        +
-//                             NUMBER_UMIN_SIGNAL_FOR_RANG_INPUT       +
-//                             NUMBER_UMAX_SIGNAL_FOR_RANG_INPUT       +
-//                             NUMBER_VMP_SIGNAL_FOR_RANG_INPUT;
-//      
-//  unsigned int others_shift = NUMBER_GENERAL_SIGNAL_FOR_RANG    + 
-//                              NUMBER_MTZ_SIGNAL_FOR_RANG        +
-//                              NUMBER_MTZ04_SIGNAL_FOR_RANG      +
-//                              NUMBER_ZDZ_SIGNAL_FOR_RANG        +
-//                              NUMBER_ZZ_SIGNAL_FOR_RANG         +
-//                              NUMBER_TZNP_SIGNAL_FOR_RANG       +
-//                              NUMBER_APV_SIGNAL_FOR_RANG        +
-//                              NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG +
-//                              NUMBER_UROV_SIGNAL_FOR_RANG       +
-//                              NUMBER_ZOP_SIGNAL_FOR_RANG        +
-//                              NUMBER_UMIN_SIGNAL_FOR_RANG       +
-//                              NUMBER_UMAX_SIGNAL_FOR_RANG       +
-//                              NUMBER_VMP_SIGNAL_FOR_RANG;
-//      
-//  unsigned int button_shift = NUMBER_GENERAL_SIGNAL_FOR_RANG_BUTTON    + 
-//                              NUMBER_MTZ_SIGNAL_FOR_RANG_BUTTON        +
-//                              NUMBER_MTZ04_SIGNAL_FOR_RANG_BUTTON      +
-//                              NUMBER_ZDZ_SIGNAL_FOR_RANG_BUTTON        +
-//                              NUMBER_ZZ_SIGNAL_FOR_RANG_BUTTON         +
-//                              NUMBER_TZNP_SIGNAL_FOR_RANG_BUTTON       +
-//                              NUMBER_APV_SIGNAL_FOR_RANG_BUTTON        +
-//                              NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG_BUTTON +
-//                              NUMBER_UROV_SIGNAL_FOR_RANG_BUTTON       +
-//                              NUMBER_ZOP_SIGNAL_FOR_RANG_BUTTON        +
-//                              NUMBER_UMIN_SIGNAL_FOR_RANG_BUTTON       +
-//                              NUMBER_UMAX_SIGNAL_FOR_RANG_BUTTON       +
-//                              NUMBER_VMP_SIGNAL_FOR_RANG_BUTTON;
-//      
-//  for (unsigned int index = 0; index < element; index++)
-//  {
-//    input_shift  += input_signals[index]*array_defined_logic[index][1];
-//    others_shift += others_signals[index]*array_defined_logic[index][1];
-//    button_shift += button_signals[index]*array_defined_logic[index][1];
-//  }
-//  
-//  //Формуємо маски функцій елемента Розширеної логіки
-//  for (unsigned int i = 0; i < input_signals[element]*(array_defined_logic[element][1] - array_defined_logic[element][0]); i++)
-//    _SET_BIT(maska, (input_shift + input_signals[element]*array_defined_logic[element][0] + i));
-//    
-//  for (unsigned int i = 0; i < others_signals[element]*(array_defined_logic[element][1] - array_defined_logic[element][0]); i++)
-//    _SET_BIT(maska, (others_shift + others_signals[element]*array_defined_logic[element][0] + i));
-//    
-//  for (unsigned int i = 0; i < button_signals[element]*(array_defined_logic[element][1] - array_defined_logic[element][0]); i++)
-//    maska_1 |= 1 << (button_shift + button_signals[element]*array_defined_logic[element][0] + i);
-//    
-//  //Знімаємо всі функції для ранжування входів, які відповідають за Розширену логіку
-//  for (int i = 0; i < NUMBER_DEFINED_BUTTONS; i++)
-//    target_label->ranguvannja_buttons[i] &= ~maska_1;
-//  //Знімаємо всі функції для ранжування виходів
-//  for (int i = 0; i < NUMBER_OUTPUTS; i++)
-//  {
-//    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_outputs[N_BIG*i+j] &= ~maska[j];
-//  }
-//  //Знімаємо всі функції для ранжування світоіндикаторів
-//  for (int i = 0; i < NUMBER_LEDS; i++)
-//  {
-//    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_leds[N_BIG*i+j] &= ~maska[j];
-//  }
-//  //Знімаємо всі функції для ранжування аналогового, дискретного реєстраторів, тиші і скидання реле
-//  for (unsigned int j = 0; j < N_BIG; j++ ) 
-//  {
-//    target_label->ranguvannja_analog_registrator[j]  &= ~maska[j];
-//    target_label->ranguvannja_digital_registrator[j] &= ~maska[j];
-//    target_label->ranguvannja_silence[j] &= ~maska[j];
-//    target_label->ranguvannja_reset[j] &= ~maska[j];
-//  }
-//  //Знімаємо всі функції для ранжування сигналізацій
-//  for (int i = 0; i < NUMBER_ALARMS; i++)
-//  {
-//    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] &= ~maska[j];
-//  }
-//  //Очищємо всі функції для ранжування оприділювальних функцій
-//  for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
-//  {
-//    for (unsigned int j = 0; j < N_BIG; j++ ) 
-//    {
-//        for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_df[N_BIG*i+j] &= ~maska[j];
-//    }
-//  }
-//  //Очищємо всі функції для ранжування оприділювальних триґерів
-//  for (int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)
-//  {
-//    for (unsigned int j = 0; j < N_BIG; j++ ) 
-//    {
-//      target_label->ranguvannja_set_dt_source_plus[N_BIG*i+j]    &= ~maska[j];
-//      target_label->ranguvannja_set_dt_source_minus[N_BIG*i+j]   &= ~maska[j];
-//      target_label->ranguvannja_reset_dt_source_plus[N_BIG*i+j]  &= ~maska[j];
-//      target_label->ranguvannja_reset_dt_source_minus[N_BIG*i+j] &= ~maska[j];
-//    }
-//  }
-//  
-//  //Очищємо всі функції для ранжування визначуваних "І"
-//  for(unsigned int i = 0; i < NUMBER_DEFINED_AND; i++)
-//  {
-//    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_and[N_BIG*i+j] &= ~maska[j];
-//  }
-//  
-//  //Очищємо всі функції для ранжування визначуваних "АБО"
-//  for(unsigned int i = 0; i < NUMBER_DEFINED_OR; i++)
-//  {
-//    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_or[N_BIG*i+j] &= ~maska[j];
-//  }
-//  
-//  //Очищємо всі функції для ранжування визначуваних "Викл.АБО"
-//  for(unsigned int i = 0; i < NUMBER_DEFINED_XOR; i++)
-//  {
-//    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_xor[N_BIG*i+j] &= ~maska[j];
-//  }
-//  
-//  //Очищємо всі функції для ранжування визначуваних "НЕ"
-//  for(unsigned int i = 0; i < NUMBER_DEFINED_NOT; i++)
-//  {
-//    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_not[N_BIG*i+j] &= ~maska[j];
-//  }
-//}
-///*****************************************************/
+/*****************************************************/
+//Функція обновлення змінних при зміні кількості елементів розширеної логіки
+/*****************************************************/
+void action_after_changing_number_el(__SETTINGS *target_label, unsigned int element)
+{
+  unsigned int maska[N_BIG] = {0, 0, 0, 0, 0, 0, 0};
+
+  //Формуємо маски тільки тих сигналів розширеної логіки, які виведені з конфігурації у кількісному значенні
+  unsigned int array_defined_logic[NUMBER_DEFINED_ELEMENTS][2] =
+  {
+    {target_label->number_defined_df , NUMBER_DEFINED_FUNCTIONS},
+    {target_label->number_defined_dt , NUMBER_DEFINED_TRIGGERS },
+    {target_label->number_defined_and, NUMBER_DEFINED_AND      },
+    {target_label->number_defined_or , NUMBER_DEFINED_OR       },
+    {target_label->number_defined_xor, NUMBER_DEFINED_XOR      },
+    {target_label->number_defined_not, NUMBER_DEFINED_NOT      }
+  };
+  const unsigned int others_signals[NUMBER_DEFINED_ELEMENTS] = {2, 3, 1, 1, 1, 1};
+  
+  unsigned int others_shift = NUMBER_GENERAL_SIGNAL_FOR_RANG;
+      
+  for (unsigned int index = 0; index < element; index++)
+  {
+    others_shift += others_signals[index]*array_defined_logic[index][1];
+  }
+  
+  //Формуємо маски функцій елемента Розширеної логіки
+  for (unsigned int i = 0; i < others_signals[element]*(array_defined_logic[element][1] - array_defined_logic[element][0]); i++)
+    _SET_BIT(maska, (others_shift + others_signals[element]*array_defined_logic[element][0] + i));
+    
+  //Знімаємо всі функції для ранжування виходів
+  for (int i = 0; i < NUMBER_OUTPUTS; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_outputs[N_BIG*i+j] &= ~maska[j];
+  }
+  //Знімаємо всі функції для ранжування світоіндикаторів
+  for (int i = 0; i < NUMBER_LEDS; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_leds[N_BIG*i+j] &= ~maska[j];
+  }
+  //Знімаємо всі функції для ранжування аналогового, дискретного реєстраторів, тиші і скидання реле
+  for (unsigned int j = 0; j < N_BIG; j++ ) 
+  {
+    target_label->ranguvannja_analog_registrator[j]  &= ~maska[j];
+    target_label->ranguvannja_digital_registrator[j] &= ~maska[j];
+    target_label->ranguvannja_silence[j] &= ~maska[j];
+    target_label->ranguvannja_reset[j] &= ~maska[j];
+  }
+  //Знімаємо всі функції для ранжування сигналізацій
+  for (int i = 0; i < NUMBER_ALARMS; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_alarms[N_BIG*i+j] &= ~maska[j];
+  }
+  //Очищємо всі функції для ранжування оприділювальних функцій
+  for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) 
+    {
+        target_label->ranguvannja_df[N_BIG*i+j] &= ~maska[j];
+    }
+  }
+  //Очищємо всі функції для ранжування оприділювальних триґерів
+  for (int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) 
+    {
+      target_label->ranguvannja_set_dt[N_BIG*i+j]    &= ~maska[j];
+      target_label->ranguvannja_reset_dt[N_BIG*i+j]  &= ~maska[j];
+    }
+  }
+  
+  //Очищємо всі функції для ранжування визначуваних "І"
+  for(unsigned int i = 0; i < NUMBER_DEFINED_AND; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_and[N_BIG*i+j] &= ~maska[j];
+  }
+  
+  //Очищємо всі функції для ранжування визначуваних "АБО"
+  for(unsigned int i = 0; i < NUMBER_DEFINED_OR; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_or[N_BIG*i+j] &= ~maska[j];
+  }
+  
+  //Очищємо всі функції для ранжування визначуваних "Викл.АБО"
+  for(unsigned int i = 0; i < NUMBER_DEFINED_XOR; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_xor[N_BIG*i+j] &= ~maska[j];
+  }
+  
+  //Очищємо всі функції для ранжування визначуваних "НЕ"
+  for(unsigned int i = 0; i < NUMBER_DEFINED_NOT; i++)
+  {
+    for (unsigned int j = 0; j < N_BIG; j++ ) target_label->ranguvannja_d_not[N_BIG*i+j] &= ~maska[j];
+  }
+}
+/*****************************************************/
 
 /*****************************************************/
 //Функція, яка визначає кількість біт затримки, який допускається між байтами у RS-485 згідно з визначеними настройками

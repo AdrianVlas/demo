@@ -854,7 +854,7 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
       
       if (type_ekran == INDEX_VIEWING_SILENCE)
         index_deleted_function = RANG_SILENCE;
-      else if (type_ekran == INDEX_VIEWING_A_REG)
+      else if (type_ekran == INDEX_VIEWING_RESET)
         index_deleted_function = RANG_RESET;
       else if (type_ekran == INDEX_VIEWING_A_REG)
         index_deleted_function = RANG_WORK_A_REJESTRATOR;
@@ -1035,13 +1035,11 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
       {
         if (
             (
-             /*
              (
               (index_in_list >= (int)(RANG_DF1_IN + 2*current_settings.number_defined_df)) &&
               (index_in_list <= RANG_DF8_OUT)
              )
              ||
-             */
              (
               (type_ekran == INDEX_VIEWING_DF) &&
               (
@@ -1052,13 +1050,11 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
             )   
             ||  
             (
-             /*
              (
               (index_in_list >= (int)(RANG_DT1_SET + 3*current_settings.number_defined_dt)) &&
               (index_in_list <= RANG_DT4_OUT)
              )
              ||
-             */
              (
               (type_ekran == INDEX_VIEWING_DT) &&
               (
@@ -1070,13 +1066,11 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
             )   
             ||  
             (
-             /*
              (
               (index_in_list >= (int)(RANG_D_AND1 + current_settings.number_defined_and)) &&
               (index_in_list <= RANG_D_AND8)
              )   
              ||
-             */
              (
               (type_ekran == INDEX_VIEWING_D_AND) &&
               (index_in_list == (RANG_D_AND1 + (number_ekran - EKRAN_RANGUVANNJA_D_AND1)))
@@ -1084,13 +1078,11 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
             )   
             ||  
             (
-             /*
              (
               (index_in_list >= (int)(RANG_D_OR1 + current_settings.number_defined_or)) &&
               (index_in_list <= RANG_D_OR8)
              )   
              ||
-             */
              (
               (type_ekran == INDEX_VIEWING_D_OR) &&
               (index_in_list == (RANG_D_OR1 + (number_ekran - EKRAN_RANGUVANNJA_D_OR1)))
@@ -1098,13 +1090,11 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
             )   
             ||  
             (
-             /*
              (
               (index_in_list >= (int)(RANG_D_XOR1 + current_settings.number_defined_xor)) &&
               (index_in_list <= RANG_D_XOR8)
              )   
              ||
-             */
              (
               (type_ekran == INDEX_VIEWING_D_XOR) &&
               (index_in_list == (RANG_D_XOR1 + (number_ekran - EKRAN_RANGUVANNJA_D_XOR1)))
@@ -1112,13 +1102,11 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
             )   
             ||  
             (
-             /*
              (
               (index_in_list >= (int)(RANG_D_NOT1 + current_settings.number_defined_not)) &&
               (index_in_list <= RANG_D_NOT16)
              )   
              ||
-             */
              (
               (type_ekran == INDEX_VIEWING_D_NOT) &&
               (index_in_list == (RANG_D_NOT1 + (number_ekran - EKRAN_RANGUVANNJA_D_NOT1)))
@@ -1315,7 +1303,7 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
 void check_current_index_is_presented_in_configuration(
                                                          unsigned int* found_new_index_tmp,
                                                                   /*int* add_filter_point,*/
-                                                                  /*EL_FILTER_STRUCT el_filter[],*/
+                                                                  EL_FILTER_STRUCT el_filter[],
                                                                   int plus_minus,
                                                                   int number_general_function_plus_number_el_function,
                                                                   int number_ctrl_phase_function
@@ -1333,19 +1321,19 @@ void check_current_index_is_presented_in_configuration(
       }
     }
 
-//    for (unsigned int i = 0; i < NUMBER_DEFINED_ELEMENTS; i++)
-//    {
-//      if (
-//          (el_filter[i].present != 0) &&
-//          (current_ekran.index_position >= (el_filter[i].start_index + el_filter[i].number_per_index*el_filter[i].real_number)) &&
-//          (current_ekran.index_position <=  el_filter[i].stop_index)
-//         )
-//      {
-//        *found_new_index_tmp = 0;
-//        current_ekran.index_position++;
-//        break; //вихід із циклу
-//      }
-//    }
+    for (unsigned int i = 0; i < NUMBER_DEFINED_ELEMENTS; i++)
+    {
+      if (
+          (el_filter[i].present != 0) &&
+          (current_ekran.index_position >= (el_filter[i].start_index + el_filter[i].number_per_index*el_filter[i].real_number)) &&
+          (current_ekran.index_position <=  el_filter[i].stop_index)
+         )
+      {
+        *found_new_index_tmp = 0;
+        current_ekran.index_position++;
+        break; //вихід із циклу
+      }
+    }
   }
   else
   {
@@ -1359,19 +1347,19 @@ void check_current_index_is_presented_in_configuration(
       }
     }
 
-//    for (unsigned int i = 0; i < NUMBER_DEFINED_ELEMENTS; i++)
-//    {
-//      if (
-//          (el_filter[i].present != 0) &&
-//          (current_ekran.index_position >= (el_filter[i].start_index + el_filter[i].number_per_index*el_filter[i].real_number)) &&
-//          (current_ekran.index_position <=  el_filter[i].stop_index)
-//         )
-//      {
-//        *found_new_index_tmp = 0;
-//        current_ekran.index_position--;
-//        break; //вихід із циклу
-//      }
-//    }
+    for (unsigned int i = 0; i < NUMBER_DEFINED_ELEMENTS; i++)
+    {
+      if (
+          (el_filter[i].present != 0) &&
+          (current_ekran.index_position >= (el_filter[i].start_index + el_filter[i].number_per_index*el_filter[i].real_number)) &&
+          (current_ekran.index_position <=  el_filter[i].stop_index)
+         )
+      {
+        *found_new_index_tmp = 0;
+        current_ekran.index_position--;
+        break; //вихід із циклу
+      }
+    }
   }
 }
 /*****************************************************/

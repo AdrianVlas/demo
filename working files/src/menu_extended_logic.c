@@ -56,44 +56,44 @@ void make_ekran_extended_logic(void)
     }
   }
   
-//  unsigned int additional_current = 0;
+  unsigned int additional_current = 0;
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
 
-//  /******************************************/
-//  //Виключаємо поля, які не треба відображати
-//  /******************************************/
-//  unsigned int number_defined_logic[NUMBER_DEFINED_ELEMENTS] =
-//  {
-//    current_settings.number_defined_df,
-//    current_settings.number_defined_dt,
-//    current_settings.number_defined_and,
-//    current_settings.number_defined_or,
-//    current_settings.number_defined_xor,
-//    current_settings.number_defined_not
-//  };
-//  
-//  for (unsigned int index_defined_element = 0; index_defined_element < NUMBER_DEFINED_ELEMENTS; index_defined_element++)
-//  {
-//    if (number_defined_logic[index_defined_element] == 0)
-//    {
-//      unsigned int i = INDEX_OF_DEFINED_FUNCTIONS + index_defined_element - additional_current;
-//
-//      if ((i+1) <= position_temp) position_temp--;
-//      do
-//      {
-//        for(unsigned int j = 0; j < MAX_COL_LCD; j++)
-//        {
-//          if ((i+1) < (MAX_ROW_FOR_EXTENDED_LIGIC - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-//          else name_string_tmp[i][j] = ' ';
-//        }
-//        i++;
-//      }
-//      while (i < (MAX_ROW_FOR_EXTENDED_LIGIC - additional_current));
-//      additional_current++;
-//    }
-//  }
-//  /******************************************/
+  /******************************************/
+  //Виключаємо поля, які не треба відображати
+  /******************************************/
+  unsigned int number_defined_logic[NUMBER_DEFINED_ELEMENTS] =
+  {
+    current_settings.number_defined_df,
+    current_settings.number_defined_dt,
+    current_settings.number_defined_and,
+    current_settings.number_defined_or,
+    current_settings.number_defined_xor,
+    current_settings.number_defined_not
+  };
+  
+  for (unsigned int index_defined_element = 0; index_defined_element < NUMBER_DEFINED_ELEMENTS; index_defined_element++)
+  {
+    if (number_defined_logic[index_defined_element] == 0)
+    {
+      unsigned int i = INDEX_OF_DEFINED_FUNCTIONS + index_defined_element - additional_current;
+
+      if ((i+1) <= position_temp) position_temp--;
+      do
+      {
+        for(unsigned int j = 0; j < MAX_COL_LCD; j++)
+        {
+          if ((i+1) < (MAX_ROW_FOR_EXTENDED_LIGIC - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+          else name_string_tmp[i][j] = ' ';
+        }
+        i++;
+      }
+      while (i < (MAX_ROW_FOR_EXTENDED_LIGIC - additional_current));
+      additional_current++;
+    }
+  }
+  /******************************************/
   
   index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 
@@ -101,7 +101,7 @@ void make_ekran_extended_logic(void)
   //Копіюємо  рядки у робочий екран
   for (unsigned int i = 0; i< MAX_ROW_LCD; i++)
   {
-    if (index_of_ekran < (MAX_ROW_FOR_EXTENDED_LIGIC/* - additional_current*/))
+    if (index_of_ekran < (MAX_ROW_FOR_EXTENDED_LIGIC - additional_current))
     {
       for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string_tmp[index_of_ekran][j];
     } 

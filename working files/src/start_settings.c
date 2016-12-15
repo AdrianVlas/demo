@@ -1606,12 +1606,12 @@ void min_settings(__SETTINGS *target_label)
   }
   
   target_label->number_iteration_el = NUMBER_ITERATION_EL_MAX;
-//  target_label->number_defined_df = NUMBER_DEFINED_FUNCTIONS_MAX;
-//  target_label->number_defined_dt = NUMBER_DEFINED_TRIGGERS_MAX;
-//  target_label->number_defined_and = NUMBER_DEFINED_AND_MAX;
-//  target_label->number_defined_or = NUMBER_DEFINED_OR_MAX;
-//  target_label->number_defined_xor = NUMBER_DEFINED_XOR_MAX;
-//  target_label->number_defined_not = NUMBER_DEFINED_NOT_MAX;
+  target_label->number_defined_df = NUMBER_DEFINED_FUNCTIONS_MAX;
+  target_label->number_defined_dt = NUMBER_DEFINED_TRIGGERS_MAX;
+  target_label->number_defined_and = NUMBER_DEFINED_AND_MAX;
+  target_label->number_defined_or = NUMBER_DEFINED_OR_MAX;
+  target_label->number_defined_xor = NUMBER_DEFINED_XOR_MAX;
+  target_label->number_defined_not = NUMBER_DEFINED_NOT_MAX;
 
   target_label->type_df = 0x0;
   

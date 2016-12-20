@@ -117,6 +117,9 @@ RANG_DI8,
 RANG_DI9,
 RANG_DI10,
 
+RANG_DB1,
+RANG_DB2,
+
 RANG_DF1_IN,
 RANG_DF1_OUT,
 RANG_DF2_IN,
@@ -194,7 +197,7 @@ RANG_ERROR_SEC_TN1_CTRL_PHASE,
 RANG_ERROR_SEC_TN2_CTRL_PHASE
 };
 
-#define NUMBER_GENERAL_SIGNAL_FOR_RANG     21
+#define NUMBER_GENERAL_SIGNAL_FOR_RANG     23
 #define NUMBER_EL_SIGNAL_FOR_RANG          69
 #define NUMBER_CTRL_PHASE_SIGNAL_FOR_RANG  5
 
@@ -214,16 +217,18 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
     (1 << (RANG_SILENCE - 0))                                  /* 0*/  \
   | (1 << (RANG_RESET - 0))                                    /* 1*/  \
   | (1 << (RANG_TEST - 0))                                     /* 2*/  \
-  | (1 << (RANG_DI1 - 0))                                      /*10*/  \
-  | (1 << (RANG_DI2 - 0))                                      /*11*/  \
-  | (1 << (RANG_DI3 - 0))                                      /*12*/  \
-  | (1 << (RANG_DI4 - 0))                                      /*13*/  \
-  | (1 << (RANG_DI5 - 0))                                      /*14*/  \
-  | (1 << (RANG_DI6 - 0))                                      /*15*/  \
-  | (1 << (RANG_DI7 - 0))                                      /*16*/  \
-  | (1 << (RANG_DI8 - 0))                                      /*17*/  \
-  | (1 << (RANG_DI9 - 0))                                      /*18*/  \
-  | (1 << (RANG_DI10 - 0))                                     /*19*/  \
+  | (1 << (RANG_DI1 - 0))                                      /*11*/  \
+  | (1 << (RANG_DI2 - 0))                                      /*12*/  \
+  | (1 << (RANG_DI3 - 0))                                      /*13*/  \
+  | (1 << (RANG_DI4 - 0))                                      /*14*/  \
+  | (1 << (RANG_DI5 - 0))                                      /*15*/  \
+  | (1 << (RANG_DI6 - 0))                                      /*16*/  \
+  | (1 << (RANG_DI7 - 0))                                      /*17*/  \
+  | (1 << (RANG_DI8 - 0))                                      /*18*/  \
+  | (1 << (RANG_DI9 - 0))                                      /*19*/  \
+  | (1 << (RANG_DI10 - 0))                                     /*20*/  \
+  | (1 << (RANG_DB1 - 0))                                      /*21*/  \
+  | (1 << (RANG_DB2 - 0))                                      /*22*/  \
 )
 
 #define MASKA_FOR_INPUT_SIGNALS_1                  0
@@ -242,14 +247,16 @@ RANG_ERROR_SEC_TN2_CTRL_PHASE
 #define MASKA_CTRL_PHASE_SIGNALS_1                 0
 
 #define MASKA_CTRL_PHASE_SIGNALS_2 (unsigned int)(                \
-     (1 << (RANG_ERROR_DELTA_U_CTRL_PHASE - 64))            /*89*/\
-   | (1 << (RANG_ERROR_DELTA_PHI_CTRL_PHASE - 64))          /*90*/\
-   | (1 << (RANG_ERROR_DELTA_F_CTRL_PHASE - 64))            /*91*/\
-   | (1 << (RANG_ERROR_SEC_TN1_CTRL_PHASE - 64))            /*92*/\
-   | (1 << (RANG_ERROR_SEC_TN2_CTRL_PHASE - 64))            /*93*/\
+     (1 << (RANG_ERROR_DELTA_U_CTRL_PHASE - 64))            /*92*/\
+   | (1 << (RANG_ERROR_DELTA_PHI_CTRL_PHASE - 64))          /*93*/\
+   | (1 << (RANG_ERROR_DELTA_F_CTRL_PHASE - 64))            /*94*/\
+   | (1 << (RANG_ERROR_SEC_TN1_CTRL_PHASE - 64))            /*95*/\
 )
 
-#define MASKA_CTRL_PHASE_SIGNALS_3                 0
+#define MASKA_CTRL_PHASE_SIGNALS_3 (unsigned int)(                \
+     (1 << (RANG_ERROR_SEC_TN2_CTRL_PHASE - 96))            /*96*/\
+)
+
 #define MASKA_CTRL_PHASE_SIGNALS_4                 0
 #define MASKA_CTRL_PHASE_SIGNALS_5                 0
 #define MASKA_CTRL_PHASE_SIGNALS_6                 0

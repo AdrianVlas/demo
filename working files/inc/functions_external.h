@@ -164,22 +164,14 @@ extern unsigned int start_read_buffer_via_I2C(uint32_t, uint32_t, uint8_t volati
 extern void main_routines_for_i2c(void);
 extern void error_start_i2c(void);
 
-extern void find_new_ADC_canal_to_read(unsigned int, unsigned int*);
 extern void control_reading_ADCs(void);
 extern void operate_test_ADCs(void);
-extern void Fourier(unsigned int);
-extern void fapch_val_1(void);
-extern void fapch_val_2(void);
-extern void delta_phi_routine(void);
-extern void current_delta_phi(void);
-extern unsigned int sequence_phases(int [][2], unsigned int*, unsigned int*, /*EXTENDED_SAMPLE*/int [], unsigned int, unsigned int);
+extern void method_sum_sqr_data(void);
 extern void calc_measurement(void);
 extern unsigned int norma_value(unsigned long long);
 extern unsigned int sqrt_32(unsigned int);
 extern unsigned int sqrt_64(unsigned long long);
 extern unsigned int get_order(int);
-
-extern void calc_angle(void);
 
 extern void main_function_for_dataflash_resp(int);
 extern void main_function_for_dataflash_req(int);

@@ -230,36 +230,62 @@ void convert_and_insert_char_for_measurement(unsigned int start_number_digit_aft
 void make_ekran_current(void)
 {
   
-  unsigned char name_string[MAX_ROW_FOR_MEASURMENT_CURRENT][MAX_COL_LCD] = 
+  const uint8_t name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_MEASURMENT_ANALOG_INPUT][MAX_COL_LCD] = 
   {
-    " Ia   =         ",
-    " Ib   =         ",
-    " Ic   =         ",
-    " I2   =         ",
-    " I1   =         "
+    {
+      " ј¬х1 =         ",
+      " ј¬х2 =         ",
+      " ј¬х3 =         ",
+      " ј¬х4 =         "
+    },
+    {
+      " ј¬х1 =         ",
+      " ј¬х2 =         ",
+      " ј¬х3 =         ",
+      " ј¬х4 =         "
+    },
+    {
+      " AIn1 =         ",
+      " AIn2 =         ",
+      " AIn3 =         ",
+      " AIn4 =         "
+    },
+    {
+      " ј¬х1 =         ",
+      " ј¬х2 =         ",
+      " ј¬х3 =         ",
+      " ј¬х4 =         "
+    }
   };
-  unsigned int index_array[MAX_ROW_FOR_MEASURMENT_CURRENT] = 
+  uint8_t name_string_tmp[MAX_ROW_FOR_MEASURMENT_ANALOG_INPUT][MAX_COL_LCD];
+  
+  const uint32_t index_array[MAX_ROW_FOR_MEASURMENT_ANALOG_INPUT] = 
   {
-    IM_IA,
-    IM_IB,
-    IM_IC,
-    IM_I2,
-    IM_I1
+    IM_AIN1,
+    IM_AIN2,
+    IM_AIN3,
+    IM_AIN4
   };
   
   // оп≥юЇмо вим≥рюванн€ €к≥ потр≥бн≥ дл€ в≥дображенн€
   semaphore_measure_values_low1 = 1;
-  for (unsigned int i = 0; i < MAX_ROW_FOR_MEASURMENT_CURRENT; i++ ) 
+  for (unsigned int i = 0; i < MAX_ROW_FOR_MEASURMENT_ANALOG_INPUT; i++ ) 
   {
     unsigned int index_to_copy = index_array[i];
     measurement_low[index_to_copy] = measurement_middle[index_to_copy];
   }
   semaphore_measure_values_low1 = 0;
 
+
   int index_language = index_language_in_array(current_settings.language);
-  for (unsigned int i = 0; i < MAX_ROW_FOR_MEASURMENT_CURRENT; i++)
+  for(int index_1 = 0; index_1 < MAX_ROW_FOR_MEASURMENT_ANALOG_INPUT; index_1++)
   {
-    name_string[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
+    for(int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
+    {
+      name_string_tmp[index_1][index_2] = name_string[index_language][index_1][index_2];
+    }
+
+    name_string_tmp[index_1][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
   }
   
   int position_temp = current_ekran.index_position;
@@ -271,17 +297,17 @@ void make_ekran_current(void)
   for (unsigned int i=0; i< MAX_ROW_LCD; i++)
   {
     //Ќаступн≥ р€дки треба перев≥рити, чи њх требе в≥дображати у текуч≥й коф≥гурац≥њ
-    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_CURRENT)
+    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_ANALOG_INPUT)
     {
       /********************************/
       //¬водимо вим≥рювальн≥ значенн€  
       /********************************/
       unsigned int index = index_array[index_of_ekran];
       unsigned int start_number_digit_after_point = 3;
-      convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string[index_of_ekran], 7);
+      convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string_tmp[index_of_ekran], 7);
       /********************************/
 
-      for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string[index_of_ekran][j];
+      for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string_tmp[index_of_ekran][j];
     }
     else
       for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = ' ';

@@ -1558,308 +1558,308 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
     
     temp_value  = output_array[address_data - base_address];
   }
-  else if ((address_data >= M_ADDRESS_FIRST_MEASUREMENTS_1) && (address_data <= M_ADDRESS_LAST_MEASUREMENTS_1))
-  {
-    //Митєві вимірювання розраховані фетодом перетворення Фур'є
-    switch (address_data)
-    {
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UA_1):
-      {
-        temp_value = measurement_low[IM_UA1] >> 3;
-
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UB_1):
-      {
-        temp_value = measurement_low[IM_UB1] >> 3;
-
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UC_1):
-      {
-        temp_value = measurement_low[IM_UC1] >> 3;
-
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UAB_1):
-      {
-        temp_value = measurement_low[IM_UAB1] >> 3;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UBC_1):
-      {
-        temp_value = measurement_low[IM_UBC1] >> 3;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UCA_1):
-      {
-        temp_value = measurement_low[IM_UCA1] >> 3;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UA_2):
-      {
-        temp_value = measurement_low[IM_UA1] >> 3;
-
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UB_2):
-      {
-        temp_value = measurement_low[IM_UB1] >> 3;
-
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UC_2):
-      {
-        temp_value = measurement_low[IM_UC1] >> 3;
-
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UAB_2):
-      {
-        temp_value = measurement_low[IM_UAB2] >> 3;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UBC_2):
-      {
-        temp_value = measurement_low[IM_UBC2] >> 3;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UCA_2):
-      {
-        temp_value = measurement_low[IM_UCA2] >> 3;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_IA_1):
-      {
-        temp_value = measurement_low[IM_IA] >> 2;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_IB_1):
-      {
-        temp_value = measurement_low[IM_IB] >> 2;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_IC_1):
-      {
-        temp_value = measurement_low[IM_IC] >> 2;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_I1):
-      {
-        temp_value = measurement_low[IM_I1] >> 2;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_I2):
-      {
-        temp_value = measurement_low[IM_I2] >> 2;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ACTIVE_POWER):
-      {
-        temp_value = P/50;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_REACTIVE_POWER):
-      {
-        temp_value = Q/50;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_FULL_POWER):
-      {
-        temp_value = S/50;
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_COS_PHI):
-      {
-        if (S != 0)
-          temp_value = cos_phi_x1000;
-        else
-          temp_value = 0x0;
-          
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_FREQUENCY_1):
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_FREQUENCY_2):
-      {
-        int int_frequency;
-        if (address_data == (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_FREQUENCY_1))int_frequency = (int)(frequency_val_1*100);
-        else int_frequency = (int)(frequency_val_2*100);
-        
-        if (int_frequency > 0 /*це число означає - частота не визначена*/)
-          temp_value = int_frequency;
-        else
-        {
-          if (int_frequency == (-1*100))
-            temp_value = (unsigned int)(-1);
-          else if (int_frequency == (-2*100))
-            temp_value = (unsigned int)(-2);
-          else if (int_frequency == (-3*100))
-            temp_value = (unsigned int)(-3);
-          else
-            temp_value = (unsigned int)(-4);
-        }
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_BASE_CANAL_FOR_ANGLE):
-      {
-        switch (base_index_for_angle)
-        {
-        case (-1):
-          {
-            temp_value = BASE_CANAL_NONE;
-            break;
-          }
-        case FULL_ORT_Ua1:
-          {
-            temp_value = BASE_CANAL_UA_TN1;
-            break;
-          }
-        case FULL_ORT_Ub1:
-          {
-            temp_value = BASE_CANAL_UB_TN1;
-            break;
-          }
-        case FULL_ORT_Uc1:
-          {
-            temp_value = BASE_CANAL_UC_TN1;
-            break;
-          }
-        case FULL_ORT_Ua2:
-          {
-            temp_value = BASE_CANAL_UA_TN2;
-            break;
-          }
-        case FULL_ORT_Ub2:
-          {
-            temp_value = BASE_CANAL_UB_TN2;
-            break;
-          }
-        case FULL_ORT_Uc2:
-          {
-            temp_value = BASE_CANAL_UC_TN2;
-            break;
-          }
-        case FULL_ORT_Uab1:
-          {
-            temp_value = BASE_CANAL_UAB_TN1;
-            break;
-          }
-        case FULL_ORT_Ubc1:
-          {
-            temp_value = BASE_CANAL_UBC_TN1;
-            break;
-          }
-        case FULL_ORT_Uca1:
-          {
-            temp_value = BASE_CANAL_UCA_TN1;
-            break;
-          }
-        case FULL_ORT_Uab2:
-          {
-            temp_value = BASE_CANAL_UAB_TN2;
-            break;
-          }
-        case FULL_ORT_Ubc2:
-          {
-            temp_value = BASE_CANAL_UBC_TN2;
-            break;
-          }
-        case FULL_ORT_Uca2:
-          {
-            temp_value = BASE_CANAL_UCA_TN2;
-            break;
-          }
-        default:
-          {
-            //Теоретично цього ніколи не мало б бути
-            total_error_sw_fixed(72);
-          }
-        }
-
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UA_1):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Ua1];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UB_1):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Ub1];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UC_1):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Uc1];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UAB_1):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Uab1];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UBC_1):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Ubc1];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UCA_1):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Uca1];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UA_2):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Ua2];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UB_2):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Ub2];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UC_2):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Uc2];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UAB_2):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Uab2];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UBC_2):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Ubc2];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UCA_2):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Uca2];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_IA_1):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Ia];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_IB_1):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Ib];
-        break;
-      }
-    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_IC_1):
-      {
-        temp_value = (unsigned int)phi_angle[FULL_ORT_Ic];
-        break;
-      }
-    default:
-      {
-        temp_value = 0;
-        break;
-      }
-    }
-  }
+//  else if ((address_data >= M_ADDRESS_FIRST_MEASUREMENTS_1) && (address_data <= M_ADDRESS_LAST_MEASUREMENTS_1))
+//  {
+//    //Митєві вимірювання розраховані фетодом перетворення Фур'є
+//    switch (address_data)
+//    {
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UA_1):
+//      {
+//        temp_value = measurement_low[IM_UA1] >> 3;
+//
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UB_1):
+//      {
+//        temp_value = measurement_low[IM_UB1] >> 3;
+//
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UC_1):
+//      {
+//        temp_value = measurement_low[IM_UC1] >> 3;
+//
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UAB_1):
+//      {
+//        temp_value = measurement_low[IM_UAB1] >> 3;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UBC_1):
+//      {
+//        temp_value = measurement_low[IM_UBC1] >> 3;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UCA_1):
+//      {
+//        temp_value = measurement_low[IM_UCA1] >> 3;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UA_2):
+//      {
+//        temp_value = measurement_low[IM_UA1] >> 3;
+//
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UB_2):
+//      {
+//        temp_value = measurement_low[IM_UB1] >> 3;
+//
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UC_2):
+//      {
+//        temp_value = measurement_low[IM_UC1] >> 3;
+//
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UAB_2):
+//      {
+//        temp_value = measurement_low[IM_UAB2] >> 3;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UBC_2):
+//      {
+//        temp_value = measurement_low[IM_UBC2] >> 3;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_UCA_2):
+//      {
+//        temp_value = measurement_low[IM_UCA2] >> 3;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_IA_1):
+//      {
+//        temp_value = measurement_low[IM_IA] >> 2;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_IB_1):
+//      {
+//        temp_value = measurement_low[IM_IB] >> 2;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_IC_1):
+//      {
+//        temp_value = measurement_low[IM_IC] >> 2;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_I1):
+//      {
+//        temp_value = measurement_low[IM_I1] >> 2;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_MEASUREMENT_I2):
+//      {
+//        temp_value = measurement_low[IM_I2] >> 2;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ACTIVE_POWER):
+//      {
+//        temp_value = P/50;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_REACTIVE_POWER):
+//      {
+//        temp_value = Q/50;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_FULL_POWER):
+//      {
+//        temp_value = S/50;
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_COS_PHI):
+//      {
+//        if (S != 0)
+//          temp_value = cos_phi_x1000;
+//        else
+//          temp_value = 0x0;
+//          
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_FREQUENCY_1):
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_FREQUENCY_2):
+//      {
+//        int int_frequency;
+//        if (address_data == (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_FREQUENCY_1))int_frequency = (int)(frequency_val_1*100);
+//        else int_frequency = (int)(frequency_val_2*100);
+//        
+//        if (int_frequency > 0 /*це число означає - частота не визначена*/)
+//          temp_value = int_frequency;
+//        else
+//        {
+//          if (int_frequency == (-1*100))
+//            temp_value = (unsigned int)(-1);
+//          else if (int_frequency == (-2*100))
+//            temp_value = (unsigned int)(-2);
+//          else if (int_frequency == (-3*100))
+//            temp_value = (unsigned int)(-3);
+//          else
+//            temp_value = (unsigned int)(-4);
+//        }
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_BASE_CANAL_FOR_ANGLE):
+//      {
+//        switch (base_index_for_angle)
+//        {
+//        case (-1):
+//          {
+//            temp_value = BASE_CANAL_NONE;
+//            break;
+//          }
+//        case FULL_ORT_Ua1:
+//          {
+//            temp_value = BASE_CANAL_UA_TN1;
+//            break;
+//          }
+//        case FULL_ORT_Ub1:
+//          {
+//            temp_value = BASE_CANAL_UB_TN1;
+//            break;
+//          }
+//        case FULL_ORT_Uc1:
+//          {
+//            temp_value = BASE_CANAL_UC_TN1;
+//            break;
+//          }
+//        case FULL_ORT_Ua2:
+//          {
+//            temp_value = BASE_CANAL_UA_TN2;
+//            break;
+//          }
+//        case FULL_ORT_Ub2:
+//          {
+//            temp_value = BASE_CANAL_UB_TN2;
+//            break;
+//          }
+//        case FULL_ORT_Uc2:
+//          {
+//            temp_value = BASE_CANAL_UC_TN2;
+//            break;
+//          }
+//        case FULL_ORT_Uab1:
+//          {
+//            temp_value = BASE_CANAL_UAB_TN1;
+//            break;
+//          }
+//        case FULL_ORT_Ubc1:
+//          {
+//            temp_value = BASE_CANAL_UBC_TN1;
+//            break;
+//          }
+//        case FULL_ORT_Uca1:
+//          {
+//            temp_value = BASE_CANAL_UCA_TN1;
+//            break;
+//          }
+//        case FULL_ORT_Uab2:
+//          {
+//            temp_value = BASE_CANAL_UAB_TN2;
+//            break;
+//          }
+//        case FULL_ORT_Ubc2:
+//          {
+//            temp_value = BASE_CANAL_UBC_TN2;
+//            break;
+//          }
+//        case FULL_ORT_Uca2:
+//          {
+//            temp_value = BASE_CANAL_UCA_TN2;
+//            break;
+//          }
+//        default:
+//          {
+//            //Теоретично цього ніколи не мало б бути
+//            total_error_sw_fixed(72);
+//          }
+//        }
+//
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UA_1):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Ua1];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UB_1):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Ub1];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UC_1):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Uc1];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UAB_1):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Uab1];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UBC_1):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Ubc1];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UCA_1):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Uca1];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UA_2):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Ua2];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UB_2):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Ub2];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UC_2):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Uc2];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UAB_2):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Uab2];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UBC_2):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Ubc2];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_UCA_2):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Uca2];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_IA_1):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Ia];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_IB_1):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Ib];
+//        break;
+//      }
+//    case (M_ADDRESS_FIRST_MEASUREMENTS_1 + OFFSET_ANGLE_IC_1):
+//      {
+//        temp_value = (unsigned int)phi_angle[FULL_ORT_Ic];
+//        break;
+//      }
+//    default:
+//      {
+//        temp_value = 0;
+//        break;
+//      }
+//    }
+//  }
 //  else if ((address_data >= M_ADDRESS_FIRST_MEASUREMENTS_DR) && (address_data <= M_ADDRESS_LAST_MEASUREMENTS_DR))
 //  {
 //    //Вимірювання, які зафіксовані під час роботи дискретного реєстратора
@@ -2778,10 +2778,10 @@ inline unsigned int Get_data(unsigned char *data, unsigned int address_data, uns
   {
     temp_value = ustuvannja[address_data - MA_ADDRESS_FIRST_USTUVANNJA ];
   }
-  else if ((address_data >= MA_ADDRESS_FIRST_PHI_USTUVANNJA ) && (address_data <= MA_ADDRESS_LAST_PHI_USTUVANNJA))
-  {
-    temp_value = phi_ustuvannja[address_data - MA_ADDRESS_FIRST_PHI_USTUVANNJA ];
-  }
+//  else if ((address_data >= MA_ADDRESS_FIRST_PHI_USTUVANNJA ) && (address_data <= MA_ADDRESS_LAST_PHI_USTUVANNJA))
+//  {
+//    temp_value = phi_ustuvannja[address_data - MA_ADDRESS_FIRST_PHI_USTUVANNJA ];
+//  }
   else if (address_data == MA_NUMBER_ITERATION_EL)
   {
     temp_value = current_settings_interfaces.number_iteration_el;
@@ -4065,33 +4065,33 @@ inline unsigned int Set_data(unsigned short int data, unsigned int address_data,
       error = ERROR_ILLEGAL_DATA_ADDRESS;
     }
   }
-  else if ((address_data >= MA_ADDRESS_FIRST_PHI_USTUVANNJA ) && (address_data <= MA_ADDRESS_LAST_PHI_USTUVANNJA))
-  {
-    //Фазове ючтування
-    if (password_ustuvannja == 0x1978)
-    {
-      unsigned int index = address_data - MA_ADDRESS_FIRST_PHI_USTUVANNJA; 
-      int phi_tmp = (short int)data;
-      float phi_radian_tmp = PI*((float)phi_tmp)/1800.0f; /*Оскільки кут встановлюється з точнітю до десятих цілим числом, то для того, щоб отримати правильно радіани - треба поділити не на 180 а на 1800= 180х10 */
-      if (method_setting == SET_DATA_IMMEDITATE)
-      {
-        phi_ustuvannja[index] = phi_tmp;
-        phi_ustuvannja_sin_cos[2*index    ] = arm_sin_f32(phi_radian_tmp);
-        phi_ustuvannja_sin_cos[2*index + 1] = arm_cos_f32(phi_radian_tmp);
-      }
-      else
-      {
-        phi_edit_ustuvannja[index] = phi_tmp;
-        phi_edit_ustuvannja_sin_cos[2*index    ] = arm_sin_f32(phi_radian_tmp);
-        phi_edit_ustuvannja_sin_cos[2*index + 1] = arm_cos_f32(phi_radian_tmp);
-      }
-    }
-    else 
-    {
-      /*У разі повідомлення про помилку тип помилки ставиться такий ніби така адреса взагалі є недоступною, щоб зменшити ймовірність несанкціонованого запису юстування*/
-      error = ERROR_ILLEGAL_DATA_ADDRESS;
-    }
-  }
+//  else if ((address_data >= MA_ADDRESS_FIRST_PHI_USTUVANNJA ) && (address_data <= MA_ADDRESS_LAST_PHI_USTUVANNJA))
+//  {
+//    //Фазове ючтування
+//    if (password_ustuvannja == 0x1978)
+//    {
+//      unsigned int index = address_data - MA_ADDRESS_FIRST_PHI_USTUVANNJA; 
+//      int phi_tmp = (short int)data;
+//      float phi_radian_tmp = PI*((float)phi_tmp)/1800.0f; /*Оскільки кут встановлюється з точнітю до десятих цілим числом, то для того, щоб отримати правильно радіани - треба поділити не на 180 а на 1800= 180х10 */
+//      if (method_setting == SET_DATA_IMMEDITATE)
+//      {
+//        phi_ustuvannja[index] = phi_tmp;
+//        phi_ustuvannja_sin_cos[2*index    ] = arm_sin_f32(phi_radian_tmp);
+//        phi_ustuvannja_sin_cos[2*index + 1] = arm_cos_f32(phi_radian_tmp);
+//      }
+//      else
+//      {
+//        phi_edit_ustuvannja[index] = phi_tmp;
+//        phi_edit_ustuvannja_sin_cos[2*index    ] = arm_sin_f32(phi_radian_tmp);
+//        phi_edit_ustuvannja_sin_cos[2*index + 1] = arm_cos_f32(phi_radian_tmp);
+//      }
+//    }
+//    else 
+//    {
+//      /*У разі повідомлення про помилку тип помилки ставиться такий ніби така адреса взагалі є недоступною, щоб зменшити ймовірність несанкціонованого запису юстування*/
+//      error = ERROR_ILLEGAL_DATA_ADDRESS;
+//    }
+//  }
   else if (address_data == MA_NUMBER_ITERATION_EL)
   {
     temp_value = data;
@@ -4212,15 +4212,6 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
     }
     else if (
              (number_file == 0)
-             ||
-             (
-              (number_file >= 1) && 
-              (number_file <= 4) && 
-              (
-               ((type_interface == USB_RECUEST  ) && (number_record_of_ar_for_USB   == 0xffff)) ||
-               ((type_interface == RS485_RECUEST) && (number_record_of_ar_for_RS485 == 0xffff))
-              )   
-             )
              ||  
              (
               (number_file >= 5) && 
@@ -4236,37 +4227,6 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
     {
       //Невірний номер файлу, або не подано команди вичитування відповідного запису
       error = ERROR_ILLEGAL_DATA_ADDRESS;
-    }
-    else if (
-             (number_file >= 1) &&
-             (number_file <= 4) &&
-             (
-              (
-               (state_ar_record != STATE_AR_NO_RECORD      ) &&
-               (state_ar_record != STATE_AR_TEMPORARY_BLOCK)
-              )
-              ||
-              ((clean_rejestrators & CLEAN_AR) != 0)  
-              ||  
-              (
-               (control_tasks_dataflash & (
-                                           TASK_ERASE_DATAFLASH_2                                        |
-                                           TASK_MAMORY_PART_PAGE_PROGRAM_THROUGH_BUFFER_DATAFLASH_FOR_AR |
-                                           TASK_MAMORY_PAGE_PROGRAM_THROUGH_BUFFER_DATAFLASH_FOR_AR
-                                          )
-               ) != 0
-              )
-             )
-            )    
-    {
-      //Зараз іде операція запису/стирання для аналоговго реєстратора, яка може тривати довго (післяаварійний масив становить 20 с), тому читання аналогового реєстратора є тимчасово недоступне
-      error = ERROR_SLAVE_DEVICE_BUSY;
-      /*
-      Тут ми не перевіряємо умову на виставлений біт TASK_MAMORY_READ_DATAFLASH_FOR_AR_INTERFACE,
-      бо, оскільки, масиви є великі і зразу весь запис прочитати не можливо, то 
-      програмне забеспечення побудоване на принципі докачки. Тобто формується відповідь з даних, які зараз
-      зчитуються з мікросхеми dataFlash
-      */
     }
     else if (
              (number_file >= 5) &&
@@ -4293,775 +4253,6 @@ inline unsigned int Get_data_file(unsigned char* input_data, unsigned char* outp
       int temp_data;
       switch (number_file)
       {
-      case 1:
-        {
-          //*************************************
-          //Заголовок для аналогового реєстратора
-          //*************************************
-          
-          //Максимальна кількість часових зрівів (ця змінна ще буде потрібна у визначення номеру останньої виборки при зчитувані конфігурації аналогового реєстратора)
-          int max_number_time_sample = (current_settings.prefault_number_periods + current_settings.postfault_number_periods) << VAGA_NUMBER_POINT_AR;
-          
-          //Очікуємо поки завершиться зчитуквання даних для аналогового реєстратора
-          while (
-                 ((type_interface == USB_RECUEST  ) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_AR_USB  ) != 0)) ||
-                 ((type_interface == RS485_RECUEST) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_AR_RS485) != 0))
-                )
-          {
-            //Якщ часом буде спрацьовувати Watchdog, то тут треба буде поставити функцію роботи з ним
-          }
-          
-          int *point_to_first_number_time_sample, *point_to_last_number_time_sample;
-          if (type_interface == USB_RECUEST)
-          {
-            point_to_first_number_time_sample = &first_number_time_sample_for_USB;
-            point_to_last_number_time_sample  = &last_number_time_sample_for_USB;
-          }
-          else
-          {
-            point_to_first_number_time_sample = &first_number_time_sample_for_RS485;
-            point_to_last_number_time_sample  = &last_number_time_sample_for_RS485;
-          }
-
-          //Перевіряємо чи зчитано заголовок аналогового реєстратора
-          if ((*point_to_first_number_time_sample) != -1)
-          {
-            //Зараз не виконувалося зчитування заголовку аналогового реєстрата
-              
-            //Виставляємо читання заголовку запису даного запису і дальше, скільки можливо, часових зрізів 
-            *point_to_first_number_time_sample = -1;
-            int last_number_time_sample_tmp = (SIZE_PAGE_DATAFLASH_2 - sizeof(__HEADER_AR))/((NUMBER_ANALOG_CANALES + number_word_digital_part_ar)*sizeof(short int));
-            if (last_number_time_sample_tmp <= max_number_time_sample)
-            {
-              *point_to_last_number_time_sample = last_number_time_sample_tmp - 1;//номер останнього часового зрізу ВКЛЮЧНО
-            }
-            else
-            {
-              *point_to_last_number_time_sample = max_number_time_sample - 1;
-            }
-
-            //Подаємо команду зчитати дані у бувер пам'яті
-            if (type_interface == USB_RECUEST)
-              control_tasks_dataflash |= TASK_MAMORY_READ_DATAFLASH_FOR_AR_USB;
-            else
-              control_tasks_dataflash |= TASK_MAMORY_READ_DATAFLASH_FOR_AR_RS485;
-                
-            //Очікуємо поки завершиться зчитуквання даних для аналогового реєстратора
-            while (
-                   ((type_interface == USB_RECUEST  ) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_AR_USB  ) != 0)) ||
-                   ((type_interface == RS485_RECUEST) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_AR_RS485) != 0))
-                  )   
-            {
-              //Якщо часом буде спрацьовувати Watchdog, то тут треба буде поставити функцію роботи з ним
-            }
-          }
-              
-          //Якщо ми сюди дійшли, то вважаємо що заголовок аналогового реєстратора вже зчитаний
-          __HEADER_AR header_ar_tmp;
-          /*
-          У перших байтах зчитаного буферу є заголовок аналоговог ореєстратора.
-          Для зручності на цю адресу ставим структуру заголовку аналогового реєстратора
-          щоб легше було можливість читати поля
-          */
-          if (type_interface == USB_RECUEST)
-            header_ar_tmp = *((__HEADER_AR*)buffer_for_USB_read_record_ar);
-          else
-            header_ar_tmp = *((__HEADER_AR*)buffer_for_RS485_read_record_ar);
-              
-          switch (number_record)
-          {
-          case 0:
-            {
-              if (length <= 10)
-              {
-                unsigned int i = 0;
-                while (i < length)
-                {
-                  if (i < 8)
-                  {
-                    unsigned int index_cell;
-                    
-                    index_cell =  (i - 0)<<1;
-                    temp_data  = header_ar_tmp.name_of_cell[ index_cell] | (header_ar_tmp.name_of_cell[ index_cell+1]<<8);
-                  }
-                  else if (i == 8)
-                  {
-                    //Серійний номер пристрою завжди один і той самий (встановлюється на заводі-виготовнику), тому я його не включив для запису у DataFlash у складі заголовку аналогового реєстратора
-                    temp_data = serial_number_dev & 0xffff;
-                  }
-                  else
-                  {
-                    temp_data = 1999;
-                  }
-                  *(output_data + 2 + 2*i) = (temp_data >> 8) & 0xff;
-                  *(output_data + 3 + 2*i) = temp_data & 0xff;
-                  i++;
-                }
-              }
-              else error = ERROR_ILLEGAL_DATA_ADDRESS;
-              break;
-            }
-          case 1:
-            {
-              if (length <= 3)
-              {
-                unsigned int i = 0;
-                while (i < length)
-                {
-                  if (i == 0)
-                  {
-                    temp_data  = NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG;
-                  }
-                  else if (i == 1)
-                  {
-                    temp_data = NUMBER_ANALOG_CANALES;
-                  }
-                  else
-                  {
-                    temp_data = NUMBER_TOTAL_SIGNAL_FOR_RANG;
-                  }
-                  *(output_data + 2 + 2*i) = (temp_data >> 8) & 0xff;
-                  *(output_data + 3 + 2*i) = temp_data & 0xff;
-                  i++;
-                }
-              }
-              else error = ERROR_ILLEGAL_DATA_ADDRESS;
-              break;
-            }
-          case 2:
-          case 3:
-          case 4:
-          case 5:
-          case 6:
-          case 7:
-          case 8:
-          case 9:
-          case 10:
-            {
-              if (length <= 27)
-              {
-                unsigned int i = 0;
-                while (i < length)
-                {
-                  if (i == 0)
-                  {
-                    //Номер каналу
-                    temp_data = (number_record - 2) + 1;
-                  }
-                  else if ( i < 9)
-                  {
-                    //Ідентитифікатор каналу - 16 ASCII символів
-                    char idetyficator[NUMBER_ANALOG_CANALES][16] = {
-                    "Ia              ",
-                    "Ib              ",
-                    "Ic              ",
-                    "Ua1             ",
-                    "Ub1             ",
-                    "Uc1             ",
-                    "Ua2             ",
-                    "Ub2             ",
-                    "Uc2             "
-                    };
-                    
-                    unsigned int index_cell;
-                    
-                    index_cell =  (i - 1)<<1;
-                    temp_data  = idetyficator[number_record - 2][index_cell] | (idetyficator[number_record - 2][index_cell+1]<<8);
-                  }
-                  else if ( i == 9)
-                  {
-                    //Фаза каналу - 2 ASCII символів
-                    char phase[NUMBER_ANALOG_CANALES][2] = {
-                    "A ",
-                    "B ",
-                    "C ",
-                    "A ",
-                    "B ",
-                    "C ",
-                    "A ",
-                    "B ",
-                    "C "
-                    };
-                    
-                    temp_data  = phase[number_record - 2][0] | (phase[number_record - 2][1]<<8);
-                  }
-                  else if ( i < 18)
-                  {
-                    //Спостережний елемент в колі - 16 ASCII символів - нічого тут не передаємо, тому у це поле поміщаємо ' '
-                    temp_data  = ((' ')<<8) | (' ');
-                  }
-                  else if ( i == 18)
-                  {
-                    //Одиниці вимірювання - 2 ASCII символів
-                    const char label_meas[2][2] = {"mA","mV"};
-                    unsigned int index;
-                    if (number_record <= (2 + I_Ic))index = 0;
-                    else index = 1;
-                    
-                    temp_data  = label_meas[index][0] | (label_meas[index][1]<<8);
-                  }
-                  else if ( i == 19)
-                  {
-                    //Коефіцієнт каналу
-                    if (number_record <= (2 + I_Ic )) temp_data  = (1000*MNOGNYK_I)   >> (VAGA_DILENNJA_I   + 4);
-                    else                              temp_data  = (1000*MNOGNYK_U)   >> (VAGA_DILENNJA_U   + 4);
-                  }
-                  else if ( i == 20)
-                  {
-                    //Додаткове зміщення
-                    temp_data  = 0;
-                  }
-                  else if ( i == 21)
-                  {
-                    //Зсув у часі
-                    temp_data  = 0; //Час зсуву відпосно початку зчитування
-                  }
-                  else if ( i == 22)
-                  {
-                    //Нижня гнаниця
-                    temp_data  = -32767;
-                  }
-                  else if ( i == 23)
-                  {
-                    //Верхня границя
-                    temp_data  = 32767;
-                  }
-                  else if ( i == 24)
-                  {
-                    //Первинний коефіцієнт трансформації
-                    temp_data  = 1;
-                  }
-                  else if ( i == 25)
-                  {
-                    //Вторинний коефіцієнт трансформації
-                    temp_data  = 1;
-                  }
-                  else if ( i == 26)
-                  {
-                    //Дані будуть передаватися з вторинної обмотки
-                    temp_data  = 'S';
-                  }
-                  *(output_data + 2 + 2*i) = (temp_data >> 8) & 0xff;
-                  *(output_data + 3 + 2*i) = temp_data & 0xff;
-                  i++;
-                }
-              }
-              else error = ERROR_ILLEGAL_DATA_ADDRESS;
-              break;
-            }
-          case (  2 + NUMBER_ANALOG_CANALES):
-          case (  3 + NUMBER_ANALOG_CANALES):
-          case (  4 + NUMBER_ANALOG_CANALES):
-          case (  5 + NUMBER_ANALOG_CANALES):
-          case (  6 + NUMBER_ANALOG_CANALES):
-          case (  7 + NUMBER_ANALOG_CANALES):
-          case (  8 + NUMBER_ANALOG_CANALES):
-          case (  9 + NUMBER_ANALOG_CANALES):
-          case ( 10 + NUMBER_ANALOG_CANALES):
-          case ( 11 + NUMBER_ANALOG_CANALES):
-          case ( 12 + NUMBER_ANALOG_CANALES):
-          case ( 13 + NUMBER_ANALOG_CANALES):
-          case ( 14 + NUMBER_ANALOG_CANALES):
-          case ( 15 + NUMBER_ANALOG_CANALES):
-          case ( 16 + NUMBER_ANALOG_CANALES):
-          case ( 17 + NUMBER_ANALOG_CANALES):
-          case ( 18 + NUMBER_ANALOG_CANALES):
-          case ( 19 + NUMBER_ANALOG_CANALES):
-          case ( 20 + NUMBER_ANALOG_CANALES):
-          case ( 21 + NUMBER_ANALOG_CANALES):
-          case ( 22 + NUMBER_ANALOG_CANALES):
-          case ( 23 + NUMBER_ANALOG_CANALES):
-          case ( 24 + NUMBER_ANALOG_CANALES):
-          case ( 25 + NUMBER_ANALOG_CANALES):
-          case ( 26 + NUMBER_ANALOG_CANALES):
-          case ( 27 + NUMBER_ANALOG_CANALES):
-          case ( 28 + NUMBER_ANALOG_CANALES):
-          case ( 29 + NUMBER_ANALOG_CANALES):
-          case ( 30 + NUMBER_ANALOG_CANALES):
-          case ( 31 + NUMBER_ANALOG_CANALES):
-          case ( 32 + NUMBER_ANALOG_CANALES):
-          case ( 33 + NUMBER_ANALOG_CANALES):
-          case ( 34 + NUMBER_ANALOG_CANALES):
-          case ( 35 + NUMBER_ANALOG_CANALES):
-          case ( 36 + NUMBER_ANALOG_CANALES):
-          case ( 37 + NUMBER_ANALOG_CANALES):
-          case ( 38 + NUMBER_ANALOG_CANALES):
-          case ( 39 + NUMBER_ANALOG_CANALES):
-          case ( 40 + NUMBER_ANALOG_CANALES):
-          case ( 41 + NUMBER_ANALOG_CANALES):
-          case ( 42 + NUMBER_ANALOG_CANALES):
-          case ( 43 + NUMBER_ANALOG_CANALES):
-          case ( 44 + NUMBER_ANALOG_CANALES):
-          case ( 45 + NUMBER_ANALOG_CANALES):
-          case ( 46 + NUMBER_ANALOG_CANALES):
-          case ( 47 + NUMBER_ANALOG_CANALES):
-          case ( 48 + NUMBER_ANALOG_CANALES):
-          case ( 49 + NUMBER_ANALOG_CANALES):
-          case ( 50 + NUMBER_ANALOG_CANALES):
-          case ( 51 + NUMBER_ANALOG_CANALES):
-          case ( 52 + NUMBER_ANALOG_CANALES):
-          case ( 53 + NUMBER_ANALOG_CANALES):
-          case ( 54 + NUMBER_ANALOG_CANALES):
-          case ( 55 + NUMBER_ANALOG_CANALES):
-          case ( 56 + NUMBER_ANALOG_CANALES):
-          case ( 57 + NUMBER_ANALOG_CANALES):
-          case ( 58 + NUMBER_ANALOG_CANALES):
-          case ( 59 + NUMBER_ANALOG_CANALES):
-          case ( 60 + NUMBER_ANALOG_CANALES):
-          case ( 61 + NUMBER_ANALOG_CANALES):
-          case ( 62 + NUMBER_ANALOG_CANALES):
-          case ( 63 + NUMBER_ANALOG_CANALES):
-          case ( 64 + NUMBER_ANALOG_CANALES):
-          case ( 65 + NUMBER_ANALOG_CANALES):
-          case ( 66 + NUMBER_ANALOG_CANALES):
-          case ( 67 + NUMBER_ANALOG_CANALES):
-          case ( 68 + NUMBER_ANALOG_CANALES):
-          case ( 69 + NUMBER_ANALOG_CANALES):
-          case ( 70 + NUMBER_ANALOG_CANALES):
-          case ( 71 + NUMBER_ANALOG_CANALES):
-          case ( 72 + NUMBER_ANALOG_CANALES):
-          case ( 73 + NUMBER_ANALOG_CANALES):
-          case ( 74 + NUMBER_ANALOG_CANALES):
-          case ( 75 + NUMBER_ANALOG_CANALES):
-          case ( 76 + NUMBER_ANALOG_CANALES):
-          case ( 77 + NUMBER_ANALOG_CANALES):
-          case ( 78 + NUMBER_ANALOG_CANALES):
-          case ( 79 + NUMBER_ANALOG_CANALES):
-          case ( 80 + NUMBER_ANALOG_CANALES):
-          case ( 81 + NUMBER_ANALOG_CANALES):
-          case ( 82 + NUMBER_ANALOG_CANALES):
-          case ( 83 + NUMBER_ANALOG_CANALES):
-          case ( 84 + NUMBER_ANALOG_CANALES):
-          case ( 85 + NUMBER_ANALOG_CANALES):
-          case ( 86 + NUMBER_ANALOG_CANALES):
-          case ( 87 + NUMBER_ANALOG_CANALES):
-          case ( 88 + NUMBER_ANALOG_CANALES):
-          case ( 89 + NUMBER_ANALOG_CANALES):
-          case ( 90 + NUMBER_ANALOG_CANALES):
-          case ( 91 + NUMBER_ANALOG_CANALES):
-          case ( 92 + NUMBER_ANALOG_CANALES):
-          case ( 93 + NUMBER_ANALOG_CANALES):
-          case ( 94 + NUMBER_ANALOG_CANALES):
-            {
-              if (length <= 19)
-              {
-                unsigned int i = 0;
-                while (i < length)
-                {
-                  if (i == 0)
-                  {
-                    //Номер каналу
-                    temp_data = (number_record - (2 + NUMBER_ANALOG_CANALES)) + 1;
-                  }
-                  else if ( i < 9)
-                  {
-                    //Ідентитифікатор каналу - 16 ASCII символів
-                    const char idetyficator[MAX_NAMBER_LANGUAGE][NUMBER_TOTAL_SIGNAL_FOR_RANG][16] =
-                    {
-                      {NAME_RANG_RU},
-                      {NAME_RANG_UA},
-                      {NAME_RANG_EN},
-                      {NAME_RANG_KZ},
-                      
-                    };
-                    int index_language = index_language_in_array(current_settings.language);
-                    unsigned int index_cell;
-                    
-                    index_cell =  (i - 1)<<1;
-                    temp_data  = idetyficator[index_language][number_record - (2 + NUMBER_ANALOG_CANALES)][index_cell] | (idetyficator[index_language][number_record - (2 + NUMBER_ANALOG_CANALES)][index_cell+1]<<8);
-                  }
-                  else if ( i == 9)
-                  {
-                    //Фаза каналу - 2 ASCII символів - нічого не передаємо
-                    temp_data  = (' '<<8) | ' ';
-                  }
-                  else if ( i < 18)
-                  {
-                    //Спостережний елемент в колі - 16 ASCII символів- нічого не передаємо
-                    temp_data  = (' '<<8) | ' ';
-                  }
-                  else if ( i == 18)
-                  {
-                    //Нормальний стан
-                    temp_data  = 0;
-                  }
-                  *(output_data + 2 + 2*i) = (temp_data >> 8) & 0xff;
-                  *(output_data + 3 + 2*i) = temp_data & 0xff;
-                  i++;
-                }
-              }
-              else error = ERROR_ILLEGAL_DATA_ADDRESS;
-              break;
-            }
-          case (2 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG):
-          case (3 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG):
-            {
-              if (length <= 1)
-              {
-                
-                if (number_record == (2 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG)) temp_data  = 5000; //Чатота лінії (x100)
-                else temp_data  = 1; //Кількість частот дискретизації
-                *(output_data + 2 ) = (temp_data >> 8) & 0xff;
-                *(output_data + 3 ) = temp_data & 0xff;
-              }
-              else error = ERROR_ILLEGAL_DATA_ADDRESS;
-              break;
-            }
-          case (4 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG):
-            {
-              if (length <= 2)
-              {
-                unsigned int i = 0;
-                while ((i < length) && (error == 0))
-                {
-                  if (i == 0) temp_data  = ((50*1000)<<VAGA_NUMBER_POINT_AR)>>4; //Частота виборки
-                  else temp_data = max_number_time_sample; //остання виборка на даній чатоті дискретизації рівна останній виборці у записі аналогового реєстратора
-
-                  *(output_data + 2 + 2*i ) = (temp_data >> 8) & 0xff;
-                  *(output_data + 3 + 2*i ) = temp_data & 0xff;
-                  i++;
-                }
-              }
-              else error = ERROR_ILLEGAL_DATA_ADDRESS;
-              break;
-            }
-          case (5 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG):
-          case (6 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG):
-            {
-              
-              if (length <= 7)
-              {
-                unsigned char time_avar_analog[7];
-                
-                //Конвертуємо формат BCD у int
-                for (unsigned int i = 0; i < 7; i++)
-                {
-                  unsigned int val = header_ar_tmp.time[i], val_l, val_m;
-                  val_l = val & 0xf;
-                  val_m = (val >> 4) & 0xf;
-                  time_avar_analog[i] = (unsigned char)(val_m*10 + val_l);
-                }
-                
-                if (number_record == (5 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG))
-                {
-                  //Визначаємо час першої виборки у доаварійному масиві = час запису мінус час доаварійного масиву
-                  //Максимальний час доаварійного масиву може бути 5000мс, бо максимальна кількість періодів 250
-
-                  //Час у сотих секунд доаварійноо масиву
-                  unsigned int max_time_milliseconds_before = (current_settings.prefault_number_periods)*2; //2 - це десяті від 20 мс, що відображає період на 50Гц
-                  unsigned int flag_carry = 0;
-                  unsigned int s, ds_ms;
-                    
-                  //Кількість секунд
-                  s = max_time_milliseconds_before / 100;
-                  //Кількість десятих і сотих мілісекунд
-                  ds_ms = max_time_milliseconds_before - s*100;
-                    
-                  //Віднімаємо даесяті і соті мілісекунд
-                  if (time_avar_analog[0] >= ds_ms)
-                  {
-                    time_avar_analog[0] -= ds_ms;
-                    flag_carry = 0;
-                  }
-                  else
-                  {
-                    time_avar_analog[0] = time_avar_analog[0] + 100 - ds_ms;
-                    flag_carry = 1;
-                  }
-                      
-                  //Віднімаємо секунди
-                  if (time_avar_analog[1] >= (s + flag_carry))
-                  {
-                    time_avar_analog[1] -= (s + flag_carry);
-                    flag_carry = 0;
-                  }
-                  else
-                  {
-                    time_avar_analog[1] = time_avar_analog[1] + 60 - (s + flag_carry);
-                    flag_carry = 1;
-                  }
-                    
-                  //Дальше віднімаємо, якщо є виставлений прапорець переносу
-                  if (flag_carry != 0)
-                  {
-                    //Віднімаємо хвилини
-                    if (time_avar_analog[2] >=  flag_carry)
-                    {
-                      time_avar_analog[2] -= flag_carry;
-                      flag_carry = 0;
-                    }
-                    else
-                    {
-                      time_avar_analog[2] = time_avar_analog[2] + 60 - flag_carry;
-                      flag_carry = 1;
-                    }
-
-                    //Дальше віднімаємо, якщо є виставлений прапорець переносу
-                    if (flag_carry != 0)
-                    {
-                      //Віднімаємо години
-                      if (time_avar_analog[3] >=  flag_carry)
-                      {
-                        time_avar_analog[3] -= flag_carry;
-                        flag_carry = 0;
-                      }
-                      else
-                      {
-                        time_avar_analog[3] = time_avar_analog[3] + 24 - flag_carry;
-                        flag_carry = 1;
-                      } 
-
-                      //Дальше віднімаємо, якщо є виставлений прапорець переносу
-                      if (flag_carry != 0)
-                      {
-                        //Віднімаємо дні місяця
-                        if (time_avar_analog[4] > flag_carry)
-                        {
-                          time_avar_analog[4] -= flag_carry;
-                          flag_carry = 0;
-                        }
-                        else
-                        {
-                          unsigned int max_value, number_previous_mounth;
-                            
-                          if (((int)(time_avar_analog[5] - 1)) > 0) number_previous_mounth = time_avar_analog[5] - 1;
-                          else number_previous_mounth = 12; //Попередній місяць - Грудень
-                             
-                          //Максимальну кількість днів у попередньому місяця (бо ми у місяців "позичаємо" одиничку і потім перейдемо на віднімання переносу у місяців)
-                          if (number_previous_mounth == 2)
-                          {
-                            //Попередній місяць - лютий
-                            //Перевірка на високосний рік
-                            if((time_avar_analog[6] & 0xfc) == 0)
-                            {
-                              //Рік високосний - кількість днів у лютому 29
-                              max_value = 29;
-                            }
-                            else
-                            {
-                              //Рік не високосний - кількість днів у лютому 28
-                              max_value = 28;
-                            }
-                          }
-                          else if (
-                                   ((number_previous_mounth <= 7) && ((number_previous_mounth & 0x01) != 0)) ||
-                                   ((number_previous_mounth >= 8) && ((number_previous_mounth & 0x01) == 0)) 
-                                  )
-                          {
-                            //Попередній місяць має 31 день
-                            max_value = 31;
-                          }
-                          else
-                          {
-                            //Попередній місяць має 30 днів
-                            max_value = 30;
-                          }
-                            
-                          time_avar_analog[4] = time_avar_analog[4] + max_value - flag_carry;
-                          flag_carry = 1;
-                        } 
-
-                        //Дальше віднімаємо, якщо є виставлений прапорець переносу
-                        if (flag_carry != 0)
-                        {
-                          //Віднімаємо місяці
-                          if ((int)(time_avar_analog[5] - flag_carry) > 0)
-                          {
-                            time_avar_analog[5] -= flag_carry;
-                            flag_carry = 0;
-                          }
-                          else
-                          {
-                            time_avar_analog[5] = 12;
-                            flag_carry = 1;
-                          } 
-
-                          //Дальше віднімаємо, якщо є виставлений прапорець переносу
-                          if (flag_carry != 0)
-                          {
-                            //Віднімаємо роки
-                            if (time_avar_analog[6] > flag_carry)
-                            {
-                              time_avar_analog[6] -= flag_carry;
-                              flag_carry = 0;
-                            }
-                            else
-                            {
-                              time_avar_analog[6] = 99;
-                              flag_carry = 1;
-                            } 
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-                 
-                unsigned int i = 0;
-                while (i < length)
-                {
-                  if (i < 3)
-                  {
-                    temp_data = time_avar_analog[4 + i];
-                    if (i == 2)temp_data += 2000; //Бо формат має бути чотиризначним числом
-                  }
-                  else if (i < 5 ) temp_data = time_avar_analog[3 - (i - 3)];
-                  else if (i == 5) temp_data = time_avar_analog[1]*100 + time_avar_analog[0];
-                  else temp_data = 0;
-                  
-                  *(output_data + 2 + 2*i) = (temp_data >> 8) & 0xff;
-                  *(output_data + 3 + 2*i) = temp_data & 0xff;
-                  i++;
-                }
-                
-              }
-              else error = ERROR_ILLEGAL_DATA_ADDRESS;
-              break;
-            }
-          case (7 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG):
-          case (8 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG):
-            {
-              if (length <= 1)
-              {
-                
-                if (number_record == (7 + NUMBER_ANALOG_CANALES + NUMBER_TOTAL_SIGNAL_FOR_RANG)) temp_data  = 'B'; //дані - це бінарні числа
-                else temp_data  = (1000000 >> VAGA_NUMBER_POINT_AR)/50; //Період дискретизації
-                *(output_data + 2 ) = (temp_data >> 8) & 0xff;
-                *(output_data + 3 ) = temp_data & 0xff;
-              }
-              else error = ERROR_ILLEGAL_DATA_ADDRESS;
-              break;
-            }
-          default:
-            {
-              error = ERROR_ILLEGAL_DATA_ADDRESS;
-              break;
-            }
-          }
-          //*************************************
-          break;
-        }        
-      case 2:
-      case 3:
-      case 4:
-        {
-          //*************************************
-          //Дані аналогового реєстратора
-          //*************************************
-          //Максимальна кількість часових зрівів 
-          int max_number_time_sample = (current_settings.prefault_number_periods + current_settings.postfault_number_periods) << VAGA_NUMBER_POINT_AR;
-          
-          //Очікуємо поки завершиться зчитуквання даних для аналогового реєстратора
-          while (
-                 ((type_interface == USB_RECUEST  ) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_AR_USB  ) != 0)) ||
-                 ((type_interface == RS485_RECUEST) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_AR_RS485) != 0))
-                )
-          {
-            //Якщ очасом буде спрацьовувати Watchdog, то тут треба буде поставити функцію роботи з ним
-          }
-
-          if (
-              ((number_file == 2) && ( number_record < 10000) && ( number_record          < ((unsigned int)(max_number_time_sample)))) ||
-              ((number_file == 3) && ( number_record < 10000) && ((number_record + 10000) < ((unsigned int)(max_number_time_sample)))) ||
-              ((number_file == 4) && ( number_record < 10000) && ((number_record + 20000) < ((unsigned int)(max_number_time_sample))))
-             )
-          {
-            if (number_file == 3) number_record += 10000;
-            else if (number_file == 4) number_record += 20000;
-              
-            int *point_to_first_number_time_sample, *point_to_last_number_time_sample;
-            if (type_interface == USB_RECUEST)
-            {
-              point_to_first_number_time_sample = &first_number_time_sample_for_USB;
-              point_to_last_number_time_sample  = &last_number_time_sample_for_USB;
-            }
-            else
-            {
-              point_to_first_number_time_sample = &first_number_time_sample_for_RS485;
-              point_to_last_number_time_sample  = &last_number_time_sample_for_RS485;
-            }
-            
-            //Перевіряємо чи зчитано заголовок аналогового реєстратора
-            if (
-                (((int)number_record) < (*point_to_first_number_time_sample)) || 
-                (((int)number_record) > (*point_to_last_number_time_sample ))
-               )
-            {
-              //Запитуваний часовий зріз не є зчитаним
-              
-              //Виставляємо читання без заголовку запису даного запису з запитуваноого номеру зрізу і дальше, скільки можливо, часових зрізів 
-              *point_to_first_number_time_sample = number_record;
-              int last_number_time_sample_tmp = number_record + SIZE_PAGE_DATAFLASH_2/((NUMBER_ANALOG_CANALES + number_word_digital_part_ar)*sizeof(short int));
-              if (last_number_time_sample_tmp <= max_number_time_sample)
-              {
-                *point_to_last_number_time_sample = last_number_time_sample_tmp - 1;//номер останнього часового зрізу ВКЛЮЧНО
-              }
-              else
-              {
-                *point_to_last_number_time_sample = max_number_time_sample - 1;
-              }
-
-              //Подаємо команду зчитати дані у бувер пам'яті
-              if (type_interface == USB_RECUEST)
-                control_tasks_dataflash |= TASK_MAMORY_READ_DATAFLASH_FOR_AR_USB;
-              else
-                control_tasks_dataflash |= TASK_MAMORY_READ_DATAFLASH_FOR_AR_RS485;
-                
-              //Очікуємо поки завершиться зчитуквання даних для аналогового реєстратора
-              while (
-                     ((type_interface == USB_RECUEST  ) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_AR_USB  ) != 0)) ||
-                     ((type_interface == RS485_RECUEST) && ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_AR_RS485) != 0))
-                    )
-              {
-                //Якщ очасом буде спрацьовувати Watchdog, то тут треба буде поставити функцію роботи з ним
-              }
-            }
-            
-            //Якщо ми сюди дійшли, то вважаємо що запитувана виборка зчитана і знаходиться у буфері читання аналогового реєстратора для інтерфейсу
-            
-            //Визначаємо індекс у буфері читання з якого розміщений потрібний нам часовий зріз
-            unsigned int index_time_sample;
-            if((*point_to_first_number_time_sample) == -1)
-            {
-              index_time_sample = sizeof(__HEADER_AR) + number_record*(NUMBER_ANALOG_CANALES + number_word_digital_part_ar)*sizeof(short int);
-            }
-            else
-            {
-              index_time_sample = 0 + (number_record - (*point_to_first_number_time_sample))*(NUMBER_ANALOG_CANALES + number_word_digital_part_ar)*sizeof(short int);
-            }
-              
-            if (length <= (3 + NUMBER_ANALOG_CANALES + number_word_digital_part_ar))
-            {
-              unsigned int i = 0;
-              while (i < length)
-              {
-                if (i == 0) temp_data = number_record + 1;
-                else if ((i == 1) || (i == 2))
-                {
-                  if (i == 1) temp_data = number_record & 0xffff;
-                  else temp_data = number_record >> 16;
-                }
-                else 
-                {
-                  unsigned char *point_to_buffer;
-                  if (type_interface == USB_RECUEST)
-                    point_to_buffer = buffer_for_USB_read_record_ar;
-                  else
-                    point_to_buffer = buffer_for_RS485_read_record_ar;
-                  
-                  temp_data = (*(point_to_buffer + index_time_sample +2*(i-3))) + ((*(point_to_buffer + index_time_sample + 1 +2*(i-3))) << 8);
-                }
-                *(output_data + 2 + 2*i) = (temp_data >> 8) & 0xff;
-                *(output_data + 3 + 2*i) = temp_data & 0xff;
-                i++;
-              }
-            }
-            else error = ERROR_ILLEGAL_DATA_ADDRESS;
-          }
-          else error = ERROR_ILLEGAL_DATA_ADDRESS;
-          //*************************************
-          break;
-        }        
       case 5:
         {
           //*************************************
@@ -5765,14 +4956,14 @@ void modbus_rountines(unsigned int type_interface)
             add_data = (*(received_buffer + 2))<<8 | (*(received_buffer + 3));
 
             if (
-                ((add_data >= M_ADDRESS_FIRST_MEASUREMENTS_1 ) && (add_data <= M_ADDRESS_LAST_MEASUREMENTS_1)) ||/*
+                /*((add_data >= M_ADDRESS_FIRST_MEASUREMENTS_1 ) && (add_data <= M_ADDRESS_LAST_MEASUREMENTS_1)) ||
                 ((add_data >= M_ADDRESS_FIRST_MEASUREMENTS_2 ) && (add_data <= M_ADDRESS_LAST_MEASUREMENTS_2)) ||*/
                 ((add_data >= M_ADDRESS_FIRST_TMP_MEASURMENTS) && (add_data <  M_ADDRESS_LAST_TMP_MEASURMENTS))  
                )
             {
               //Копіюємо вимірювання
               semaphore_measure_values_low1 = 1;
-              for (unsigned int i = 0; i < (NUMBER_ANALOG_CANALES + 8); i++ ) 
+              for (unsigned int i = 0; i < NUMBER_ANALOG_CANALES; i++ ) 
               {
                 measurement_low[i] = measurement_middle[i];
               }
@@ -6144,7 +5335,7 @@ void modbus_rountines(unsigned int type_interface)
                   set_array_rang[i]   = 0;
                 }
               }
-              else if((add_data >= MA_ADDRESS_FIRST_USTUVANNJA) && (add_data <= MA_ADDRESS_LAST_PHI_USTUVANNJA))/*амплітудні і фазні юстуючі коефіцієнти*/ 
+              else if((add_data >= MA_ADDRESS_FIRST_USTUVANNJA) && (add_data <= MA_ADDRESS_LAST_USTUVANNJA))/*амплітудні і фазні юстуючі коефіцієнти*/ 
               {
                 //Помічаємо ненульовим значенням, що йде намагання змінити юстуючі коефіцієнти
                 changing_ustuvannja = 0xff;
@@ -6299,12 +5490,12 @@ void modbus_rountines(unsigned int type_interface)
               }
             }
             else if (
-                     ((add_data >= MA_ADDRESS_FIRST_USTUVANNJA) && (add_data <= MA_ADDRESS_LAST_PHI_USTUVANNJA)) ||
+                     ((add_data >= MA_ADDRESS_FIRST_USTUVANNJA) && (add_data <= MA_ADDRESS_LAST_USTUVANNJA)) ||
                      ( add_data == MA_SET_SERIAL_NUMBER)  
                     )
             {
               if (
-                  ((add_data >= MA_ADDRESS_FIRST_USTUVANNJA) && (add_data <= MA_ADDRESS_LAST_PHI_USTUVANNJA))
+                  ((add_data >= MA_ADDRESS_FIRST_USTUVANNJA) && (add_data <= MA_ADDRESS_LAST_USTUVANNJA))
                  )   
               {
                 //Помічаємо, що вимірювальною системою треба забрати нові коефіцієнти юстування
@@ -6841,7 +6032,7 @@ void modbus_rountines(unsigned int type_interface)
                 //Ці дані не потребують перевірки на пароль
               
                 if (
-                    (add_data >= MA_ADDRESS_FIRST_USTUVANNJA) && (add_data <= MA_ADDRESS_LAST_PHI_USTUVANNJA) || /*юстуючі амплітудні і фазові коефіцієнти*/
+                    (add_data >= MA_ADDRESS_FIRST_USTUVANNJA) && (add_data <= MA_ADDRESS_LAST_USTUVANNJA) || /*юстуючі амплітудні і фазові коефіцієнти*/
                     (add_data == MA_SET_SERIAL_NUMBER                                                       )    /*серійний номер*/  
                    )
                 {
@@ -6853,9 +6044,6 @@ void modbus_rountines(unsigned int type_interface)
                     for(unsigned int k = 0; k < NUMBER_ANALOG_CANALES; k++) 
                     {
                       edit_ustuvannja[k] = ustuvannja[k];
-                      phi_edit_ustuvannja[k] = phi_ustuvannja[k];
-                      phi_edit_ustuvannja_sin_cos[2*k] = phi_ustuvannja_sin_cos[2*k];
-                      phi_edit_ustuvannja_sin_cos[2*k + 1] = phi_ustuvannja_sin_cos[2*k + 1];
                     }
                     edit_serial_number_dev = serial_number_dev;
                   }
@@ -6927,7 +6115,7 @@ void modbus_rountines(unsigned int type_interface)
                 }
               }
               else if (
-                       ((add_data >= MA_ADDRESS_FIRST_USTUVANNJA ) && (add_data <= MA_ADDRESS_LAST_PHI_USTUVANNJA)) ||
+                       ((add_data >= MA_ADDRESS_FIRST_USTUVANNJA ) && (add_data <= MA_ADDRESS_LAST_USTUVANNJA)) ||
                        ( add_data == MA_SET_SERIAL_NUMBER)  
                       )
               {
@@ -7014,9 +6202,6 @@ void modbus_rountines(unsigned int type_interface)
               for(unsigned int k = 0; k < NUMBER_ANALOG_CANALES; k++) 
               {
                 ustuvannja[k] = edit_ustuvannja[k];
-                phi_ustuvannja[k] = phi_edit_ustuvannja[k];
-                phi_ustuvannja_sin_cos[2*k] = phi_edit_ustuvannja_sin_cos[2*k];
-                phi_ustuvannja_sin_cos[2*k + 1] = phi_edit_ustuvannja_sin_cos[2*k + 1];
               }
               //Помічаємо, що елементи масиву юстування змінені і готові для передавання у вимірювальну систему
               changed_ustuvannja = CHANGED_ETAP_ENDED;

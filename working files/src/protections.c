@@ -5,23 +5,14 @@
 /*****************************************************/
 inline void diagnostyca_adc_execution(void)
 {
-  if (gnd_adc1 >0x51) _SET_BIT(set_diagnostyka, ERROR_GND_ADC1_TEST_BIT);
-  else _SET_BIT(clear_diagnostyka, ERROR_GND_ADC1_TEST_BIT);
+  if (gnd_adc >0x51) _SET_BIT(set_diagnostyka, ERROR_GND_ADC_TEST_BIT);
+  else _SET_BIT(clear_diagnostyka, ERROR_GND_ADC_TEST_BIT);
 
-  if (gnd_adc2 >0x51) _SET_BIT(set_diagnostyka, ERROR_GND_ADC2_TEST_BIT);
-  else _SET_BIT(clear_diagnostyka, ERROR_GND_ADC2_TEST_BIT);
+  if ((vref_adc <0x709) || (vref_adc > 0x8f5)) _SET_BIT(set_diagnostyka, ERROR_VREF_ADC_TEST_BIT);
+  else _SET_BIT(clear_diagnostyka,ERROR_VREF_ADC_TEST_BIT);
 
-  if ((vref_adc1 <0x709) || (vref_adc1 > 0x8f5)) _SET_BIT(set_diagnostyka, ERROR_VREF_ADC1_TEST_BIT);
-  else _SET_BIT(clear_diagnostyka,ERROR_VREF_ADC1_TEST_BIT);
-
-  if ((vref_adc2 <0x709) || (vref_adc2 > 0x8f5)) _SET_BIT(set_diagnostyka, ERROR_VREF_ADC2_TEST_BIT);
-  else _SET_BIT(clear_diagnostyka,ERROR_VREF_ADC2_TEST_BIT);
-
-  if ((vdd_adc1 <0x8F9) || (vdd_adc1 > 0xC24)) _SET_BIT(set_diagnostyka, ERROR_VDD_ADC1_TEST_BIT);
-  else _SET_BIT(clear_diagnostyka, ERROR_VDD_ADC1_TEST_BIT);
-
-  if ((vdd_adc2 <0x8F9) || (vdd_adc2 > 0xC24)) _SET_BIT(set_diagnostyka, ERROR_VDD_ADC2_TEST_BIT);
-  else _SET_BIT(clear_diagnostyka, ERROR_VDD_ADC2_TEST_BIT);
+  if ((vdd_adc <0x8F9) || (vdd_adc > 0xC24)) _SET_BIT(set_diagnostyka, ERROR_VDD_ADC_TEST_BIT);
+  else _SET_BIT(clear_diagnostyka, ERROR_VDD_ADC_TEST_BIT);
 }
 /*****************************************************/
 
@@ -132,234 +123,40 @@ inline unsigned int sqrt_32(unsigned int y)
 /*****************************************************/
 inline void calc_measurement(void)
 {
-  int ortogonal_local[2*NUMBER_ANALOG_CANALES];
-  //Виставляємо семафор заборони обновлення значень з вимірювальної системи
-
+  unsigned long long sum_sqr_data_local[NUMBER_ANALOG_CANALES];
+  
   //Копіюємо вхідні велечини у локальні змінні
   /*
-  оскільки для дискретного перетворення Фурє коефіцієнти діляться на число виборок і множиться на 2 (еквівалент 2/Т),
-  то це ми можемо зробити зміщенням
+  Оскільки для інтеградбного розгахунку сума квадратів з період ділиться на період, 
+  що для дискретного випадку аналогічно діленню на кількість виборок, то ми це ділення якраз і робимо зміщенням
   */
-  /*
-  Проведені мною розрахунки показують, що якщо просумувати добуток миттєвих значень на синус/косинус за період,
-  а потім результат поділити на 2/Т (зробити це відповідним зсуваом, про який я писав вище),
-  то максимана розрядність резутьтату буде рівна макисальній розрядності вхідного сигналу
-  Тобто для 3I0            - це 19 біт + знак = ((11 біт + знак)*16*16)
-        для фазних струмів - це 15 біт + знак = ((11 біт + знак)*16   )
-  оскільки нам ще треба це число піднімати до квадрату а аж потім добувати корінь квадратний з суми квадратів, то
-  фазний струм можна підносити до кваррату - переповнення не буде, бо (15 біт *2) = 30 біт Бо 32 біт unsigned int
-  А аж потім забрати множенння на 16, щоб збільшити точність вимірювання
-  
-  Для 3I0 можливе переповнення - тому треба або:
-  1.  
-  Перше 16-кратне підсилення забрати прямо з ортогональних для 3I0,
-  тоді ортогоанльні стануть не більше 15-розрядного числа + знак.
-  Друге 16-кратне підсилення забрати вже в остаточному результаті
-    
-  2.Використати 64-бітну арифметику.
-    
-  До 17 листопада 2014 року використовуввся перший метод.
-  Але виникала похибка при розрахунку стуму вищих гармонік. Припускаю, що могло бути
-  зв'язане з тим, що коли відкидадися молодші розряди - то струм першої гармоніки ставав
-  трохи меншим за ремальне значення - а тоді виростав струм вищих гармонік
-    
-  Тому пробую використати другий метод з 17 листопада 2014 року  
-  
-  Для покращення точності з 18 листопада 2014 року я забираю амплітуду sin/cos вже
-  перед самими розрахунками
-  */
-  
-  unsigned int bank_ortogonal_tmp = (bank_ortogonal + 1) & 0x1;
-  for(unsigned int i=0; i<(2*NUMBER_ANALOG_CANALES); i++ )
+  unsigned int bank_sum_sqr_data_tmp = (bank_sum_sqr_data + 1) & 0x1;
+  for(uint32_t i =0; i < NUMBER_ANALOG_CANALES; i++ )
   {
-    ortogonal_local[i] = ortogonal[i][bank_ortogonal_tmp];
-  }
-  bank_ortogonal = bank_ortogonal_tmp;
+    /***/
+    //Розраховуємо діюче значення 3I0 по інтегральній сформулі
+    /***/
+    /*Добуваємо квадратний корінь*/
+    sum_sqr_data_local[i] = sqrt_64(sum_sqr_data[i][bank_sum_sqr_data_tmp]);
+  
+    /*Для приведення цього значення у мА треба помножити на свій коефіцієнт*/
+    /*Ще сигнал зараз є підсиленим у 16 раз, тому ділим його на 16*/
 
-  unsigned int copy_to_low_tasks = (semaphore_measure_values_low == 0) ? true : false;
-  if (copy_to_low_tasks == true) current_delta_phi();
+    /*
+    Ми маємо ще отримане число поділити на корнь з NUMBER_POINT = 32 = 16*2
+    Тобто ми маємо поділити на 4*sqrt(2)
+    4 це зміщення на 2
+    ((MNOGNYK_I_D * X )>> VAGA_DILENNJA_I_D)/sqrt(2) тотожне
+   (MNOGNYK_I_DIJUCHE_D * X )>> VAGA_DILENNJA_I_DIJUCHE_D 
   
-  /*******************************************************/
-  //Перевіряємо, чи відбувалися зміни юстування
-  /*******************************************************/
-  if (changed_ustuvannja == CHANGED_ETAP_ENDED_EXTRA_ETAP) /*Це є умова, що нові дані підготовлені для передачі їх у роботу системою захистів(і при цьому зараз дані не змінюються)*/
-  {
-    //Копіюємо масив юстування у копію цього масиву але з яким працює (читає і змінює) тільки вимірювальна захистема
-    for(unsigned int i = 0; i < NUMBER_ANALOG_CANALES; i++) 
-    {
-      phi_ustuvannja_meas[i] = phi_ustuvannja[i];
-      phi_ustuvannja_sin_cos_meas[2*i    ] = phi_ustuvannja_sin_cos[2*i    ];
-      phi_ustuvannja_sin_cos_meas[2*i + 1] = phi_ustuvannja_sin_cos[2*i + 1];
-    }
-      
-    //Помічаємо, що зміни прийняті системою захистів
-    changed_ustuvannja = CHANGED_ETAP_NONE;
+    Якщо робити через пари (MNOGNYK_I_DIJUCHE_D;VAGA_DILENNJA_I_DIJUCHE_D) і (MNOGNYK_I_D;VAGA_DILENNJA_I_D)
+    то виникає похибка при розрахунку вищих гармонік (що було коли для захистів велися такі розрахунки. У ЦС їх немає).
+    Тому треба іти на такі спрощення виразів
+    */
+    float value_i_float = (unsigned int)(MNOGNYK_I_DIJUCHE_FLOAT*((float)sum_sqr_data_local[i])/(64.0f)); /*64 = 4*16. 16 - це підсилення каналів "Analog Input"; 4 - це sqrt(16), а 16 береться з того, що 32 = 16*2 */
+    measurement[i] = (unsigned int)value_i_float; 
+    /***/
   }
-  /*****************************************************/
-
-  /***
-  Довертаємо кути і копіюємо ортогональні для низькопріоритетних задач
-  ***/
-  for (unsigned int i = 0; i < NUMBER_ANALOG_CANALES; i++)
-  {
-    float sin_alpha = ((float)ortogonal_local[2*i    ])/((float)((1 << (VAGA_NUMBER_POINT - 1))));
-    float cos_alpha = ((float)ortogonal_local[2*i + 1])/((float)((1 << (VAGA_NUMBER_POINT - 1))));
-    
-    float sin_beta;
-    float cos_beta;
-    if (i < I_Ua2)
-    {
-      sin_beta =  phi_ustuvannja_sin_cos_meas[2*i    ];
-      cos_beta =  phi_ustuvannja_sin_cos_meas[2*i + 1];
-    }
-    else
-    {
-       unsigned int frequency_locking_bank_tmp = frequency_locking_bank & 0x1;
-       sin_beta = phi_ustuvannja_sin_cos_meas[2*i    ]*frequency_locking_cos[frequency_locking_bank_tmp] + phi_ustuvannja_sin_cos_meas[2*i + 1]*frequency_locking_sin[frequency_locking_bank_tmp];
-       cos_beta = phi_ustuvannja_sin_cos_meas[2*i + 1]*frequency_locking_cos[frequency_locking_bank_tmp] - phi_ustuvannja_sin_cos_meas[2*i    ]*frequency_locking_sin[frequency_locking_bank_tmp];
-    }
-    
-    unsigned int new_index = index_converter_Ib_p[i];
-    int ortogonal_sin = ortogonal_calc[2*new_index    ] = (int)(sin_alpha*cos_beta + cos_alpha*sin_beta);
-    int ortogonal_cos = ortogonal_calc[2*new_index + 1] = (int)(cos_alpha*cos_beta - sin_alpha*sin_beta);
-
-    
-    //Копіюємо ортогональні для розрахунку кутів
-    if (copy_to_low_tasks == true)
-    {
-      ortogonal_calc_low[2*new_index    ] = ortogonal_sin;
-      ortogonal_calc_low[2*new_index + 1] = ortogonal_cos;
-    }
-  }
-  /***/
-  
-  /*
-  ---------------------------------------------------------------------------------------------------------
-  150А (150 000мА) - максимальний фазний струм
-  Коефіцієнст переведення в мА  - Koef_1 = 84,978173543997808495193432804655 для фазних струмів (5439/64 = 84,984375)
-  
-  Тоді для 150А максимально можливе значення ортогональних може бути
-  150000/Koef_1 = 1765,0303364589078874793160507446
-  Якщо врахувати, що сигнал є підсиленим у 16 раз, то максимальне значення ортогональних може бути
-  16*150000/Koef_1 = 28240,485383342526199669056811914 < 28241(0x6E51) це є 15 бітне число (+ можливий знак)
-  ---------------------------------------------------------------------------------------------------------
-
-  ---------------------------------------------------------------------------------------------------------
-  150В (150 000мВ) - максимальна фазна напруга
-  Коефіцієнст переведення в мВ  - Koef_1 = 64,883134509545420915167731259667 для фазних напруг (4152/64 = 64,875)
-  
-  Тоді для 150В максимально можливе значення ортогональних може бути
-  150000/Koef_1 = 2311,848851536795430557291797995
-  Якщо врахувати, що сигнал є підсиленим у 16 раз, то максимальне значення ортогональних може бути
-  16*150000/Koef_1 = 36989,581624588726888916668767919 < 36990(0x907E) це є 16 бітне число (+ можливий знак) - тобто число виходить 17-бітне
-  
-  Якщо з фазної напруги розраховується лінійна напруга, то, якзо припустити що вектори розврнуті у різні сторони, то  максимальне
-  значення ортогональних може бути
-  2*16*150000/Koef_1 = 73979,163249177453777833337535838 < 73980(0x120FC) це є 17 бітне число (+ можливий знак) - тобто число виходить 18-бітне
-  ---------------------------------------------------------------------------------------------------------
-  
-  ---------------------------------------------------------------------------------------------------------
-  2А (2 000мА * 10 = 20 000(десятих мА)) - максимальний струм 3I0
-  Коефіцієнст переведення в десяті мА  - Koef_1* = 169,95634708799561699038686560931 для 3I0  для 3I0 при вираженні у десятих міліамперів (170/1 = 170)
-
-  
-  Тоді для 2А максимально можливе значення ортогональних може бути
-  20000/Koef_1* = 117,67727621049018824880803941698
-  Якщо врахувати, що сигнал є підсиленим у 16 раз (підсилення в 256 раз ми вже зменшили до 16), то максимальне значення ортогональних може бути
-  16*20000/Koef_1* = 1882,8364193678430119809286306717 < 1883(0x075B) це є 11 бітне число (+ можливий знак)
-  ---------------------------------------------------------------------------------------------------------
-  */
-  
-  /***/
-  //Розраховуємо діюче значення через перетворення Фур'є
-  /***/
-  for(unsigned int i = 0; i < NUMBER_ANALOG_CANALES; i++)
-  {
-#if (I_Ia == 0)
-    if (i <= I_Ic)
-#else
-    if ((i >= I_Ia) && (i <= I_Ic))
-#endif
-    {
-      unsigned int delta_index = (i - I_Ia);
-      unsigned int index_m = IM_IA + delta_index;
-      unsigned int index_ort = FULL_ORT_Ia + delta_index;
-      
-      measurement[index_m] = ( MNOGNYK_I_DIJUCHE*(sqrt_32((unsigned int)(ortogonal_calc[2*index_ort]*ortogonal_calc[2*index_ort]) + (unsigned int)(ortogonal_calc[2*index_ort+1]*ortogonal_calc[2*index_ort+1]))) ) >> (VAGA_DILENNJA_I_DIJUCHE + 4);
-    }
-    else
-    {
-      unsigned int delta_index = (i - I_Ua1);
-      unsigned int index_m = IM_UA1 + delta_index;
-      unsigned int index_ort = FULL_ORT_Ua1 + delta_index;
-      
-      measurement[index_m] = ( MNOGNYK_U_DIJUCHE*(sqrt_32((unsigned int)(ortogonal_calc[2*index_ort]*ortogonal_calc[2*index_ort]) + (unsigned int)(ortogonal_calc[2*index_ort+1]*ortogonal_calc[2*index_ort+1]))) ) >> (VAGA_DILENNJA_U_DIJUCHE + 4);
-    }
-    
-  }
-  /***/
-
-  int _x, _y;
-  //Ubc1
-  _x = ortogonal_calc[2*FULL_ORT_Ubc1 + 0] = ortogonal_calc[2*FULL_ORT_Ub1    ] - ortogonal_calc[2*FULL_ORT_Uc1    ];
-  _y = ortogonal_calc[2*FULL_ORT_Ubc1 + 1] = ortogonal_calc[2*FULL_ORT_Ub1 + 1] - ortogonal_calc[2*FULL_ORT_Uc1 + 1];
-  if (copy_to_low_tasks == true)
-  {
-    ortogonal_calc_low[2*FULL_ORT_Ubc1 + 0] = _x;
-    ortogonal_calc_low[2*FULL_ORT_Ubc1 + 1] = _y;
-  }
-  measurement[IM_UBC1] = ( MNOGNYK_U_DIJUCHE*(sqrt_64((unsigned long long)((long long)_x*(long long)_x) + (unsigned long long)((long long)_y*(long long)_y))) ) >> (VAGA_DILENNJA_U_DIJUCHE + 4);
-  
-  //Uca1
-  _x = ortogonal_calc[2*FULL_ORT_Uca1 + 0] = ortogonal_calc[2*FULL_ORT_Uc1    ] - ortogonal_calc[2*FULL_ORT_Ua1    ];
-  _y = ortogonal_calc[2*FULL_ORT_Uca1 + 1] = ortogonal_calc[2*FULL_ORT_Uc1 + 1] - ortogonal_calc[2*FULL_ORT_Ua1 + 1];
-  if (copy_to_low_tasks == true)
-  {
-    ortogonal_calc_low[2*FULL_ORT_Uca1 + 0] = _x;
-    ortogonal_calc_low[2*FULL_ORT_Uca1 + 1] = _y;
-  }
-  measurement[IM_UCA1] = ( MNOGNYK_U_DIJUCHE*(sqrt_64((unsigned long long)((long long)_x*(long long)_x) + (unsigned long long)((long long)_y*(long long)_y))) ) >> (VAGA_DILENNJA_U_DIJUCHE + 4);
-
-  //Uab1
-  _x = ortogonal_calc[2*FULL_ORT_Uab1 + 0] = ortogonal_calc[2*FULL_ORT_Ua1    ] - ortogonal_calc[2*FULL_ORT_Ub1    ];
-  _y = ortogonal_calc[2*FULL_ORT_Uab1 + 1] = ortogonal_calc[2*FULL_ORT_Ua1 + 1] - ortogonal_calc[2*FULL_ORT_Ub1 + 1];
-  if (copy_to_low_tasks == true)
-  {
-    ortogonal_calc_low[2*FULL_ORT_Uab1 + 0] = _x;
-    ortogonal_calc_low[2*FULL_ORT_Uab1 + 1] = _y;
-  }
-  measurement[IM_UAB1] = ( MNOGNYK_U_DIJUCHE*(sqrt_64((unsigned long long)((long long)_x*(long long)_x) + (unsigned long long)((long long)_y*(long long)_y))) ) >> (VAGA_DILENNJA_U_DIJUCHE + 4);
-
-  //Ubc2
-  _x = ortogonal_calc[2*FULL_ORT_Ubc2 + 0] = ortogonal_calc[2*FULL_ORT_Ub2    ] - ortogonal_calc[2*FULL_ORT_Uc2    ];
-  _y = ortogonal_calc[2*FULL_ORT_Ubc2 + 1] = ortogonal_calc[2*FULL_ORT_Ub2 + 1] - ortogonal_calc[2*FULL_ORT_Uc2 + 1];
-  if (copy_to_low_tasks == true)
-  {
-    ortogonal_calc_low[2*FULL_ORT_Ubc2 + 0] = _x;
-    ortogonal_calc_low[2*FULL_ORT_Ubc2 + 1] = _y;
-  }
-  measurement[IM_UBC2] = ( MNOGNYK_U_DIJUCHE*(sqrt_64((unsigned long long)((long long)_x*(long long)_x) + (unsigned long long)((long long)_y*(long long)_y))) ) >> (VAGA_DILENNJA_U_DIJUCHE + 4);
-  
-  //Uca2
-  _x = ortogonal_calc[2*FULL_ORT_Uca2 + 0] = ortogonal_calc[2*FULL_ORT_Uc2    ] - ortogonal_calc[2*FULL_ORT_Ua2    ];
-  _y = ortogonal_calc[2*FULL_ORT_Uca2 + 1] = ortogonal_calc[2*FULL_ORT_Uc2 + 1] - ortogonal_calc[2*FULL_ORT_Ua2 + 1];
-  if (copy_to_low_tasks == true)
-  {
-    ortogonal_calc_low[2*FULL_ORT_Uca2 + 0] = _x;
-    ortogonal_calc_low[2*FULL_ORT_Uca2 + 1] = _y;
-  }
-  measurement[IM_UCA2] = ( MNOGNYK_U_DIJUCHE*(sqrt_64((unsigned long long)((long long)_x*(long long)_x) + (unsigned long long)((long long)_y*(long long)_y))) ) >> (VAGA_DILENNJA_U_DIJUCHE + 4);
-
-  //Uab2
-  _x = ortogonal_calc[2*FULL_ORT_Uab2 + 0] = ortogonal_calc[2*FULL_ORT_Ua2    ] - ortogonal_calc[2*FULL_ORT_Ub2    ];
-  _y = ortogonal_calc[2*FULL_ORT_Uab2 + 1] = ortogonal_calc[2*FULL_ORT_Ua2 + 1] - ortogonal_calc[2*FULL_ORT_Ub2 + 1];
-  if (copy_to_low_tasks == true)
-  {
-    ortogonal_calc_low[2*FULL_ORT_Uab2 + 0] = _x;
-    ortogonal_calc_low[2*FULL_ORT_Uab2 + 1] = _y;
-  }
-  measurement[IM_UAB2] = ( MNOGNYK_U_DIJUCHE*(sqrt_64((unsigned long long)((long long)_x*(long long)_x) + (unsigned long long)((long long)_y*(long long)_y))) ) >> (VAGA_DILENNJA_U_DIJUCHE + 4);
-  /***/
 }
 /*****************************************************/
 
@@ -1382,33 +1179,6 @@ inline void main_protection(void)
   /***********************************************************/
   calc_measurement();
 
-#ifdef DEBUG_TEST
-  /***/
-  //Тільки для відладки
-  /***/
-  if (temp_value_3I0_1 != 0)
-    measurement[IM_3I0]         = temp_value_3I0_1;
-  if (temp_value_3I0_other != 0)
-    measurement[IM_3I0_other_g] = temp_value_3I0_other;
-  if (temp_value_IA != 0)
-    measurement[IM_IA]          = temp_value_IA;
-  if (temp_value_IC != 0)
-    measurement[IM_IC]          = temp_value_IC;
-  if (temp_value_UA != 0)
-    measurement[IM_UA]          = temp_value_UA;
-  if (temp_value_UB != 0)
-    measurement[IM_UB]          = temp_value_UB;
-  if (temp_value_UC != 0)
-    measurement[IM_UC]          = temp_value_UC;
-  if (temp_value_3U0 != 0)
-    measurement[IM_3U0]         = temp_value_3U0;
-  if (temp_value_I2 != 0)
-    measurement[IM_I2]          = temp_value_I2;
-  if (temp_value_I1 != 0)
-    measurement[IM_I1]          = temp_value_I1;
-  /***/
-#endif
-    
       
   //Діагностика справності раз на період
   diagnostyca_adc_execution();
@@ -1417,14 +1187,14 @@ inline void main_protection(void)
   unsigned int bank_measurement_high_tmp = (bank_measurement_high ^ 0x1) & 0x1;
   if(semaphore_measure_values_low1 == 0)
   {
-    for (unsigned int i = 0; i < (NUMBER_ANALOG_CANALES + 8); i++) 
+    for (unsigned int i = 0; i < NUMBER_ANALOG_CANALES; i++) 
     {
       measurement_high[bank_measurement_high_tmp][i] = measurement_middle[i] = measurement[i];
     }
   }
   else
   {
-    for (unsigned int i = 0; i < (NUMBER_ANALOG_CANALES + 8); i++) 
+    for (unsigned int i = 0; i < NUMBER_ANALOG_CANALES; i++) 
     {
       measurement_high[bank_measurement_high_tmp][i] = measurement[i];
     }
@@ -1472,34 +1242,9 @@ inline void main_protection(void)
   //Сигнал "Несправность Аварийная"
   /**************************/
   if (
-      (_CHECK_SET_BIT(diagnostyka, ERROR_SETTINGS_EEPROM_BIT                     ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_SETTINGS_EEPROM_EMPTY_BIT               ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_SETTINGS_EEPROM_COMPARISON_BIT          ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_SETTINGS_EEPROM_CONTROL_BIT             ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_USTUVANNJA_EEPROM_BIT                   ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_USTUVANNJA_EEPROM_EMPTY_BIT             ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_USTUVANNJA_EEPROM_COMPARISON_BIT        ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_USTUVANNJA_EEPROM_CONTROL_BIT           ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_USTUVANNJA_EEPROM_ADJUSTMENT_ID_FAIL_BIT) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_TRG_FUNC_EEPROM_BIT                     ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_TRG_FUNC_EEPROM_EMPTY_BIT               ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_TRG_FUNC_EEPROM_COMPARISON_BIT          ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_TRG_FUNC_EEPROM_CONTROL_BIT             ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_GND_ADC1_TEST_BIT                       ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_VREF_ADC1_TEST_BIT                      ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_VDD_ADC1_TEST_BIT                       ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_GND_ADC1_TEST_COARSE_BIT                ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_VREF_ADC1_TEST_COARSE_BIT               ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_VDD_ADC1_TEST_COARSE_BIT                ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_GND_ADC2_TEST_BIT                       ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_VREF_ADC2_TEST_BIT                      ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_VDD_ADC2_TEST_BIT                       ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_GND_ADC2_TEST_COARSE_BIT                ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_VREF_ADC2_TEST_COARSE_BIT               ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_VDD_ADC2_TEST_COARSE_BIT                ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_DIGITAL_OUTPUTS_BIT                     ) != 0) ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_INTERNAL_FLASH_BIT                     ) != 0)/* ||
-      (_CHECK_SET_BIT(diagnostyka, ERROR_EXTERNAL_SRAM_BIT                       ) != 0)*/
+      ((diagnostyka[0] & MASKA_AVAR_ERROR_0) != 0) ||
+      ((diagnostyka[1] & MASKA_AVAR_ERROR_1) != 0) ||
+      ((diagnostyka[2] & MASKA_AVAR_ERROR_2) != 0)
      )   
   {
     _SET_BIT(active_functions, RANG_AVAR_DEFECT);

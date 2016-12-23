@@ -156,19 +156,6 @@ inline void periodical_operations(void)
   }
 
   /*******************/
-  //Кут між ТН1 і ТН2
-  /*******************/
-  if (periodical_tasks_CALC_DELTA_PHI != 0)
-  {
-    //Розраховуємо кут між ТН1 і ТН2
-    delta_phi_routine();
-    
-    //Скидаємо активну задачу
-    periodical_tasks_CALC_DELTA_PHI = false;
-  }
-  /*******************/
-
-  /*******************/
   //Контроль достовірності важливих даних
   /*******************/
   /*
@@ -181,15 +168,6 @@ inline void periodical_operations(void)
   Щоб за один оберт виконувалася тільки одна перевірка, тобто щоб в одному оберті
   не було надто довга затримка на фонову перевірку, хоч і важливу.
   */
-  else if (periodical_tasks_CALCULATION_ANGLE != 0)
-  {
-    //Стоїть у черзі активна задача розразунку кутів
-      
-    calc_angle();
-
-    //Скидаємо активну задачу розрахунку кутів
-    periodical_tasks_CALCULATION_ANGLE = false;
-  }
   else if (periodical_tasks_TEST_SETTINGS != 0)
   {
     //Стоїть у черзі активна задача самоконтролю таблиці настройок

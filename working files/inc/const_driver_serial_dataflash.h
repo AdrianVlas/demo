@@ -53,7 +53,6 @@
 #define SIZE_PR_ERR_AREA                      (NUMBER_PAGES_INTO_PR_ERR<<VAGA_SIZE_PAGE_DATAFLASH_1)
 #define MAX_ADDRESS_PR_ERR_AREA               (MIN_ADDRESS_PR_ERR_AREA + SIZE_PR_ERR_AREA - 1)
 
-#define MASKA_BIT_FOR_PRESCALER               0x1
 #define VAGA_NUMBER_POINT_AR                  (VAGA_NUMBER_POINT - 1)
 #define NUMBER_POINT_AR                       (1 << VAGA_NUMBER_POINT_AR)
 #define MIN_ADDRESS_AR_AREA                   0x0

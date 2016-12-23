@@ -52,114 +52,28 @@ void global_vareiables_installation(void)
     output_adc[i].value = 0;
   }
   
-  for (unsigned int i = 0; i < NUMBER_GND_ADC1; i++)
+  for (unsigned int i = 0; i < NUMBER_GND_ADC; i++)
   {
     for(unsigned int j = 0; j < NUMBER_POINT; j++)
     {
-      gnd_adc1_moment_value[i][j] = GND_NORMAL_VALUE;
+      gnd_adc_moment_value[i][j] = GND_NORMAL_VALUE;
     }
-    gnd_adc1_averange_sum[i] = GND_NORMAL_VALUE*NUMBER_POINT;
-    gnd_adc1_averange[i] = GND_NORMAL_VALUE;
+    gnd_adc_averange_sum[i] = GND_NORMAL_VALUE*NUMBER_POINT;
+    gnd_adc_averange[i] = GND_NORMAL_VALUE;
   }
-  gnd_adc1 = GND_NORMAL_VALUE;
-
-  for (unsigned int i = 0; i < NUMBER_GND_ADC2; i++)
-  {
-    for(unsigned int j = 0; j < NUMBER_POINT; j++)
-    {
-      gnd_adc2_moment_value[i][j] = GND_NORMAL_VALUE;
-    }
-    gnd_adc2_averange_sum[i] = GND_NORMAL_VALUE*NUMBER_POINT;
-    gnd_adc2_averange[i] = GND_NORMAL_VALUE;
-  }
-  gnd_adc2 = GND_NORMAL_VALUE;
+  gnd_adc = GND_NORMAL_VALUE;
 
   for(unsigned int i = 0; i < NUMBER_POINT; i++)
   {
-    vref_adc1_moment_value[i] = VREF_NORMAL_VALUE;
-    vdd_adc1_moment_value[i] = VDD_NORMAL_VALUE;
+    vref_adc_moment_value[i] = VREF_NORMAL_VALUE;
+    vdd_adc_moment_value[i] = VDD_NORMAL_VALUE;
 
-    vref_adc2_moment_value[i] = VREF_NORMAL_VALUE;
-    vdd_adc2_moment_value[i] = VDD_NORMAL_VALUE;
+    vref_adc_moment_value[i] = VREF_NORMAL_VALUE;
+    vdd_adc_moment_value[i] = VDD_NORMAL_VALUE;
   }
   
   for(unsigned int i=0; i<(NUMBER_ANALOG_CANALES*NUMBER_POINT*NUMBER_PERIOD_TRANSMIT); i++)
     current_data[i] = 0;
-  
-  rozshyrena_vyborka.VAL_1_time_p = 0;
-  rozshyrena_vyborka.VAL_1_time_c = 0;
-  for (unsigned int i = 0; i < NUMBER_ANALOG_CANALES_VAL_1; i++)
-  {
-    rozshyrena_vyborka.VAL_1_data_p[i] = 0;
-    rozshyrena_vyborka.VAL_1_data_c[i] = 0;
-  }
-  rozshyrena_vyborka.VAL_2_time_p = 0;
-  rozshyrena_vyborka.VAL_2_time_c = 0;
-  for (unsigned int i = 0; i < NUMBER_ANALOG_CANALES_VAL_2; i++)
-  {
-    rozshyrena_vyborka.VAL_2_data_p[i] = 0;
-    rozshyrena_vyborka.VAL_2_data_c[i] = 0;
-  }
-
-  for (unsigned int i = 0; i < MAX_INDEX_DATA_FOR_OSCYLOGRAPH; i++)
-  {
-    data_for_oscylograph[i].time_stemp = 0;
-    data_for_oscylograph[i].VAL_1_fix = 0;
-    data_for_oscylograph[i].VAL_2_fix = 0;
-    for (unsigned int j = 0; j < NUMBER_ANALOG_CANALES; j++) data_for_oscylograph[i].data[j] = 0;
-    for (unsigned int j = 0; j < N_BIG; j++) data_for_oscylograph[i].active_functions[j] = 0;
-    data_for_oscylograph[i].state_ar_record = STATE_AR_NO_RECORD;
-  }
-
-  for (unsigned int i = 0; i < MAX_INDEX_PhK; i++)
-  {
-    for (unsigned int j = 0; j < 2; j++)
-    {
-      perechid_cherez_nul[i][j].x1 = 0;
-      perechid_cherez_nul[i][j].y1 = 0;
-
-      perechid_cherez_nul[i][j].x2 = 0;
-      perechid_cherez_nul[i][j].y2 = 0;
-    }
-    fix_perechid_cherez_nul[i] = 0;
-  }
-
-  poperednij_perechid.Ua1_x1 = 0;
-  poperednij_perechid.Ua1_y1 = 0;
-  poperednij_perechid.Ua1_x2 = 0;
-  poperednij_perechid.Ua1_y2 = 0;
-  poperednij_perechid.Ub1_x1 = 0;
-  poperednij_perechid.Ub1_y1 = 0;
-  poperednij_perechid.Ub1_x2 = 0;
-  poperednij_perechid.Ub1_y2 = 0;
-  poperednij_perechid.Uc1_x1 = 0;
-  poperednij_perechid.Uc1_y1 = 0;
-  poperednij_perechid.Uc1_x2 = 0;
-  poperednij_perechid.Uc1_y2 = 0;
-  poperednij_perechid.Ua2_x1 = 0;
-  poperednij_perechid.Ua2_y1 = 0;
-  poperednij_perechid.Ua2_x2 = 0;
-  poperednij_perechid.Ua2_y2 = 0;
-  poperednij_perechid.Ub2_x1 = 0;
-  poperednij_perechid.Ub2_y1 = 0;
-  poperednij_perechid.Ub2_x2 = 0;
-  poperednij_perechid.Ub2_y2 = 0;
-  poperednij_perechid.Uc2_x1 = 0;
-  poperednij_perechid.Uc2_y1 = 0;
-  poperednij_perechid.Uc2_x2 = 0;
-  poperednij_perechid.Uc2_y2 = 0;
-  
-  for(unsigned int i=0; i<(NUMBER_POINT*NUMBER_ANALOG_CANALES_VAL_1); i++)
-  {
-    data_sin_val_1[i] = 0;
-    data_cos_val_1[i] = 0;
-  }
-  
-  for(unsigned int i=0; i<(NUMBER_POINT*NUMBER_ANALOG_CANALES_VAL_2); i++)
-  {
-    data_sin_val_2[i] = 0;
-    data_cos_val_2[i] = 0;
-  }
   
   for(unsigned int i=0; i<NUMBER_ANALOG_CANALES; i++)
   {
@@ -167,26 +81,8 @@ void global_vareiables_installation(void)
     ADCs_data_raw[i].value = 0;
       
     ustuvannja_meas[i] = ustuvannja[i] = DEFAULT_USTUVANNJA_VALUE;
-
-    int phi_tmp;
-    phi_ustuvannja_meas[i] = phi_ustuvannja[i] = phi_tmp = 0;
-    
-    float phi_radian_tmp = PI*((float)phi_tmp)/180.0f;
-    phi_ustuvannja_sin_cos_meas[2*i    ] = phi_ustuvannja_sin_cos[2*i    ] = arm_sin_f32(phi_radian_tmp);
-    phi_ustuvannja_sin_cos_meas[2*i + 1] = phi_ustuvannja_sin_cos[2*i + 1] = arm_cos_f32(phi_radian_tmp);
   }
 
-  for(unsigned int i=0; i<(2*NUMBER_ANALOG_CANALES); i++)
-  {
-    ortogonal_irq[i] = 0;
-    ortogonal[i][0] = ortogonal[i][1] = 0;
-  }
-
-  for(unsigned int i=0; i<(2*FULL_ORT_MAX); i++)
-  {
-    ortogonal_calc[i]     = 0;
-    ortogonal_calc_low[i] = 0;
-  }
   /**************************/
 
   /**************************/
@@ -1116,8 +1012,8 @@ void start_settings_peripherals(void)
       
   for (unsigned int i = 0; i < NUMBER_ADCs; i++)
   {
-    if (i == 0) GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC;
-    else GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC; 
+//    if (i == 0) GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC;
+//    else GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC; 
     
     //Посилаємо перше слово 0xffff
     while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_TXE) == RESET);          //Очікуємо, поки SPI стане вільним
@@ -1469,25 +1365,13 @@ void start_settings_peripherals(void)
   /* Output Compare Timing Mode настроювання: Канал:1 */
   TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Timing;
   TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Disable;
-  TIM_OCInitStructure.TIM_Pulse = step_val_1;
+  TIM_OCInitStructure.TIM_Pulse = TIM5_CCR1_VAL;
   TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
   TIM_OC1Init(TIM5, &TIM_OCInitStructure);
   TIM_OC1PreloadConfig(TIM5, TIM_OCPreload_Disable);
 
-  TIM_OCInitStructure.TIM_Pulse = step_val_2;
-  TIM_OC2Init(TIM5, &TIM_OCInitStructure);
-  TIM_OC2PreloadConfig(TIM5, TIM_OCPreload_Disable);
-
-  TIM_OCInitStructure.TIM_Pulse = TIM5_CCR1_2_3_VAL;
-  TIM_OC3Init(TIM5, &TIM_OCInitStructure);
-  TIM_OC3PreloadConfig(TIM5, TIM_OCPreload_Disable);
-  
   /* Дозволяємо переривання від каналу 1 таймера 5*/
   TIM_ITConfig(TIM5, TIM_IT_CC1, ENABLE);
-  /* Дозволяємо переривання від каналу 2 таймера 5*/
-  TIM_ITConfig(TIM5, TIM_IT_CC2, ENABLE);
-  /* Дозволяємо переривання від каналу 3 таймера 3*/
-  TIM_ITConfig(TIM5, TIM_IT_CC3, ENABLE);
   /**********************/
   
   /**********************/

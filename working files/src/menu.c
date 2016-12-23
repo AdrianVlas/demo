@@ -1257,7 +1257,7 @@ void main_manu_function(void)
           {
             if(current_ekran.current_level == EKRAN_MEASURMENT_CURRENT)
             {
-              if(current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_CURRENT) current_ekran.index_position = 0;
+              if(current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_ANALOG_INPUT) current_ekran.index_position = 0;
               position_in_current_level_menu[EKRAN_MEASURMENT_CURRENT] = current_ekran.index_position;
               //Формуємо екран вимірювання струмів
               make_ekran_current();
@@ -2319,7 +2319,7 @@ void main_manu_function(void)
               //Натиснута кнопка UP
               if(current_ekran.current_level == EKRAN_MEASURMENT_CURRENT)
               {
-                if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_CURRENT - 1;
+                if(--current_ekran.index_position < 0) current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_ANALOG_INPUT - 1;
                 position_in_current_level_menu[EKRAN_MEASURMENT_CURRENT] = current_ekran.index_position;
                 //Формуємо екран вимірювання струмів вікна
                 make_ekran_current();
@@ -2683,7 +2683,7 @@ void main_manu_function(void)
               //Натиснута кнопка DOWN
               if(current_ekran.current_level == EKRAN_MEASURMENT_CURRENT)
               {
-                if(++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_CURRENT) current_ekran.index_position = 0;
+                if(++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_ANALOG_INPUT) current_ekran.index_position = 0;
                 position_in_current_level_menu[EKRAN_MEASURMENT_CURRENT] = current_ekran.index_position;
                 //Формуємо екран вимірювання струмів вікна
                 make_ekran_current();

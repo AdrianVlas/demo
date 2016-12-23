@@ -960,34 +960,6 @@ void control_ustuvannja(void)
     i++;
   }
 
-  point_1 = (unsigned char*)(&phi_ustuvannja); 
-  point_2 = (unsigned char*)(&phi_ustuvannja_meas);
-  i = 0;
-  while ((difference == 0) && (i < sizeof(phi_ustuvannja)))
-  {
-    temp_value_1 = *(point_1);
-    temp_value_2 = *(point_2);
-    crc_ustuvannja_tmp += temp_value_1;
-    if (temp_value_1 != temp_value_2) difference = 0xff;
-    point_1++;
-    point_2++;
-    i++;
-  }
-
-  point_1 = (unsigned char*)(&phi_ustuvannja_sin_cos); 
-  point_2 = (unsigned char*)(&phi_ustuvannja_sin_cos_meas);
-  i = 0;
-  while ((difference == 0) && (i < sizeof(phi_ustuvannja_sin_cos)))
-  {
-    temp_value_1 = *(point_1);
-    temp_value_2 = *(point_2);
-    crc_ustuvannja_tmp += temp_value_1;
-    if (temp_value_1 != temp_value_2) difference = 0xff;
-    point_1++;
-    point_2++;
-    i++;
-  }
-
   /*
   Не треба контролювати ідентичність серійног номеру, який працює з вимірювально системою,
   чи системою захистів, чи ще якоюсь високопріоритетною і високонадійною від завад системою,

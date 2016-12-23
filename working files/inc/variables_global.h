@@ -3,8 +3,7 @@
 
 //Вимірювальна система
 volatile unsigned int semaphore_adc_irq = false;
-volatile unsigned int adc_DATA_VAL_1_read = false;
-volatile unsigned int adc_DATA_VAL_2_read = false;
+volatile unsigned int adc_DATA_VAL_read = false;
 volatile unsigned int adc_TEST_VAL_read = false;
 volatile unsigned int status_adc_read_work = 0;
 const unsigned int input_adc[NUMBER_INPUTs_ADCs][2]={
@@ -23,100 +22,28 @@ const unsigned int input_adc[NUMBER_INPUTs_ADCs][2]={
                                                      {1,0xb370},
                                                      {1,0xb770},
                                                      {1,0xbb70},
-                                                     {1,0xbf70},
-                                                     {2,0x8370},
-                                                     {2,0x8770},
-                                                     {2,0x8b70},
-                                                     {2,0x8f70},
-                                                     {2,0x9370},
-                                                     {2,0x9770},
-                                                     {2,0x9b70},
-                                                     {2,0x9f70},
-                                                     {2,0xa370},
-                                                     {2,0xa770},
-                                                     {2,0xab70},
-                                                     {2,0xaf70},
-                                                     {2,0xb370},
-                                                     {2,0xb770},
-                                                     {2,0xbb70},
-                                                     {2,0xbf70}
+                                                     {1,0xbf70}
                                                     };
 EXTENDED_OUTPUT_DATA output_adc[NUMBER_INPUTs_ADCs];
-ROZSHYRENA_VYBORKA rozshyrena_vyborka;
 
 unsigned int command_word_adc = 0, command_word_adc_work = 0, active_index_command_word_adc = 0;
 unsigned int state_reading_ADCs = STATE_READING_ADCs_NONE;
 
-uint32_t step_val_1 = TIM5_CCR1_2_3_VAL;
-uint32_t step_val_2 = TIM5_CCR1_2_3_VAL;
-uint32_t penultimate_tick_VAL_1 = 0, previous_tick_VAL_1 = 0;
-uint32_t penultimate_tick_VAL_2 = 0, previous_tick_VAL_2 = 0;
+uint32_t previous_tick_VAL = 0;
 
-DATA_FOR_OSCYLOGRAPH data_for_oscylograph[MAX_INDEX_DATA_FOR_OSCYLOGRAPH];
-unsigned int head_data_for_oscylograph = 0;
-unsigned int tail_data_for_oscylograph = 0, VAL_1_tail_data_for_oscylograph = 0, VAL_2_tail_data_for_oscylograph = 0;
+const unsigned int index_GND_ADC[NUMBER_GND_ADC] = {C_GND_ADC_1, C_GND_ADC_2, C_GND_ADC_3, C_GND_ADC_4, C_GND_ADC_5};
+unsigned int gnd_adc_moment_value[NUMBER_GND_ADC][NUMBER_POINT];
+unsigned int gnd_adc_averange_sum[NUMBER_GND_ADC];
+unsigned int gnd_adc_averange[NUMBER_GND_ADC];
+unsigned int gnd_adc;
 
-VYBORKA_XY perechid_cherez_nul[MAX_INDEX_PhK][2];
-unsigned int fix_perechid_cherez_nul[MAX_INDEX_PhK];
-unsigned int fix_perechid_cherez_nul_TN1_TN2 = 0, fix_perechid_cherez_nul_TN1_TN2_work = 0;
-POPEREDNJY_PERECHID poperednij_perechid;
+unsigned int vref_adc_moment_value[NUMBER_POINT];
+unsigned int vref_adc_averange_sum = VREF_NORMAL_VALUE*NUMBER_POINT;
+unsigned int vref_adc = VREF_NORMAL_VALUE;
 
-volatile unsigned int semaphore_delta_phi = 0;
-
-int delta_phi_index_1 = -1, delta_phi_index_2 = -1;
-int delta_phi_index_1_work_middle = -1, delta_phi_index_2_work_middle = -1;
-int delta_phi_index_1_work_low = -1, delta_phi_index_2_work_low = -1;
-int delta_phi[2] = {UNDEF_PHI, UNDEF_PHI}, delta_phi_synchro = UNDEF_PHI, delta_phi_min, delta_phi_max; 
-unsigned int bank_delta_phi = 0;
-unsigned int reset_delta_phi = false;
-int speed_delta_phi[2] = {UNDEF_SPEED_PHI, UNDEF_SPEED_PHI};
-unsigned int tick_0[2];
-
-int frequency_locking_phi = 0;
-unsigned int frequency_locking_bank = 0;
-float frequency_locking_cos[2] = {1.0f, 1.0f}, frequency_locking_sin[2] = {0.0f, 0.0f};
-
-unsigned int maska_canaliv_fapch_1 = 0;
-float frequency_val_1 = -1, frequency_val_1_work = -1;
-unsigned int tick_period_1 = (TIM5_CCR1_2_3_VAL*NUMBER_POINT), tick_period_1_work = (TIM5_CCR1_2_3_VAL*NUMBER_POINT);
-unsigned int tick_c1, tick_c1_work;
-
-unsigned int maska_canaliv_fapch_2 = 0;
-float frequency_val_2 = -1, frequency_val_2_work = -1;
-unsigned int tick_period_2 = (TIM5_CCR1_2_3_VAL*NUMBER_POINT), tick_period_2_work = (TIM5_CCR1_2_3_VAL*NUMBER_POINT);
-unsigned int tick_c2, tick_c2_work;
-
-float frequency_val_1_min = 50, frequency_val_1_max = 50;
-float frequency_val_2_min = 50, frequency_val_2_max = 50;
-unsigned int command_restart_monitoring_frequency = 0;
-
-const unsigned int index_GND_ADC1[NUMBER_GND_ADC1] = {C_GND_ADC1_1, C_GND_ADC1_2, C_GND_ADC1_3, C_GND_ADC1_4, C_GND_ADC1_5};
-unsigned int gnd_adc1_moment_value[NUMBER_GND_ADC1][NUMBER_POINT];
-unsigned int gnd_adc1_averange_sum[NUMBER_GND_ADC1];
-unsigned int gnd_adc1_averange[NUMBER_GND_ADC1];
-unsigned int gnd_adc1;
-
-const unsigned int index_GND_ADC2[NUMBER_GND_ADC2] = {C_GND_ADC2_1, C_GND_ADC2_2, C_GND_ADC2_3};
-unsigned int gnd_adc2_moment_value[NUMBER_GND_ADC2][NUMBER_POINT];
-unsigned int gnd_adc2_averange_sum[NUMBER_GND_ADC2];
-unsigned int gnd_adc2_averange[NUMBER_GND_ADC2];
-unsigned int gnd_adc2;
-
-unsigned int vref_adc1_moment_value[NUMBER_POINT];
-unsigned int vref_adc1_averange_sum = VREF_NORMAL_VALUE*NUMBER_POINT;
-unsigned int vref_adc1 = VREF_NORMAL_VALUE;
-
-unsigned int vref_adc2_moment_value[NUMBER_POINT];
-unsigned int vref_adc2_averange_sum = VREF_NORMAL_VALUE*NUMBER_POINT;
-unsigned int vref_adc2 = VREF_NORMAL_VALUE;
-
-unsigned int vdd_adc1_moment_value[NUMBER_POINT];
-unsigned int vdd_adc1_averange_sum = VDD_NORMAL_VALUE*NUMBER_POINT;
-unsigned int vdd_adc1 = VDD_NORMAL_VALUE;
-
-unsigned int vdd_adc2_moment_value[NUMBER_POINT];
-unsigned int vdd_adc2_averange_sum = VDD_NORMAL_VALUE*NUMBER_POINT;
-unsigned int vdd_adc2 = VDD_NORMAL_VALUE;
+unsigned int vdd_adc_moment_value[NUMBER_POINT];
+unsigned int vdd_adc_averange_sum = VDD_NORMAL_VALUE*NUMBER_POINT;
+unsigned int vdd_adc = VDD_NORMAL_VALUE;
 
 unsigned int index_array_of_one_value = 0;
 
@@ -128,124 +55,20 @@ unsigned int index_array_of_current_data_value = 0;
 volatile unsigned int changed_ustuvannja = CHANGED_ETAP_NONE; 
 unsigned char crc_ustuvannja;
 unsigned int ustuvannja_meas[NUMBER_ANALOG_CANALES], ustuvannja[NUMBER_ANALOG_CANALES], edit_ustuvannja[NUMBER_ANALOG_CANALES];
-int phi_ustuvannja_meas[NUMBER_ANALOG_CANALES], phi_ustuvannja[NUMBER_ANALOG_CANALES], phi_edit_ustuvannja[NUMBER_ANALOG_CANALES];
-float phi_ustuvannja_sin_cos_meas[2*NUMBER_ANALOG_CANALES], phi_ustuvannja_sin_cos[2*NUMBER_ANALOG_CANALES], phi_edit_ustuvannja_sin_cos[2*NUMBER_ANALOG_CANALES];
 
-const float sin_data_f[NUMBER_POINT] = {
-                                         0.000000000000000000000000000000f,
-                                         0.195090322016128000000000000000f,
-                                         0.382683432365090000000000000000f,
-                                         0.555570233019602000000000000000f,
-                                         0.707106781186547000000000000000f,
-                                         0.831469612302545000000000000000f,
-                                         0.923879532511287000000000000000f,
-                                         0.980785280403230000000000000000f,
-                                         1.000000000000000000000000000000f,
-                                         0.980785280403230000000000000000f,
-                                         0.923879532511287000000000000000f,
-                                         0.831469612302545000000000000000f,
-                                         0.707106781186548000000000000000f,
-                                         0.555570233019602000000000000000f,
-                                         0.382683432365090000000000000000f,
-                                         0.195090322016129000000000000000f,
-                                         0.000000000000000122514845490862f,
-                                        -0.195090322016128000000000000000f,
-                                        -0.382683432365090000000000000000f,
-                                        -0.555570233019602000000000000000f,
-                                        -0.707106781186547000000000000000f,
-                                        -0.831469612302545000000000000000f,
-                                        -0.923879532511287000000000000000f,
-                                        -0.980785280403230000000000000000f,
-                                        -1.000000000000000000000000000000f,
-                                        -0.980785280403230000000000000000f,
-                                        -0.923879532511287000000000000000f,
-                                        -0.831469612302545000000000000000f,
-                                        -0.707106781186548000000000000000f,
-                                        -0.555570233019602000000000000000f,
-                                        -0.382683432365090000000000000000f,
-                                        -0.195090322016129000000000000000f
-};
-
-const float cos_data_f[NUMBER_POINT] = {
-                                         1.000000000000000000000000000000f,
-                                         0.980785280403230000000000000000f,
-                                         0.923879532511287000000000000000f,
-                                         0.831469612302545000000000000000f,
-                                         0.707106781186548000000000000000f,
-                                         0.555570233019602000000000000000f,
-                                         0.382683432365090000000000000000f,
-                                         0.195090322016129000000000000000f,
-                                         0.000000000000000122514845490862f,
-                                        -0.195090322016128000000000000000f,
-                                        -0.382683432365090000000000000000f,
-                                        -0.555570233019602000000000000000f,
-                                        -0.707106781186547000000000000000f,
-                                        -0.831469612302545000000000000000f,
-                                        -0.923879532511287000000000000000f,
-                                        -0.980785280403230000000000000000f,
-                                        -1.000000000000000000000000000000f,
-                                        -0.980785280403230000000000000000f,
-                                        -0.923879532511287000000000000000f,
-                                        -0.831469612302545000000000000000f,
-                                        -0.707106781186548000000000000000f,
-                                        -0.555570233019602000000000000000f,
-                                        -0.382683432365090000000000000000f,
-                                        -0.195090322016129000000000000000f,
-                                         0.000000000000000000000000000000f,
-                                         0.195090322016128000000000000000f,
-                                         0.382683432365090000000000000000f,
-                                         0.555570233019602000000000000000f,
-                                         0.707106781186547000000000000000f,
-                                         0.831469612302545000000000000000f,
-                                         0.923879532511287000000000000000f,
-                                         0.980785280403230000000000000000f
-};
-
-unsigned int index_sin_cos_array[NUMBER_ADCs] = {0, 0};
-unsigned int index_data_sin_cos_array[NUMBER_ADCs] = {0, 0};
-int data_sin_val_1[NUMBER_POINT*NUMBER_ANALOG_CANALES_VAL_1];
-int data_cos_val_1[NUMBER_POINT*NUMBER_ANALOG_CANALES_VAL_1];
-int data_sin_val_2[NUMBER_POINT*NUMBER_ANALOG_CANALES_VAL_2];
-int data_cos_val_2[NUMBER_POINT*NUMBER_ANALOG_CANALES_VAL_2];
-int ortogonal_irq[2*NUMBER_ANALOG_CANALES];
-int ortogonal[2*NUMBER_ANALOG_CANALES][2];
-unsigned int bank_ortogonal = 0;
-volatile unsigned int semaphore_measure_values_low = 0;
+uint32_t sqr_current_data[NUMBER_POINT][NUMBER_ANALOG_CANALES];
+uint32_t index_array_of_sqr_current_data;
+uint32_t bank_sum_sqr_data;
+uint64_t sum_sqr_data_irq[NUMBER_ANALOG_CANALES];
+uint64_t sum_sqr_data[2][NUMBER_ANALOG_CANALES];
 
 volatile unsigned int semaphore_measure_values_low1 = 0;
 
 unsigned int number_inputs_for_fix_one_second = 0;
-volatile unsigned int measurement[NUMBER_ANALOG_CANALES + 8]; 
-unsigned int measurement_high[2][NUMBER_ANALOG_CANALES + 8] , bank_measurement_high = 0; 
-unsigned int measurement_middle[NUMBER_ANALOG_CANALES + 8]; 
-unsigned int measurement_low[NUMBER_ANALOG_CANALES + 8]; 
-
-const unsigned int index_converter_Ib_p[NUMBER_ANALOG_CANALES]  = {FULL_ORT_Ia, FULL_ORT_Ib, FULL_ORT_Ic, FULL_ORT_Ua1, FULL_ORT_Ub1, FULL_ORT_Uc1, FULL_ORT_Ua2, FULL_ORT_Ub2, FULL_ORT_Uc2};
-int ortogonal_calc[2*FULL_ORT_MAX];
-int ortogonal_calc_low[2*FULL_ORT_MAX];
-int phi_angle[FULL_ORT_MAX] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-int base_index_for_angle = -1;
-int phi_angle_high[2][FULL_ORT_MAX] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-unsigned int bank_phi_angle_high = 0;
-
-int P_plus[2] = {0, 0};
-int P_minus[2] = {0, 0};
-int Q_1q[2] = {0, 0};
-int Q_2q[2] = {0, 0};
-int Q_3q[2] = {0, 0};
-int Q_4q[2] = {0, 0};
-unsigned int lichylnyk_1s_po_20ms = 0;
-volatile unsigned int bank_for_enegry = 0;
-int P = 0, Q = 0, cos_phi_x1000 = 0;
-unsigned int S = 0;
-
-#define VAGA_E_AMPLITUDE        7
-const int ea[2] = {(int)(((float)(1 << VAGA_E_AMPLITUDE))*( 0.0000f)), (int)(((float)(1 << VAGA_E_AMPLITUDE))*( 1.0000f))};
-const int eb[2] = {(int)(((float)(1 << VAGA_E_AMPLITUDE))*(-0.8660f)), (int)(((float)(1 << VAGA_E_AMPLITUDE))*(-0.5000f))};
-const int ec[2] = {(int)(((float)(1 << VAGA_E_AMPLITUDE))*( 0.8660f)), (int)(((float)(1 << VAGA_E_AMPLITUDE))*(-0.5000f))};
-#undef  VAGA_E_AMPLITUDE
-unsigned int sequence_TN1 = 0;
-unsigned int sequence_TN2 = 0;
+volatile unsigned int measurement[NUMBER_ANALOG_CANALES]; 
+unsigned int measurement_high[2][NUMBER_ANALOG_CANALES] , bank_measurement_high = 0; 
+unsigned int measurement_middle[NUMBER_ANALOG_CANALES]; 
+unsigned int measurement_low[NUMBER_ANALOG_CANALES]; 
 
 volatile unsigned int state_inputs = 0; //"є сигнал " - відповідає встановленому біту (1); "немає сигналу" - відповідає скинутому біту (0)
 unsigned int state_outputs = 0;
@@ -301,8 +124,6 @@ volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR = false;
 volatile unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK = false;
 volatile unsigned int periodical_tasks_TEST_RESURS_LOCK = false;
 volatile unsigned int periodical_tasks_TEST_FLASH_MEMORY = false;
-volatile unsigned int periodical_tasks_CALCULATION_ANGLE = false;
-volatile unsigned int periodical_tasks_CALC_DELTA_PHI = false;
 
 const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VYMIRJUVANNJA] =
 {
@@ -627,16 +448,6 @@ extern unsigned int __ICFEDIT_region_RAM1_size__;
 //unsigned int temp_value_for_debbuging_2 = 0;
 //unsigned int temp_value_for_debbuging_3 = 0;
 
-unsigned int temp_value_3I0_1 = 0;
-unsigned int temp_value_3I0_other = 0;
-unsigned int temp_value_IA = 0;
-unsigned int temp_value_IC = 0;
-unsigned int temp_value_UA = 0;
-unsigned int temp_value_UB = 0;
-unsigned int temp_value_UC = 0;
-unsigned int temp_value_3U0 = 0;
-unsigned int temp_value_I2 = 0;
-unsigned int temp_value_I1 = 0;
 
 #endif
 

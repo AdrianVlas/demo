@@ -210,8 +210,6 @@ STATE_READING_WRITE_READ,
 STATE_READING_READ
 } STATE_READING_ADCs;
 
-typedef enum _full_ort_index __full_ort_index;
-
 typedef struct
 {
   uint32_t tick;
@@ -224,76 +222,6 @@ typedef struct
   uint32_t tick;
   int value;
 } EXTENDED_SAMPLE;
-
-typedef struct
-{
-  unsigned int VAL_1_time_p;
-  int VAL_1_data_p[NUMBER_ANALOG_CANALES_VAL_1];
-
-  unsigned int VAL_1_time_c;
-  int VAL_1_data_c[NUMBER_ANALOG_CANALES_VAL_1];
-
-  unsigned int VAL_2_time_p;
-  int VAL_2_data_p[NUMBER_ANALOG_CANALES_VAL_2];
-
-  unsigned int VAL_2_time_c;
-  int VAL_2_data_c[NUMBER_ANALOG_CANALES_VAL_2];
-} ROZSHYRENA_VYBORKA;
-
-typedef struct
-{
-  unsigned int time_stemp;
-  unsigned int VAL_1_fix;
-  unsigned int VAL_2_fix;
-  int data [NUMBER_ANALOG_CANALES];
-  unsigned int active_functions[N_BIG];
-  int state_ar_record;
-  
-} DATA_FOR_OSCYLOGRAPH;
-
-
-typedef struct 
-{
-  unsigned int x1;
-  int y1;
-
-  unsigned int x2;
-  int y2;
-
-} VYBORKA_XY;
-
-typedef struct
-{
-  unsigned int Ua1_x1;
-  int Ua1_y1;
-  unsigned int Ua1_x2;
-  int Ua1_y2;
-
-  unsigned int Ub1_x1;
-  int Ub1_y1;
-  unsigned int Ub1_x2;
-  int Ub1_y2;
-
-  unsigned int Uc1_x1;
-  int Uc1_y1;  
-  unsigned int Uc1_x2;
-  int Uc1_y2;  
-
-  unsigned int Ua2_x1;
-  int Ua2_y1;
-  unsigned int Ua2_x2;
-  int Ua2_y2;
-
-  unsigned int Ub2_x1;
-  int Ub2_y1;
-  unsigned int Ub2_x2;
-  int Ub2_y2;
-
-  unsigned int Uc2_x1;
-  int Uc2_y1;  
-  unsigned int Uc2_x2;
-  int Uc2_y2;  
-} POPEREDNJY_PERECHID;
 
 typedef struct
 {
